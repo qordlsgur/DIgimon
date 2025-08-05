@@ -1,0 +1,201 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="99.Defines">
+      <UniqueIdentifier>{c97b62e1-26b8-437d-b3de-0d9d5445f414}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="98.Default">
+      <UniqueIdentifier>{728a900b-3685-4452-a6ae-b82a17c7e63f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="00.MainApp">
+      <UniqueIdentifier>{bdd4a935-b20f-47a5-bf83-4e2952e2c6f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Levels">
+      <UniqueIdentifier>{cb4350f1-3e29-4ead-b993-68bc255c8704}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Levels\Loading">
+      <UniqueIdentifier>{cad4621e-281a-4009-9890-0044e3fce66c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Levels\Loading\Loader">
+      <UniqueIdentifier>{1c661d94-d467-4c27-a3f8-4da71a1c898a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Levels\Logo">
+      <UniqueIdentifier>{b684fa80-8a44-48d3-8763-79acbba3a849}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Levels\GamePlay">
+      <UniqueIdentifier>{490444ba-eab1-44cf-9259-6b16f02e8e25}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects">
+      <UniqueIdentifier>{6822825a-d704-42c1-aab4-274a2e135da0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\BackGround">
+      <UniqueIdentifier>{045c1a1c-a8ed-4e5b-bc33-e5328ed48bf1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03.UI">
+      <UniqueIdentifier>{065efe51-bd22-448b-874b-95bd8ab4a602}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03.UI\Inventory">
+      <UniqueIdentifier>{df64bb19-1ffe-4508-ae76-c784c79e02c6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03.UI\DigiDex">
+      <UniqueIdentifier>{7a9a9694-98af-4b95-8dc2-e7c821d01f99}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="97.ShaderFiles">
+      <UniqueIdentifier>{7206fb55-4b0c-4a04-9298-0d3b877a131c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03.UI\Storage">
+      <UniqueIdentifier>{c6efcb2c-611d-4d96-badf-b73b5ca67b63}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03.UI\Digivice">
+      <UniqueIdentifier>{fc614611-2300-4d33-9b45-229c6dd5a3ca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03.UI\Equipment">
+      <UniqueIdentifier>{56db962c-f656-4ed3-b3a4-f47f2a3b04e1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03.UI\Digimon_Storage">
+      <UniqueIdentifier>{33813018-7503-4408-a905-38b3f34781f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03.UI\Slot">
+      <UniqueIdentifier>{97a84a0e-a44c-4bf5-a642-4f35e246163b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03.UI\Item">
+      <UniqueIdentifier>{c243ede8-6f50-41f9-8f5b-c1129b993563}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="96.DataLoader">
+      <UniqueIdentifier>{8896ded6-e484-4309-827b-25388516bee7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04.Mouse">
+      <UniqueIdentifier>{c398de9c-7b4c-4eae-8079-cb52dc15849d}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Client.h">
+      <Filter>98.Default</Filter>
+    </ClInclude>
+    <ClInclude Include="framework.h">
+      <Filter>98.Default</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>98.Default</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>98.Default</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\MainApp.h">
+      <Filter>00.MainApp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Level_Logo.h">
+      <Filter>01.Levels\Logo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Level_Loading.h">
+      <Filter>01.Levels\Loading</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Level_GamePlay.h">
+      <Filter>01.Levels\GamePlay</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Loader.h">
+      <Filter>01.Levels\Loading\Loader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Client_Defines.h">
+      <Filter>99.Defines</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\BackGround.h">
+      <Filter>02.GameObjects\BackGround</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\Inventory.h">
+      <Filter>03.UI\Inventory</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\Storage.h">
+      <Filter>03.UI\Storage</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\DigiDex.h">
+      <Filter>03.UI\DigiDex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\DataLoader.h">
+      <Filter>96.DataLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\Digimon_Storage.h">
+      <Filter>03.UI\Digimon_Storage</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\Digivice.h">
+      <Filter>03.UI\Digivice</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\Equipment.h">
+      <Filter>03.UI\Equipment</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\Item.h">
+      <Filter>03.UI\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\Slot.h">
+      <Filter>03.UI\Slot</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Client.ico">
+      <Filter>98.Default</Filter>
+    </Image>
+    <Image Include="small.ico">
+      <Filter>98.Default</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Client.rc">
+      <Filter>98.Default</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Client.cpp">
+      <Filter>98.Default</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\MainApp.cpp">
+      <Filter>00.MainApp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Level_Logo.cpp">
+      <Filter>01.Levels\Logo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Level_Loading.cpp">
+      <Filter>01.Levels\Loading</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Level_GamePlay.cpp">
+      <Filter>01.Levels\GamePlay</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Loader.cpp">
+      <Filter>01.Levels\Loading\Loader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\BackGround.cpp">
+      <Filter>02.GameObjects\BackGround</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\Inventory.cpp">
+      <Filter>03.UI\Inventory</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\Storage.cpp">
+      <Filter>03.UI\Storage</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\DigiDex.cpp">
+      <Filter>03.UI\DigiDex</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\DataLoader.cpp">
+      <Filter>96.DataLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\Digimon_Storage.cpp">
+      <Filter>03.UI\Digimon_Storage</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\Digivice.cpp">
+      <Filter>03.UI\Digivice</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\Equipment.cpp">
+      <Filter>03.UI\Equipment</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\Item.cpp">
+      <Filter>03.UI\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\Slot.cpp">
+      <Filter>03.UI\Slot</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxPosTex.hlsl">
+      <Filter>97.ShaderFiles</Filter>
+    </FxCompile>
+  </ItemGroup>
+</Project>
