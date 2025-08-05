@@ -8,6 +8,7 @@
 #include "DirectXTK/DDSTextureLoader.h"
 #include "DirectXTK/WICTextureLoader.h"
 #include "FX11/d3dx11effect.h"
+#include <dinput.h>
 using namespace DirectX;
 
 #include <vector>
@@ -35,6 +36,9 @@ namespace Engine
 {
 	const static wstring g_strTransformTag = { TEXT("Com_Transform") };
 }
+
+#define DIK_KEY		0xff
+#define DIK_MOUSE   3
 
 #define DIRECTINPUT_VERSION	0x0800
 #include <dinput.h>

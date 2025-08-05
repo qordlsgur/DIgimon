@@ -67,6 +67,9 @@
     <Filter Include="04.Mouse">
       <UniqueIdentifier>{c398de9c-7b4c-4eae-8079-cb52dc15849d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.GameObjects\Terrain">
+      <UniqueIdentifier>{45c04ebe-174d-49f1-aad2-e285bc5c24a8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -128,6 +131,9 @@
     </ClInclude>
     <ClInclude Include="..\public\Slot.h">
       <Filter>03.UI\Slot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\Terrain.h">
+      <Filter>02.GameObjects\Terrain</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -192,9 +198,15 @@
     <ClCompile Include="..\private\Slot.cpp">
       <Filter>03.UI\Slot</Filter>
     </ClCompile>
+    <ClCompile Include="..\private\Terrain.cpp">
+      <Filter>02.GameObjects\Terrain</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxPosTex.hlsl">
+      <Filter>97.ShaderFiles</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader_VtxNorTex.hlsl">
       <Filter>97.ShaderFiles</Filter>
     </FxCompile>
   </ItemGroup>

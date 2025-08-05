@@ -49,7 +49,7 @@ HRESULT CGameInstance::Initialize_Engine(const ENGINE_DESC& EngineDesc, ID3D11De
 
 void CGameInstance::Update_Engine(_float fTimeDelta)
 {
-	m_pMouse_Manager->Update_Mouse(fTimeDelta);
+	m_pMouse_Manager->Priority_Update(fTimeDelta);
 
 	m_pObject_Manager->Priority_Update(fTimeDelta);
 
@@ -171,6 +171,11 @@ CGameObject* CGameInstance::Add_GameObject_ToLayer_ToCreate(_uint iPrototypeLeve
 HRESULT CGameInstance::Add_RenderGroup(RENDER eRenderGroup, CGameObject* pRenderObject)
 {
 	return m_pRenderer->Add_RenderGroup(eRenderGroup, pRenderObject);
+}
+
+POINT& CGameInstance::Get_Mouse()
+{
+	return m_pMouse_Manager->Get_Mouse();
 }
 
 #pragma endregion

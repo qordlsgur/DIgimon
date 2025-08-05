@@ -106,6 +106,18 @@
     <ClInclude Include="..\public\Mouse_Manager.h">
       <Filter>01.Utility\06.Mouse_Manager</Filter>
     </ClInclude>
+    <ClInclude Include="..\public\VIBuffer_Terrain.h">
+      <Filter>01.Utility\03.Components\VIBuffer\VIBuffer_Terrain</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\PipeLine.h">
+      <Filter>01.Utility\07.PipeLine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\Camera.h">
+      <Filter>01.Utility\02.GameObjects\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\Key_Manager.h">
+      <Filter>01.Utility\08.Key_Manager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Private\Base.cpp">
@@ -170,6 +182,18 @@
     </ClCompile>
     <ClCompile Include="..\private\Mouse_Manager.cpp">
       <Filter>01.Utility\06.Mouse_Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\VIBuffer_Terrain.cpp">
+      <Filter>01.Utility\03.Components\VIBuffer\VIBuffer_Terrain</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\PipeLine.cpp">
+      <Filter>01.Utility\07.PipeLine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\Camera.cpp">
+      <Filter>01.Utility\02.GameObjects\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\Key_Manager.cpp">
+      <Filter>01.Utility\08.Key_Manager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -256,6 +280,18 @@
     </Filter>
     <Filter Include="01.Utility\06.Mouse_Manager">
       <UniqueIdentifier>{35659401-33f3-494e-93b2-3f81144d7623}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Utility\03.Components\VIBuffer\VIBuffer_Terrain">
+      <UniqueIdentifier>{31440dcc-e07f-44d6-a129-d8f7ac5e62a9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Utility\02.GameObjects\Camera">
+      <UniqueIdentifier>{3104c012-9124-4731-9d5c-1a6824d6b082}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Utility\07.PipeLine">
+      <UniqueIdentifier>{42ddc06f-98fc-4b03-ae22-bfb0e0b0d3b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Utility\08.Key_Manager">
+      <UniqueIdentifier>{8e24b3fd-d24e-4b50-96a8-744e8ec26fd3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

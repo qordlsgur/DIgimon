@@ -27,7 +27,8 @@ public:
 	virtual HRESULT Render() override;
 
 public:
-	void Get_Parent_WorldPos(_float4 fParent_World) { m_fParent_WorldPos = fParent_World; }
+	void Set_Parent_WorldPos(_vector fParent_World);
+	void Set_Move(_float fX, _float fY);
 
 private:
 	CVIBuffer_Rect* m_pVIBufferCom = { nullptr };
@@ -38,7 +39,7 @@ private:
 	HRESULT Ready_Components();
 	HRESULT Bind_ShaderResources();
 
-	_float4x4 m_fParent_WorldPos{};
+	_float4 m_fParent_WorldPos{};
 
 public:
 	static CSlot* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);

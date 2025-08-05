@@ -22,11 +22,11 @@ HRESULT CInventory::Initialize(void* pArg)
 	CUIObject::UIOBJECT_DESC	Desc{};
 
 	Desc.fX = 700.f;
-	Desc.fY = 300.f;
-	Desc.fSizeX = 300.f;
-	Desc.fSizeY = 500.f;
+	Desc.fY = 400.f;
+	Desc.fSizeX = 500.f;
+	Desc.fSizeY = 600.f;
 
-	m_iSlotCount = 9;
+	m_iSlotCount = 56;
 
 	if (FAILED(__super::Initialize(&Desc)))
 		return E_FAIL;
@@ -50,7 +50,7 @@ void CInventory::Update(_float fTimeDelta)
 {
 	for (_uint i = 0; i < m_iSlotCount; ++i)
 	{
-		//m_vSlots[i]->Get_Parent_WorldPos(m_pTransformCom->Get_State(STATE::POSITION));
+		m_vSlots[i]->Set_Parent_WorldPos(m_pTransformCom->Get_State(STATE::POSITION));
 	}
 }
 
@@ -119,12 +119,23 @@ HRESULT CInventory::Bind_ShaderResources()
 
 HRESULT CInventory::Create_Slot(const _wstring& strLayerTag)
 {
-	for (_uint i = 0; i<m_iSlotCount; ++i)
+	for (_uint i = 0; i < m_iSlotCount; ++i)
 	{
 		m_pSlot = static_cast<CSlot*>(m_pGameInstance->Add_GameObject_ToLayer_ToCreate(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Slot"),
 			ENUM_CLASS(LEVEL::GAMEPLAY), strLayerTag));
 
 		m_vSlots.push_back(m_pSlot);
+	}
+
+	for (_uint i = 0; i < m_iSlotCount; ++i)
+	{
+		_float col = i % 8;
+		_float row = i / 8;
+
+		_float startX = -270.f + col * (100 + 10);
+		_float startY = -250.f + row * (100 + 10);
+		
+		m_vSlots[i]->Set_Move(startX, startY);
 	}
 
 	return S_OK;

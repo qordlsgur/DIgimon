@@ -9,7 +9,7 @@ HRESULT CMouse_Manager::Initialize()
     return S_OK;
 }
 
-void CMouse_Manager::Update_Mouse(_float fTimeDelta)
+void CMouse_Manager::Priority_Update(_float fTimeDelta)
 {
     GetCursorPos(&m_pCursor);
     ScreenToClient(pDesc.hWnd, &m_pCursor);
@@ -17,6 +17,7 @@ void CMouse_Manager::Update_Mouse(_float fTimeDelta)
 
 void CMouse_Manager::Update(_float fTimeDelta)
 {
+
 }
 
 void CMouse_Manager::Late_Update(_float fTimeDelta)

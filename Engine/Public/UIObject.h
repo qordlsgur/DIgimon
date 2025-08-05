@@ -48,6 +48,8 @@ protected:
 	_float4x4				m_ViewMatrix{};
 	_float4x4				m_ProjMatrix{};
 
+	_float					m_fX{}, m_fY{}, m_fSizeX{}, m_fSizeY{};
+
 public:
 	virtual CGameObject* Clone(void* pArg) = 0;
 	virtual void Free() override;

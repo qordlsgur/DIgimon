@@ -12,7 +12,7 @@ private:
 
 public:
 	HRESULT Initialize();
-	void Update_Mouse(_float fTimeDelta);
+	void Priority_Update(_float fTimeDelta);
 	void Update(_float fTimeDelta);
 	void Late_Update(_float fTimeDelta);
 

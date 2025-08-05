@@ -56,6 +56,11 @@ public:
 #pragma endregion
 
 
+#pragma region MOUSE
+
+	POINT& Get_Mouse();
+
+#pragma endregion
 
 
 

@@ -37,6 +37,7 @@ void CTransform::Set_Scale(_float fX, _float fY, _float fZ)
 
 HRESULT CTransform::Initialize_Prototype()
 {
+	XMStoreFloat4x4(&m_WorldMatrix, XMMatrixIdentity());
     return S_OK;
 }
 
@@ -49,8 +50,6 @@ HRESULT CTransform::Initialize(void* pArg)
 
     m_fSpeedPerSec = pDesc->fSpeedPerSec;
     m_fRotationPerSec = pDesc->fRotationPerSec;
-
-	XMStoreFloat4x4(&m_WorldMatrix, XMMatrixIdentity());
 
     return S_OK;
 }
