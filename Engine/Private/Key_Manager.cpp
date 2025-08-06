@@ -51,58 +51,61 @@ HRESULT CKey_Manager::Initialize(ID3D11Device* pDevice, ID3D11DeviceContext* pCo
 
 void CKey_Manager::Update(_float fTimeDelta)
 {
+	HRESULT hr;
+
+    // 이전 마우스 상태 저장
+    memcpy(m_byPrevious_MouseStates, m_byCurrent_MouseStates, sizeof(m_byCurrent_MouseStates));
+
     // 이전 키 상태 저장
     memcpy(m_byPrevious_KeyStates, m_byCurrent_KeyStates, sizeof(m_byCurrent_KeyStates));
-    //m_PreviousMouseState = m_CurrentMouseState;
+
+    // 마우스 현재 상태 읽기
+    hr = m_pMouse->GetDeviceState(sizeof(DIMOUSESTATE), &m_byCurrent_MouseStates);
+    if (FAILED(hr))
+    {
+        if ((hr == DIERR_INPUTLOST) || (hr == DIERR_NOTACQUIRED))
+            m_pMouse->Acquire();
+    }
 
     // 키보드 현재 상태 읽기
-    HRESULT hr = m_pKeyboard->GetDeviceState(sizeof(m_byCurrent_KeyStates), m_byCurrent_KeyStates);
+     hr = m_pKeyboard->GetDeviceState(sizeof(m_byCurrent_KeyStates), m_byCurrent_KeyStates);
     if (FAILED(hr))
     {
         if ((hr == DIERR_INPUTLOST) || (hr == DIERR_NOTACQUIRED))
             m_pKeyboard->Acquire();
     }
-
-    // 마우스 현재 상태 읽기
-    //hr = m_pMouse->GetDeviceState(sizeof(DIMOUSESTATE), &m_CurrentMouseState);
-    //if (FAILED(hr))
-    //{
-    //    if ((hr == DIERR_INPUTLOST) || (hr == DIERR_NOTACQUIRED))
-    //        m_pMouse->Acquire();
-    //}
 }
 
 
-bool CKey_Manager::Key_Down()
+bool CKey_Manager::Key_Down(_ubyte Key)
 {
-    return false;
+    return (m_byCurrent_KeyStates[Key] & 0x80) && !(m_byPrevious_KeyStates[Key] & 0x80);
 }
 
-bool CKey_Manager::Key_Up()
+bool CKey_Manager::Key_Up(_ubyte Key)
 {
-    return false;
+    return !(m_byCurrent_KeyStates[Key] & 0x80) && (m_byPrevious_KeyStates[Key] & 0x80);
 }
 
-bool CKey_Manager::Key_Pressing()
+bool CKey_Manager::Key_Pressing(_ubyte Key)
 {
-    return false;
+    return (m_byCurrent_KeyStates[Key] & 0x80);
 }
 
-bool CKey_Manager::Mouse_Down()
+bool CKey_Manager::Mouse_Down(_ubyte Key)
 {
-    return false;
+    return (m_byCurrent_MouseStates[Key] & 0x80) && !(m_byPrevious_MouseStates[Key] & 0x80);
 }
 
-bool CKey_Manager::Mouse_Up()
+bool CKey_Manager::Mouse_Up(_ubyte Key)
 {
-    return false;
+    return !(m_byCurrent_MouseStates[Key] & 0x80) && (m_byPrevious_MouseStates[Key] & 0x80);
 }
 
-bool CKey_Manager::Mouse_Pressing()
+bool CKey_Manager::Mouse_Pressing(_ubyte Key)
 {
-    return false;
+    return (m_byCurrent_MouseStates[Key] & 0x80);
 }
-
 
 CKey_Manager* CKey_Manager::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 {
