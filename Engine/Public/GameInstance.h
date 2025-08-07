@@ -62,7 +62,28 @@ public:
 
 #pragma endregion
 
+#pragma region KEY
 
+	_bool Key_Down(_byte Key);
+	_bool Key_Up(_byte Key);
+	_bool Key_Pressing(_byte Key);
+	
+	_bool Mouse_Down(MOUSEKEYSTATE eMouse);
+	_bool Mouse_Up(MOUSEKEYSTATE eMouse);
+	_bool Mouse_Pressing(MOUSEKEYSTATE eMouse);
+
+	_long Mouse_Drag(MOUSEMOVESTATE eMouseState);
+
+#pragma endregion
+
+#pragma region PIPELINE
+
+	void Set_Transform(D3DTS eState, _fmatrix TransformStateMatrix);
+	const _float4x4* Get_Transform_Float4x4(D3DTS eState);
+	_matrix Get_Transform_Matrix(D3DTS eState);
+	const _float4* Get_CamPosition();
+
+#pragma endregion
 
 private:
 	class CGraphic_Device*			m_pGraphic_Device = { nullptr };
@@ -73,6 +94,9 @@ private:
 	class CRenderer*				m_pRenderer = { nullptr };
 	class CPicking*					m_pPicking = { nullptr };
 	class CMouse_Manager*			m_pMouse_Manager = { nullptr };
+	class CKey_Manager*				m_pKey_Manager = { nullptr };
+	class CPipeLine*				m_pPipeLine = { nullptr };
+
 public:
 	void Release_Engine();
 	virtual void Free() override;

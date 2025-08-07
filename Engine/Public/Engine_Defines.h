@@ -2,13 +2,17 @@
 #define Engine_Define_h__
 
 #include <d3d11.h>
+#define DIRECTINPUT_VERSION	0x0800
+#include <dinput.h>
+
+#pragma warning(disable : 4251)
 #include <DirectXMath.h>
 #include <DirectXCollision.h>
 #include <d3dcompiler.h>
 #include "DirectXTK/DDSTextureLoader.h"
 #include "DirectXTK/WICTextureLoader.h"
 #include "FX11/d3dx11effect.h"
-#include <dinput.h>
+
 using namespace DirectX;
 
 #include <vector>
@@ -39,11 +43,6 @@ namespace Engine
 
 #define DIK_KEY		0xff
 #define DIK_MOUSE   3
-
-#define DIRECTINPUT_VERSION	0x0800
-#include <dinput.h>
-
-#pragma warning(disable : 4251)
 
 #ifdef _DEBUG
 

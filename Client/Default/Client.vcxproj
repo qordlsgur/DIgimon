@@ -152,19 +152,25 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\Public\BackGround.h" />
+    <ClInclude Include="..\public\Camera_Free.h" />
     <ClInclude Include="..\Public\Client_Defines.h" />
     <ClInclude Include="..\public\DataLoader.h" />
     <ClInclude Include="..\public\DigiDex.h" />
+    <ClInclude Include="..\public\DigimonInfo.h" />
+    <ClInclude Include="..\public\Digimon_Manager.h" />
     <ClInclude Include="..\public\Digimon_Storage.h" />
     <ClInclude Include="..\public\Digivice.h" />
     <ClInclude Include="..\public\Equipment.h" />
+    <ClInclude Include="..\public\Exit_Button.h" />
     <ClInclude Include="..\public\Inventory.h" />
     <ClInclude Include="..\public\Item.h" />
+    <ClInclude Include="..\public\ItemType_Button.h" />
     <ClInclude Include="..\Public\Level_GamePlay.h" />
     <ClInclude Include="..\Public\Level_Loading.h" />
     <ClInclude Include="..\Public\Level_Logo.h" />
     <ClInclude Include="..\Public\Loader.h" />
     <ClInclude Include="..\Public\MainApp.h" />
+    <ClInclude Include="..\public\PartyUHD.h" />
     <ClInclude Include="..\public\Slot.h" />
     <ClInclude Include="..\public\Storage.h" />
     <ClInclude Include="..\public\Terrain.h" />
@@ -175,18 +181,24 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Private\BackGround.cpp" />
+    <ClCompile Include="..\private\Camera_Free.cpp" />
     <ClCompile Include="..\private\DataLoader.cpp" />
     <ClCompile Include="..\private\DigiDex.cpp" />
+    <ClCompile Include="..\private\DigimonInfo.cpp" />
+    <ClCompile Include="..\private\Digimon_Manager.cpp" />
     <ClCompile Include="..\private\Digimon_Storage.cpp" />
     <ClCompile Include="..\private\Digivice.cpp" />
     <ClCompile Include="..\private\Equipment.cpp" />
+    <ClCompile Include="..\private\Exit_Button.cpp" />
     <ClCompile Include="..\private\Inventory.cpp" />
     <ClCompile Include="..\private\Item.cpp" />
+    <ClCompile Include="..\private\ItemType_Button.cpp" />
     <ClCompile Include="..\Private\Level_GamePlay.cpp" />
     <ClCompile Include="..\Private\Level_Loading.cpp" />
     <ClCompile Include="..\Private\Level_Logo.cpp" />
     <ClCompile Include="..\Private\Loader.cpp" />
     <ClCompile Include="..\Private\MainApp.cpp" />
+    <ClCompile Include="..\private\PartyUHD.cpp" />
     <ClCompile Include="..\private\Slot.cpp" />
     <ClCompile Include="..\private\Storage.cpp" />
     <ClCompile Include="..\private\Terrain.cpp" />
@@ -201,6 +213,16 @@
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxPosTex.hlsl" />
+    <FxCompile Include="Shader_VtxNorTexTow.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Effect</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Geometry</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">4.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Geometry</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">4.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Effect</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
     <FxCompile Include="Shader_VtxNorTex.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Effect</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>

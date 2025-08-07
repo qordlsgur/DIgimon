@@ -33,6 +33,8 @@ protected:
 	HRESULT Begin();
 	HRESULT End();
 
+	virtual void Set_Active() { m_bActive = !m_bActive; }
+
 protected:
 	// 기본적인 UI들은 이제 회면 가장 앞에 위치해 있다.
     // 몬스터나 플레이어가 UI쪽으로 와도 UI는 그 앞에 그려진다.
@@ -47,6 +49,8 @@ protected:
     // 0은 최소거리 1은 최대거리이다.
 	_float4x4				m_ViewMatrix{};
 	_float4x4				m_ProjMatrix{};
+
+	_bool					m_bActive = { false };
 
 	_float					m_fX{}, m_fY{}, m_fSizeX{}, m_fSizeY{};
 

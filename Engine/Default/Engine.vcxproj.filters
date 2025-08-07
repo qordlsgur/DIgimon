@@ -89,7 +89,7 @@
       <Filter>02.FMOD</Filter>
     </ClInclude>
     <ClInclude Include="..\public\Sound_Manager.h">
-      <Filter>01.Utility\12.Sound</Filter>
+      <Filter>01.Utility\98.Sound</Filter>
     </ClInclude>
     <ClInclude Include="..\public\VIBuffer.h">
       <Filter>01.Utility\03.Components\VIBuffer</Filter>
@@ -117,6 +117,9 @@
     </ClInclude>
     <ClInclude Include="..\public\Key_Manager.h">
       <Filter>01.Utility\08.Key_Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\Button.h">
+      <Filter>01.Utility\02.GameObjects\Button</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -166,7 +169,7 @@
       <Filter>01.Utility\03.Components\Transform</Filter>
     </ClCompile>
     <ClCompile Include="..\private\Sound_Manager.cpp">
-      <Filter>01.Utility\12.Sound</Filter>
+      <Filter>01.Utility\98.Sound</Filter>
     </ClCompile>
     <ClCompile Include="..\private\VIBuffer.cpp">
       <Filter>01.Utility\03.Components\VIBuffer</Filter>
@@ -194,6 +197,9 @@
     </ClCompile>
     <ClCompile Include="..\private\Key_Manager.cpp">
       <Filter>01.Utility\08.Key_Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\Button.cpp">
+      <Filter>01.Utility\02.GameObjects\Button</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -263,9 +269,6 @@
     <Filter Include="02.FMOD">
       <UniqueIdentifier>{22ddcddb-51b1-4fc9-b9e1-cc341c75aad7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01.Utility\12.Sound">
-      <UniqueIdentifier>{13401173-173c-4f95-90f2-b6286a45e76d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="01.Utility\03.Components\VIBuffer">
       <UniqueIdentifier>{936321a2-8dd5-461b-ab80-005f6c67d893}</UniqueIdentifier>
     </Filter>
@@ -292,6 +295,12 @@
     </Filter>
     <Filter Include="01.Utility\08.Key_Manager">
       <UniqueIdentifier>{8e24b3fd-d24e-4b50-96a8-744e8ec26fd3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Utility\98.Sound">
+      <UniqueIdentifier>{13401173-173c-4f95-90f2-b6286a45e76d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Utility\02.GameObjects\Button">
+      <UniqueIdentifier>{f57ac093-3455-41a2-9d55-d48f31013326}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

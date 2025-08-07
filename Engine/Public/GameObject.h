@@ -33,6 +33,10 @@ public:
 
 	class CComponent* Find_Component(const _wstring& strComponentTag);
 
+public:
+	virtual void OnClick();
+
+
 protected:
 	int											m_iData;
 	ID3D11Device*								m_pDevice = { nullptr };

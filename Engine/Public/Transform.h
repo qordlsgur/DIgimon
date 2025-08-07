@@ -32,6 +32,11 @@ public:
 
 	_float3 Get_Scale() const; // 스케일 받기
 
+	// 월드 매트릭스를 던져준다.
+	const _float4x4* Get_WorldMatrixPtr() const {
+		return &m_WorldMatrix;
+	}
+
 	// 이 함수는 이제 계산을 한 후에 x(Right),y(Up),z(Look), 중에 어디에 뭐를 집어 넣을 지 
 	// 값을 세팅 해주는 함수 이다. 만약 Right에 vState값을 넣어 주고 싶다고 하면 이제 eState에
 	// Right를 넣고 뒤에 계산용 벡터를 집어 넣으면 그 계산용 벡터를 저장용에 집어 넣어 준다.

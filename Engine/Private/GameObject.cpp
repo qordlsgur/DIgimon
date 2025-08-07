@@ -90,6 +90,10 @@ CComponent* CGameObject::Find_Component(const _wstring& strComponentTag)
 	return iter->second;
 }
 
+void CGameObject::OnClick()
+{
+}
+
 
 // 이 함수는 Component를 추가 할 때 원본을 찾아서 원본이 있으면 추가를 하고
 // 원본이 없으면 종료시킨다.

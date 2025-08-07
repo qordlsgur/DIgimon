@@ -1,6 +1,6 @@
 #include "Loader.h"
 
-#pragma region UIheader
+#pragma region UI
 
 #include "BackGround.h"
 #include "DigiDex.h"
@@ -11,6 +11,13 @@
 #include "Item.h"
 #include "Slot.h"
 #include "Storage.h"
+
+#pragma endregion
+
+#pragma region Button
+
+#include "ItemType_Button.h"
+#include "Exit_Button.h"
 
 #pragma endregion
 
@@ -128,14 +135,39 @@ HRESULT CLoader::Loading_For_GamePlay()
 #pragma  region TEXTURE
 	m_strMessage = TEXT("텍스쳐를(을) 로딩 중 입니다.");
 	
-	/* For.Prototype_Component_Texture_Inventory*/
+	/* For.Prototype_Component_Texture_Inventory */
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Inventory"),
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/UI/Inven.png"), 1))))
 		return E_FAIL;
 
-	/* For.Prototype_Component_Texture_Inventory*/
+	/* For.Prototype_Component_Texture_Slot */
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Slot"),
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/UI/Slot.png"), 1))))
+		return E_FAIL;
+
+	/* For.Prototype_Component_Texture_Weapon */
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Weapon"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/UI/Weapon.png"), 1))))
+		return E_FAIL;
+
+	/* For.Prototype_Component_Texture_Soby */
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Soby"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/UI/Soby.png"), 1))))
+		return E_FAIL;
+
+	/* For.Prototype_Component_Texture_Gita */
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Gita"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/UI/Gita.png"), 1))))
+		return E_FAIL;
+
+	/* For.Prototype_Component_Texture_ItemType_Button */
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_ItemType_Button"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/UI/Button%d.png"), 2))))
+		return E_FAIL;
+
+	/* For.Prototype_Component_Texture_Exit_Button */
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Exit_Button"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/UI/Exit_Button.png"), 1))))
 		return E_FAIL;
 
 	/* For.Prototype_Component_Texture_Terrain */
@@ -189,6 +221,11 @@ HRESULT CLoader::Loading_For_GamePlay()
 		CShader::Create(m_pDevice, m_pContext, TEXT("../Bin/ShaderFiles/Shader_VtxNorTex.hlsl"), VTXNORTEX::Elements, VTXNORTEX::iNumElements))))
 		return E_FAIL;
 
+	/* For.Prototype_Component_Shader_VtxNorTexTow */
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Shader_VtxNorTexTow"),
+		CShader::Create(m_pDevice, m_pContext, TEXT("../Bin/ShaderFiles/Shader_VtxNorTexTow.hlsl"), VTXNORTEX::Elements, VTXNORTEX::iNumElements))))
+		return E_FAIL;
+
 #pragma endregion
 
 #pragma region PROTOTYPE
@@ -203,6 +240,16 @@ HRESULT CLoader::Loading_For_GamePlay()
 	//* For.Prototype_GameObject_Slot */
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Slot"),
 		CSlot::Create(m_pDevice, m_pContext))))
+		return E_FAIL;	
+	
+	//* For.Prototype_GameObject_Slot */
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Exit_Button"),
+		CExit_Button::Create(m_pDevice, m_pContext))))
+		return E_FAIL;	
+	
+	//* For.Prototype_GameObject_Slot */
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_ItemType_Button"),
+		CItemType_Button::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
 	/* For.Prototype_GameObject_Terrain */

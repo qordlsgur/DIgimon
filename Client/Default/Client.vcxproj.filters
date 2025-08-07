@@ -70,6 +70,42 @@
     <Filter Include="02.GameObjects\Terrain">
       <UniqueIdentifier>{45c04ebe-174d-49f1-aad2-e285bc5c24a8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.GameObjects\Camera">
+      <UniqueIdentifier>{6dd4334d-b226-4888-b7ab-75bb7a5645cc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Camera\Camera_Free">
+      <UniqueIdentifier>{0b7a2668-162a-4314-962a-ce5d5e770d19}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03.UI\PartyHUD">
+      <UniqueIdentifier>{f393a3d0-f8d3-48bc-9024-368e06523d73}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03.UI\Manager">
+      <UniqueIdentifier>{c06e1ed9-6732-49ac-bbfe-d9c865b02768}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03.UI\Manager\Digimon_Manager">
+      <UniqueIdentifier>{bbf095f0-ac54-4c49-ae56-40b3dd914917}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="05.DigimonInfo">
+      <UniqueIdentifier>{2d80d47d-d079-45b3-99d3-6392f413ee0f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03.UI\Manager\Storage_Manager">
+      <UniqueIdentifier>{158eeb85-c11a-4576-a95c-dac21c17788f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03.UI\Manager\Inventory_Manager">
+      <UniqueIdentifier>{27a24dd8-ac77-4fe7-a202-e302e667e509}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03.UI\Manager\DigiDex_Manager">
+      <UniqueIdentifier>{f983c745-1507-4474-8d57-126ea2223af8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03.UI\Inventory\Button">
+      <UniqueIdentifier>{04c1327b-5966-4506-a009-e515cb77c291}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03.UI\Inventory\Button\ItemType_Button">
+      <UniqueIdentifier>{63d8d6e8-25fb-4d71-9190-0e3e00a11237}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03.UI\Inventory\Button\Exit_Button">
+      <UniqueIdentifier>{5bbb7fd5-071a-4acd-9eb1-1ba8f8344bcc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -134,6 +170,24 @@
     </ClInclude>
     <ClInclude Include="..\public\Terrain.h">
       <Filter>02.GameObjects\Terrain</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\Camera_Free.h">
+      <Filter>02.GameObjects\Camera\Camera_Free</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\PartyUHD.h">
+      <Filter>03.UI\PartyHUD</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\Digimon_Manager.h">
+      <Filter>03.UI\Manager\Digimon_Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\DigimonInfo.h">
+      <Filter>05.DigimonInfo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\Exit_Button.h">
+      <Filter>03.UI\Inventory\Button\Exit_Button</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\ItemType_Button.h">
+      <Filter>03.UI\Inventory\Button\ItemType_Button</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -201,12 +255,33 @@
     <ClCompile Include="..\private\Terrain.cpp">
       <Filter>02.GameObjects\Terrain</Filter>
     </ClCompile>
+    <ClCompile Include="..\private\Camera_Free.cpp">
+      <Filter>02.GameObjects\Camera\Camera_Free</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\PartyUHD.cpp">
+      <Filter>03.UI\PartyHUD</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\Digimon_Manager.cpp">
+      <Filter>03.UI\Manager\Digimon_Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\DigimonInfo.cpp">
+      <Filter>05.DigimonInfo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\Exit_Button.cpp">
+      <Filter>03.UI\Inventory\Button\Exit_Button</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\ItemType_Button.cpp">
+      <Filter>03.UI\Inventory\Button\ItemType_Button</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxPosTex.hlsl">
       <Filter>97.ShaderFiles</Filter>
     </FxCompile>
     <FxCompile Include="Shader_VtxNorTex.hlsl">
+      <Filter>97.ShaderFiles</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader_VtxNorTexTow.hlsl">
       <Filter>97.ShaderFiles</Filter>
     </FxCompile>
   </ItemGroup>

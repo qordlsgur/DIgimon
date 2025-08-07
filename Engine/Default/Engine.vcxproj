@@ -118,7 +118,7 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
-      <AdditionalDependencies>d3d11.lib;../Public/FMOD/fmod_vc.lib;../Public/FMOD/fmodL_vc.lib;DirectXTKd.lib;Effects11d.lib;%(AdditionalDependencies);dinput8.lib;dxguid.lib</AdditionalDependencies>
+      <AdditionalDependencies>d3d11.lib;dinput8.lib;dxguid.lib;../Public/FMOD/fmod_vc.lib;../Public/FMOD/fmodL_vc.lib;DirectXTKd.lib;Effects11d.lib;%(AdditionalDependencies);dinput8.lib;dxguid.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>../ThirdPartyLib/</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
@@ -138,12 +138,13 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
-      <AdditionalDependencies>d3d11.lib;DirectXTK.lib;Effects11.lib;%(AdditionalDependencies);dinput8.lib;dxguid.lib</AdditionalDependencies>
+      <AdditionalDependencies>d3d11.lib;dinput8.lib;dxguid.lib;DirectXTK.lib;Effects11.lib;%(AdditionalDependencies);dinput8.lib;dxguid.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>../ThirdPartyLib/</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\Public\Base.h" />
+    <ClInclude Include="..\public\Button.h" />
     <ClInclude Include="..\public\Camera.h" />
     <ClInclude Include="..\Public\Component.h" />
     <ClInclude Include="..\Public\Engine_Defines.h" />
@@ -185,6 +186,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Private\Base.cpp" />
+    <ClCompile Include="..\private\Button.cpp" />
     <ClCompile Include="..\private\Camera.cpp" />
     <ClCompile Include="..\Private\Component.cpp" />
     <ClCompile Include="..\Private\GameInstance.cpp" />

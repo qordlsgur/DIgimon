@@ -23,8 +23,8 @@ HRESULT CSlot::Initialize(void* pArg)
 
 	Desc.fX = 100.f;
 	Desc.fY = 100.f;
-	Desc.fSizeX = 100.f;
-	Desc.fSizeY = 100.f;
+	Desc.fSizeX = 85.f;
+	Desc.fSizeY = 85.f;
 
 	if (FAILED(__super::Initialize(&Desc)))
 		return E_FAIL;
@@ -47,8 +47,6 @@ void CSlot::Update(_float fTimeDelta)
 void CSlot::Late_Update(_float fTimeDelta)
 {
 	m_pTransformCom->Set_State(STATE::POSITION, XMVectorSet(m_fX - m_fSizeX * 0.5f, -m_fY + m_fSizeY * 0.5f, 0.f, 1.f) + XMLoadFloat4(&m_fParent_WorldPos));
-
-	m_pGameInstance->Add_RenderGroup(RENDER::BLENDUI, this);
 }
 
 HRESULT CSlot::Render()

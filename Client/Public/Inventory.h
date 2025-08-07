@@ -3,6 +3,8 @@
 #include "Client_Defines.h"
 #include "UIObject.h"
 #include "Slot.h"
+#include "Exit_Button.h"
+#include "ItemType_Button.h"
 
 NS_BEGIN(Engine)
 class CVIBuffer_Rect;
@@ -32,10 +34,14 @@ private:
 	CTexture*							m_pTextureCom = { nullptr };
 	CShader*							m_pShaderCom = { nullptr };
 
-	_uint								m_iSlotCount{};
-	vector<class CSlot*>				m_vSlots;
-	class CSlot*						m_pSlot = { nullptr };
+	_uint								m_iSlotCount{};	// ¿Â∫Ò æ∆¿Ã≈€ ΩΩ∑‘ ∞πºˆ
 
+
+	vector<class CSlot*>				m_vSlots;		// ¿Â∫Ò æ∆¿Ã≈€ ΩΩ∑‘ ∫§≈Õ
+
+	class CSlot*						m_pSlot		= { nullptr };
+	class CExit_Button*					m_pExit		= { nullptr };
+	class CItemType_Button*				m_pItemType	= { nullptr };
 
 private:
 	HRESULT Ready_Components();

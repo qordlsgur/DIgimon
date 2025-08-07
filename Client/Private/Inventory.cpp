@@ -23,10 +23,11 @@ HRESULT CInventory::Initialize(void* pArg)
 
 	Desc.fX = 700.f;
 	Desc.fY = 400.f;
-	Desc.fSizeX = 500.f;
-	Desc.fSizeY = 600.f;
+	Desc.fSizeX = 385.f;
+	Desc.fSizeY = 500.f;
 
-	m_iSlotCount = 56;
+	m_iSlotCount = 40;
+
 
 	if (FAILED(__super::Initialize(&Desc)))
 		return E_FAIL;
@@ -36,8 +37,6 @@ HRESULT CInventory::Initialize(void* pArg)
 
 	if (FAILED(Create_Slot(TEXT("Layer_Slot"))))
 		return E_FAIL;
-
-	size_t a = m_vSlots.size();
 
 	return S_OK;
 }
@@ -52,6 +51,15 @@ void CInventory::Update(_float fTimeDelta)
 	{
 		m_vSlots[i]->Set_Parent_WorldPos(m_pTransformCom->Get_State(STATE::POSITION));
 	}
+
+	m_pExit->Set_Parent_WorldPos(m_pTransformCom->Get_State(STATE::POSITION));
+
+	m_pItemType->Set_Parent_WorldPos(m_pTransformCom->Get_State(STATE::POSITION));
+
+	if (m_pGameInstance->Key_Down(DIK_I))
+		Set_Active();
+
+
 }
 
 void CInventory::Late_Update(_float fTimeDelta)
@@ -61,22 +69,33 @@ void CInventory::Late_Update(_float fTimeDelta)
 
 HRESULT CInventory::Render()
 {
+	if (m_bActive)
+	{
+		if (FAILED(Bind_ShaderResources()))
+			return E_FAIL;
 
-	if (FAILED(Bind_ShaderResources()))
-		return E_FAIL;
+		if (FAILED(m_pShaderCom->Begin(0)))
+			return E_FAIL;
 
-	if (FAILED(m_pShaderCom->Begin(0)))
-		return E_FAIL;
+		if (FAILED(m_pVIBufferCom->Bind_Resources()))
+			return E_FAIL;
 
-	if (FAILED(m_pVIBufferCom->Bind_Resources()))
-		return E_FAIL;
+		__super::Begin();
 
-	__super::Begin();
+		if (FAILED(m_pVIBufferCom->Render()))
+			return E_FAIL;
 
-	if (FAILED(m_pVIBufferCom->Render()))
-		return E_FAIL;
+		for (_uint i = 0; i < m_iSlotCount; ++i)
+		{
+			m_vSlots[i]->Render();
+		}
 
-	__super::End();
+		m_pExit->Render();
+
+		m_pItemType->Render();
+
+		__super::End();
+	}
 
 	return S_OK;
 }
@@ -132,11 +151,21 @@ HRESULT CInventory::Create_Slot(const _wstring& strLayerTag)
 		_float col = i % 8;
 		_float row = i / 8;
 
-		_float startX = -270.f + col * (100 + 10);
-		_float startY = -250.f + row * (100 + 10);
-		
+		_float startX = -230.f + col * (85 + 10);
+		_float startY = -200.f + row * (85 + 10);
+
 		m_vSlots[i]->Set_Move(startX, startY);
 	}
+
+	m_pExit = static_cast<CExit_Button*>(m_pGameInstance->Add_GameObject_ToLayer_ToCreate(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Exit_Button"),
+		ENUM_CLASS(LEVEL::GAMEPLAY), strLayerTag));
+
+	m_pExit->Set_Move(425, -370);
+
+	m_pItemType = static_cast<CItemType_Button*>(m_pGameInstance->Add_GameObject_ToLayer_ToCreate(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_ItemType_Button"),
+		ENUM_CLASS(LEVEL::GAMEPLAY), strLayerTag));
+
+	m_pItemType->Set_Move(-230.f, -300.f);
 
 	return S_OK;
 }

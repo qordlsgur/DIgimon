@@ -7,8 +7,10 @@ NS_BEGIN(Engine)
 class ENGINE_DLL CCamera abstract : public CGameObject
 {
 public:
-	typedef struct tagCameraDesc
+	typedef struct tagCameraDesc : public CGameObject::GAMEOBJECT_DESC
 	{
+		// 카메라의 위치가 다 다르고 보는 위치 거리가 다 달라서 카메라 오브젝트를 생성 할 때
+		// 만드는 동시에 위치를 넣을 수 있게 값을 받아온다.
 		_float3		vEye{}, vAt{};
 		_float		fFovy{}, fNear{}, fFar{};
 	}CAMERA_DESC;
@@ -32,8 +34,8 @@ protected:
 	_float							m_fNear = {};
 	_float							m_fFar = {};
 
-	class CGameInstance* m_pGameInstance = { nullptr };
-
+protected:
+	HRESULT Bind_Matrices();
 public:
 	virtual CGameObject* Clone(void* pArg) = 0;
 	virtual void Free() override;
