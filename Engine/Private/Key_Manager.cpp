@@ -33,7 +33,7 @@ HRESULT CKey_Manager::Initialize(HINSTANCE hInst, HWND hWnd)
     // 마우스 객체 생성
     if (FAILED(m_pDInput->CreateDevice(GUID_SysMouse, &m_pMouse, nullptr)))
         return E_FAIL;
-
+    
     // 생성된 마우스 객체의 대한 정보를 컴 객체에게 전달하는 함수
     m_pMouse->SetDataFormat(&c_dfDIMouse);
 
@@ -116,4 +116,5 @@ void CKey_Manager::Free()
 
     Safe_Release(m_pKeyboard);
     Safe_Release(m_pMouse);
+    Safe_Release(m_pDInput);
 }                

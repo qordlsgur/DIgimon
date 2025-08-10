@@ -58,7 +58,7 @@ HRESULT CItemType_Button::Render()
 	if (FAILED(Bind_ShaderResources()))
 		return E_FAIL;
 
-	if (FAILED(m_pShaderCom->Begin(1)))
+	if (FAILED(m_pShaderCom->Begin(0)))
 		return E_FAIL;
 
 	if (FAILED(m_pVIBufferCom->Bind_Resources()))
@@ -115,12 +115,8 @@ HRESULT CItemType_Button::Bind_ShaderResources()
 		return E_FAIL;
 	if (FAILED(m_pShaderCom->Bind_Matrix("g_ProjMatrix", &m_ProjMatrix)))
 		return E_FAIL;
-	if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture1", 0)))
+	if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture", 0)))
 		return E_FAIL;
-	if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture2", 1)))
-		return E_FAIL;
-
-
 	return S_OK;
 }
 

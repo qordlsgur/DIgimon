@@ -68,6 +68,25 @@ HRESULT CButton::Initialize(void* pArg)
 		ViewportDesc.Height, 0.f, 1.f));
 
 	// 다시 말하지만 절대 Context는 다른 스레드에서 사용 하지 말고 메인 스레드에서 사용할것
+	// 
+	// Depth 테스트 끄기용 상태
+	D3D11_DEPTH_STENCIL_DESC descDisable{};
+	descDisable.DepthEnable = FALSE;
+	descDisable.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ZERO;
+	descDisable.DepthFunc = D3D11_COMPARISON_ALWAYS;
+	HRESULT hr = m_pDevice->CreateDepthStencilState(&descDisable, &m_pDepthDisable);
+	if (FAILED(hr))
+		return hr;
+
+	// Depth 테스트 켜기용 상태
+	D3D11_DEPTH_STENCIL_DESC descEnable{};
+	descEnable.DepthEnable = TRUE;
+	descEnable.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
+	descEnable.DepthFunc = D3D11_COMPARISON_LESS;
+	hr = m_pDevice->CreateDepthStencilState(&descEnable, &m_pDepthEnable);
+	if (FAILED(hr))
+		return hr;
+
 	return S_OK;
 }
 
@@ -90,34 +109,14 @@ HRESULT CButton::Render()
 
 HRESULT CButton::Begin()
 {
-	D3D11_DEPTH_STENCIL_DESC pDesc = {};
-
-	pDesc.DepthEnable = FALSE;
-	pDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ZERO;
-	pDesc.DepthFunc = D3D11_COMPARISON_ALWAYS;
-
-	ID3D11DepthStencilState* pDepthState = nullptr;
-	m_pDevice->CreateDepthStencilState(&pDesc, &pDepthState);
-
-	// 적용
-	m_pContext->OMSetDepthStencilState(pDepthState, 0);
+	m_pContext->OMSetDepthStencilState(m_pDepthDisable, 0);
 
 	return S_OK;
 }
 
 HRESULT CButton::End()
 {
-	D3D11_DEPTH_STENCIL_DESC pDesc = {};
-
-	pDesc.DepthEnable = TRUE;
-	pDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
-	pDesc.DepthFunc = D3D11_COMPARISON_LESS;
-
-	ID3D11DepthStencilState* pDepthState = nullptr;
-	m_pDevice->CreateDepthStencilState(&pDesc, &pDepthState);
-
-	// 적용
-	m_pContext->OMSetDepthStencilState(pDepthState, 0);
+	m_pContext->OMSetDepthStencilState(m_pDepthEnable, 0);
 
 	return S_OK;
 }
@@ -128,4 +127,16 @@ void CButton::OnClick()
 
 void CButton::Free()
 {
+	__super::Free();
+
+	if (m_pDepthDisable)
+	{
+		m_pDepthDisable->Release();
+		m_pDepthDisable = nullptr;
+	}
+	if (m_pDepthEnable)
+	{
+		m_pDepthEnable->Release();
+		m_pDepthEnable = nullptr;
+	}
 }

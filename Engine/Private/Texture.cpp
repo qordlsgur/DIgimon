@@ -36,7 +36,10 @@ HRESULT CTexture::Initialize_Prototype(const _tchar* pTextureFilePath, _uint iNu
 
 	for (_uint i = 0; i < m_iNumSRVs; ++i)
 	{
-		// 원래는 로드를 할 때 ID3D11Texture2D로 먼저 선언을 하고 그 다음에 
+		// 원래는 로드를 할 때 
+		// 
+		// 
+		// 로 먼저 선언을 하고 그 다음에 
 		// ID3D11ShaderResourcView를 만들어야 하는데 이거를 외부 라이브러리가
 		// 알아서 해줌
 		// 그래서 ID3D11ShaderResourcView만 선언을 해줌

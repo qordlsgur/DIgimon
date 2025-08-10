@@ -2,18 +2,18 @@
 <Project>
   <ProjectOutputs>
     <ProjectOutput>
-      <FullPath>C:\Users\hyen6\Desktop\Framework\Digimon\Client\Bin\Client.exe</FullPath>
+      <FullPath>C:\Users\hyen6\Desktop\DIgimon\Client\Bin\Client.exe</FullPath>
     </ProjectOutput>
   </ProjectOutputs>
   <ContentFiles>
     <ContentFile>
-      <FullPath>C:\Users\hyen6\Desktop\Framework\Digimon\Client\Bin\Shader_VtxPosTex.cso</FullPath>
+      <FullPath>C:\Users\hyen6\Desktop\DIgimon\Client\Bin\Shader_VtxPosTex.cso</FullPath>
     </ContentFile>
     <ContentFile>
-      <FullPath>C:\Users\hyen6\Desktop\Framework\Digimon\Client\Bin\Shader_VtxNorTexTow.cso</FullPath>
+      <FullPath>C:\Users\hyen6\Desktop\DIgimon\Client\Bin\Shader_VtxNorTexTow.cso</FullPath>
     </ContentFile>
     <ContentFile>
-      <FullPath>C:\Users\hyen6\Desktop\Framework\Digimon\Client\Bin\Shader_VtxNorTex.cso</FullPath>
+      <FullPath>C:\Users\hyen6\Desktop\DIgimon\Client\Bin\Shader_VtxNorTex.cso</FullPath>
     </ContentFile>
   </ContentFiles>
   <SatelliteDlls />

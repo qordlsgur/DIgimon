@@ -131,6 +131,7 @@ void CGameObject::Free()
 
 	m_Components.clear();
 
+	Safe_Release(m_pTransformCom);
 	Safe_Release(m_pGameInstance);
 	Safe_Release(m_pDevice);
 	Safe_Release(m_pContext);

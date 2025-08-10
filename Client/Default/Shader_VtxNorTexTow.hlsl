@@ -1,8 +1,7 @@
 matrix g_WorldMatrix, g_ViewMatrix, g_ProjMatrix;
 
-
 texture2D g_Texture1;
-texture2D g_Texture2;
+
 
 sampler DefaultSampler = sampler_state
 {
@@ -62,8 +61,8 @@ struct PS_IN // 이 친구는 w나누기까지 다 한 값을 들고옴
 
 struct PS_OUT
 {
-    float4 vColor1 : SV_TARGET0; // 현재 장치에 바인딩 된 0번째 값
-    float4 vColor2 : SV_TARGET1; // 현재 장치에 바인딩 된 1번째 값
+    float4 vColor : SV_TARGET0; // 현재 장치에 바인딩 된 0번째 값
+
 };
 
 
@@ -73,10 +72,9 @@ PS_OUT PS_MAIN(PS_IN In)
 	// 출력을 위한 변수
     
     PS_OUT Out;
-
-    Out.vColor1 = g_Texture1.Sample(DefaultSampler, In.vTexcoord);
-    Out.vColor2 = g_Texture2.Sample(DefaultSampler, In.vTexcoord);
     
+    Out.vColor = g_Texture1.Sample(DefaultSampler, In.vTexcoord);
+
     return Out;
 }
 

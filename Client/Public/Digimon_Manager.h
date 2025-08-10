@@ -26,9 +26,9 @@ public:
 	void Party_Out();
 
 private:
-	class CPartyUHD* m_pPartyUHD = { nullptr };
-	class CDigivice* m_pDigivice = { nullptr };
-	class CDigimon_Storage* m_pDigimon_Storage = { nullptr };
+	//class CPartyUHD* m_pPartyUHD = { nullptr };
+	//class CDigivice* m_pDigivice = { nullptr };
+	//class CDigimon_Storage* m_pDigimon_Storage = { nullptr };
 
 public:
 	virtual void Free() override;

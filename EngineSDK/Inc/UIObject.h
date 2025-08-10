@@ -54,6 +54,9 @@ protected:
 
 	_float					m_fX{}, m_fY{}, m_fSizeX{}, m_fSizeY{};
 
+	ID3D11DepthStencilState* m_pDepthStencilState_Disable = nullptr;
+	ID3D11DepthStencilState* m_pDepthStencilState_Enable = nullptr;
+
 public:
 	virtual CGameObject* Clone(void* pArg) = 0;
 	virtual void Free() override;

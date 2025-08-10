@@ -27,25 +27,25 @@ HRESULT CShader::Initialize_Prototype(const _tchar* pShaderFilePath, const D3D11
 	// 알아서 이 친구를 실헹 안하고 해버린다. 이런걸 스스로 최적화 못하게 막아버린다.
 #ifdef _DEBUG
 	iHlslFlag = D3DCOMPILE_DEBUG | D3DCOMPILE_SKIP_OPTIMIZATION;
-		// 릴리즈 모드일때는 그냥 가장 기본적인 D3DCOMPILE_OPTIMZATION_LEVEL1를 사용함 
-		// 이 친구는 설정 없이 기본적으로 해주는거다.
+	// 릴리즈 모드일때는 그냥 가장 기본적인 D3DCOMPILE_OPTIMZATION_LEVEL1를 사용함 
+	// 이 친구는 설정 없이 기본적으로 해주는거다.
 #else
 	iHlslFlag = D3DCOMPILE_OPTIMZATION_LEVEL1;
 #endif
 
-		// 이 함수는 셰이더를 객체화 시키기 위해서 사용하는 함수이다.
-		// 첫 번째 인자는 셰이더 파일의 경로 이다.
-		// 두 번째 인자는 이제 define을 하는데 세번째 인자에서 같이 해줄 수 있으므로 그냥 nullptr
-		// 세 번째 인자는 Include 인데 셰이더 파일에서 Include할 수 있게 해줌
-		// D3D_COMPILE_STANDARE_FILE_INCLUDE를 안하면 셰이더 파일에서 Include 를 사용 못함
-		// 네 번째 인자는 Flag를 설정 해준다 위에 참고
-		// 다섯 번째 인자는 pass에 버전을 정의 해놔서 0으로 설정함
-		// 여섯 번쨰 인자는 Device를 던져줌
-		// 일곱 번쨰 인자는 m_pEffect
-		// 여덟 번째는 Blob인데 지금은 사용을 거의 안해서 nullptr로 해도 상관 없음
-		if (FAILED(D3DX11CompileEffectFromFile(pShaderFilePath, nullptr,
-			D3D_COMPILE_STANDARD_FILE_INCLUDE, iHlslFlag, 0, m_pDevice, &m_pEffect, nullptr)))
-			return E_FAIL;
+	// 이 함수는 셰이더를 객체화 시키기 위해서 사용하는 함수이다.
+	// 첫 번째 인자는 셰이더 파일의 경로 이다.
+	// 두 번째 인자는 이제 define을 하는데 세번째 인자에서 같이 해줄 수 있으므로 그냥 nullptr
+	// 세 번째 인자는 Include 인데 셰이더 파일에서 Include할 수 있게 해줌
+	// D3D_COMPILE_STANDARE_FILE_INCLUDE를 안하면 셰이더 파일에서 Include 를 사용 못함
+	// 네 번째 인자는 Flag를 설정 해준다 위에 참고
+	// 다섯 번째 인자는 pass에 버전을 정의 해놔서 0으로 설정함
+	// 여섯 번쨰 인자는 Device를 던져줌
+	// 일곱 번쨰 인자는 m_pEffect
+	// 여덟 번째는 Blob인데 지금은 사용을 거의 안해서 nullptr로 해도 상관 없음
+	if (FAILED(D3DX11CompileEffectFromFile(pShaderFilePath, nullptr,
+		D3D_COMPILE_STANDARD_FILE_INCLUDE, iHlslFlag, 0, m_pDevice, &m_pEffect, nullptr)))
+		return E_FAIL;
 
 	// Blob은 옛날 13 버전에는 셰이더가 디버그를 돌려도 에러메세지가 출력이 안되서
 	// 에러 메세지를 Blob에 넣어서 출력을 했는데 지금은 디버그창에 떠서 필요 없음
@@ -145,6 +145,20 @@ HRESULT CShader::Bind_SRV(const _char* pConstantName, ID3D11ShaderResourceView* 
 
 	// 맞으면 넘겨줌
 	return pSRVariable->SetResource(pSRV);
+}
+
+HRESULT CShader::Bind_Int(const _char* pConstanName, _int pInt)
+{
+	ID3DX11EffectVariable* pVariable = m_pEffect->GetVariableByName(pConstanName);
+	if (pVariable == nullptr)
+		return E_FAIL;
+
+	ID3DX11EffectScalarVariable* pIntVariable = pVariable->AsScalar();
+	if (pIntVariable == nullptr)
+		return E_FAIL;
+
+
+	return pIntVariable->SetInt(pInt);
 }
 
 HRESULT CShader::Begin(_uint iPassIndex)

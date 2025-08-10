@@ -263,7 +263,9 @@ void CGameInstance::Release_Engine()
 {
 	DestroyInstance();
 
-
+	Safe_Release(m_pMouse_Manager);
+	Safe_Release(m_pPipeLine);
+	Safe_Release(m_pKey_Manager);
 	Safe_Release(m_pTimer_Manager);
 	Safe_Release(m_pRenderer);
 	Safe_Release(m_pPrototype_Manager);

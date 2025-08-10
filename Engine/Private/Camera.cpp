@@ -80,4 +80,5 @@ HRESULT CCamera::Render()
 
 void CCamera::Free()
 {
+	__super::Free();
 }

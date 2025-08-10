@@ -119,7 +119,10 @@ HRESULT CGraphic_Device::Ready_SwapChain(HWND hWnd, WINMODE isWindowed, _uint iW
 	ZeroMemory(&SwapChain, sizeof(DXGI_SWAP_CHAIN_DESC));
 			
 	/* 백버퍼 == 텍스쳐 */
-	/*텍스처(백버퍼 == ID3D11Texture2D)를 생성하는 행위*/
+	/*텍스처(백버퍼 == 
+	
+	
+	)를 생성하는 행위*/
 	SwapChain.BufferDesc.Width = iWinCX;	/* 가로 픽셀 수 */
 	SwapChain.BufferDesc.Height = iWinCY;	/* 세로 픽셀 수 */
 

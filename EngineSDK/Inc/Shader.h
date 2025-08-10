@@ -20,8 +20,11 @@ public:
 	// g_WorldMatrix, g_ViewMatrix, g_ProjMatrix등등 을 이용하기 위해서 만듬
 	HRESULT Bind_Matrix(const _char* pConstanName, const _float4x4* pMatrix);
 
-	// 위에 있는 함수와 마찬가지로 g_Texture에 값을 집어 넣기 위해서 만든 함수
+	// g_Texture에 값을 집어 넣기 위해서 만든 함수
 	HRESULT Bind_SRV(const _char* pConstanName, ID3D11ShaderResourceView* pSRV);
+
+	// int값을 바꾸기 위해서 만든 함수
+	HRESULT Bind_Int(const _char* pConstanName, _int pInt);
 
 public:
 	// 셰이더 적용을 위해

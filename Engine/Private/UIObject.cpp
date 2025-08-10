@@ -69,6 +69,26 @@ HRESULT CUIObject::Initialize(void* pArg)
 		ViewportDesc.Height, 0.f, 1.f));
 
 	// 다시 말하지만 절대 Context는 다른 스레드에서 사용 하지 말고 메인 스레드에서 사용할것
+
+	D3D11_DEPTH_STENCIL_DESC descDisable = {};
+	descDisable.DepthEnable = FALSE;
+	descDisable.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ZERO;
+	descDisable.DepthFunc = D3D11_COMPARISON_ALWAYS;
+
+	HRESULT hr = m_pDevice->CreateDepthStencilState(&descDisable, &m_pDepthStencilState_Disable);
+	if (FAILED(hr))
+		return hr;
+
+	// DepthStencilState Enable 생성 (Depth 테스트 켜기)
+	D3D11_DEPTH_STENCIL_DESC descEnable = {};
+	descEnable.DepthEnable = TRUE;
+	descEnable.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
+	descEnable.DepthFunc = D3D11_COMPARISON_LESS;
+
+	hr = m_pDevice->CreateDepthStencilState(&descEnable, &m_pDepthStencilState_Enable);
+	if (FAILED(hr))
+		return hr;
+
 	return S_OK;
 }
 
@@ -91,17 +111,10 @@ HRESULT CUIObject::Render()
 
 HRESULT CUIObject::Begin()
 {
-	D3D11_DEPTH_STENCIL_DESC pDesc = {};
+	if (m_pDepthStencilState_Disable == nullptr)
+		return E_FAIL;
 
-	pDesc.DepthEnable = FALSE;
-	pDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ZERO;
-	pDesc.DepthFunc = D3D11_COMPARISON_ALWAYS;
-
-	ID3D11DepthStencilState* pDepthState = nullptr;
-	m_pDevice->CreateDepthStencilState(&pDesc, &pDepthState);
-
-	// 적용
-	m_pContext->OMSetDepthStencilState(pDepthState, 0);
+	m_pContext->OMSetDepthStencilState(m_pDepthStencilState_Disable, 0);
 
 	return S_OK;
 }
@@ -109,17 +122,10 @@ HRESULT CUIObject::Begin()
 HRESULT CUIObject::End()
 {
 
-	D3D11_DEPTH_STENCIL_DESC pDesc = {};
+	if (m_pDepthStencilState_Enable == nullptr)
+		return E_FAIL;
 
-	pDesc.DepthEnable = TRUE;
-	pDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
-	pDesc.DepthFunc = D3D11_COMPARISON_LESS;
-
-	ID3D11DepthStencilState* pDepthState = nullptr;
-	m_pDevice->CreateDepthStencilState(&pDesc, &pDepthState);
-
-	// 적용
-	m_pContext->OMSetDepthStencilState(pDepthState, 0);
+	m_pContext->OMSetDepthStencilState(m_pDepthStencilState_Enable, 0);
 
 	return S_OK;
 }
@@ -128,4 +134,14 @@ void CUIObject::Free()
 {
     __super::Free();
 
+	if (m_pDepthStencilState_Disable)
+	{
+		m_pDepthStencilState_Disable->Release();
+		m_pDepthStencilState_Disable = nullptr;
+	}
+	if (m_pDepthStencilState_Enable)
+	{
+		m_pDepthStencilState_Enable->Release();
+		m_pDepthStencilState_Enable = nullptr;
+	}
 }
