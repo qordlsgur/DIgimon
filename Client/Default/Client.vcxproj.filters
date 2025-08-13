@@ -106,6 +106,12 @@
     <Filter Include="03.UI\Inventory\Button\Exit_Button">
       <UniqueIdentifier>{5bbb7fd5-071a-4acd-9eb1-1ba8f8344bcc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="03.UI\Slot\Inventory_Slot">
+      <UniqueIdentifier>{1268257d-646d-4ed7-adac-8fc9916efb0a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03.UI\Slot\Digivice_Slot">
+      <UniqueIdentifier>{ee28cb80-802e-4cac-ac37-b3bf6c3c6a2b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -165,9 +171,6 @@
     <ClInclude Include="..\public\Item.h">
       <Filter>03.UI\Item</Filter>
     </ClInclude>
-    <ClInclude Include="..\public\Slot.h">
-      <Filter>03.UI\Slot</Filter>
-    </ClInclude>
     <ClInclude Include="..\public\Terrain.h">
       <Filter>02.GameObjects\Terrain</Filter>
     </ClInclude>
@@ -189,6 +192,10 @@
     <ClInclude Include="..\public\ItemType_Button.h">
       <Filter>03.UI\Inventory\Button\ItemType_Button</Filter>
     </ClInclude>
+    <ClInclude Include="..\public\Slot.h">
+      <Filter>03.UI\Slot\Inventory_Slot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\Digivice_Slot.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Client.ico">
@@ -249,9 +256,6 @@
     <ClCompile Include="..\private\Item.cpp">
       <Filter>03.UI\Item</Filter>
     </ClCompile>
-    <ClCompile Include="..\private\Slot.cpp">
-      <Filter>03.UI\Slot</Filter>
-    </ClCompile>
     <ClCompile Include="..\private\Terrain.cpp">
       <Filter>02.GameObjects\Terrain</Filter>
     </ClCompile>
@@ -273,15 +277,19 @@
     <ClCompile Include="..\private\ItemType_Button.cpp">
       <Filter>03.UI\Inventory\Button\ItemType_Button</Filter>
     </ClCompile>
+    <ClCompile Include="..\private\Slot.cpp">
+      <Filter>03.UI\Slot\Inventory_Slot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\Digivice_Slot.cpp" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxPosTex.hlsl">
       <Filter>97.ShaderFiles</Filter>
     </FxCompile>
-    <FxCompile Include="Shader_VtxNorTex.hlsl">
+    <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxNorTex.hlsl">
       <Filter>97.ShaderFiles</Filter>
     </FxCompile>
-    <FxCompile Include="Shader_VtxNorTexTow.hlsl">
+    <FxCompile Include="..\Bin\ShaderFiles\Shader_Inventory.hlsl">
       <Filter>97.ShaderFiles</Filter>
     </FxCompile>
   </ItemGroup>

@@ -2,32 +2,33 @@
 #include "GameInstance.h"
 
 CDigivice::CDigivice(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
-	: CUIObject{pDevice, pContext }
+	: CUIObject{ pDevice, pContext }
 {
 }
 
 CDigivice::CDigivice(const CDigivice& Prototype)
-	: CUIObject{Prototype}
+	: CUIObject{ Prototype }
 {
 }
 
 HRESULT CDigivice::Initialize_Prototype()
 {
-    return S_OK;
+	return S_OK;
 }
 
 HRESULT CDigivice::Initialize(void* pArg)
 {
 	CUIObject::UIOBJECT_DESC	Desc{};
 
-	Desc.fX = g_iWinSizeX >> 1;
-	Desc.fY = g_iWinSizeY >> 1;
-	Desc.fSizeX = g_iWinSizeX;
-	Desc.fSizeY = g_iWinSizeY;
+	Desc.fX = 700.f;
+	Desc.fY = 400.f;
+	Desc.fSizeX = 628.f;
+	Desc.fSizeY = 474.f;
+
+	m_pRect = { long(Desc.fX - Desc.fSizeX * 0.5f), long(Desc.fY - Desc.fSizeY * 0.5f), long(Desc.fX + Desc.fSizeX * 0.5f), long(Desc.fY + Desc.fSizeY * 0.5f) };
 
 	if (FAILED(__super::Initialize(&Desc)))
 		return E_FAIL;
-
 
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
@@ -41,27 +42,32 @@ void CDigivice::Priority_Update(_float fTimeDelta)
 
 void CDigivice::Update(_float fTimeDelta)
 {
+	if (m_pGameInstance->Key_Down(DIK_V))
+		Set_Active();
 }
 
 void CDigivice::Late_Update(_float fTimeDelta)
 {
-	m_pGameInstance->Add_RenderGroup(RENDER::BLENDUI, this);
+	m_pGameInstance->Add_RenderGroup(RENDER::UI, this);
 }
 
 HRESULT CDigivice::Render()
 {
-	if (FAILED(Bind_ShaderResources()))
-		return E_FAIL;
+	if (m_bActive)
+	{
+		if (FAILED(Bind_ShaderResources()))
+			return E_FAIL;
 
-	if (FAILED(m_pShaderCom->Begin(0)))
-		return E_FAIL;
+		if (FAILED(m_pShaderCom->Begin(0)))
+			return E_FAIL;
 
-	if (FAILED(m_pVIBufferCom->Bind_Resources()))
-		return E_FAIL;
+		if (FAILED(m_pVIBufferCom->Bind_Resources()))
+			return E_FAIL;
 
-	if (FAILED(m_pVIBufferCom->Render()))
-		return E_FAIL;
+		if (FAILED(m_pVIBufferCom->Render()))
+			return E_FAIL;
 
+	}
 	return S_OK;
 }
 
@@ -73,12 +79,12 @@ HRESULT CDigivice::Ready_Components()
 		return E_FAIL;
 
 	/* Com_Texture */
-	if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::LOGO), TEXT("Prototype_Component_Texture_Digivice"),
+	if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Digivice"),
 		TEXT("Com_Texture"), reinterpret_cast<CComponent**>(&m_pTextureCom))))
 		return E_FAIL;
 
 	/* Com_Shader */
-	if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::STATIC), TEXT("Prototype_Component_Shader_VtxPosTex"),
+	if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Shader_Inventory"),
 		TEXT("Com_Shader"), reinterpret_cast<CComponent**>(&m_pShaderCom))))
 		return E_FAIL;
 

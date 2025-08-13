@@ -1,14 +1,17 @@
 #include "Loader.h"
 
+#include "BackGround.h"
 #pragma region UI
 
-#include "BackGround.h"
+#include "Item.h"
+
 #include "DigiDex.h"
 #include "Digimon_Storage.h"
 #include "Digivice.h"
-#include "Equipment.h"
+#include "Digivice_Slot.h"
+
 #include "Inventory.h"
-#include "Item.h"
+#include "Equipment.h"
 #include "Slot.h"
 #include "Storage.h"
 
@@ -140,9 +143,24 @@ HRESULT CLoader::Loading_For_GamePlay()
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/UI/Inven.png"), 1))))
 		return E_FAIL;
 
+	/* For.Prototype_Component_Texture_DigiDex */
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_DigiDex"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/UI/DigiDex.png"), 1))))
+		return E_FAIL;
+
+	/* For.Prototype_Component_Texture_DigiVice*/
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Digivice"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/UI/Digivice.png"), 1))))
+		return E_FAIL;
+
 	/* For.Prototype_Component_Texture_Slot */
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Slot"),
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/UI/Slot.png"), 1))))
+		return E_FAIL;
+
+	/* For.Prototype_Component_Texture_Digivice_Slot */
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Digivice_Slot"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/UI/Digivice_Slot.png"), 1))))
 		return E_FAIL;
 
 	/* For.Prototype_Component_Texture_Weapon */
@@ -221,9 +239,9 @@ HRESULT CLoader::Loading_For_GamePlay()
 		CShader::Create(m_pDevice, m_pContext, TEXT("../Bin/ShaderFiles/Shader_VtxNorTex.hlsl"), VTXNORTEX::Elements, VTXNORTEX::iNumElements))))
 		return E_FAIL;
 
-	/* For.Prototype_Component_Shader_VtxNorTexTow */
-	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Shader_VtxNorTexTow"),
-		CShader::Create(m_pDevice, m_pContext, TEXT("../Bin/ShaderFiles/Shader_VtxNorTexTow.hlsl"), VTXNORTEX::Elements, VTXNORTEX::iNumElements))))
+	/* For.Prototype_Component_Shader_Inventory */
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Shader_Inventory"),
+		CShader::Create(m_pDevice, m_pContext, TEXT("../Bin/ShaderFiles/Shader_Inventory.hlsl"), VTXPOSTEX::Elements, VTXPOSTEX::iNumElements))))
 		return E_FAIL;
 
 #pragma endregion
@@ -237,17 +255,32 @@ HRESULT CLoader::Loading_For_GamePlay()
 		CInventory::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
+	//* For.Prototype_GameObject_DigiDex */
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_DigiDex"),
+		CDigiDex::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	//* For.Prototype_GameObject_Digivice */
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Digivice"),
+		CDigivice::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
 	//* For.Prototype_GameObject_Slot */
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Slot"),
 		CSlot::Create(m_pDevice, m_pContext))))
 		return E_FAIL;	
+
+	//* For.Prototype_GameObject_Digivice_Slot */
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Digivice_Slot"),
+		CDigivice_Slot::Create(m_pDevice, m_pContext))))
+		return E_FAIL;	
 	
-	//* For.Prototype_GameObject_Slot */
+	//* For.Prototype_GameObject_Exit_Button */
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Exit_Button"),
 		CExit_Button::Create(m_pDevice, m_pContext))))
 		return E_FAIL;	
 	
-	//* For.Prototype_GameObject_Slot */
+	//* For.Prototype_GameObject_ItemType_Button */
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_ItemType_Button"),
 		CItemType_Button::Create(m_pDevice, m_pContext))))
 		return E_FAIL;

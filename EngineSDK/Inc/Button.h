@@ -28,6 +28,10 @@ public:
 	virtual void Late_Update(_float fTimeDelta);
 	virtual HRESULT Render();
 
+public:
+	virtual RECT* Get_Pos() { return &m_pRect; }
+
+
 protected:
 	HRESULT Begin();
 	HRESULT End();
@@ -36,6 +40,7 @@ protected:
 
 	virtual void OnClick() override;
 	virtual void IsHover() { m_bHover = !m_bHover; }
+	virtual void Hover();
 
 protected:
 
@@ -46,6 +51,8 @@ protected:
 	_bool					m_bHover = { false };
 
 	_float					m_fX{}, m_fY{}, m_fSizeX{}, m_fSizeY{};
+
+	RECT					m_pRect{};
 
 	ID3D11DepthStencilState* m_pDepthDisable = nullptr;  // 깊이 테스트 OFF
 	ID3D11DepthStencilState* m_pDepthEnable = nullptr;   // 깊이 테스트 ON

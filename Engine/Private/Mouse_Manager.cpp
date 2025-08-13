@@ -1,5 +1,7 @@
 #include "Mouse_Manager.h"
 
+#include "GameInstance.h"
+
 CMouse_Manager::CMouse_Manager()
 {
 }
@@ -17,7 +19,7 @@ void CMouse_Manager::Priority_Update(_float fTimeDelta)
 
 void CMouse_Manager::Update(_float fTimeDelta)
 {
-
+    m_pGameInstance->Mouse_Down(MOUSEKEYSTATE::LBUTTON);
 }
 
 void CMouse_Manager::Late_Update(_float fTimeDelta)

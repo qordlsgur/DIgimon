@@ -89,6 +89,22 @@ HRESULT CUIObject::Initialize(void* pArg)
 	if (FAILED(hr))
 		return hr;
 
+	D3D11_BLEND_DESC Desc{};
+	Desc.AlphaToCoverageEnable = false;
+	Desc.IndependentBlendEnable = false;
+
+	Desc.RenderTarget[0].BlendEnable = true;
+	Desc.RenderTarget[0].SrcBlend = D3D11_BLEND_SRC_ALPHA;
+	Desc.RenderTarget[0].DestBlend = D3D11_BLEND_INV_SRC_ALPHA;
+	Desc.RenderTarget[0].BlendOp = D3D11_BLEND_OP_ADD;
+	Desc.RenderTarget[0].SrcBlendAlpha = D3D11_BLEND_ONE;
+	Desc.RenderTarget[0].DestBlendAlpha = D3D11_BLEND_ZERO;
+	Desc.RenderTarget[0].BlendOpAlpha = D3D11_BLEND_OP_ADD;
+	Desc.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
+
+	m_pDevice->CreateBlendState(&Desc, &m_pBS);
+
+
 	return S_OK;
 }
 
@@ -130,6 +146,24 @@ HRESULT CUIObject::End()
 	return S_OK;
 }
 
+HRESULT CUIObject::Blend_Begin()
+{
+	_float fBlendFactor[4] = { 0.f,0.f,0.f,0.f };
+	_uint iSampleMask = 0xffffffff;
+	m_pContext->OMSetBlendState(m_pBS, fBlendFactor, iSampleMask);
+
+	return S_OK;
+}
+
+HRESULT CUIObject::Blend_End()
+{
+	_float fBlendFactor[4] = { 0.f,0.f,0.f,0.f };
+	_uint iSampleMask = 0xffffffff;
+	m_pContext->OMSetBlendState(nullptr, fBlendFactor, iSampleMask);
+
+	return S_OK;
+}
+
 void CUIObject::Free()
 {
     __super::Free();
@@ -143,5 +177,10 @@ void CUIObject::Free()
 	{
 		m_pDepthStencilState_Enable->Release();
 		m_pDepthStencilState_Enable = nullptr;
+	}
+	if (m_pBS)
+	{
+		m_pBS->Release();
+		m_pBS = nullptr;
 	}
 }

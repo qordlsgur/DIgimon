@@ -3,12 +3,12 @@
 #include "GameInstance.h"
 
 CExit_Button::CExit_Button(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
-    : CButton{pDevice, pContext}
+	: CButton{ pDevice, pContext }
 {
 }
 
 CExit_Button::CExit_Button(const CExit_Button& Prototype)
-    : CButton{ Prototype }
+	: CButton{ Prototype }
 {
 }
 
@@ -25,6 +25,8 @@ HRESULT CExit_Button::Initialize(void* pArg)
 	Desc.fY = 100.f;
 	Desc.fSizeX = 70.f;
 	Desc.fSizeY = 70.f;
+
+	m_pRect = { long(Desc.fX - Desc.fSizeX * 0.5f), long(Desc.fY - Desc.fSizeY * 0.5f), long(Desc.fX + Desc.fSizeX * 0.5f), long(Desc.fY + Desc.fSizeY * 0.5f) };
 
 	if (FAILED(__super::Initialize(&Desc)))
 		return E_FAIL;
@@ -61,37 +63,12 @@ HRESULT CExit_Button::Render()
 	if (FAILED(m_pVIBufferCom->Bind_Resources()))
 		return E_FAIL;
 
-	//__super::Begin();
-
-	D3D11_BLEND_DESC pDesc{};
-
-	pDesc.AlphaToCoverageEnable = false;
-	pDesc.IndependentBlendEnable = false;
-
-	pDesc.RenderTarget[0].BlendEnable = true;
-	pDesc.RenderTarget[0].SrcBlend = D3D11_BLEND_SRC_ALPHA;
-	pDesc.RenderTarget[0].DestBlend = D3D11_BLEND_INV_SRC_ALPHA;
-	pDesc.RenderTarget[0].BlendOp = D3D11_BLEND_OP_ADD;
-	pDesc.RenderTarget[0].SrcBlendAlpha = D3D11_BLEND_ONE;
-	pDesc.RenderTarget[0].DestBlendAlpha = D3D11_BLEND_ZERO;
-	pDesc.RenderTarget[0].BlendOpAlpha = D3D11_BLEND_OP_ADD;
-	pDesc.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
-
-	ID3D11BlendState* BS = nullptr;
-
-	m_pDevice->CreateBlendState(&pDesc, &BS);
-
-	_float fBlendFactor[4] = { 0.f,0.f,0.f,0.f };
-	_uint iSampleMask = 0xffffffff;
-	m_pContext->OMSetBlendState(BS, fBlendFactor, iSampleMask);
-
+	__super::Begin();
+	
 	if (FAILED(m_pVIBufferCom->Render()))
 		return E_FAIL;
 
-	m_pContext->OMSetBlendState(nullptr, nullptr, iSampleMask);
-	Safe_Release(BS);
-
-	//__super::End();
+	__super::End();
 
 	return S_OK;
 }
@@ -109,6 +86,11 @@ void CExit_Button::Set_Move(_float fX, _float fY)
 
 	m_pTransformCom->Set_State(STATE::POSITION, XMVectorSet(m_fX - m_fSizeX * 0.5f, -m_fY + m_fSizeY * 0.5f, 0.f, 1.f) + XMLoadFloat4(&m_fParent_WorldPos));
 
+}
+
+void CExit_Button::Hover()
+{
+	int a = 10;
 }
 
 HRESULT CExit_Button::Ready_Components()

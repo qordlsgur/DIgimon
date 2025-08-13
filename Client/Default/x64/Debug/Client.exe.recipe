@@ -7,13 +7,13 @@
   </ProjectOutputs>
   <ContentFiles>
     <ContentFile>
-      <FullPath>C:\Users\hyen6\Desktop\DIgimon\Client\Bin\Shader_VtxPosTex.cso</FullPath>
-    </ContentFile>
-    <ContentFile>
-      <FullPath>C:\Users\hyen6\Desktop\DIgimon\Client\Bin\Shader_VtxNorTexTow.cso</FullPath>
+      <FullPath>C:\Users\hyen6\Desktop\DIgimon\Client\Bin\Shader_Inventory.cso</FullPath>
     </ContentFile>
     <ContentFile>
       <FullPath>C:\Users\hyen6\Desktop\DIgimon\Client\Bin\Shader_VtxNorTex.cso</FullPath>
+    </ContentFile>
+    <ContentFile>
+      <FullPath>C:\Users\hyen6\Desktop\DIgimon\Client\Bin\Shader_VtxPosTex.cso</FullPath>
     </ContentFile>
   </ContentFiles>
   <SatelliteDlls />

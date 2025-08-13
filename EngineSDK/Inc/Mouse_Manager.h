@@ -22,6 +22,9 @@ public:
 private:
 	POINT				m_pCursor{};
 	ENGINE_DESC			pDesc{};
+
+	class CGameInstance* m_pGameInstance = { nullptr };
+
 public:
 	static CMouse_Manager* Create();
 	virtual void Free();

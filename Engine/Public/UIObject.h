@@ -33,6 +33,11 @@ protected:
 	HRESULT Begin();
 	HRESULT End();
 
+	HRESULT Blend_Begin();
+	HRESULT Blend_End();
+
+	virtual RECT* Get_Pos() { return &m_pRect; }
+
 	virtual void Set_Active() { m_bActive = !m_bActive; }
 
 protected:
@@ -53,6 +58,11 @@ protected:
 	_bool					m_bActive = { false };
 
 	_float					m_fX{}, m_fY{}, m_fSizeX{}, m_fSizeY{};
+
+	RECT					m_pRect{};
+
+	ID3D11BlendState*		m_pBS = { nullptr };
+
 
 	ID3D11DepthStencilState* m_pDepthStencilState_Disable = nullptr;
 	ID3D11DepthStencilState* m_pDepthStencilState_Enable = nullptr;

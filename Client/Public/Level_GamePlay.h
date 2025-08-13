@@ -18,6 +18,8 @@ public:
 
 private:
 	HRESULT Ready_Layer_Inventory(const _wstring& strLayerTag);
+	HRESULT Ready_Layer_DigiDex(const _wstring& strLayerTag);
+	HRESULT Ready_Layer_Digivice(const _wstring& strLayerTag);
 
 	HRESULT Ready_Lights();
 	HRESULT Ready_Layer_BackGround(const _wstring& strLayerTag);

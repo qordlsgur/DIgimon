@@ -30,6 +30,9 @@ public:
 	virtual HRESULT Render() override;
 
 private:
+	virtual void OnClick() override;
+
+private:
 	CVIBuffer_Rect*						m_pVIBufferCom = { nullptr };
 	CTexture*							m_pTextureCom = { nullptr };
 	CShader*							m_pShaderCom = { nullptr };

@@ -21,10 +21,12 @@ HRESULT CDigiDex::Initialize(void* pArg)
 {
     CUIObject::UIOBJECT_DESC	Desc{};
 
-    Desc.fX = g_iWinSizeX >> 1;
-    Desc.fY = g_iWinSizeY >> 1;
-    Desc.fSizeX = g_iWinSizeX;
-    Desc.fSizeY = g_iWinSizeY;
+    Desc.fX = 700.f;
+    Desc.fY = 400.f;
+    Desc.fSizeX = 884.f;
+    Desc.fSizeY = 462.f;
+
+    m_pRect = { long(Desc.fX - Desc.fSizeX * 0.5f), long(Desc.fY - Desc.fSizeY * 0.5f), long(Desc.fX + Desc.fSizeX * 0.5f), long(Desc.fY + Desc.fSizeY * 0.5f) };
 
     if (FAILED(__super::Initialize(&Desc)))
         return E_FAIL;
@@ -42,27 +44,37 @@ void CDigiDex::Priority_Update(_float fTimeDelta)
 
 void CDigiDex::Update(_float fTimeDelta)
 {
+    if (m_pGameInstance->Key_Down(DIK_U))
+        Set_Active();
 }
 
 void CDigiDex::Late_Update(_float fTimeDelta)
 {
-    m_pGameInstance->Add_RenderGroup(RENDER::BLENDUI, this);
+    m_pGameInstance->Add_RenderGroup(RENDER::UI, this);
 }
 
 HRESULT CDigiDex::Render()
 {
-    if (FAILED(Bind_ShaderResources()))
-        return E_FAIL;
+    if (m_bActive)
+    {
+        if (FAILED(Bind_ShaderResources()))
+            return E_FAIL;
 
-    if (FAILED(m_pShaderCom->Begin(0)))
-        return E_FAIL;
+        if (FAILED(m_pShaderCom->Begin(0)))
+            return E_FAIL;
 
-    if (FAILED(m_pVIBufferCom->Bind_Resources()))
-        return E_FAIL;
+        if (FAILED(m_pVIBufferCom->Bind_Resources()))
+            return E_FAIL;
 
-    if (FAILED(m_pVIBufferCom->Render()))
-        return E_FAIL;
+        __super::Begin();
+        __super::Blend_Begin();
 
+        if (FAILED(m_pVIBufferCom->Render()))
+            return E_FAIL;
+
+        __super::End();
+        __super::Blend_End();
+    }
     return S_OK;
 }
 
@@ -74,15 +86,14 @@ HRESULT CDigiDex::Ready_Components()
         return E_FAIL;
 
     /* Com_Texture */
-    if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::LOGO), TEXT("Prototype_Component_Texture_DigiDex"),
+    if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_DigiDex"),
         TEXT("Com_Texture"), reinterpret_cast<CComponent**>(&m_pTextureCom))))
         return E_FAIL;
 
     /* Com_Shader */
-    if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::STATIC), TEXT("Prototype_Component_Shader_VtxPosTex"),
+    if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Shader_Inventory"),
         TEXT("Com_Shader"), reinterpret_cast<CComponent**>(&m_pShaderCom))))
         return E_FAIL;
-
     return S_OK;
 }
 

@@ -23,10 +23,12 @@ HRESULT CInventory::Initialize(void* pArg)
 
 	Desc.fX = 700.f;
 	Desc.fY = 400.f;
-	Desc.fSizeX = 385.f;
+	Desc.fSizeX = 382.f;
 	Desc.fSizeY = 500.f;
 
 	m_iSlotCount = 40;
+
+	m_pRect = { long(Desc.fX - Desc.fSizeX * 0.5f), long(Desc.fY - Desc.fSizeY * 0.5f), long(Desc.fX + Desc.fSizeX * 0.5f), long(Desc.fY + Desc.fSizeY * 0.5f) };
 
 
 	if (FAILED(__super::Initialize(&Desc)))
@@ -59,6 +61,11 @@ void CInventory::Update(_float fTimeDelta)
 	if (m_pGameInstance->Key_Down(DIK_I))
 		Set_Active();
 
+	if (m_bActive)
+	{
+		if (m_pGameInstance->Mouse_Down(MOUSEKEYSTATE::LBUTTON))
+			OnClick();
+	}
 
 }
 
@@ -81,6 +88,7 @@ HRESULT CInventory::Render()
 			return E_FAIL;
 
 		__super::Begin();
+		__super::Blend_Begin();
 
 		if (FAILED(m_pVIBufferCom->Render()))
 			return E_FAIL;
@@ -94,10 +102,19 @@ HRESULT CInventory::Render()
 
 		m_pItemType->Render();
 
+		__super::Blend_End();
 		__super::End();
 	}
 
 	return S_OK;
+}
+
+void CInventory::OnClick()
+{
+	POINT pPt = m_pGameInstance->Get_Mouse();
+
+	if (PtInRect(m_pExit->Get_Pos(), pPt))
+		m_pExit->Hover();
 }
 
 HRESULT CInventory::Ready_Components()
@@ -114,7 +131,7 @@ HRESULT CInventory::Ready_Components()
 		return E_FAIL;
 
 	/* Com_Shader */
-	if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::STATIC), TEXT("Prototype_Component_Shader_VtxPosTex"),
+	if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Shader_Inventory"),
 		TEXT("Com_Shader"), reinterpret_cast<CComponent**>(&m_pShaderCom))))
 		return E_FAIL;
 

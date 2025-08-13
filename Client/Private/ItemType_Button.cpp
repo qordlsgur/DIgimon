@@ -27,6 +27,9 @@ HRESULT CItemType_Button::Initialize(void* pArg)
 	Desc.fSizeX = 80.f;
 	Desc.fSizeY = 40.f;
 
+	m_pRect = { long(Desc.fX - Desc.fSizeX * 0.5f), long(Desc.fY - Desc.fSizeY * 0.5f), long(Desc.fX + Desc.fSizeX * 0.5f), long(Desc.fY + Desc.fSizeY * 0.5f) };
+
+
 	if (FAILED(__super::Initialize(&Desc)))
 		return E_FAIL;
 
@@ -99,7 +102,7 @@ HRESULT CItemType_Button::Ready_Components()
 		return E_FAIL;
 
 	/* Com_Shader */
-	if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Shader_VtxNorTexTow"),
+	if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Shader_VtxNorTex"),
 		TEXT("Com_Shader"), reinterpret_cast<CComponent**>(&m_pShaderCom))))
 		return E_FAIL;
 
@@ -117,6 +120,7 @@ HRESULT CItemType_Button::Bind_ShaderResources()
 		return E_FAIL;
 	if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture", 0)))
 		return E_FAIL;
+
 	return S_OK;
 }
 

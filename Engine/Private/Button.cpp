@@ -125,6 +125,10 @@ void CButton::OnClick()
 {
 }
 
+void CButton::Hover()
+{
+}
+
 void CButton::Free()
 {
 	__super::Free();
