@@ -31,10 +31,21 @@ private:
 	CTexture* m_pTextureCom = { nullptr };
 	CShader* m_pShaderCom = { nullptr };
 
+	class CDigivice_Slot* m_pDigivice_Slot = { nullptr };
+
+	_uint	m_iDigivice_Battle_Slot_Number;
+	_uint	m_iDigivice_Serve_Slot_Number;
+
+	vector<class CDigivice_Slot*> m_pBattle_Slot;
+	vector<class CDigivice_Slot*> m_pServe_Slot;
+
+	class CDigimon_Manager* m_pDigimon_Manager = {nullptr};
 
 private:
 	HRESULT Ready_Components();
 	HRESULT Bind_ShaderResources();
+
+	HRESULT Create_Slot(const _wstring& strLayerTag);
 
 public:
 	static CDigivice* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);

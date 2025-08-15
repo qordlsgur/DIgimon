@@ -195,7 +195,9 @@
     <ClInclude Include="..\public\Slot.h">
       <Filter>03.UI\Slot\Inventory_Slot</Filter>
     </ClInclude>
-    <ClInclude Include="..\public\Digivice_Slot.h" />
+    <ClInclude Include="..\public\Digivice_Slot.h">
+      <Filter>03.UI\Slot\Digivice_Slot</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Client.ico">
@@ -280,7 +282,9 @@
     <ClCompile Include="..\private\Slot.cpp">
       <Filter>03.UI\Slot\Inventory_Slot</Filter>
     </ClCompile>
-    <ClCompile Include="..\private\Digivice_Slot.cpp" />
+    <ClCompile Include="..\private\Digivice_Slot.cpp">
+      <Filter>03.UI\Slot\Digivice_Slot</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxPosTex.hlsl">

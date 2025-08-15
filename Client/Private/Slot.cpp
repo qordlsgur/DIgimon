@@ -139,7 +139,7 @@ CGameObject* CSlot::Clone(void* pArg)
 
 	if (FAILED(pInstance->Initialize(pArg)))
 	{
-		MSG_BOX("Failed to Created :CSlot");
+		MSG_BOX("Failed to Created : CSlot ");
 		Safe_Release(pInstance);
 	}
 

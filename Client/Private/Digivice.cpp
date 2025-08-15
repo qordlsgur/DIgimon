@@ -1,5 +1,7 @@
 #include "Digivice.h"
 #include "GameInstance.h"
+#include "Digivice_Slot.h"
+#include "Digimon_Manager.h"
 
 CDigivice::CDigivice(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CUIObject{ pDevice, pContext }
@@ -27,11 +29,22 @@ HRESULT CDigivice::Initialize(void* pArg)
 
 	m_pRect = { long(Desc.fX - Desc.fSizeX * 0.5f), long(Desc.fY - Desc.fSizeY * 0.5f), long(Desc.fX + Desc.fSizeX * 0.5f), long(Desc.fY + Desc.fSizeY * 0.5f) };
 
+	m_pDigimon_Manager->GetInstance();
+
+	m_iDigivice_Battle_Slot_Number = 3;
+
+	m_iDigivice_Serve_Slot_Number = 5;
+
 	if (FAILED(__super::Initialize(&Desc)))
 		return E_FAIL;
 
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
+
+	if (FAILED(Create_Slot(L"Layout_Digivice_Slot")))
+		return E_FAIL;
+
+
 
 	return S_OK;
 }
@@ -64,8 +77,22 @@ HRESULT CDigivice::Render()
 		if (FAILED(m_pVIBufferCom->Bind_Resources()))
 			return E_FAIL;
 
+		__super::Begin();
+
 		if (FAILED(m_pVIBufferCom->Render()))
 			return E_FAIL;
+
+		for (_uint i = 0; i < m_iDigivice_Battle_Slot_Number; ++i)
+		{
+			m_pBattle_Slot[i]->Render();
+		}
+
+		for (_uint i = 0; i < m_iDigivice_Serve_Slot_Number; ++i)
+		{
+			m_pServe_Slot[i]->Render();
+		}
+
+		__super::End();
 
 	}
 	return S_OK;
@@ -102,6 +129,31 @@ HRESULT CDigivice::Bind_ShaderResources()
 		return E_FAIL;
 	if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture", 0)))
 		return E_FAIL;
+
+	return S_OK;
+}
+
+HRESULT CDigivice::Create_Slot(const _wstring& strLayerTag)
+{
+	for (_uint i = 0; i < m_iDigivice_Battle_Slot_Number; ++i)
+	{
+		m_pDigivice_Slot = static_cast<CDigivice_Slot*>(m_pGameInstance->Add_GameObject_ToLayer_ToCreate(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Slot"),
+			ENUM_CLASS(LEVEL::GAMEPLAY), strLayerTag));
+
+		m_pBattle_Slot.push_back(m_pDigivice_Slot);
+	}
+
+	for (_uint i = 0; i < m_iDigivice_Serve_Slot_Number; ++i)
+	{
+		m_pDigivice_Slot = static_cast<CDigivice_Slot*>(m_pGameInstance->Add_GameObject_ToLayer_ToCreate(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Slot"),
+			ENUM_CLASS(LEVEL::GAMEPLAY), strLayerTag));
+
+		m_pServe_Slot.push_back(m_pDigivice_Slot);
+	}
+
+	m_pBattle_Slot[0]->Set_Move(100.f, 100.f);
+	m_pBattle_Slot[1]->Set_Move(300.f, 100.f);
+	m_pBattle_Slot[2]->Set_Move(500.f, 100.f);
 
 	return S_OK;
 }
