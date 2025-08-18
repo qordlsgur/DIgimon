@@ -39,6 +39,9 @@ HRESULT CLevel_GamePlay::Initialize()
 	if (FAILED(Ready_Layer_Digivice(TEXT("Layer_Digivice"))))
 		return E_FAIL;
 
+	if (FAILED(Ready_Layer_UHD(TEXT("Layer_UHD"))))
+		return E_FAIL;
+
 	return S_OK;
 }
 
@@ -73,6 +76,15 @@ HRESULT CLevel_GamePlay::Ready_Layer_DigiDex(const _wstring& strLayerTag)
 HRESULT CLevel_GamePlay::Ready_Layer_Digivice(const _wstring& strLayerTag)
 {
 	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Digivice"),
+		ENUM_CLASS(LEVEL::GAMEPLAY), strLayerTag)))
+		return E_FAIL;
+
+	return S_OK;
+}
+
+HRESULT CLevel_GamePlay::Ready_Layer_UHD(const _wstring& strLayerTag)
+{
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_PartyUHD"),
 		ENUM_CLASS(LEVEL::GAMEPLAY), strLayerTag)))
 		return E_FAIL;
 

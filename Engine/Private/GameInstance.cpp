@@ -46,7 +46,7 @@ HRESULT CGameInstance::Initialize_Engine(const ENGINE_DESC& EngineDesc, ID3D11De
 	if (nullptr == m_pRenderer)
 		return E_FAIL;
 
-	m_pMouse_Manager = CMouse_Manager::Create();
+	m_pMouse_Manager = CMouse_Manager::Create(EngineDesc.hWnd);
 	if (nullptr == m_pMouse_Manager)
 		return E_FAIL;
 

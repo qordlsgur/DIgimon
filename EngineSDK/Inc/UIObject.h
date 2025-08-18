@@ -29,6 +29,10 @@ public:
 	virtual void Late_Update(_float fTimeDelta);
 	virtual HRESULT Render();
 
+public:
+
+	virtual RECT* Get_Pos() { return &m_pRect; }
+
 protected:
 	HRESULT Begin();
 	HRESULT End();
@@ -36,7 +40,6 @@ protected:
 	HRESULT Blend_Begin();
 	HRESULT Blend_End();
 
-	virtual RECT* Get_Pos() { return &m_pRect; }
 
 	virtual void Set_Active() { m_bActive = !m_bActive; }
 
@@ -58,6 +61,7 @@ protected:
 	_bool					m_bActive = { false };
 
 	_float					m_fX{}, m_fY{}, m_fSizeX{}, m_fSizeY{};
+	_float					m_fWinSizeX{}, m_fWinSizeY{};
 
 	RECT					m_pRect{};
 

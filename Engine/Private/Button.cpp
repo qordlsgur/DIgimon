@@ -37,6 +37,10 @@ HRESULT CButton::Initialize(void* pArg)
 	m_fSizeX = pDesc->fSizeX;
 	m_fSizeY = pDesc->fSizeY;
 
+
+	m_fWinSizeX = ViewportDesc.Width;
+	m_fWinSizeY = ViewportDesc.Height;
+
 	// 설정을 해준 구조체를 바탕으로 사이즈를 설정 해준다.
 	// 사이즈를 설정 했으면 이제 위치도 잡아준다.
 	// 먼저 Position을 세팅 해주기 위해서 가로를 반으로 갈라서 fx를 뺀다.

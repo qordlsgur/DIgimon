@@ -88,9 +88,6 @@
     <Filter Include="05.DigimonInfo">
       <UniqueIdentifier>{2d80d47d-d079-45b3-99d3-6392f413ee0f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03.UI\Manager\Storage_Manager">
-      <UniqueIdentifier>{158eeb85-c11a-4576-a95c-dac21c17788f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="03.UI\Manager\Inventory_Manager">
       <UniqueIdentifier>{27a24dd8-ac77-4fe7-a202-e302e667e509}</UniqueIdentifier>
     </Filter>
@@ -111,6 +108,9 @@
     </Filter>
     <Filter Include="03.UI\Slot\Digivice_Slot">
       <UniqueIdentifier>{ee28cb80-802e-4cac-ac37-b3bf6c3c6a2b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03.UI\Slot\UHD_Slot">
+      <UniqueIdentifier>{4d151d9b-850c-4082-a650-99d0f3832411}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -197,6 +197,12 @@
     </ClInclude>
     <ClInclude Include="..\public\Digivice_Slot.h">
       <Filter>03.UI\Slot\Digivice_Slot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\Inventory_Manager.h">
+      <Filter>03.UI\Manager\Inventory_Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\UHD_Slot.h">
+      <Filter>03.UI\Slot\UHD_Slot</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -285,6 +291,12 @@
     <ClCompile Include="..\private\Digivice_Slot.cpp">
       <Filter>03.UI\Slot\Digivice_Slot</Filter>
     </ClCompile>
+    <ClCompile Include="..\private\Inventory_Manager.cpp">
+      <Filter>03.UI\Manager\Inventory_Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\UHD_Slot.cpp">
+      <Filter>03.UI\Slot\UHD_Slot</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxPosTex.hlsl">
@@ -294,6 +306,12 @@
       <Filter>97.ShaderFiles</Filter>
     </FxCompile>
     <FxCompile Include="..\Bin\ShaderFiles\Shader_Inventory.hlsl">
+      <Filter>97.ShaderFiles</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Bin\ShaderFiles\Shader_Hover.hlsl">
+      <Filter>97.ShaderFiles</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Bin\ShaderFiles\Shader_UHD.hlsl">
       <Filter>97.ShaderFiles</Filter>
     </FxCompile>
   </ItemGroup>

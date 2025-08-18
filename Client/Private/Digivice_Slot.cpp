@@ -23,8 +23,8 @@ HRESULT CDigivice_Slot::Initialize(void* pArg)
 
 	Desc.fX = 100.f;
 	Desc.fY = 100.f;
-	Desc.fSizeX = 191.f;
-	Desc.fSizeY = 39.f;
+	Desc.fSizeX = 195.f;
+	Desc.fSizeY = 40.f;
 
 	if (FAILED(__super::Initialize(&Desc)))
 		return E_FAIL;
@@ -80,10 +80,9 @@ void CDigivice_Slot::Set_Move(_float fX, _float fY)
 	m_fX = fX;
 	m_fY = fY;
 
-	m_pTransformCom->Set_State(STATE::POSITION, XMVectorSet(m_fX - m_fSizeX * 0.5f, -m_fY + m_fSizeY * 0.5f, 0.f, 1.f) + XMLoadFloat4(&m_fParent_WorldPos));
+	m_pRect = { long(m_fX - m_fSizeX * 0.5f),long(m_fY - m_fSizeY * 0.5f),long(m_fX + m_fSizeX * 0.5f),long(m_fY + m_fSizeY * 0.5f) };
 
 }
-
 
 HRESULT CDigivice_Slot::Ready_Components()
 {

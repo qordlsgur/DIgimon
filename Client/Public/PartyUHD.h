@@ -5,9 +5,7 @@
 #include "Slot.h"
 
 NS_BEGIN(Engine)
-class CVIBuffer_Rect;
-class CTexture;
-class CShader;
+
 NS_END
 
 NS_BEGIN(Client)
@@ -28,18 +26,15 @@ public:
 	virtual HRESULT Render() override;
 
 private:
-	CVIBuffer_Rect* m_pVIBufferCom = { nullptr };
-	CTexture* m_pTextureCom = { nullptr };
-	CShader* m_pShaderCom = { nullptr };
+	class CDigimon_Manager*					m_pDigimon_Manager = { nullptr };
+	class CUHD_Slot*						m_pUHD_Slot = { nullptr };
 
-	_uint								m_iSlotCount{};
+	vector<class CUHD_Slot*>				m_vSlots;
 
-private:
-
+	_uint									m_iSlotCount{};
 
 private:
-	HRESULT Ready_Components();
-	HRESULT Bind_ShaderResources();
+
 	HRESULT Create_Slot(const _wstring& strLayerTag);
 
 public:

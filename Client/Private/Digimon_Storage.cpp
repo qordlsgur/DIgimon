@@ -1,6 +1,8 @@
 #include "Digimon_Storage.h"
 #include "GameInstance.h"
 
+#include "Digimon_Manager.h"
+
 CDigimon_Storage::CDigimon_Storage(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
     : CUIObject{ pDevice, pContext }
 {
@@ -24,6 +26,9 @@ HRESULT CDigimon_Storage::Initialize(void* pArg)
 	Desc.fY = g_iWinSizeY >> 1;
 	Desc.fSizeX = g_iWinSizeX;
 	Desc.fSizeY = g_iWinSizeY;
+
+	m_pDigimon_Manager = CDigimon_Manager::GetInstance();
+	m_pDigimon_Manager->Digimon_Storage(this);
 
 	if (FAILED(__super::Initialize(&Desc)))
 		return E_FAIL;

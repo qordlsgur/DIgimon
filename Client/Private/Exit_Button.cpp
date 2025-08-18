@@ -21,8 +21,8 @@ HRESULT CExit_Button::Initialize(void* pArg)
 {
 	CButton::BUTTON_DESC	Desc{};
 
-	Desc.fX = 100.f;
-	Desc.fY = 100.f;
+	Desc.fX = 0;
+	Desc.fY = 0.f;
 	Desc.fSizeX = 70.f;
 	Desc.fSizeY = 70.f;
 
@@ -48,7 +48,7 @@ void CExit_Button::Update(_float fTimeDelta)
 
 void CExit_Button::Late_Update(_float fTimeDelta)
 {
-	m_pTransformCom->Set_State(STATE::POSITION, XMVectorSet(m_fX - m_fSizeX * 0.5f, -m_fY + m_fSizeY * 0.5f, 0.f, 1.f) + XMLoadFloat4(&m_fParent_WorldPos));
+	m_pTransformCom->Set_State(STATE::POSITION, XMVectorSet(m_fX - m_fWinSizeX * 0.5f, -m_fY + m_fWinSizeY * 0.5f, 0.f, 1.f) + XMLoadFloat4(&m_fParent_WorldPos));
 }
 
 
@@ -64,7 +64,7 @@ HRESULT CExit_Button::Render()
 		return E_FAIL;
 
 	__super::Begin();
-	
+
 	if (FAILED(m_pVIBufferCom->Render()))
 		return E_FAIL;
 
@@ -79,12 +79,13 @@ void CExit_Button::Set_Parent_WorldPos(_vector fParent_World)
 	XMStoreFloat4(&m_fParent_WorldPos, fParent_World);
 }
 
+
 void CExit_Button::Set_Move(_float fX, _float fY)
 {
 	m_fX = fX;
 	m_fY = fY;
 
-	m_pTransformCom->Set_State(STATE::POSITION, XMVectorSet(m_fX - m_fSizeX * 0.5f, -m_fY + m_fSizeY * 0.5f, 0.f, 1.f) + XMLoadFloat4(&m_fParent_WorldPos));
+	m_pRect = { long(m_fX - m_fSizeX * 0.5f),long(m_fY - m_fSizeY * 0.5f),long(m_fX + m_fSizeX * 0.5f),long(m_fY + m_fSizeY * 0.5f) };
 
 }
 

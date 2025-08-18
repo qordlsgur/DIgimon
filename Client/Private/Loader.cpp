@@ -9,6 +9,8 @@
 #include "Digimon_Storage.h"
 #include "Digivice.h"
 #include "Digivice_Slot.h"
+#include "PartyUHD.h"
+#include "UHD_Slot.h"
 
 #include "Inventory.h"
 #include "Equipment.h"
@@ -137,30 +139,16 @@ HRESULT CLoader::Loading_For_GamePlay()
 {
 #pragma  region TEXTURE
 	m_strMessage = TEXT("텍스쳐를(을) 로딩 중 입니다.");
-	
+
+	//인벤토리------------------------------------------------------------------------------------------------------------------------------------------------------
 	/* For.Prototype_Component_Texture_Inventory */
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Inventory"),
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/UI/Inven.png"), 1))))
 		return E_FAIL;
 
-	/* For.Prototype_Component_Texture_DigiDex */
-	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_DigiDex"),
-		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/UI/DigiDex.png"), 1))))
-		return E_FAIL;
-
-	/* For.Prototype_Component_Texture_DigiVice*/
-	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Digivice"),
-		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/UI/Digivice.png"), 1))))
-		return E_FAIL;
-
-	/* For.Prototype_Component_Texture_Slot */
-	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Slot"),
-		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/UI/Slot.png"), 1))))
-		return E_FAIL;
-
-	/* For.Prototype_Component_Texture_Digivice_Slot */
-	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Digivice_Slot"),
-		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/UI/Digivice_Slot.png"), 1))))
+	/* For.Prototype_Component_Texture_Inventory_Slot */
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Inventory_Slot"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/UI/Inventory_Slot%d.png"), 2))))
 		return E_FAIL;
 
 	/* For.Prototype_Component_Texture_Weapon */
@@ -178,11 +166,92 @@ HRESULT CLoader::Loading_For_GamePlay()
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/UI/Gita.png"), 1))))
 		return E_FAIL;
 
-	/* For.Prototype_Component_Texture_ItemType_Button */
-	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_ItemType_Button"),
-		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/UI/Button%d.png"), 2))))
+	/* For.Prototype_Component_Texture_Weapon_Item_Button */
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Weapon_Item_Button"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/UI/Weapon_Button.png"), 1))))
 		return E_FAIL;
 
+	/* For.Prototype_Component_Texture_Soby_Item_Button */
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Soby_Item_Button"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/UI/Soby_Button.png"), 1))))
+		return E_FAIL;
+
+	/* For.Prototype_Component_Texture_Gita_Item_Button */
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Gita_Item_Button"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/UI/Gita_Button.png"), 1))))
+		return E_FAIL;
+
+	/* For.Prototype_Component_Texture_LineUp_Buttom */
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_LineUp_Buttom"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/UI/LineUP_Button.png"), 1))))
+		return E_FAIL;
+
+	//장비창------------------------------------------------------------------------------------------------------------------------------------------------------
+
+	/* For.Prototype_Component_Texture_DigiDex */
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_DigiDex"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/UI/DigiDex.png"), 1))))
+		return E_FAIL;
+
+	/* For.Prototype_Component_Texture_DigiVice*/
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Digivice"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/UI/Digivice.png"), 1))))
+		return E_FAIL;
+
+	/* For.Prototype_Component_Texture_Digivice_Slot */
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Digivice_Slot"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/UI/Digivice_Slot.png"), 1))))
+		return E_FAIL;
+
+	//Party_HUD---------------------------------------------------------------------------------------------------------------------------------------------------------
+
+		/* For.Prototype_Component_Texture_HUD_Mask */
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_HUD_Mask"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/HUD/BattleDigimon_Mask.png"), 1))))
+		return E_FAIL;	
+	
+	/* For.Prototype_Component_Texture_HUD_Frame */
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_HUD_Frame"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/HUD/BattleDigimon_Frame.png"), 1))))
+		return E_FAIL;
+
+	/* For.Prototype_Component_Texture_HUD_SP */
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_HUD_SP"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/HUD/BattleDigimon_SP.png"), 1))))
+		return E_FAIL;	
+	
+	/* For.Prototype_Component_Texture_HUD_HP */
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_HUD_HP"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/HUD/BattleDigimon_HP.png"), 1))))
+		return E_FAIL;	
+	
+	/* For.Prototype_Component_Texture_HUD_EVP */
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_HUD_EVP"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/HUD/BattleDigimon_EVP.png"), 1))))
+		return E_FAIL;
+
+	//디지몬UI이미지-------------------------------------------------------------------------------------------------------------------------------------------
+
+#pragma region Flarelizamon
+
+		/* For.Prototype_Component_Texture_Flarelizamon_HUD */
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Flarelizamon_HUD"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/Digimon_UI/A/Flarelizamon_HUD.png"), 1))))
+		return E_FAIL;
+
+	/* For.Prototype_Component_Texture_Flarelizamon_Digivice */
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Flarelizamon_Digivice"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/Digimon_UI/B/Flarelizamon_Digivice.png"), 1))))
+		return E_FAIL;
+
+	/* For.Prototype_Component_Texture_Flarelizamon_Digidex */
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Flarelizamon_Digidex"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/Digimon_UI/C/Flarelizamon_DigiDex.png"), 1))))
+		return E_FAIL;
+
+#pragma endregion
+
+	//공용버튼---------------------------------------------------------------------------------------------------------------------------------------------------------
 	/* For.Prototype_Component_Texture_Exit_Button */
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Exit_Button"),
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/UI/Exit_Button.png"), 1))))
@@ -244,45 +313,72 @@ HRESULT CLoader::Loading_For_GamePlay()
 		CShader::Create(m_pDevice, m_pContext, TEXT("../Bin/ShaderFiles/Shader_Inventory.hlsl"), VTXPOSTEX::Elements, VTXPOSTEX::iNumElements))))
 		return E_FAIL;
 
+	/* For.Prototype_Component_Shader_Hover */
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Shader_Hover"),
+		CShader::Create(m_pDevice, m_pContext, TEXT("../Bin/ShaderFiles/Shader_Hover.hlsl"), VTXPOSTEX::Elements, VTXPOSTEX::iNumElements))))
+		return E_FAIL;
+
+	/* For.Prototype_Component_Shader_UHD */
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Shader_UHD"),
+		CShader::Create(m_pDevice, m_pContext, TEXT("../Bin/ShaderFiles/Shader_UHD.hlsl"), VTXPOSTEX::Elements, VTXPOSTEX::iNumElements))))
+		return E_FAIL;
+
 #pragma endregion
 
 #pragma region PROTOTYPE
 
 	m_strMessage = TEXT("객체원형를(을) 로딩 중 입니다.");
 
+	//인벤토리---------------------------------------------------------------------------------------------------------------------------------------------------------
 	//* For.Prototype_GameObject_Inventory */
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Inventory"),
 		CInventory::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
-	//* For.Prototype_GameObject_DigiDex */
-	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_DigiDex"),
-		CDigiDex::Create(m_pDevice, m_pContext))))
+	//* For.Prototype_GameObject_Slot */
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Slot"),
+		CSlot::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
+
+	//* For.Prototype_GameObject_ItemType_Button */
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_ItemType_Button"),
+		CItemType_Button::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	//디지몬---------------------------------------------------------------------------------------------------------------------------------------------------------
 
 	//* For.Prototype_GameObject_Digivice */
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Digivice"),
 		CDigivice::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
-	//* For.Prototype_GameObject_Slot */
-	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Slot"),
-		CSlot::Create(m_pDevice, m_pContext))))
-		return E_FAIL;	
-
 	//* For.Prototype_GameObject_Digivice_Slot */
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Digivice_Slot"),
 		CDigivice_Slot::Create(m_pDevice, m_pContext))))
 		return E_FAIL;	
+
+	//* For.Prototype_GameObject_DigiDex */
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_DigiDex"),
+		CDigiDex::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+	
+	//Party_HUD---------------------------------------------------------------------------------------------------------------------------------------------------------
+
+	//* For.Prototype_GameObject_PartyUHD */
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_PartyUHD"),
+		CPartyUHD::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+	
+	//* For.Prototype_GameObject_UHDSlot */
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_UHDSlot"),
+		CUHD_Slot::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	//---------------------------------------------------------------------------------------------------------------------------------------------------------
 	
 	//* For.Prototype_GameObject_Exit_Button */
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Exit_Button"),
 		CExit_Button::Create(m_pDevice, m_pContext))))
-		return E_FAIL;	
-	
-	//* For.Prototype_GameObject_ItemType_Button */
-	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_ItemType_Button"),
-		CItemType_Button::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
 	/* For.Prototype_GameObject_Terrain */

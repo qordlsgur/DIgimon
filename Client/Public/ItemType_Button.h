@@ -30,6 +30,8 @@ public:
 	void Set_Parent_WorldPos(_vector fParent_World);
 	void Set_Move(_float fX, _float fY);
 
+	void Change_Inventory_Category();
+
 private:
 	CVIBuffer_Rect* m_pVIBufferCom = { nullptr };
 	CTexture* m_pTextureCom = { nullptr };

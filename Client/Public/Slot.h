@@ -30,10 +30,14 @@ public:
 	void Set_Parent_WorldPos(_vector fParent_World);
 	void Set_Move(_float fX, _float fY);
 
+	virtual void OnClick() override;
+
 private:
 	CVIBuffer_Rect* m_pVIBufferCom = { nullptr };
 	CTexture* m_pTextureCom = { nullptr };
 	CShader* m_pShaderCom = { nullptr };
+
+	_bool	m_bHover = { false };
 
 private:
 	HRESULT Ready_Components();

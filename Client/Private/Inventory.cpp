@@ -26,7 +26,6 @@ HRESULT CInventory::Initialize(void* pArg)
 	Desc.fSizeX = 382.f;
 	Desc.fSizeY = 500.f;
 
-	m_iSlotCount = 40;
 
 	m_pRect = { long(Desc.fX - Desc.fSizeX * 0.5f), long(Desc.fY - Desc.fSizeY * 0.5f), long(Desc.fX + Desc.fSizeX * 0.5f), long(Desc.fY + Desc.fSizeY * 0.5f) };
 
@@ -49,6 +48,9 @@ void CInventory::Priority_Update(_float fTimeDelta)
 
 void CInventory::Update(_float fTimeDelta)
 {
+	m_pTransformCom->Set_Scale(m_fSizeX, m_fSizeY, 1.f);
+	m_pTransformCom->Set_State(STATE::POSITION, XMVectorSet(m_fX - m_fWinSizeX * 0.5f, -m_fY + m_fWinSizeY * 0.5f, 0.f, 1.f));
+
 	for (_uint i = 0; i < m_iSlotCount; ++i)
 	{
 		m_vSlots[i]->Set_Parent_WorldPos(m_pTransformCom->Get_State(STATE::POSITION));
@@ -56,7 +58,10 @@ void CInventory::Update(_float fTimeDelta)
 
 	m_pExit->Set_Parent_WorldPos(m_pTransformCom->Get_State(STATE::POSITION));
 
-	m_pItemType->Set_Parent_WorldPos(m_pTransformCom->Get_State(STATE::POSITION));
+	m_pWeapon_Type->Set_Parent_WorldPos(m_pTransformCom->Get_State(STATE::POSITION));
+	m_pSoby_Type->Set_Parent_WorldPos(m_pTransformCom->Get_State(STATE::POSITION));
+	m_pGita_Type->Set_Parent_WorldPos(m_pTransformCom->Get_State(STATE::POSITION));
+	m_pLineUp_Type->Set_Parent_WorldPos(m_pTransformCom->Get_State(STATE::POSITION));
 
 	if (m_pGameInstance->Key_Down(DIK_I))
 		Set_Active();
@@ -100,7 +105,10 @@ HRESULT CInventory::Render()
 
 		m_pExit->Render();
 
-		m_pItemType->Render();
+		m_pWeapon_Type->Render();
+		m_pSoby_Type->Render();
+		m_pGita_Type->Render();
+		m_pLineUp_Type->Render();
 
 		__super::Blend_End();
 		__super::End();
@@ -113,13 +121,24 @@ void CInventory::OnClick()
 {
 	POINT pPt = m_pGameInstance->Get_Mouse();
 
-	if (PtInRect(m_pExit->Get_Pos(), pPt))
-		m_pExit->Hover();
+	if (PtInRect(&m_pRect, pPt))
+	{
+		for (int i = 0; i < m_iSlotCount; ++i)
+		{
+			if (PtInRect(m_vSlots[i]->Get_Pos(), pPt))
+			{
+				m_vSlots[i]->OnClick();
+				return;
+			}
+		}
+
+		if (PtInRect(m_pExit->Get_Pos(), pPt))
+			m_pExit->Hover();
+	}
 }
 
 HRESULT CInventory::Ready_Components()
 {
-
 	/* Com_VIBuffer */
 	if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::STATIC), TEXT("Prototype_Component_VIBuffer_Rect"),
 		TEXT("Com_VIBuffer"), reinterpret_cast<CComponent**>(&m_pVIBufferCom))))
@@ -155,6 +174,9 @@ HRESULT CInventory::Bind_ShaderResources()
 
 HRESULT CInventory::Create_Slot(const _wstring& strLayerTag)
 {
+	m_iSlotCount = 40;
+	m_iItem_Button_Count = 4;
+
 	for (_uint i = 0; i < m_iSlotCount; ++i)
 	{
 		m_pSlot = static_cast<CSlot*>(m_pGameInstance->Add_GameObject_ToLayer_ToCreate(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Slot"),
@@ -168,21 +190,38 @@ HRESULT CInventory::Create_Slot(const _wstring& strLayerTag)
 		_float col = i % 8;
 		_float row = i / 8;
 
-		_float startX = -230.f + col * (85 + 10);
-		_float startY = -200.f + row * (85 + 10);
+		_float startX = 368.f + col * (85 + 10);
+		_float startY = 125.f + row * (85 + 10);
 
 		m_vSlots[i]->Set_Move(startX, startY);
 	}
 
+
 	m_pExit = static_cast<CExit_Button*>(m_pGameInstance->Add_GameObject_ToLayer_ToCreate(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Exit_Button"),
 		ENUM_CLASS(LEVEL::GAMEPLAY), strLayerTag));
 
-	m_pExit->Set_Move(425, -370);
+	m_pExit->Set_Move(1040, -50);
 
-	m_pItemType = static_cast<CItemType_Button*>(m_pGameInstance->Add_GameObject_ToLayer_ToCreate(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_ItemType_Button"),
+
+
+
+	m_pWeapon_Type = static_cast<CItemType_Button*>(m_pGameInstance->Add_GameObject_ToLayer_ToCreate(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_ItemType_Button"),
 		ENUM_CLASS(LEVEL::GAMEPLAY), strLayerTag));
+	m_pWeapon_Type->Set_Move(-200.f, -300.f);
 
-	m_pItemType->Set_Move(-230.f, -300.f);
+	m_pSoby_Type = static_cast<CItemType_Button*>(m_pGameInstance->Add_GameObject_ToLayer_ToCreate(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_ItemType_Button"),
+		ENUM_CLASS(LEVEL::GAMEPLAY), strLayerTag));
+	m_pSoby_Type->Set_Move(-80.f, -300.f);
+
+	m_pGita_Type = static_cast<CItemType_Button*>(m_pGameInstance->Add_GameObject_ToLayer_ToCreate(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_ItemType_Button"),
+		ENUM_CLASS(LEVEL::GAMEPLAY), strLayerTag));
+	m_pGita_Type->Set_Move(40.f, -300.f);
+
+	m_pLineUp_Type = static_cast<CItemType_Button*>(m_pGameInstance->Add_GameObject_ToLayer_ToCreate(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_ItemType_Button"),
+		ENUM_CLASS(LEVEL::GAMEPLAY), strLayerTag));
+	m_pLineUp_Type->Set_Move(380.f, -300.f);
+
+
 
 	return S_OK;
 }

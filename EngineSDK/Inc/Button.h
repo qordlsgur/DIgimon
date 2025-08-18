@@ -31,7 +31,6 @@ public:
 public:
 	virtual RECT* Get_Pos() { return &m_pRect; }
 
-
 protected:
 	HRESULT Begin();
 	HRESULT End();
@@ -51,6 +50,7 @@ protected:
 	_bool					m_bHover = { false };
 
 	_float					m_fX{}, m_fY{}, m_fSizeX{}, m_fSizeY{};
+	_float					m_fWinSizeX{}, m_fWinSizeY{};
 
 	RECT					m_pRect{};
 

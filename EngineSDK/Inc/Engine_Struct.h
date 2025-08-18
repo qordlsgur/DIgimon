@@ -52,6 +52,4 @@ namespace Engine
 
 }
 
-
-
 #endif // Engine_Struct_h__

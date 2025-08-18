@@ -31,6 +31,7 @@ private:
 	CTexture* m_pTextureCom = { nullptr };
 	CShader* m_pShaderCom = { nullptr };
 
+	class CDigimon_Manager* m_pDigimon_Manager = { nullptr };
 
 private:
 	HRESULT Ready_Components();

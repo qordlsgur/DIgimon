@@ -11,7 +11,7 @@ private:
 	virtual ~CMouse_Manager() = default;
 
 public:
-	HRESULT Initialize();
+	HRESULT Initialize(HWND hWnd);
 	void Priority_Update(_float fTimeDelta);
 	void Update(_float fTimeDelta);
 	void Late_Update(_float fTimeDelta);
@@ -21,12 +21,13 @@ public:
 
 private:
 	POINT				m_pCursor{};
-	ENGINE_DESC			pDesc{};
+
+	HWND				m_phWnd{};
 
 	class CGameInstance* m_pGameInstance = { nullptr };
 
 public:
-	static CMouse_Manager* Create();
+	static CMouse_Manager* Create(HWND hWnd);
 	virtual void Free();
 };
 
