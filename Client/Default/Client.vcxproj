@@ -218,6 +218,7 @@
     <Image Include="small.ico" />
   </ItemGroup>
   <ItemGroup>
+    <FxCompile Include="..\Bin\ShaderFiles\Shader_Digivice.hlsl" />
     <FxCompile Include="..\Bin\ShaderFiles\Shader_Hover.hlsl" />
     <FxCompile Include="..\Bin\ShaderFiles\Shader_Inventory.hlsl" />
     <FxCompile Include="..\Bin\ShaderFiles\Shader_UHD.hlsl" />

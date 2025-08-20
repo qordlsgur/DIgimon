@@ -31,20 +31,24 @@ public:
 	_bool	Get_Digimon() { return m_bDigimon; }
 	virtual void OnClick() override;
 
+	void Set_Digimon_ID(_uint ID);
+
 private:
 	CVIBuffer_Rect* m_pVIBufferCom = { nullptr };
 
-	CTexture* m_pMaskTextureCom = { nullptr };
-	CTexture* m_pFrameTextureCom = { nullptr };
-	CTexture* m_pSPTextureCom = { nullptr };
-	CTexture* m_pHPTextureCom = { nullptr };
-	CTexture* m_pEVPTextureCom = { nullptr };
-
-	CTexture* m_pDigimonTextureCom = { nullptr };
-
-	CShader* m_pShaderCom = { nullptr };
-
-	_bool	m_bDigimon = false;
+	CTexture*  m_pFrameTextureCom = { nullptr };
+	CTexture*  m_pMaskTextureCom = { nullptr };
+	CTexture*  m_pSPTextureCom = { nullptr };
+	CTexture*  m_pHPTextureCom = { nullptr };
+	CTexture*  m_pEVPTextureCom = { nullptr };
+			  
+	CTexture*  m_pDigimonTextureCom = { nullptr };
+			  
+	CShader*   m_pShaderCom = { nullptr };
+			   
+	_uint	   m_iDigimon_ID{};
+			   
+	_bool	   m_bDigimon = false;
 
 private:
 	HRESULT Ready_Components();

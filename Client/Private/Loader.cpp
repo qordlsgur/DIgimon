@@ -186,7 +186,7 @@ HRESULT CLoader::Loading_For_GamePlay()
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/UI/LineUP_Button.png"), 1))))
 		return E_FAIL;
 
-	//장비창------------------------------------------------------------------------------------------------------------------------------------------------------
+	//디지몬------------------------------------------------------------------------------------------------------------------------------------------------------
 
 	/* For.Prototype_Component_Texture_DigiDex */
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_DigiDex"),
@@ -203,11 +203,21 @@ HRESULT CLoader::Loading_For_GamePlay()
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/UI/Digivice_Slot.png"), 1))))
 		return E_FAIL;
 
+	/* For.Prototype_Component_Texture_Digivice_Mask */
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Digivice_Mask"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/UI/DIgivice_Mask.png"), 1))))
+		return E_FAIL;
+
 	//Party_HUD---------------------------------------------------------------------------------------------------------------------------------------------------------
 
 		/* For.Prototype_Component_Texture_HUD_Mask */
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_HUD_Mask"),
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/HUD/BattleDigimon_Mask.png"), 1))))
+		return E_FAIL;	
+
+		/* For.Prototype_Component_Texture_HUD */
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_HUD"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/HUD/Mask.png"), 1))))
 		return E_FAIL;	
 	
 	/* For.Prototype_Component_Texture_HUD_Frame */
@@ -234,19 +244,19 @@ HRESULT CLoader::Loading_For_GamePlay()
 
 #pragma region Flarelizamon
 
-		/* For.Prototype_Component_Texture_Flarelizamon_HUD */
-	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Flarelizamon_HUD"),
-		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/Digimon_UI/A/Flarelizamon_HUD.png"), 1))))
+		/* For.Prototype_Component_Texture_Digimon_HUD */
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Digimon_HUD"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/Digimon_UI/A/A%d.png"), 6))))
 		return E_FAIL;
 
-	/* For.Prototype_Component_Texture_Flarelizamon_Digivice */
-	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Flarelizamon_Digivice"),
-		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/Digimon_UI/B/Flarelizamon_Digivice.png"), 1))))
+	/* For.Prototype_Component_Texture_Digimon_Digivice */
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Digimon_Digivice"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/Digimon_UI/B/B%d.png"), 6))))
 		return E_FAIL;
 
-	/* For.Prototype_Component_Texture_Flarelizamon_Digidex */
-	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Flarelizamon_Digidex"),
-		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/Digimon_UI/C/Flarelizamon_DigiDex.png"), 1))))
+	/* For.Prototype_Component_Texture_Digimon_Digidex */
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Digimon_Digidex"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/Digimon_UI/C/C%d.png"), 6))))
 		return E_FAIL;
 
 #pragma endregion
@@ -321,6 +331,11 @@ HRESULT CLoader::Loading_For_GamePlay()
 	/* For.Prototype_Component_Shader_UHD */
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Shader_UHD"),
 		CShader::Create(m_pDevice, m_pContext, TEXT("../Bin/ShaderFiles/Shader_UHD.hlsl"), VTXPOSTEX::Elements, VTXPOSTEX::iNumElements))))
+		return E_FAIL;
+
+	/* For.Prototype_Component_Shader_Digivice */
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Shader_Digivice"),
+		CShader::Create(m_pDevice, m_pContext, TEXT("../Bin/ShaderFiles/Shader_Digivice.hlsl"), VTXPOSTEX::Elements, VTXPOSTEX::iNumElements))))
 		return E_FAIL;
 
 #pragma endregion

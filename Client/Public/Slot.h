@@ -39,6 +39,8 @@ private:
 
 	_bool	m_bHover = { false };
 
+	int a{};
+
 private:
 	HRESULT Ready_Components();
 	HRESULT Bind_ShaderResources();

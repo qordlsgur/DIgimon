@@ -60,6 +60,11 @@ HRESULT CPartyUHD::Render()
     return S_OK;
 }
 
+void CPartyUHD::Set_Digimon_ID(_uint Slot, _uint ID)
+{
+	m_vSlots[Slot]->Set_Digimon_ID(ID);
+}
+
 HRESULT CPartyUHD::Create_Slot(const _wstring& strLayerTag)
 {
 	for (_uint i = 0; i < m_iSlotCount; ++i)

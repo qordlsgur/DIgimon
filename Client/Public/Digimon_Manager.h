@@ -43,6 +43,8 @@ private:
 	vector<class CDigimon_Storage*> m_vDigimon_Storage_Slot;
 	_uint m_iDigimon_Storage_Slot_Number{};
 
+
+
 public:
 	virtual void Free() override;
 };

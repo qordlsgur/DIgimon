@@ -60,12 +60,14 @@ HRESULT CDigivice_Slot::Render()
 	if (FAILED(m_pVIBufferCom->Bind_Resources()))
 		return E_FAIL;
 
-	//__super::Begin();
+	__super::Begin();
+	__super::Blend_Begin();
 
 	if (FAILED(m_pVIBufferCom->Render()))
 		return E_FAIL;
 
-	//__super::End();
+	__super::Blend_End();
+	__super::End();
 
 	return S_OK;
 }
@@ -91,13 +93,23 @@ HRESULT CDigivice_Slot::Ready_Components()
 		TEXT("Com_VIBuffer"), reinterpret_cast<CComponent**>(&m_pVIBufferCom))))
 		return E_FAIL;
 
-	/* Com_Texture */
+	/* Com_Digivice_Slot_Texture */
 	if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Digivice_Slot"),
-		TEXT("Com_Texture"), reinterpret_cast<CComponent**>(&m_pTextureCom))))
+		TEXT("Com_Digivice_Slot_Texture"), reinterpret_cast<CComponent**>(&m_pSlotTextureCom))))
+		return E_FAIL;
+
+	/* Com_Digivice_Mask_Texture */
+	if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Digivice_Mask"),
+		TEXT("Com_Digivice_Mask_Texture"), reinterpret_cast<CComponent**>(&m_pMaskTextureCom))))
+		return E_FAIL;
+
+	/* Com_Digivice_Texture */
+	if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Digimon_Digivice"),
+		TEXT("Com_Digivice_Texture"), reinterpret_cast<CComponent**>(&m_pDigimonTextureCom))))
 		return E_FAIL;
 
 	/* Com_Shader */
-	if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::STATIC), TEXT("Prototype_Component_Shader_VtxPosTex"),
+	if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Shader_Digivice"),
 		TEXT("Com_Shader"), reinterpret_cast<CComponent**>(&m_pShaderCom))))
 		return E_FAIL;
 
@@ -113,7 +125,11 @@ HRESULT CDigivice_Slot::Bind_ShaderResources()
 		return E_FAIL;
 	if (FAILED(m_pShaderCom->Bind_Matrix("g_ProjMatrix", &m_ProjMatrix)))
 		return E_FAIL;
-	if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture", 0)))
+	if (FAILED(m_pSlotTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture1", 0)))
+		return E_FAIL;
+	if (FAILED(m_pMaskTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture2", 0)))
+		return E_FAIL;
+	if (FAILED(m_pDigimonTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture3", 5)))
 		return E_FAIL;
 
 	return S_OK;
@@ -152,6 +168,7 @@ void CDigivice_Slot::Free()
 	__super::Free();
 
 	Safe_Release(m_pVIBufferCom);
-	Safe_Release(m_pTextureCom);
+	Safe_Release(m_pSlotTextureCom);
+	Safe_Release(m_pMaskTextureCom);
 	Safe_Release(m_pShaderCom);
 }

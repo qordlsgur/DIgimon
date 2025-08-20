@@ -25,6 +25,9 @@ public:
 	virtual void Late_Update(_float fTimeDelta) override;
 	virtual HRESULT Render() override;
 
+public:
+	void Set_Digimon_ID(_uint Slot, _uint ID);
+
 private:
 	class CDigimon_Manager*					m_pDigimon_Manager = { nullptr };
 	class CUHD_Slot*						m_pUHD_Slot = { nullptr };

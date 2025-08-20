@@ -88,10 +88,10 @@ HRESULT CDigivice::Render()
 			m_pBattle_Slot[i]->Render();
 		}
 
-		//for (_uint i = 0; i < m_iDigivice_Serve_Slot_Number; ++i)
-		//{
-		//	m_pServe_Slot[i]->Render();
-		//}
+		for (_uint i = 0; i < m_iDigivice_Serve_Slot_Number; ++i)
+		{
+			m_pServe_Slot[i]->Render();
+		}
 
 		__super::End();
 
@@ -164,6 +164,17 @@ HRESULT CDigivice::Create_Slot(const _wstring& strLayerTag)
 		m_pServe_Slot.push_back(m_pDigivice_Slot);
 	}
 
+	for (_uint i = 0; i < m_iDigivice_Serve_Slot_Number; ++i)
+	{
+
+		_float row = i % 5;
+
+		_float startX = -75.f;
+		_float startY = 95.f + row * 43;
+
+		m_pServe_Slot[i]->Set_Move(startX, startY);
+
+	}
 
 	return S_OK;
 }

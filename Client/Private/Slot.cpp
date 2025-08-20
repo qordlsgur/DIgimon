@@ -45,10 +45,12 @@ void CSlot::Priority_Update(_float fTimeDelta)
 void CSlot::Update(_float fTimeDelta)
 {
 	if (m_pGameInstance->Key_Down(DIK_Z))
-		m_bHover = true;
+		a = 0;
+		//m_bHover = true;
 
 	if (m_pGameInstance->Key_Down(DIK_X))
-		m_bHover = false;
+		a = 1;
+		//m_bHover = false;
 
 }
 
@@ -129,13 +131,8 @@ HRESULT CSlot::Bind_ShaderResources()
 		return E_FAIL;
 	if (FAILED(m_pShaderCom->Bind_Int("g_Hover", m_bHover)))
 		return E_FAIL;
-
-	if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture1", 0)))
+	if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture1", a)))
 		return E_FAIL;
-
-	if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture2", 1)))
-		return E_FAIL;
-
 
 	return S_OK;
 }

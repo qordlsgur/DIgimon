@@ -87,6 +87,11 @@ void CUHD_Slot::OnClick()
 {
 }
 
+void CUHD_Slot::Set_Digimon_ID(_uint ID)
+{
+	m_iDigimon_ID = ID;
+}
+
 HRESULT CUHD_Slot::Ready_Components()
 {
 	/* Com_VIBuffer */
@@ -120,7 +125,7 @@ HRESULT CUHD_Slot::Ready_Components()
 		return E_FAIL;
 
 	/* Com_Digimon_Texture */
-	if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Flarelizamon_HUD"),
+	if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Digimon_HUD"),
 		TEXT("Com_Digimon_Texture"), reinterpret_cast<CComponent**>(&m_pDigimonTextureCom))))
 		return E_FAIL;
 
@@ -150,8 +155,9 @@ HRESULT CUHD_Slot::Bind_ShaderResources()
 		return E_FAIL;
 	if (FAILED(m_pEVPTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture5", 0)))
 		return E_FAIL;
-	if (FAILED(m_pDigimonTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture6", 0)))
+	if (FAILED(m_pDigimonTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture6", m_iDigimon_ID)))
 		return E_FAIL;
+
 	return S_OK;
 }
 

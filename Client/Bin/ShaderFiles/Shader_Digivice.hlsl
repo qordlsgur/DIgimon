@@ -3,9 +3,7 @@ matrix g_WorldMatrix, g_ViewMatrix, g_ProjMatrix;
 Texture2D g_Texture1;
 Texture2D g_Texture2;
 Texture2D g_Texture3;
-Texture2D g_Texture4;
-Texture2D g_Texture5;
-Texture2D g_Texture6;
+
 
 sampler DefaultSampler = sampler_state
 {
@@ -62,38 +60,25 @@ PS_OUT PS_MAIN(PS_IN In)
     PS_OUT Out;
 
     // 텍스처 샘플링
-    float4 tex1 = g_Texture1.Sample(DefaultSampler, In.vTexcoord); // 마스크용
-    float4 tex2 = g_Texture2.Sample(DefaultSampler, In.vTexcoord); // 프레임
-    float4 tex3 = g_Texture3.Sample(DefaultSampler, In.vTexcoord); // 마나
-    float4 tex4 = g_Texture4.Sample(DefaultSampler, In.vTexcoord); // 체력
-    float4 tex5 = g_Texture5.Sample(DefaultSampler, In.vTexcoord); // 경험치
-    float4 tex6 = g_Texture6.Sample(DefaultSampler, In.vTexcoord); // 캐릭터 이미지
+    float4 tex1 = g_Texture1.Sample(DefaultSampler, In.vTexcoord); // 슬롯
+    float4 tex2 = g_Texture2.Sample(DefaultSampler, In.vTexcoord); // 마스크
+    float4 tex3 = g_Texture3.Sample(DefaultSampler, In.vTexcoord); // 이미지
+
 
     // 최종 색상 초기화: 투명으로 시작
     float4 color = float4(0, 0, 0, 0);
 
     // 1번 마스크 영역만 6번 텍스처 덮어쓰기
     if (tex1.a > 0)
-        color = tex6;
+        color = tex1;
 
     // 2번 프레임 텍스처 덮어쓰기
     if (tex2.a > 0)
         color = tex2;
 
-    // 3번 마나: 최소 0.47
-    float fSp = 0.47; // UV 기준
-    if (In.vTexcoord.y <= fSp && tex3.a > 0)
+    // 3번 프레임 텍스처 덮어쓰기
+    if (tex3.a > 0)
         color = tex3;
-
-    // 4번 체력: 최소 0.13
-    float fHp = 0.13; // UV 기준
-    if (In.vTexcoord.y <= fHp && tex4.a > 0)
-        color = tex4;
-
-    // 5번 진화치: 최소 0.21
-    float fEvp = 0.6; // UV 기준
-    if (In.vTexcoord.y <= fEvp && tex5.a > 0)
-        color = tex5;
 
     Out.vColor = color;
     return Out;
