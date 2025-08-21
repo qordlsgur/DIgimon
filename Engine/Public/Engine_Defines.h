@@ -25,6 +25,9 @@ using namespace DirectX;
 #include <conio.h>
 #include <io.h>
 #include <ctime>
+#include <iostream>
+#include <fstream>
+
 using namespace std;
 
 #include "fmod.h"

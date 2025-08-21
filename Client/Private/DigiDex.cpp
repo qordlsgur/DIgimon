@@ -1,7 +1,7 @@
 #include "DigiDex.h"
 
 #include "GameInstance.h"
-
+#include "DigiDex_Manager.h"
 CDigiDex::CDigiDex(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
     : CUIObject{ pDevice, pContext }
 {
@@ -34,6 +34,9 @@ HRESULT CDigiDex::Initialize(void* pArg)
 
     if (FAILED(Ready_Components()))
         return E_FAIL;
+
+    m_pDigiDex_Manager = CDigiDex_Manager::GetInstance();
+    m_pDigiDex_Manager->DigiDex(this);
 
     return S_OK;
 }

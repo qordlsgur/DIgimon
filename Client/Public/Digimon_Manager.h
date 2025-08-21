@@ -7,10 +7,6 @@ NS_BEGIN(Client)
 
 class CDigimon_Manager final : public CBase
 {
-	typedef struct DIgimon_Desc
-	{
-
-	};
 public:
 	DECLARE_SINGLETON(CDigimon_Manager);
 
@@ -25,6 +21,10 @@ public:
 	void Swap_Digimon();
 	void Digimon_UHD();
 
+	void Acquire_Digimon();
+
+	void Copy_Digimon();
+
 	void PartyUHD(class CPartyUHD* pPartyUHD);
 	void Digivice(class CDigivice* pDigivice);
 	void Digimon_Storage(class CDigimon_Storage* pDigimon_Storage);
@@ -35,10 +35,7 @@ private:
 	class CDigimon_Storage* m_pDigimon_Storage = { nullptr };
 
 	vector<class CDigivice*> m_vDigivice_Battle_Slot;
-	_uint m_iDigivice_Battle_Slot_Number{};
-
-	vector<class CDigivice*> m_vDigivice_Serve_Slot;
-	_uint m_iDigivice_Serve_Slot_Number{};
+	_uint m_iDigivice_Number{};
 
 	vector<class CDigimon_Storage*> m_vDigimon_Storage_Slot;
 	_uint m_iDigimon_Storage_Slot_Number{};

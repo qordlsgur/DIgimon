@@ -3,15 +3,25 @@
 
 #include "Camera_Free.h"
 
+#include "Digimon_Manager.h"
+#include "Inventory_Manager.h"
+#include "DigiDex_Manager.h"
+
 CLevel_GamePlay::CLevel_GamePlay(ID3D11Device* pDevice, ID3D11DeviceContext* pContext, LEVEL eLevelID)
-	: CLevel { pDevice, pContext, ENUM_CLASS(eLevelID)}
-	
+	: CLevel{ pDevice, pContext, ENUM_CLASS(eLevelID) }
+	, m_pDigiDex_Manager{ CDigiDex_Manager::GetInstance()}
+	, m_pInventort_Manager{ CInventory_Manager::GetInstance()}
+	, m_pDigimon_Manager{ CDigimon_Manager::GetInstance()}
 {
 
 }
 
 HRESULT CLevel_GamePlay::Initialize()
 {
+
+	m_pDigiDex_Manager->Initialize();
+
+
 	//if (FAILED(Ready_Lights()))
 	//	return E_FAIL;
 
@@ -29,7 +39,7 @@ HRESULT CLevel_GamePlay::Initialize()
 
 	//if (FAILED(Ready_Layer_Effect(TEXT("Layer_Effect"))))
 	//	return E_FAIL;	
-	
+
 	if (FAILED(Ready_Layer_Inventory(TEXT("Layer_Inventory"))))
 		return E_FAIL;
 
@@ -41,6 +51,8 @@ HRESULT CLevel_GamePlay::Initialize()
 
 	if (FAILED(Ready_Layer_UHD(TEXT("Layer_UHD"))))
 		return E_FAIL;
+
+
 
 	return S_OK;
 }
@@ -94,7 +106,7 @@ HRESULT CLevel_GamePlay::Ready_Layer_UHD(const _wstring& strLayerTag)
 HRESULT CLevel_GamePlay::Ready_Lights()
 {
 
-	
+
 	return S_OK;
 }
 
@@ -139,7 +151,7 @@ HRESULT CLevel_GamePlay::Ready_Layer_Player(const _wstring& strLayerTag)
 			ENUM_CLASS(LEVEL::GAMEPLAY), strLayerTag)))
 			return E_FAIL;
 	}*/
-	
+
 
 	return S_OK;
 }

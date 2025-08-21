@@ -154,8 +154,8 @@
     <ClInclude Include="..\Public\BackGround.h" />
     <ClInclude Include="..\public\Camera_Free.h" />
     <ClInclude Include="..\Public\Client_Defines.h" />
-    <ClInclude Include="..\public\DataLoader.h" />
     <ClInclude Include="..\public\DigiDex.h" />
+    <ClInclude Include="..\public\DigiDex_Manager.h" />
     <ClInclude Include="..\public\DigimonInfo.h" />
     <ClInclude Include="..\public\Digimon_Manager.h" />
     <ClInclude Include="..\public\Digimon_Storage.h" />
@@ -185,7 +185,6 @@
   <ItemGroup>
     <ClCompile Include="..\Private\BackGround.cpp" />
     <ClCompile Include="..\private\Camera_Free.cpp" />
-    <ClCompile Include="..\private\DataLoader.cpp" />
     <ClCompile Include="..\private\DigiDex.cpp" />
     <ClCompile Include="..\private\DigimonInfo.cpp" />
     <ClCompile Include="..\private\Digimon_Manager.cpp" />
@@ -208,6 +207,7 @@
     <ClCompile Include="..\private\Storage.cpp" />
     <ClCompile Include="..\private\Terrain.cpp" />
     <ClCompile Include="..\private\UHD_Slot.cpp" />
+    <ClCompile Include="..\public\DigiDex_Manager.cpp" />
     <ClCompile Include="Client.cpp" />
   </ItemGroup>
   <ItemGroup>

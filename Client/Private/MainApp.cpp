@@ -6,10 +6,10 @@
 
 #include "Camera_Free.h"
 
-Client::CMainApp::CMainApp()	
-	: m_pGameInstance { CGameInstance::GetInstance() }
+Client::CMainApp::CMainApp()
+	: m_pGameInstance{ CGameInstance::GetInstance() }
 {
-	
+
 
 	Safe_AddRef(m_pGameInstance);
 }
@@ -34,10 +34,8 @@ HRESULT Client::CMainApp::Initialize()
 		return E_FAIL;
 
 	if (FAILED(Start_Level(LEVEL::LOGO)))
-		return E_FAIL;	
+		return E_FAIL;
 
-	if (FAILED(Loader_Digimon_Data()))
-		return E_FAIL;	
 
 	return S_OK;
 }
@@ -62,7 +60,7 @@ HRESULT Client::CMainApp::Render()
 
 HRESULT CMainApp::Ready_Default_Setting()
 {
-	
+
 
 	return S_OK;
 }
@@ -71,7 +69,7 @@ HRESULT CMainApp::Start_Level(LEVEL eLevelID)
 {
 	if (FAILED(m_pGameInstance->Change_Level(CLevel_Loading::Create(m_pDevice, m_pContext, LEVEL::LOADING, eLevelID))))
 		return E_FAIL;
-	
+
 	return S_OK;
 }
 
@@ -106,11 +104,6 @@ HRESULT CMainApp::Ready_Prototypes()
 	return S_OK;
 }
 
-HRESULT CMainApp::Loader_Digimon_Data()
-{
-	return S_OK;
-}
-
 CMainApp* Client::CMainApp::Create()
 {
 	CMainApp* pInstance = new CMainApp();
@@ -133,5 +126,5 @@ void Client::CMainApp::Free()
 
 	m_pGameInstance->Release_Engine();
 
-	Safe_Release(m_pGameInstance);	
+	Safe_Release(m_pGameInstance);
 }

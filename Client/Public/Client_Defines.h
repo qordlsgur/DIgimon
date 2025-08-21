@@ -11,6 +11,14 @@ namespace Client
 	enum class LEVEL { STATIC, LOADING, LOGO, GAMEPLAY, END };
 
 	enum class ITEMTYPE { WEAPON, SOBY, GITA, END };
+
+	typedef struct Digimon_Data
+	{
+		wchar_t			Digimon_name[24];
+		int				Digimon_ID;
+		int				Digimon_Type;
+		int				Digimon_Stage;
+	};
 }
 
 using namespace Client;

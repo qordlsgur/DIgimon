@@ -61,9 +61,6 @@
     <Filter Include="03.UI\Item">
       <UniqueIdentifier>{c243ede8-6f50-41f9-8f5b-c1129b993563}</UniqueIdentifier>
     </Filter>
-    <Filter Include="96.DataLoader">
-      <UniqueIdentifier>{8896ded6-e484-4309-827b-25388516bee7}</UniqueIdentifier>
-    </Filter>
     <Filter Include="04.Mouse">
       <UniqueIdentifier>{c398de9c-7b4c-4eae-8079-cb52dc15849d}</UniqueIdentifier>
     </Filter>
@@ -112,6 +109,9 @@
     <Filter Include="03.UI\Slot\UHD_Slot">
       <UniqueIdentifier>{4d151d9b-850c-4082-a650-99d0f3832411}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.GameObjects\Digimon">
+      <UniqueIdentifier>{170dc205-fbc9-4611-a4d6-9d3d0a2c199c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -155,9 +155,6 @@
     </ClInclude>
     <ClInclude Include="..\public\DigiDex.h">
       <Filter>03.UI\DigiDex</Filter>
-    </ClInclude>
-    <ClInclude Include="..\public\DataLoader.h">
-      <Filter>96.DataLoader</Filter>
     </ClInclude>
     <ClInclude Include="..\public\Digimon_Storage.h">
       <Filter>03.UI\Digimon_Storage</Filter>
@@ -204,6 +201,9 @@
     <ClInclude Include="..\public\UHD_Slot.h">
       <Filter>03.UI\Slot\UHD_Slot</Filter>
     </ClInclude>
+    <ClInclude Include="..\public\DigiDex_Manager.h">
+      <Filter>03.UI\Manager\DigiDex_Manager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Client.ico">
@@ -249,9 +249,6 @@
     <ClCompile Include="..\private\DigiDex.cpp">
       <Filter>03.UI\DigiDex</Filter>
     </ClCompile>
-    <ClCompile Include="..\private\DataLoader.cpp">
-      <Filter>96.DataLoader</Filter>
-    </ClCompile>
     <ClCompile Include="..\private\Digimon_Storage.cpp">
       <Filter>03.UI\Digimon_Storage</Filter>
     </ClCompile>
@@ -296,6 +293,9 @@
     </ClCompile>
     <ClCompile Include="..\private\UHD_Slot.cpp">
       <Filter>03.UI\Slot\UHD_Slot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\public\DigiDex_Manager.cpp">
+      <Filter>03.UI\Manager\DigiDex_Manager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

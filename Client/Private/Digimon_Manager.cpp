@@ -8,8 +8,7 @@ CDigimon_Manager::CDigimon_Manager()
 
 HRESULT CDigimon_Manager::Initialize()
 {
-	m_iDigivice_Battle_Slot_Number = 3;
-	m_iDigivice_Serve_Slot_Number = 5;
+	m_iDigivice_Number = 8;
 
 	m_iDigimon_Storage_Slot_Number = 10;
 
@@ -23,6 +22,18 @@ void CDigimon_Manager::Swap_Digimon()
 
 void CDigimon_Manager::Digimon_UHD()
 {
+
+}
+
+void CDigimon_Manager::Acquire_Digimon()
+{
+	for (_uint i = 0; i < m_iDigivice_Number; ++i)
+	{
+		if (m_vDigivice_Battle_Slot[i] != nullptr)
+		{
+			m_vDigivice_Battle_Slot[i];
+		}
+	}
 }
 
 void CDigimon_Manager::PartyUHD(CPartyUHD* pPartyUHD)

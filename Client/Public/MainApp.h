@@ -25,11 +25,13 @@ private:
 	ID3D11Device*			m_pDevice = { nullptr };
 	ID3D11DeviceContext*	m_pContext = { nullptr };
 
+	class CDigiDex_Manager*		m_pDigiDex_Manager		= { nullptr };
+
 private:
 	HRESULT Ready_Default_Setting();
 	HRESULT Start_Level(LEVEL eLevelID);
 	HRESULT Ready_Prototypes();
-	HRESULT Loader_Digimon_Data();
+
 
 public:
 	static CMainApp* Create();

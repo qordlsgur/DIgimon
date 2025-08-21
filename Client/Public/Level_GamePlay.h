@@ -29,7 +29,10 @@ private:
 	HRESULT Ready_Layer_Monster(const _wstring& strLayerTag);
 	HRESULT Ready_Layer_Effect(const _wstring& strLayerTag);
 
-
+private:
+	class CDigiDex_Manager* m_pDigiDex_Manager = { nullptr };
+	class CInventory_Manager* m_pInventort_Manager = { nullptr };
+	class CDigimon_Manager* m_pDigimon_Manager = { nullptr };
 
 public:
 	static CLevel_GamePlay* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext, LEVEL eLevelID);

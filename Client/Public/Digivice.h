@@ -37,10 +37,9 @@ private:
 	class CDigivice_Slot* m_pDigivice_Slot = { nullptr };
 
 	_uint	m_iDigivice_Battle_Slot_Number;
-	_uint	m_iDigivice_Serve_Slot_Number;
 
 	vector<class CDigivice_Slot*> m_pBattle_Slot;
-	vector<class CDigivice_Slot*> m_pServe_Slot;
+
 
 	class CDigimon_Manager* m_pDigimon_Manager = {nullptr};
 

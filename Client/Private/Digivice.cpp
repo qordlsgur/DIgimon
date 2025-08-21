@@ -29,9 +29,7 @@ HRESULT CDigivice::Initialize(void* pArg)
 
 	m_pRect = { long(Desc.fX - Desc.fSizeX * 0.5f), long(Desc.fY - Desc.fSizeY * 0.5f), long(Desc.fX + Desc.fSizeX * 0.5f), long(Desc.fY + Desc.fSizeY * 0.5f) };
 
-	m_iDigivice_Battle_Slot_Number = 3;
-
-	m_iDigivice_Serve_Slot_Number = 5;
+	m_iDigivice_Battle_Slot_Number = 8;
 
 	m_pDigimon_Manager = CDigimon_Manager::GetInstance();
 	m_pDigimon_Manager->Digivice(this);
@@ -44,8 +42,6 @@ HRESULT CDigivice::Initialize(void* pArg)
 
 	if (FAILED(Create_Slot(L"Layout_Digivice_Slot")))
 		return E_FAIL;
-
-
 
 	return S_OK;
 }
@@ -88,10 +84,6 @@ HRESULT CDigivice::Render()
 			m_pBattle_Slot[i]->Render();
 		}
 
-		for (_uint i = 0; i < m_iDigivice_Serve_Slot_Number; ++i)
-		{
-			m_pServe_Slot[i]->Render();
-		}
 
 		__super::End();
 
@@ -156,15 +148,7 @@ HRESULT CDigivice::Create_Slot(const _wstring& strLayerTag)
 
 	}
 
-	for (_uint i = 0; i < m_iDigivice_Serve_Slot_Number; ++i)
-	{
-		m_pDigivice_Slot = static_cast<CDigivice_Slot*>(m_pGameInstance->Add_GameObject_ToLayer_ToCreate(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Digivice_Slot"),
-			ENUM_CLASS(LEVEL::GAMEPLAY), strLayerTag));
-
-		m_pServe_Slot.push_back(m_pDigivice_Slot);
-	}
-
-	for (_uint i = 0; i < m_iDigivice_Serve_Slot_Number; ++i)
+	for (_uint i = 3; i < m_iDigivice_Battle_Slot_Number; ++i)
 	{
 
 		_float row = i % 5;
@@ -172,7 +156,7 @@ HRESULT CDigivice::Create_Slot(const _wstring& strLayerTag)
 		_float startX = -75.f;
 		_float startY = 95.f + row * 43;
 
-		m_pServe_Slot[i]->Set_Move(startX, startY);
+		m_pBattle_Slot[i]->Set_Move(startX, startY);
 
 	}
 

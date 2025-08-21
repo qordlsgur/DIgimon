@@ -32,6 +32,8 @@ private:
 	CTexture* m_pTextureCom = { nullptr };
 	CShader* m_pShaderCom = { nullptr };
 
+	class CDigiDex_Manager* m_pDigiDex_Manager = { nullptr };
+
 private:
 	HRESULT Ready_Components();
 	HRESULT Bind_ShaderResources();
