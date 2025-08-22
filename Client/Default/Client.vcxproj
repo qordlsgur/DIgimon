@@ -156,6 +156,7 @@
     <ClInclude Include="..\Public\Client_Defines.h" />
     <ClInclude Include="..\public\DigiDex.h" />
     <ClInclude Include="..\public\DigiDex_Manager.h" />
+    <ClInclude Include="..\public\DigiDex_Slot.h" />
     <ClInclude Include="..\public\DigimonInfo.h" />
     <ClInclude Include="..\public\Digimon_Manager.h" />
     <ClInclude Include="..\public\Digimon_Storage.h" />
@@ -187,6 +188,7 @@
     <ClCompile Include="..\private\Camera_Free.cpp" />
     <ClCompile Include="..\private\DigiDex.cpp" />
     <ClCompile Include="..\Private\DigiDex_Manager.cpp" />
+    <ClCompile Include="..\private\DigiDex_Slot.cpp" />
     <ClCompile Include="..\private\DigimonInfo.cpp" />
     <ClCompile Include="..\private\Digimon_Manager.cpp" />
     <ClCompile Include="..\private\Digimon_Storage.cpp" />

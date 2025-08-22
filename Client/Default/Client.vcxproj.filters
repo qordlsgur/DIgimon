@@ -112,6 +112,9 @@
     <Filter Include="02.GameObjects\Digimon">
       <UniqueIdentifier>{170dc205-fbc9-4611-a4d6-9d3d0a2c199c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="03.UI\Slot\DIgiDex_Slot">
+      <UniqueIdentifier>{6bb22912-3e89-4ddf-bbfe-be998047d0bf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -203,6 +206,9 @@
     </ClInclude>
     <ClInclude Include="..\public\DigiDex_Manager.h">
       <Filter>03.UI\Manager\DigiDex_Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\DigiDex_Slot.h">
+      <Filter>03.UI\Slot\DIgiDex_Slot</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -296,6 +302,9 @@
     </ClCompile>
     <ClCompile Include="..\Private\DigiDex_Manager.cpp">
       <Filter>03.UI\Manager\DigiDex_Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\DigiDex_Slot.cpp">
+      <Filter>03.UI\Slot\DIgiDex_Slot</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
