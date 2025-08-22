@@ -186,6 +186,7 @@
     <ClCompile Include="..\Private\BackGround.cpp" />
     <ClCompile Include="..\private\Camera_Free.cpp" />
     <ClCompile Include="..\private\DigiDex.cpp" />
+    <ClCompile Include="..\Private\DigiDex_Manager.cpp" />
     <ClCompile Include="..\private\DigimonInfo.cpp" />
     <ClCompile Include="..\private\Digimon_Manager.cpp" />
     <ClCompile Include="..\private\Digimon_Storage.cpp" />
@@ -207,7 +208,6 @@
     <ClCompile Include="..\private\Storage.cpp" />
     <ClCompile Include="..\private\Terrain.cpp" />
     <ClCompile Include="..\private\UHD_Slot.cpp" />
-    <ClCompile Include="..\public\DigiDex_Manager.cpp" />
     <ClCompile Include="Client.cpp" />
   </ItemGroup>
   <ItemGroup>

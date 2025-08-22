@@ -143,6 +143,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\EngineSDK\Inc\FMOD\fmod.h" />
+    <ClInclude Include="..\..\EngineSDK\Inc\FMOD\fmod.hpp" />
+    <ClInclude Include="..\..\EngineSDK\Inc\FMOD\fmod_codec.h" />
+    <ClInclude Include="..\..\EngineSDK\Inc\FMOD\fmod_common.h" />
+    <ClInclude Include="..\..\EngineSDK\Inc\FMOD\fmod_dsp.h" />
+    <ClInclude Include="..\..\EngineSDK\Inc\FMOD\fmod_dsp_effects.h" />
+    <ClInclude Include="..\..\EngineSDK\Inc\FMOD\fmod_errors.h" />
+    <ClInclude Include="..\..\EngineSDK\Inc\FMOD\fmod_output.h" />
     <ClInclude Include="..\Public\Base.h" />
     <ClInclude Include="..\public\Button.h" />
     <ClInclude Include="..\public\Camera.h" />
@@ -153,14 +161,6 @@
     <ClInclude Include="..\Public\Engine_Macro.h" />
     <ClInclude Include="..\Public\Engine_Struct.h" />
     <ClInclude Include="..\Public\Engine_Typedef.h" />
-    <ClInclude Include="..\Public\FMOD\fmod.h" />
-    <ClInclude Include="..\Public\FMOD\fmod.hpp" />
-    <ClInclude Include="..\Public\FMOD\fmod_codec.h" />
-    <ClInclude Include="..\Public\FMOD\fmod_common.h" />
-    <ClInclude Include="..\Public\FMOD\fmod_dsp.h" />
-    <ClInclude Include="..\Public\FMOD\fmod_dsp_effects.h" />
-    <ClInclude Include="..\Public\FMOD\fmod_errors.h" />
-    <ClInclude Include="..\Public\FMOD\fmod_output.h" />
     <ClInclude Include="..\Public\GameInstance.h" />
     <ClInclude Include="..\Public\GameObject.h" />
     <ClInclude Include="..\Public\Graphic_Device.h" />
@@ -213,9 +213,9 @@
     <ClCompile Include="..\private\VIBuffer_Terrain.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\Public\FMOD\fmod.cs" />
-    <None Include="..\Public\FMOD\fmod_dsp.cs" />
-    <None Include="..\Public\FMOD\fmod_errors.cs" />
+    <None Include="..\..\EngineSDK\Inc\FMOD\fmod.cs" />
+    <None Include="..\..\EngineSDK\Inc\FMOD\fmod_dsp.cs" />
+    <None Include="..\..\EngineSDK\Inc\FMOD\fmod_errors.cs" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

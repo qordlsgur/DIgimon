@@ -64,30 +64,6 @@
     <ClInclude Include="..\public\Transform.h">
       <Filter>01.Utility\03.Components\Transform</Filter>
     </ClInclude>
-    <ClInclude Include="..\Public\FMOD\fmod.h">
-      <Filter>02.FMOD</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Public\FMOD\fmod.hpp">
-      <Filter>02.FMOD</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Public\FMOD\fmod_codec.h">
-      <Filter>02.FMOD</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Public\FMOD\fmod_common.h">
-      <Filter>02.FMOD</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Public\FMOD\fmod_dsp.h">
-      <Filter>02.FMOD</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Public\FMOD\fmod_dsp_effects.h">
-      <Filter>02.FMOD</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Public\FMOD\fmod_errors.h">
-      <Filter>02.FMOD</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Public\FMOD\fmod_output.h">
-      <Filter>02.FMOD</Filter>
-    </ClInclude>
     <ClInclude Include="..\public\Sound_Manager.h">
       <Filter>01.Utility\98.Sound</Filter>
     </ClInclude>
@@ -120,6 +96,30 @@
     </ClInclude>
     <ClInclude Include="..\public\Button.h">
       <Filter>01.Utility\02.GameObjects\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\EngineSDK\Inc\FMOD\fmod.h">
+      <Filter>02.FMOD</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\EngineSDK\Inc\FMOD\fmod.hpp">
+      <Filter>02.FMOD</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\EngineSDK\Inc\FMOD\fmod_codec.h">
+      <Filter>02.FMOD</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\EngineSDK\Inc\FMOD\fmod_common.h">
+      <Filter>02.FMOD</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\EngineSDK\Inc\FMOD\fmod_dsp.h">
+      <Filter>02.FMOD</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\EngineSDK\Inc\FMOD\fmod_dsp_effects.h">
+      <Filter>02.FMOD</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\EngineSDK\Inc\FMOD\fmod_errors.h">
+      <Filter>02.FMOD</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\EngineSDK\Inc\FMOD\fmod_output.h">
+      <Filter>02.FMOD</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -304,13 +304,13 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\Public\FMOD\fmod.cs">
+    <None Include="..\..\EngineSDK\Inc\FMOD\fmod.cs">
       <Filter>02.FMOD</Filter>
     </None>
-    <None Include="..\Public\FMOD\fmod_dsp.cs">
+    <None Include="..\..\EngineSDK\Inc\FMOD\fmod_dsp.cs">
       <Filter>02.FMOD</Filter>
     </None>
-    <None Include="..\Public\FMOD\fmod_errors.cs">
+    <None Include="..\..\EngineSDK\Inc\FMOD\fmod_errors.cs">
       <Filter>02.FMOD</Filter>
     </None>
   </ItemGroup>

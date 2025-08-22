@@ -294,7 +294,7 @@
     <ClCompile Include="..\private\UHD_Slot.cpp">
       <Filter>03.UI\Slot\UHD_Slot</Filter>
     </ClCompile>
-    <ClCompile Include="..\public\DigiDex_Manager.cpp">
+    <ClCompile Include="..\Private\DigiDex_Manager.cpp">
       <Filter>03.UI\Manager\DigiDex_Manager</Filter>
     </ClCompile>
   </ItemGroup>
