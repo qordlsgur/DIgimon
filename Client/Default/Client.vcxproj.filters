@@ -115,6 +115,9 @@
     <Filter Include="03.UI\Slot\DIgiDex_Slot">
       <UniqueIdentifier>{6bb22912-3e89-4ddf-bbfe-be998047d0bf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="03.UI\Slot\Digivice_Slot\Mask">
+      <UniqueIdentifier>{249eef68-99dd-4582-9e82-a8622007df1e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -209,6 +212,9 @@
     </ClInclude>
     <ClInclude Include="..\public\DigiDex_Slot.h">
       <Filter>03.UI\Slot\DIgiDex_Slot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Digivice_Mask.h">
+      <Filter>03.UI\Slot\Digivice_Slot\Mask</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -306,6 +312,9 @@
     <ClCompile Include="..\private\DigiDex_Slot.cpp">
       <Filter>03.UI\Slot\DIgiDex_Slot</Filter>
     </ClCompile>
+    <ClCompile Include="..\Private\Digivice_Mask.cpp">
+      <Filter>03.UI\Slot\Digivice_Slot\Mask</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxPosTex.hlsl">
@@ -324,6 +333,9 @@
       <Filter>97.ShaderFiles</Filter>
     </FxCompile>
     <FxCompile Include="..\Bin\ShaderFiles\Shader_Digivice.hlsl">
+      <Filter>97.ShaderFiles</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Bin\ShaderFiles\Shader_Digivice_Mask.hlsl">
       <Filter>97.ShaderFiles</Filter>
     </FxCompile>
   </ItemGroup>

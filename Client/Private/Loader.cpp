@@ -9,6 +9,7 @@
 #include "Digimon_Storage.h"
 #include "Digivice.h"
 #include "Digivice_Slot.h"
+#include "Digivice_Mask.h"
 #include "PartyUHD.h"
 #include "UHD_Slot.h"
 
@@ -336,7 +337,12 @@ HRESULT CLoader::Loading_For_GamePlay()
 	/* For.Prototype_Component_Shader_Digivice */
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Shader_Digivice"),
 		CShader::Create(m_pDevice, m_pContext, TEXT("../Bin/ShaderFiles/Shader_Digivice.hlsl"), VTXPOSTEX::Elements, VTXPOSTEX::iNumElements))))
-		return E_FAIL;
+		return E_FAIL;	
+
+	/* For.Prototype_Component_Shader_Digivice_Mask */
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Shader_Digivice_Mask"),
+		CShader::Create(m_pDevice, m_pContext, TEXT("../Bin/ShaderFiles/Shader_Digivice_Mask.hlsl"), VTXPOSTEX::Elements, VTXPOSTEX::iNumElements))))
+		return E_FAIL;	
 
 #pragma endregion
 
@@ -362,20 +368,25 @@ HRESULT CLoader::Loading_For_GamePlay()
 
 	//µðÁö¸ó---------------------------------------------------------------------------------------------------------------------------------------------------------
 
-	//* For.Prototype_GameObject_Digivice */
+	/* For.Prototype_GameObject_Digivice */
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Digivice"),
 		CDigivice::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
-	//* For.Prototype_GameObject_Digivice_Slot */
+	/* For.Prototype_GameObject_Digivice_Slot */
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Digivice_Slot"),
 		CDigivice_Slot::Create(m_pDevice, m_pContext))))
 		return E_FAIL;	
+	
+	/* For.Prototype_GameObject_Digivice_Mask */
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Digivice_Mask"),
+		CDigivice_Mask::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
 
-	//* For.Prototype_GameObject_DigiDex */
+	/* For.Prototype_GameObject_DigiDex */
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_DigiDex"),
 		CDigiDex::Create(m_pDevice, m_pContext))))
-		return E_FAIL;
+		return E_FAIL;	
 	
 	//Party_HUD---------------------------------------------------------------------------------------------------------------------------------------------------------
 

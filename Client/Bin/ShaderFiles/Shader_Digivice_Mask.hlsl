@@ -1,7 +1,9 @@
 matrix g_WorldMatrix, g_ViewMatrix, g_ProjMatrix;
 
 Texture2D g_Texture1;
+Texture2D g_Texture2;
 
+int HasDigimon;
 
 sampler DefaultSampler = sampler_state
 {
@@ -57,13 +59,33 @@ PS_OUT PS_MAIN(PS_IN In)
 {
     PS_OUT Out;
 
-    Out.vColor = g_Texture1.Sample(DefaultSampler, In.vTexcoord);
+    if (HasDigimon != 0)
+    {
+        float4 tex1 = g_Texture1.Sample(DefaultSampler, In.vTexcoord);
+        float4 tex2 = g_Texture2.Sample(DefaultSampler, In.vTexcoord);
+        
+        float4 color = float4(0, 0, 0, 0);
+
+        if (tex1.a > 0)
+            color = tex1;
+
+        if (tex2.a > 0)
+            color = tex2;
+        
+        Out.vColor = color;
+    }
+    
+    else
+        Out.vColor = g_Texture1.Sample(DefaultSampler, In.vTexcoord);
     
     if (Out.vColor.a < 0.3f)
         discard;
     
     return Out;
 }
+
+
+
 
 technique11 DefaultTechnique
 {

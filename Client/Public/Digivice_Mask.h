@@ -11,12 +11,12 @@ NS_END
 
 NS_BEGIN(Client)
 
-class CDigivice final : public CUIObject
+class CDigivice_Mask final : public CUIObject
 {
 private:
-	CDigivice(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
-	CDigivice(const CDigivice& Prototype);
-	virtual ~CDigivice() = default;
+	CDigivice_Mask(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
+	CDigivice_Mask(const CDigivice_Mask& Prototype);
+	virtual ~CDigivice_Mask() = default;
 
 public:
 	virtual HRESULT Initialize_Prototype() override;
@@ -27,32 +27,29 @@ public:
 	virtual HRESULT Render() override;
 
 public:
-	void Digimon_Swap();
+	void Set_Parent_WorldPos(_vector fParent_World);
+	void Set_Move(_float fX, _float fY);
+
+	void Set_Digimon_ID(_uint ID) { m_iDigimon_ID = ID; }
 
 private:
 	CVIBuffer_Rect* m_pVIBufferCom = { nullptr };
-	CTexture* m_pTextureCom = { nullptr };
+	CTexture* m_pMaskTextureCom = { nullptr };
+	CTexture* m_pDigimonTextureCom = { nullptr };
 	CShader* m_pShaderCom = { nullptr };
 
-	class CDigivice_Slot* m_pDigivice_Slot = { nullptr };
-	class CDigivice_Mask* m_pDigivice_Mask = { nullptr };
+	_uint			m_iDigimon_ID{};
 
-	_uint	m_iDigivice_Battle_Slot_Number;
-
-	vector<class CDigivice_Slot*> m_pBattle_Slot;
-	vector<class CDigivice_Mask*> m_pBattle_Mask;
-
-
-	class CDigimon_Manager* m_pDigimon_Manager = {nullptr};
+	_bool			m_bHasDigimon = false;
 
 private:
 	HRESULT Ready_Components();
 	HRESULT Bind_ShaderResources();
 
-	HRESULT Create_Slot(const _wstring& strLayerTag);
+	_float4 m_fParent_WorldPos{};
 
 public:
-	static CDigivice* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
+	static CDigivice_Mask* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	virtual CGameObject* Clone(void* pArg) override;
 	virtual void Free() override;
 };

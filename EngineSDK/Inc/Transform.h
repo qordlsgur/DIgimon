@@ -41,8 +41,7 @@ public:
 	// 값을 세팅 해주는 함수 이다. 만약 Right에 vState값을 넣어 주고 싶다고 하면 이제 eState에
 	// Right를 넣고 뒤에 계산용 벡터를 집어 넣으면 그 계산용 벡터를 저장용에 집어 넣어 준다.
 	void Set_State(STATE eState, _fvector vState) {
-		XMStoreFloat4(reinterpret_cast<_float4*>(
-			&m_WorldMatrix.m[ENUM_CLASS(eState)]), vState);
+		XMStoreFloat4(reinterpret_cast<_float4*>(&m_WorldMatrix.m[ENUM_CLASS(eState)]), vState);
 	}
 
 	// 이 함수는 스케일 값을 조절 해주는 함수이다.

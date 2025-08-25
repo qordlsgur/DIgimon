@@ -161,6 +161,7 @@
     <ClInclude Include="..\public\Digimon_Manager.h" />
     <ClInclude Include="..\public\Digimon_Storage.h" />
     <ClInclude Include="..\public\Digivice.h" />
+    <ClInclude Include="..\Public\Digivice_Mask.h" />
     <ClInclude Include="..\public\Digivice_Slot.h" />
     <ClInclude Include="..\public\Equipment.h" />
     <ClInclude Include="..\public\Exit_Button.h" />
@@ -193,6 +194,7 @@
     <ClCompile Include="..\private\Digimon_Manager.cpp" />
     <ClCompile Include="..\private\Digimon_Storage.cpp" />
     <ClCompile Include="..\private\Digivice.cpp" />
+    <ClCompile Include="..\Private\Digivice_Mask.cpp" />
     <ClCompile Include="..\private\Digivice_Slot.cpp" />
     <ClCompile Include="..\private\Equipment.cpp" />
     <ClCompile Include="..\private\Exit_Button.cpp" />
@@ -221,6 +223,7 @@
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="..\Bin\ShaderFiles\Shader_Digivice.hlsl" />
+    <FxCompile Include="..\Bin\ShaderFiles\Shader_Digivice_Mask.hlsl" />
     <FxCompile Include="..\Bin\ShaderFiles\Shader_Hover.hlsl" />
     <FxCompile Include="..\Bin\ShaderFiles\Shader_Inventory.hlsl" />
     <FxCompile Include="..\Bin\ShaderFiles\Shader_UHD.hlsl" />

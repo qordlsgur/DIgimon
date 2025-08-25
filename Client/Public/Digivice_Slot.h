@@ -33,11 +33,10 @@ public:
 private:
 	CVIBuffer_Rect* m_pVIBufferCom = { nullptr };
 	CTexture*		m_pSlotTextureCom = { nullptr };
-	CTexture*		m_pMaskTextureCom = { nullptr };
-	CTexture*		m_pDigimonTextureCom = { nullptr };
 	CShader*		m_pShaderCom = { nullptr };
 
 	_uint			m_iDigimon_ID{};
+
 
 private:
 	HRESULT Ready_Components();

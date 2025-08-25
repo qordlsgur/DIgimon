@@ -56,7 +56,25 @@ void CSlot::Update(_float fTimeDelta)
 
 void CSlot::Late_Update(_float fTimeDelta)
 {
-	m_pTransformCom->Set_State(STATE::POSITION, XMVectorSet(m_fX - m_fWinSizeX * 0.5f, -m_fY + m_fWinSizeY * 0.5f, 0.f, 1.f) + XMLoadFloat4(&m_fParent_WorldPos));
+	_vector vLocalPos = XMVectorSet(m_fX, -m_fY, 0.f, 1.f);
+	// 부모 위치는 월드 좌표라고 가정하고, 자식 위치에 더함
+	_vector vWorldPos = vLocalPos + XMLoadFloat4(&m_fParent_WorldPos);
+
+	// 최종 위치 설정
+	m_pTransformCom->Set_Scale(m_fSizeX, m_fSizeY, 1.f);
+	m_pTransformCom->Set_State(STATE::POSITION, vWorldPos);
+
+	// 화면 좌표로 변환해서 사각형 영역 설정
+	_float4 Pos;
+	XMStoreFloat4(&Pos, vWorldPos);
+	;
+	// 부모 기준 상대 좌표로 사각형 설정
+	m_pRect = {
+		long(m_fX - m_fSizeX * 0.5f),
+		long(m_fY - m_fSizeY * 0.5f),
+		long(m_fX + m_fSizeX * 0.5f),
+		long(m_fY + m_fSizeY * 0.5f)
+	};
 }
 
 HRESULT CSlot::Render()

@@ -119,10 +119,17 @@ HRESULT CInventory::Render()
 
 void CInventory::OnClick()
 {
-	POINT pPt = m_pGameInstance->Get_Mouse();
+	POINT pPt{};
+	GetCursorPos(&pPt);
+	ScreenToClient(g_hWnd, &pPt);
 
 	if (PtInRect(&m_pRect, pPt))
 	{
+		_float4 pos;
+		XMStoreFloat4(&pos, m_pTransformCom->Get_State(STATE::POSITION));
+		pPt.x -= LONG(pos.x);
+		pPt.y -= LONG(pos.y);
+
 		for (int i = 0; i < m_iSlotCount; ++i)
 		{
 			if (PtInRect(m_vSlots[i]->Get_Pos(), pPt))
@@ -190,8 +197,8 @@ HRESULT CInventory::Create_Slot(const _wstring& strLayerTag)
 		_float col = i % 8;
 		_float row = i / 8;
 
-		_float startX = 368.f + col * (85 + 10);
-		_float startY = 125.f + row * (85 + 10);
+		_float startX = -270.f + col * (85 + 10);
+		_float startY = -250.f + row * (85 + 10);
 
 		m_vSlots[i]->Set_Move(startX, startY);
 	}
