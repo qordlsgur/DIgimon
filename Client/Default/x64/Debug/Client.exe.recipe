@@ -2,27 +2,27 @@
 <Project>
   <ProjectOutputs>
     <ProjectOutput>
-      <FullPath>C:\Users\hyen6\Desktop\Framework\Digimon\Client\Bin\Client.exe</FullPath>
+      <FullPath>C:\Users\hyen6\Desktop\DIgimon\Client\Bin\Client.exe</FullPath>
     </ProjectOutput>
   </ProjectOutputs>
   <ContentFiles>
     <ContentFile>
-      <FullPath>C:\Users\hyen6\Desktop\Framework\Digimon\Client\Bin\Shader_Digivice.cso</FullPath>
+      <FullPath>C:\Users\hyen6\Desktop\DIgimon\Client\Bin\Shader_Digivice.cso</FullPath>
     </ContentFile>
     <ContentFile>
-      <FullPath>C:\Users\hyen6\Desktop\Framework\Digimon\Client\Bin\Shader_Hover.cso</FullPath>
+      <FullPath>C:\Users\hyen6\Desktop\DIgimon\Client\Bin\Shader_Hover.cso</FullPath>
     </ContentFile>
     <ContentFile>
-      <FullPath>C:\Users\hyen6\Desktop\Framework\Digimon\Client\Bin\Shader_Inventory.cso</FullPath>
+      <FullPath>C:\Users\hyen6\Desktop\DIgimon\Client\Bin\Shader_Inventory.cso</FullPath>
     </ContentFile>
     <ContentFile>
-      <FullPath>C:\Users\hyen6\Desktop\Framework\Digimon\Client\Bin\Shader_UHD.cso</FullPath>
+      <FullPath>C:\Users\hyen6\Desktop\DIgimon\Client\Bin\Shader_UHD.cso</FullPath>
     </ContentFile>
     <ContentFile>
-      <FullPath>C:\Users\hyen6\Desktop\Framework\Digimon\Client\Bin\Shader_VtxNorTex.cso</FullPath>
+      <FullPath>C:\Users\hyen6\Desktop\DIgimon\Client\Bin\Shader_VtxNorTex.cso</FullPath>
     </ContentFile>
     <ContentFile>
-      <FullPath>C:\Users\hyen6\Desktop\Framework\Digimon\Client\Bin\Shader_VtxPosTex.cso</FullPath>
+      <FullPath>C:\Users\hyen6\Desktop\DIgimon\Client\Bin\Shader_VtxPosTex.cso</FullPath>
     </ContentFile>
   </ContentFiles>
   <SatelliteDlls />
