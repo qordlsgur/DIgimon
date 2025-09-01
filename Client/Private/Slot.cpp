@@ -23,8 +23,8 @@ HRESULT CSlot::Initialize(void* pArg)
 
 	Desc.fX = 100;
 	Desc.fY = 100;
-	Desc.fSizeX = 85.f;
-	Desc.fSizeY = 85.f;
+	Desc.fSizeX = 40.f;
+	Desc.fSizeY = 40.f;
 
 	m_pRect = { long(Desc.fX - Desc.fSizeX * 0.5f), long(Desc.fY - Desc.fSizeY * 0.5f), long(Desc.fX + Desc.fSizeX * 0.5f), long(Desc.fY + Desc.fSizeY * 0.5f) };
 
@@ -50,31 +50,29 @@ void CSlot::Update(_float fTimeDelta)
 
 	if (m_pGameInstance->Key_Down(DIK_X))
 		a = 1;
-		//m_bHover = false;
+	//m_bHover = false;
 
+	// 부모 + 로컬
+	_vector vWorldPos = XMVectorSet(m_fX + m_fParent_WorldPos.x,-(m_fY)+m_fParent_WorldPos.y,0.f, 1.f);
+
+	m_pTransformCom->Set_Scale(m_fSizeX, m_fSizeY, 1.f);
+	m_pTransformCom->Set_State(STATE::POSITION, vWorldPos);
+
+	_float4 Pos;
+	XMStoreFloat4(&Pos, vWorldPos);
+
+	// RECT는 화면 좌상단 기준으로 변환
+	m_pRect = {
+		long(Pos.x - m_fSizeX * 0.5f + m_fWinSizeX * 0.5f),
+		long(-Pos.y - m_fSizeY * 0.f - m_fWinSizeY * 0.5f),
+		long(Pos.x + m_fSizeX * 0.5f + m_fWinSizeX * 0.5f),
+		long(-Pos.y + m_fSizeY * 0.f - m_fWinSizeY * 0.5f)
+	};
 }
 
 void CSlot::Late_Update(_float fTimeDelta)
 {
-	_vector vLocalPos = XMVectorSet(m_fX, -m_fY, 0.f, 1.f);
-	// 부모 위치는 월드 좌표라고 가정하고, 자식 위치에 더함
-	_vector vWorldPos = vLocalPos + XMLoadFloat4(&m_fParent_WorldPos);
 
-	// 최종 위치 설정
-	m_pTransformCom->Set_Scale(m_fSizeX, m_fSizeY, 1.f);
-	m_pTransformCom->Set_State(STATE::POSITION, vWorldPos);
-
-	// 화면 좌표로 변환해서 사각형 영역 설정
-	_float4 Pos;
-	XMStoreFloat4(&Pos, vWorldPos);
-	;
-	// 부모 기준 상대 좌표로 사각형 설정
-	m_pRect = {
-		long(m_fX - m_fSizeX * 0.5f),
-		long(m_fY - m_fSizeY * 0.5f),
-		long(m_fX + m_fSizeX * 0.5f),
-		long(m_fY + m_fSizeY * 0.5f)
-	};
 }
 
 HRESULT CSlot::Render()
