@@ -1,8 +1,6 @@
 matrix g_WorldMatrix, g_ViewMatrix, g_ProjMatrix;
 
 Texture2D g_Texture1;
-Texture2D g_Texture2;
-Texture2D g_Texture3;
 
 
 sampler DefaultSampler = sampler_state
@@ -59,33 +57,13 @@ PS_OUT PS_MAIN(PS_IN In)
 {
     PS_OUT Out;
 
-    // 텍스처 샘플링
-    float4 tex1 = g_Texture1.Sample(DefaultSampler, In.vTexcoord); // 슬롯
-    float4 tex2 = g_Texture2.Sample(DefaultSampler, In.vTexcoord); // 마스크
-    float4 tex3 = g_Texture3.Sample(DefaultSampler, In.vTexcoord); // 이미지
-
-
-    // 최종 색상 초기화: 투명으로 시작
-    float4 color = float4(0, 0, 0, 0);
-
-    // 1번 마스크 영역만 6번 텍스처 덮어쓰기
-    if (tex1.a > 0)
-        color = tex1;
-
-    // 2번 프레임 텍스처 덮어쓰기
-    if (tex2.a > 0)
-        color = tex2;
-
-    // 3번 프레임 텍스처 덮어쓰기
-    if (tex3.a > 0)
-        color = tex3;
-
-    Out.vColor = color;
+    Out.vColor = g_Texture1.Sample(DefaultSampler, In.vTexcoord);
+    
+    if (Out.vColor.a < 0.3f)
+        discard;
+    
     return Out;
 }
-
-
-
 
 technique11 DefaultTechnique
 {

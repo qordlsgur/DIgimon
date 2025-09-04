@@ -1,4 +1,8 @@
 #include "Digimon_Manager.h"
+#include "PartyUHD.h"
+#include "Digivice.h"
+#include "Digimon_Storage.h"
+
 
 IMPLEMENT_SINGLETON(CDigimon_Manager)
 
@@ -54,4 +58,8 @@ void CDigimon_Manager::Digimon_Storage(CDigimon_Storage* pDigimon_Storage)
 void CDigimon_Manager::Free()
 {
 	__super::Free();
+
+	/*Safe_Release(m_pPartyUHD);
+	Safe_Release(m_pDigivice);
+	Safe_Release(m_pDigimon_Storage);*/
 }

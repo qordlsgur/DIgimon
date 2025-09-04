@@ -23,15 +23,17 @@ HRESULT CDigivice_Slot::Initialize(void* pArg)
 
 	Desc.fX = 100.f;
 	Desc.fY = 100.f;
-	Desc.fSizeX = 195.f;
-	Desc.fSizeY = 40.f;
+	Desc.fSizeX = 495.f;
+	Desc.fSizeY = 95.f;
 
 	if (FAILED(__super::Initialize(&Desc)))
 		return E_FAIL;
 
-
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
+
+
+
 
 	return S_OK;
 }
@@ -46,7 +48,9 @@ void CDigivice_Slot::Update(_float fTimeDelta)
 
 void CDigivice_Slot::Late_Update(_float fTimeDelta)
 {
-	m_pTransformCom->Set_State(STATE::POSITION, XMVectorSet(m_fX - m_fSizeX * 0.5f, -m_fY + m_fSizeY * 0.5f, 0.f, 1.f) + XMLoadFloat4(&m_fParent_WorldPos));
+	m_pTransformCom->Set_State(STATE::POSITION, XMVectorSet(m_fX - m_fWinSizeX * 0.5f, -m_fY + m_fWinSizeY * 0.5f, 0.f, 1.f) + XMLoadFloat4(&m_fParent_WorldPos));
+	m_pTransformCom->Set_Scale(m_fSizeX, m_fSizeY, 1.f);
+
 }
 
 HRESULT CDigivice_Slot::Render()
@@ -61,12 +65,11 @@ HRESULT CDigivice_Slot::Render()
 		return E_FAIL;
 
 	__super::Begin();
-	__super::Blend_Begin();
 
 	if (FAILED(m_pVIBufferCom->Render()))
 		return E_FAIL;
 
-	__super::Blend_End();
+
 	__super::End();
 
 	return S_OK;
@@ -81,9 +84,6 @@ void CDigivice_Slot::Set_Move(_float fX, _float fY)
 {
 	m_fX = fX;
 	m_fY = fY;
-
-	m_pRect = { long(m_fX - m_fSizeX * 0.5f),long(m_fY - m_fSizeY * 0.5f),long(m_fX + m_fSizeX * 0.5f),long(m_fY + m_fSizeY * 0.5f) };
-
 }
 
 HRESULT CDigivice_Slot::Ready_Components()
@@ -96,16 +96,6 @@ HRESULT CDigivice_Slot::Ready_Components()
 	/* Com_Digivice_Slot_Texture */
 	if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Digivice_Slot"),
 		TEXT("Com_Digivice_Slot_Texture"), reinterpret_cast<CComponent**>(&m_pSlotTextureCom))))
-		return E_FAIL;
-
-	/* Com_Digivice_Mask_Texture */
-	if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Digivice_Mask"),
-		TEXT("Com_Digivice_Mask_Texture"), reinterpret_cast<CComponent**>(&m_pMaskTextureCom))))
-		return E_FAIL;
-
-	/* Com_Digivice_Texture */
-	if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Digimon_Digivice"),
-		TEXT("Com_Digivice_Texture"), reinterpret_cast<CComponent**>(&m_pDigimonTextureCom))))
 		return E_FAIL;
 
 	/* Com_Shader */
@@ -126,10 +116,6 @@ HRESULT CDigivice_Slot::Bind_ShaderResources()
 	if (FAILED(m_pShaderCom->Bind_Matrix("g_ProjMatrix", &m_ProjMatrix)))
 		return E_FAIL;
 	if (FAILED(m_pSlotTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture1", 0)))
-		return E_FAIL;
-	if (FAILED(m_pMaskTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture2", 0)))
-		return E_FAIL;
-	if (FAILED(m_pDigimonTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture3", 5)))
 		return E_FAIL;
 
 	return S_OK;
@@ -169,6 +155,5 @@ void CDigivice_Slot::Free()
 
 	Safe_Release(m_pVIBufferCom);
 	Safe_Release(m_pSlotTextureCom);
-	Safe_Release(m_pMaskTextureCom);
 	Safe_Release(m_pShaderCom);
 }

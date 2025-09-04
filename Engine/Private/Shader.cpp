@@ -130,6 +130,18 @@ HRESULT CShader::Bind_Matrix(const _char* pConstanName, const _float4x4* pMatrix
 	return pMatrixVariable->SetMatrix(reinterpret_cast<const _float*>(pMatrix));
 }
 
+HRESULT CShader::Bind_Matrices(const _char* pConstantName, const _float4x4* pMatrix, _uint iNumMatrices)
+{
+	ID3DX11EffectVariable* pVariable = m_pEffect->GetVariableByName(pConstantName);
+	if (nullptr == pVariable)
+		return E_FAIL;
+
+	ID3DX11EffectMatrixVariable* pMatrixVariable = pVariable->AsMatrix();
+	if (nullptr == pMatrixVariable)
+		return E_FAIL;
+
+	return pMatrixVariable->SetMatrixArray(reinterpret_cast<const _float*>(pMatrix), 0, iNumMatrices);
+}
 HRESULT CShader::Bind_SRV(const _char* pConstantName, ID3D11ShaderResourceView* pSRV)
 {
 	// 이 함수는 텍스쳐를 넣을 때 이제 그 텍스쳐가 전역 변수로 있으면 그거를 넘겨주기 위함

@@ -15,4 +15,5 @@ HRESULT CInventory_Manager::Initialize()
 
 void CInventory_Manager::Free()
 {
+    __super::Free();
 }

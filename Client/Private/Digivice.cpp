@@ -2,6 +2,7 @@
 #include "GameInstance.h"
 #include "Digivice_Slot.h"
 #include "Digimon_Manager.h"
+#include "Digivice_Mask.h"
 
 CDigivice::CDigivice(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CUIObject{ pDevice, pContext }
@@ -23,11 +24,9 @@ HRESULT CDigivice::Initialize(void* pArg)
 	CUIObject::UIOBJECT_DESC	Desc{};
 
 	Desc.fX = 700.f;
-	Desc.fY = 400.f;
-	Desc.fSizeX = 700.f;
-	Desc.fSizeY = 500.f;
-
-	m_pRect = { long(Desc.fX - Desc.fSizeX * 0.5f), long(Desc.fY - Desc.fSizeY * 0.5f), long(Desc.fX + Desc.fSizeX * 0.5f), long(Desc.fY + Desc.fSizeY * 0.5f) };
+	Desc.fY = 350.f;
+	Desc.fSizeX = 900.f;
+	Desc.fSizeY = 600.f;
 
 	m_iDigivice_Battle_Slot_Number = 8;
 
@@ -54,6 +53,15 @@ void CDigivice::Update(_float fTimeDelta)
 {
 	if (m_pGameInstance->Key_Down(DIK_V))
 		Set_Active();
+
+	m_pTransformCom->Set_Scale(m_fSizeX, m_fSizeY, 1.f);
+	m_pTransformCom->Set_State(STATE::POSITION, XMVectorSet(m_fX - m_fWinSizeX * 0.5f, -m_fY + m_fWinSizeY * 0.5f, 0.f, 1.f));
+
+	for (_uint i = 0; i < m_iDigivice_Battle_Slot_Number; ++i)
+	{
+		m_pBattle_Slot[i]->Set_Parent_WorldPos(m_pTransformCom->Get_State(STATE::POSITION));
+		m_pBattle_Mask[i]->Set_Parent_WorldPos(m_pTransformCom->Get_State(STATE::POSITION));
+	}
 }
 
 void CDigivice::Late_Update(_float fTimeDelta)
@@ -82,11 +90,10 @@ HRESULT CDigivice::Render()
 		for (_uint i = 0; i < m_iDigivice_Battle_Slot_Number; ++i)
 		{
 			m_pBattle_Slot[i]->Render();
+			m_pBattle_Mask[i]->Render();
 		}
 
-
 		__super::End();
-
 	}
 	return S_OK;
 }
@@ -133,7 +140,11 @@ HRESULT CDigivice::Create_Slot(const _wstring& strLayerTag)
 		m_pDigivice_Slot = static_cast<CDigivice_Slot*>(m_pGameInstance->Add_GameObject_ToLayer_ToCreate(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Digivice_Slot"),
 			ENUM_CLASS(LEVEL::GAMEPLAY), strLayerTag));
 
+		m_pDigivice_Mask = static_cast<CDigivice_Mask*>(m_pGameInstance->Add_GameObject_ToLayer_ToCreate(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Digivice_Mask"),
+			ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Layer_Mask")));
+
 		m_pBattle_Slot.push_back(m_pDigivice_Slot);
+		m_pBattle_Mask.push_back(m_pDigivice_Mask);
 	}
 
 	for (_uint i = 0; i < m_iDigivice_Battle_Slot_Number; ++i)
@@ -141,10 +152,13 @@ HRESULT CDigivice::Create_Slot(const _wstring& strLayerTag)
 
 		_float row = i % 3;
 
-		_float startX = -75.f;
-		_float startY = -80.f + row * 43;
+		_float startX = 100.f;
+		_float startY = 20.f + row * 105;
+
+		_float maskstartX = -50.f;
 
 		m_pBattle_Slot[i]->Set_Move(startX, startY);
+		m_pBattle_Mask[i]->Set_Move(maskstartX, startY);
 
 	}
 
@@ -153,11 +167,13 @@ HRESULT CDigivice::Create_Slot(const _wstring& strLayerTag)
 
 		_float row = i % 5;
 
-		_float startX = -75.f;
-		_float startY = 95.f + row * 43;
+		_float startX = 100.f;
+		_float startY = 430.f + row * 105;
+
+		_float maskstartX = -50.f;
 
 		m_pBattle_Slot[i]->Set_Move(startX, startY);
-
+		m_pBattle_Mask[i]->Set_Move(maskstartX, startY);
 	}
 
 	return S_OK;
@@ -197,4 +213,8 @@ void CDigivice::Free()
 	Safe_Release(m_pVIBufferCom);
 	Safe_Release(m_pTextureCom);
 	Safe_Release(m_pShaderCom);
+
+	Safe_Release(m_pDigivice_Slot);
+	Safe_Release(m_pDigivice_Mask);
+	Safe_Release(m_pDigimon_Manager);
 }

@@ -46,9 +46,8 @@ private:
 
 	vector<class CSlot*>				m_vItem_Buttons;		// ¿Â∫Ò æ∆¿Ã≈€ ΩΩ∑‘ ∫§≈Õ
 
-	class CSlot*						m_pSlot		= { nullptr };
-	class CExit_Button*					m_pExit		= { nullptr };
-
+	class CSlot*						m_pSlot			= { nullptr };
+	class CExit_Button*					m_pExit			= { nullptr };
 	class CItemType_Button*				m_pWeapon_Type	= { nullptr };
 	class CItemType_Button*				m_pSoby_Type	= { nullptr };
 	class CItemType_Button*				m_pGita_Type	= { nullptr };

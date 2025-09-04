@@ -1,0 +1,57 @@
+#pragma once
+
+#include "Client_Defines.h"
+#include "UIObject.h"
+
+NS_BEGIN(Engine)
+class CVIBuffer_Rect;
+class CTexture;
+class CShader;
+NS_END
+
+NS_BEGIN(Client)
+
+class CDigivice_Mask final : public CUIObject
+{
+private:
+	CDigivice_Mask(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
+	CDigivice_Mask(const CDigivice_Mask& Prototype);
+	virtual ~CDigivice_Mask() = default;
+
+public:
+	virtual HRESULT Initialize_Prototype() override;
+	virtual HRESULT Initialize(void* pArg) override;
+	virtual void Priority_Update(_float fTimeDelta) override;
+	virtual void Update(_float fTimeDelta) override;
+	virtual void Late_Update(_float fTimeDelta) override;
+	virtual HRESULT Render() override;
+
+public:
+	void Set_Parent_WorldPos(_vector fParent_World);
+	void Set_Move(_float fX, _float fY);
+
+	void Set_Digimon_ID(_uint ID) { m_iDigimon_ID = ID; }
+
+private:
+	CVIBuffer_Rect* m_pVIBufferCom = { nullptr };
+	CTexture* m_pMaskTextureCom = { nullptr };
+	CTexture* m_pDigimonTextureCom = { nullptr };
+	CShader* m_pShaderCom = { nullptr };
+
+	_uint			m_iDigimon_ID{};
+
+	_bool			m_bHasDigimon = false;
+
+private:
+	HRESULT Ready_Components();
+	HRESULT Bind_ShaderResources();
+
+	_float4 m_fParent_WorldPos{};
+
+public:
+	static CDigivice_Mask* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
+	virtual CGameObject* Clone(void* pArg) override;
+	virtual void Free() override;
+};
+
+NS_END

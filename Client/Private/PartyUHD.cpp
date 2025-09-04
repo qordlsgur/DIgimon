@@ -117,5 +117,7 @@ CGameObject* CPartyUHD::Clone(void* pArg)
 void CPartyUHD::Free()
 {
 	__super::Free();
-}
 
+	Safe_Release(m_pDigimon_Manager);
+	Safe_Release(m_pUHD_Slot);
+}

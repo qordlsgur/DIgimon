@@ -50,6 +50,7 @@ void CInventory::Update(_float fTimeDelta)
 {
 	m_pTransformCom->Set_Scale(m_fSizeX, m_fSizeY, 1.f);
 	m_pTransformCom->Set_State(STATE::POSITION, XMVectorSet(m_fX - m_fWinSizeX * 0.5f, -m_fY + m_fWinSizeY * 0.5f, 0.f, 1.f));
+	m_pRect = { long(m_fX - m_fSizeX * 0.5f), long(m_fY - m_fSizeY * 0.5f), long(m_fX + m_fSizeX * 0.5f), long(m_fY + m_fSizeY * 0.5f) };
 
 	for (_uint i = 0; i < m_iSlotCount; ++i)
 	{
@@ -190,8 +191,8 @@ HRESULT CInventory::Create_Slot(const _wstring& strLayerTag)
 		_float col = i % 8;
 		_float row = i / 8;
 
-		_float startX = 368.f + col * (85 + 10);
-		_float startY = 125.f + row * (85 + 10);
+		_float startX = -165.f + col * (40 + 7);
+		_float startY = -140.f + row * (40 + 7);
 
 		m_vSlots[i]->Set_Move(startX, startY);
 	}
@@ -256,13 +257,10 @@ void CInventory::Free()
 {
 	__super::Free();
 
-	for (auto& vSlots : m_vSlots)
-		Safe_Release(vSlots);
-
-	m_vSlots.clear();
-
 	Safe_Release(m_pVIBufferCom);
 	Safe_Release(m_pTextureCom);
 	Safe_Release(m_pShaderCom);
 
+	Safe_Release(m_pSlot);
+	Safe_Release(m_pExit);
 }

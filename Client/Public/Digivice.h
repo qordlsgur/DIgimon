@@ -35,10 +35,12 @@ private:
 	CShader* m_pShaderCom = { nullptr };
 
 	class CDigivice_Slot* m_pDigivice_Slot = { nullptr };
+	class CDigivice_Mask* m_pDigivice_Mask = { nullptr };
 
 	_uint	m_iDigivice_Battle_Slot_Number;
 
 	vector<class CDigivice_Slot*> m_pBattle_Slot;
+	vector<class CDigivice_Mask*> m_pBattle_Mask;
 
 
 	class CDigimon_Manager* m_pDigimon_Manager = {nullptr};
