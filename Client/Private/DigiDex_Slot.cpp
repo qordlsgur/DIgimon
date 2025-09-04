@@ -121,6 +121,8 @@ HRESULT CDigiDex_Slot::Bind_ShaderResources()
 		return E_FAIL;
 	if (FAILED(m_pShaderCom->Bind_Int("g_Hover", m_bHover)))
 		return E_FAIL;
+	if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture1", a)))
+		return E_FAIL;
 
 	return S_OK;
 }
