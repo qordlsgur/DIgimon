@@ -1,4 +1,5 @@
 #include "DigiDex_Manager.h"
+#include "DigiDex.h"
 
 
 IMPLEMENT_SINGLETON(CDigiDex_Manager)
@@ -49,4 +50,6 @@ _bool CDigiDex_Manager::Digimon_Data_Loder(const _tchar* pBinFilePath, vector<Di
 void CDigiDex_Manager::Free()
 {
 	__super::Free();
+
+	//Safe_Release(m_pDigiDex);
 }

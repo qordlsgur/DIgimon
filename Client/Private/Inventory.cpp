@@ -257,13 +257,10 @@ void CInventory::Free()
 {
 	__super::Free();
 
-	for (auto& vSlots : m_vSlots)
-		Safe_Release(vSlots);
-
-	m_vSlots.clear();
-
 	Safe_Release(m_pVIBufferCom);
 	Safe_Release(m_pTextureCom);
 	Safe_Release(m_pShaderCom);
 
+	Safe_Release(m_pSlot);
+	Safe_Release(m_pExit);
 }

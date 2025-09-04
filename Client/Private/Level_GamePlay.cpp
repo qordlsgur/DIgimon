@@ -34,8 +34,8 @@ HRESULT CLevel_GamePlay::Initialize()
 	//if (FAILED(Ready_Layer_Player(TEXT("Layer_Player"))))
 	//	return E_FAIL;
 
-	//if (FAILED(Ready_Layer_Monster(TEXT("Layer_Monster"))))
-	//	return E_FAIL;
+	if (FAILED(Ready_Layer_Monster(TEXT("Layer_Monster"))))
+		return E_FAIL;
 
 	//if (FAILED(Ready_Layer_Effect(TEXT("Layer_Effect"))))
 	//	return E_FAIL;	
@@ -158,12 +158,12 @@ HRESULT CLevel_GamePlay::Ready_Layer_Player(const _wstring& strLayerTag)
 
 HRESULT CLevel_GamePlay::Ready_Layer_Monster(const _wstring& strLayerTag)
 {
-	/*for (size_t i = 0; i < 20; i++)
+	for (size_t i = 0; i < 1; i++)
 	{
 		if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Monster"),
 			ENUM_CLASS(LEVEL::GAMEPLAY), strLayerTag)))
 			return E_FAIL;
-	}*/
+	}
 
 
 	return S_OK;
@@ -196,13 +196,11 @@ CLevel_GamePlay* CLevel_GamePlay::Create(ID3D11Device* pDevice, ID3D11DeviceCont
 	return pInstance;
 }
 
-
-
-
-
 void CLevel_GamePlay::Free()
 {
 	__super::Free();
 
-
+	Safe_Release(m_pDigiDex_Manager);
+	Safe_Release(m_pInventort_Manager);
+	Safe_Release(m_pDigimon_Manager);
 }

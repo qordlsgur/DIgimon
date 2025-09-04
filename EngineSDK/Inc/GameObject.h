@@ -8,7 +8,7 @@ class ENGINE_DLL CGameObject abstract : public CBase
 {
 public:
 	// 게임 오브젝트로 만드는 오브젝트들은 전부 다 Transform을 받아오기 떄문에
-	// 속도랑 회전 값을 넘겨 주기 위해서 값을 넘겨주는 친구이다.
+	// 속도랑 회전 값을 넘겨 주기 위해서 값을 넘겨주는 친구이다. 
 typedef struct tagGameObjectDesc : public CTransform::TRANSFORM_DESC
 {
 

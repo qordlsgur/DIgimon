@@ -23,7 +23,7 @@ public:
 
 	void Acquire_Digimon();
 
-	void Copy_Digimon();
+	//void Copy_Digimon();
 
 	void PartyUHD(class CPartyUHD* pPartyUHD);
 	void Digivice(class CDigivice* pDigivice);

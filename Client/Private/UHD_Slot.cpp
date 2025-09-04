@@ -198,5 +198,6 @@ void CUHD_Slot::Free()
 	Safe_Release(m_pSPTextureCom);
 	Safe_Release(m_pHPTextureCom);
 	Safe_Release(m_pEVPTextureCom);
+	Safe_Release(m_pDigimonTextureCom);
 	Safe_Release(m_pShaderCom);
 }
