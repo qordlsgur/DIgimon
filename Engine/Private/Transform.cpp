@@ -1,5 +1,6 @@
 #include "Transform.h"
 #include "Shader.h"
+#include "Navigation.h"
 
 CTransform::CTransform(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
     : CComponent{ pDevice, pContext }
@@ -261,6 +262,144 @@ void CTransform::LookAt(_fvector vAt)
 	Set_State(STATE::RIGHT, XMVector3Normalize(vRight) * vScale.x);
 	Set_State(STATE::UP, XMVector3Normalize(vUp) * vScale.y);
 	Set_State(STATE::LOOK, XMVector3Normalize(vLook) * vScale.z);
+}
+
+void CTransform::Jump(_float fHight)
+{
+	_vector		vPosition = Get_State(STATE::POSITION);
+	_vector		vUp = Get_State(STATE::UP);
+
+	vPosition += XMVector3Normalize(vUp) * fHight;
+
+	Set_State(STATE::POSITION, vPosition);
+}
+
+void CTransform::Go_Straight(_float fTimeDelta, class CNavigation* pNavigation)
+{
+	_vector		vPosition = Get_State(STATE::POSITION);
+	_vector		vLook = Get_State(STATE::LOOK);
+
+	vPosition += XMVector3Normalize(vLook) * m_fSpeedPerSec * fTimeDelta;
+
+	if (nullptr == pNavigation ||
+		true == pNavigation->isMove(vPosition))
+		Set_State(STATE::POSITION, vPosition);
+}
+
+_bool CTransform::FollowPlayer(_vector fTarget, _float fFollowDistance, _float fTimeDelta)
+{
+	_vector Pos = Get_State(STATE::POSITION);
+
+	_vector Target = XMVectorSet(fTarget.m128_f32[0], 0.f, fTarget.m128_f32[2], fTarget.m128_f32[3]);
+
+	_vector Dir = XMVectorSubtract(Target, Pos);
+	_vector LenVec = XMVector3Length(Dir);
+	_float Distance = XMVectorGetX(LenVec);
+
+	if (Distance >= fFollowDistance)
+		isFollow = true;
+
+	if (Distance <= 10)
+	{
+		isFollow = false;
+		return false;
+	}
+
+	if (isFollow)
+	{
+		Pos += XMVector3Normalize(Dir) * (m_fSpeedPerSec * 0.7f) * fTimeDelta;
+		Set_State(STATE::POSITION, Pos);
+		return true;
+	}
+}
+
+void CTransform::Look(_vector Angle, _float fTimeDelta)
+{
+	_vector vRight = Get_State(STATE::RIGHT);
+	_vector vUp = Get_State(STATE::UP);
+	_vector vLook = Get_State(STATE::LOOK);
+
+	_vector Look = XMVector3Normalize(vLook);
+	_vector NorAngle = XMVector3Normalize(Angle);
+
+	_float vDot = XMVectorGetX(XMVector3Dot(Look, NorAngle));
+
+	_float vAngle = acos(clamp(vDot, -1.f, 1.f));
+
+	_vector cross = XMVector3Cross(Look, NorAngle);
+
+	_float Sing = XMVectorGetY(cross);
+	if (fabs(Sing) <= 0.0001f)
+		Sing = 0.f;
+	Sing = (Sing >= 0) ? 1.f : -1.f;
+
+	_float Max = m_fSpeedPerSec * fTimeDelta;
+
+	_float TargetAngle = min(vAngle, Max) * Sing;
+
+	_matrix RotationMatrix = XMMatrixRotationAxis(XMVectorSet(0.f, 1.f, 0.f, 0.f), TargetAngle);
+
+	vRight = XMVector3TransformNormal(vRight, RotationMatrix);
+	vUp = XMVector3TransformNormal(vUp, RotationMatrix);
+	vLook = XMVector3TransformNormal(vLook, RotationMatrix);
+
+	Set_State(STATE::RIGHT, vRight);
+	Set_State(STATE::UP, vUp);
+	Set_State(STATE::LOOK, vLook);
+}
+
+void CTransform::LookAtPlayer(_vector fTarger, _float fTimeDelta)
+{
+	_vector	vRight = Get_State(STATE::RIGHT);
+	_vector	vUp = Get_State(STATE::UP);
+	_vector	vLook = Get_State(STATE::LOOK);
+
+	_vector pos = Get_State(STATE::POSITION);
+	_vector Look = XMVector3Normalize(vLook);
+
+	_vector Target = XMVectorSet(fTarger.m128_f32[0], 0.f, fTarger.m128_f32[2], fTarger.m128_f32[3]);
+
+	_vector Dir = XMVector3Normalize(XMVectorSubtract(Target, pos));
+
+	_float Dot = XMVectorGetX(XMVector3Dot(Dir, Look));
+
+	_float vAngle = acos(clamp(Dot, -1.f, 1.f));
+
+	_vector Cross = XMVector3Cross(Look, Dir);
+
+	_float Sing = XMVectorGetY(Cross);
+
+	if (fabs(Sing) <= 0.0001f)
+		Sing = 0.f;
+
+	Sing = (Sing >= 0) ? 1.f : -1.f;
+
+	_matrix RotationMatrix = XMMatrixRotationAxis(XMVectorSet(0.f, 1.f, 0.f, 0.f), vAngle * Sing * m_fSpeedPerSec * fTimeDelta);
+
+	vRight = XMVector3TransformNormal(vRight, RotationMatrix);
+	vUp = XMVector3TransformNormal(vUp, RotationMatrix);
+	vLook = XMVector3TransformNormal(vLook, RotationMatrix);
+
+	Set_State(STATE::RIGHT, vRight);
+	Set_State(STATE::UP, vUp);
+	Set_State(STATE::LOOK, vLook);
+}
+
+void CTransform::TurnY(_float fAngle, _float fTimeDelta)
+{
+	_vector		vRight = Get_State(STATE::RIGHT);
+	_vector		vUp = Get_State(STATE::UP);
+	_vector		vLook = Get_State(STATE::LOOK);
+
+	_matrix		RotationMatrix = XMMatrixRotationAxis(XMVectorSet(0.f, 1.f, 0.f, 0.f), fAngle * m_fRotationPerSec * fTimeDelta);
+
+	vRight = XMVector3TransformNormal(vRight, RotationMatrix);
+	vUp = XMVector3TransformNormal(vUp, RotationMatrix);
+	vLook = XMVector3TransformNormal(vLook, RotationMatrix);
+
+	Set_State(STATE::RIGHT, vRight);
+	Set_State(STATE::UP, vUp);
+	Set_State(STATE::LOOK, vLook);
 }
 
 CTransform* CTransform::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)

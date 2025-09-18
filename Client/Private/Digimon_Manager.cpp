@@ -35,7 +35,7 @@ void CDigimon_Manager::Acquire_Digimon()
 	{
 		if (m_vDigivice_Battle_Slot[i] != nullptr)
 		{
-			m_vDigivice_Battle_Slot[i];
+			//m_vDigivice_Battle_Slot[i];
 		}
 	}
 }
@@ -62,4 +62,12 @@ void CDigimon_Manager::Free()
 	/*Safe_Release(m_pPartyUHD);
 	Safe_Release(m_pDigivice);
 	Safe_Release(m_pDigimon_Storage);*/
+
+	for (auto& Slot : m_vDigimon_Storage_Slot)
+		Safe_Release(Slot);
+	m_vDigimon_Storage_Slot.clear();
+
+	for (auto& Slot : m_vDigivice_Battle_Slot)
+		Safe_Release(Slot);
+	m_vDigivice_Battle_Slot.clear();
 }

@@ -1,82 +1,124 @@
+#include "Engine_Shader_Defines.hlsli"
+
 matrix g_WorldMatrix, g_ViewMatrix, g_ProjMatrix;
 
-Texture2D g_Texture;
+vector g_vCamPosition;
+
+vector g_vLightDir;
+vector g_vLightDiffuse;
+vector g_vLightAmbient;
+vector g_vLightSpecular;
+
+texture2D g_DiffuseTexture;
+vector g_vMtrlAmbient = vector(1.f, 1.f, 1.f, 1.f);
+vector g_vMtrlSpecular = vector(1.f, 1.f, 1.f, 1.f);
 
 sampler DefaultSampler = sampler_state
 {
     Filter = MIN_MAG_MIP_LINEAR;
-    
+    AddressU = wrap;
+    AddressV = wrap;
 };
 
-// : 이 친구는 시메틱 이라고 한다. 선언하는 함수를 보면 시메틱 네임 이라는게 있다.
-struct VS_IN // 구조체랑 똑같음 
+/* 정점 쉐이더 : */
+/* 정점에 대한 셰이딩 == 정점에 필요한 연산을 수행한다 == 정점의 상태변환(월드, 뷰, 투영) + 추가변환 */
+/* 정점의 구성 정보를 수정, 변경한다 */ 
+struct VS_IN
 {
     float3 vPosition : POSITION;
     float3 vNormal : NORMAL;
     float2 vTexcoord : TEXCOORD0;
 };
 
-struct VS_OUT // 위에 IN은 3인데 출력은 무조건 4이다.
+struct VS_OUT
 {
     float4 vPosition : SV_POSITION;
+    float4 vNormal : NORMAL;
     float2 vTexcoord : TEXCOORD0;
+    float4 vWorldPos : TEXCOORD1;
 };
 
 VS_OUT VS_MAIN(VS_IN In)
 {
-	
-	// 받아온 정점의 IN.vPotition * 월드 * 뷰 * 투영
-	
-	// return에 필요한 변수이다.
     VS_OUT Out;
-    
-    // 투영행렬까지 가기 위한 계산을 해 줘야 한다.
+  
     matrix matWV, matWVP;
     
-    // mul이라는 함수는 행렬의 곱이 가능하다고 하면 곱하기를 해주는 함수이다.
-    matWV = mul(g_WorldMatrix, g_ViewMatrix); // 월드 행렬 * 뷰 행렬
-    matWVP = mul(matWV, g_ProjMatrix); // 뷰 스페이스 행렬 * 투영 행렬
+    matWV = mul(g_WorldMatrix, g_ViewMatrix);
+    matWVP = mul(matWV, g_ProjMatrix);
     
-    // 밑에 계산식은 1*3이랑 4*4 라서 계산을 하기 위해서 뒤에 w값인 1을 넣어준다.
-    // 여기서 왜 w가 0인가 1인가는 렌더링 파이프라인에 투영행렬을 해 주는 과정에 설명
     Out.vPosition = mul(vector(In.vPosition, 1.f), matWVP);
-    
     Out.vTexcoord = In.vTexcoord;
+    Out.vNormal = normalize(mul(vector(In.vNormal, 0.f), g_WorldMatrix));
+    Out.vWorldPos = mul(vector(In.vPosition, 1.f), g_WorldMatrix);
 
     return Out;
 }
 
-struct PS_IN // 이 친구는 w나누기까지 다 한 값을 들고옴
+/* 출력된 정점 위치벡터의 w값으로 모든 성분을 나눈다 -> 투영스페이스로 변환 */ 
+/* 정점의 위치에 대해서 뷰포트 변환을 수행한다 */ 
+/* 정점의 모든 정보를 보간하여 픽셀을 만든다. -> 래스터라이즈 */ 
+
+struct PS_IN
 {
-    float4 vPosition : SV_POSITION; // 윈도우 상의 좌표이다(모든 계산이 끝난 친구)
+    float4 vPosition : SV_POSITION;
+    float4 vNormal : NORMAL;
     float2 vTexcoord : TEXCOORD0;
+    float4 vWorldPos : TEXCOORD1;
 };
 
 struct PS_OUT
 {
-    float4 vColor : SV_TARGET0; // 현재 장치에 바인딩 된 0번째 값
+    float4 vColor : SV_TARGET0;
 };
 
 
-// 픽셀 셰이더 함수: 리턴 값은 픽셀의 최종 색
+
+/* 픽셀 쉐이더 : 픽셀의 최종적인 색을 결정하낟. */
 PS_OUT PS_MAIN(PS_IN In)
 {
-	// 출력을 위한 변수
-    
     PS_OUT Out;
     
+    vector vMtrlDiffuse = g_DiffuseTexture.Sample(DefaultSampler, In.vTexcoord * 30.f);
     
-    Out.vColor = g_Texture.Sample(DefaultSampler, In.vTexcoord);
+    float fShade = max(dot(normalize(g_vLightDir) * -1.f, In.vNormal), 0.f);
+    
+    vector vReflect = normalize(reflect(normalize(g_vLightDir), In.vNormal));
+    vector vLook = In.vWorldPos - g_vCamPosition;
+    
+    float fSpecular = pow(max(dot(normalize(vLook) * -1.f, vReflect), 0.f), 50.f);
+    
+    Out.vColor = (g_vLightDiffuse * vMtrlDiffuse) * (fShade + (g_vLightAmbient * g_vMtrlAmbient)) +
+        (g_vLightSpecular * g_vMtrlSpecular) * fSpecular;
     
     return Out;
 }
 
 technique11 DefaultTechnique
 {
-		// pass도 여러개 정의 가능하다.
-    pass DefaultPass
+    pass Terrain
     {
+        SetRasterizerState(RS_Default);
+        SetDepthStencilState(DSS_Default, 0);
+        SetBlendState(BS_None, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
         VertexShader = compile vs_5_0 VS_MAIN();
         PixelShader = compile ps_5_0 PS_MAIN();
     }
+
+    //pass Frame
+    //{
+    //    VertexShader = compile vs_5_0 VS_MAIN();
+    //    PixelShader = compile ps_5_0 PS_MAIN();
+    //}
+    //pass AlphaBlend
+    //{
+    //    VertexShader = compile vs_5_0 VS_MAIN();
+    //    PixelShader = compile ps_5_0 PS_MAIN();
+    //}
+
+
+ 
+    
+
+ 
 }

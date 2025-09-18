@@ -20,12 +20,12 @@ public:
 
 	void DigiDex(class CDigiDex* pDigiDex);
 private:
-	_bool Digimon_Data_Loder(const _tchar* pBinFilePath, vector<Digimon_Data>& Data);
+	_bool Digimon_Data_Loder(const _tchar* pBinFilePath, vector<DIGIMON_DATA>& Data);
 
 	class CDigiDex* m_pDigiDex = { nullptr };
 
 private:
-	vector<Digimon_Data> Digimon_Datas;
+	vector<DIGIMON_DATA> Digimon_Datas;
 
 private:
 	virtual void Free() override;

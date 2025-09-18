@@ -1,19 +1,19 @@
 #include "UIObject.h"
 
 CUIObject::CUIObject(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
-    : CGameObject{ pDevice, pContext }
+	: CGameObject{ pDevice, pContext }
 {
 }
 
 CUIObject::CUIObject(const CUIObject& Prototype)
-    : CGameObject{ Prototype }
+	: CGameObject{ Prototype }
 {
 }
 
 HRESULT CUIObject::Initialize_Prototype()
 {
 
-    return S_OK;
+	return S_OK;
 }
 
 HRESULT CUIObject::Initialize(void* pArg)
@@ -71,42 +71,6 @@ HRESULT CUIObject::Initialize(void* pArg)
 	XMStoreFloat4x4(&m_ProjMatrix, XMMatrixOrthographicLH(ViewportDesc.Width,
 		ViewportDesc.Height, 0.f, 1.f));
 
-	// 다시 말하지만 절대 Context는 다른 스레드에서 사용 하지 말고 메인 스레드에서 사용할것
-
-	D3D11_DEPTH_STENCIL_DESC descDisable = {};
-	descDisable.DepthEnable = FALSE;
-	descDisable.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ZERO;
-	descDisable.DepthFunc = D3D11_COMPARISON_ALWAYS;
-
-	HRESULT hr = m_pDevice->CreateDepthStencilState(&descDisable, &m_pDepthStencilState_Disable);
-	if (FAILED(hr))
-		return hr;
-
-	// DepthStencilState Enable 생성 (Depth 테스트 켜기)
-	D3D11_DEPTH_STENCIL_DESC descEnable = {};
-	descEnable.DepthEnable = TRUE;
-	descEnable.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
-	descEnable.DepthFunc = D3D11_COMPARISON_LESS;
-
-	hr = m_pDevice->CreateDepthStencilState(&descEnable, &m_pDepthStencilState_Enable);
-	if (FAILED(hr))
-		return hr;
-
-	D3D11_BLEND_DESC Desc{};
-	Desc.AlphaToCoverageEnable = false;
-	Desc.IndependentBlendEnable = false;
-
-	Desc.RenderTarget[0].BlendEnable = true;
-	Desc.RenderTarget[0].SrcBlend = D3D11_BLEND_SRC_ALPHA;
-	Desc.RenderTarget[0].DestBlend = D3D11_BLEND_INV_SRC_ALPHA;
-	Desc.RenderTarget[0].BlendOp = D3D11_BLEND_OP_ADD;
-	Desc.RenderTarget[0].SrcBlendAlpha = D3D11_BLEND_ONE;
-	Desc.RenderTarget[0].DestBlendAlpha = D3D11_BLEND_ZERO;
-	Desc.RenderTarget[0].BlendOpAlpha = D3D11_BLEND_OP_ADD;
-	Desc.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
-
-	m_pDevice->CreateBlendState(&Desc, &m_pBS);
-
 
 	return S_OK;
 }
@@ -125,65 +89,16 @@ void CUIObject::Late_Update(_float fTimeDelta)
 
 HRESULT CUIObject::Render()
 {
-    return S_OK;
-}
-
-HRESULT CUIObject::Begin()
-{
-	if (m_pDepthStencilState_Disable == nullptr)
-		return E_FAIL;
-
-	m_pContext->OMSetDepthStencilState(m_pDepthStencilState_Disable, 0);
-
 	return S_OK;
 }
 
-HRESULT CUIObject::End()
+void CUIObject::Set_Active()
 {
-
-	if (m_pDepthStencilState_Enable == nullptr)
-		return E_FAIL;
-
-	m_pContext->OMSetDepthStencilState(m_pDepthStencilState_Enable, 0);
-
-	return S_OK;
-}
-
-HRESULT CUIObject::Blend_Begin()
-{
-	_float fBlendFactor[4] = { 0.f,0.f,0.f,0.f };
-	_uint iSampleMask = 0xffffffff;
-	m_pContext->OMSetBlendState(m_pBS, fBlendFactor, iSampleMask);
-
-	return S_OK;
-}
-
-HRESULT CUIObject::Blend_End()
-{
-	_float fBlendFactor[4] = { 0.f,0.f,0.f,0.f };
-	_uint iSampleMask = 0xffffffff;
-	m_pContext->OMSetBlendState(nullptr, fBlendFactor, iSampleMask);
-
-	return S_OK;
+	m_bActive = !m_bActive;
 }
 
 void CUIObject::Free()
 {
-    __super::Free();
+	__super::Free();
 
-	if (m_pDepthStencilState_Disable)
-	{
-		m_pDepthStencilState_Disable->Release();
-		m_pDepthStencilState_Disable = nullptr;
-	}
-	if (m_pDepthStencilState_Enable)
-	{
-		m_pDepthStencilState_Enable->Release();
-		m_pDepthStencilState_Enable = nullptr;
-	}
-	if (m_pBS)
-	{
-		m_pBS->Release();
-		m_pBS = nullptr;
-	}
 }

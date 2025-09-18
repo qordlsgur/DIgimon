@@ -29,9 +29,6 @@ HRESULT CGameObject::Initialize_Prototype()
 
 HRESULT CGameObject::Initialize(void* pArg)
 {
-	// 객체가 사본으로 만들어 지는건 이제 오브젝트를 생성하는데
-	// 그때 바로 TransformComponent를 생성하기 위해서 바로 Create를 박아둔다.
-	// Create에 값을 채워주고 만약 값이 nullptr이면 실패한다.
 	m_pTransformCom = CTransform::Create(m_pDevice, m_pContext);
 	if (nullptr == m_pTransformCom)
 		return E_FAIL;
@@ -40,22 +37,15 @@ HRESULT CGameObject::Initialize(void* pArg)
 	if (FAILED(m_pTransformCom->Initialize(pArg)))
 		return E_FAIL;
 
-	// pArg가 있으면 값을 넘겨줌
-	// 위에서 parg를 선언하고 밑에도 선언하면 두번 하는거 아니야 라고 생각 할 수 있는데
-	// 위에 Transform에서 있는거만 들고가고 없는건 안들고감
-	// 그리고 값을 Trasnform에 넘기는게 아니고 자기 자신이 들고있는것 뿐
+
 	if (nullptr != pArg)
 	{
 		GAMEOBJECT_DESC* pDesc = static_cast<GAMEOBJECT_DESC*>(pArg);
 	}
 
-	// 그리고 컴포넌트가 처음부터 생성이 되어서 바로 넣어준다.
 	m_Components.emplace(g_strTransformTag, m_pTransformCom);
 
-	// 그리고 레퍼런스 카운트를 1 증가 시킨다.
-	// 원래는 컴포넌트를 AddCount에서 증가를 시키는데 Add로 선언한게 아니라 바로 생성을
-	// 해버려서 여기서 바로 값을 증가 시켜줬다.
-	// 원래 Map에 넣는건 AddComponent에서 해준디.
+
 	Safe_AddRef(m_pTransformCom);
 
 	return S_OK;
@@ -88,6 +78,16 @@ CComponent* CGameObject::Find_Component(const _wstring& strComponentTag)
 		return nullptr;
 
 	return iter->second;
+}
+
+_vector CGameObject::Get_Transform()
+{
+	return m_pTransformCom->Get_State(STATE::POSITION);
+}
+
+void CGameObject::Set_Matrix(_float4x4 Matrix)
+{
+	m_pTransformCom->Set_WorldMatrix(Matrix);
 }
 
 void CGameObject::OnClick()

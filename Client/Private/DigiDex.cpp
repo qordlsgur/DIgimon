@@ -69,14 +69,8 @@ HRESULT CDigiDex::Render()
         if (FAILED(m_pVIBufferCom->Bind_Resources()))
             return E_FAIL;
 
-        __super::Begin();
-        __super::Blend_Begin();
-
         if (FAILED(m_pVIBufferCom->Render()))
             return E_FAIL;
-
-        __super::End();
-        __super::Blend_End();
     }
     return S_OK;
 }
@@ -152,5 +146,5 @@ void CDigiDex::Free()
     Safe_Release(m_pVIBufferCom);
     Safe_Release(m_pTextureCom);
     Safe_Release(m_pShaderCom);
-    Safe_Release(m_pDigiDex_Manager);
+ /*   Safe_Release(m_pDigiDex_Manager);*/
 }

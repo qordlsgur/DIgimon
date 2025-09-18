@@ -18,7 +18,13 @@ namespace Client
 		int				Digimon_ID;
 		int				Digimon_Type;
 		int				Digimon_Stage;
+	}DIGIMON_DATA;
+
+	enum class OBJECT {
+		TREE1, TREE2, TREE3, TENNIS, CAFE, BILDING1, BILDING2, BILDING3, BILDING4
+		, BILDING5, BILDING6, BILDING7, BILDING8, BILDING9, BILDING10, BILDING11, BILDING12, BILDING13
 	};
+
 }
 
 using namespace Client;

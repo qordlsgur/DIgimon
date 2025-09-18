@@ -73,7 +73,8 @@ public:
 	_bool Mouse_Pressing(MOUSEKEYSTATE eMouse);
 
 	_long Mouse_Drag(MOUSEMOVESTATE eMouseState);
-
+	_long Mouse_WheelUp();
+	_long Mouse_WheelDown();
 #pragma endregion
 
 #pragma region PIPELINE
@@ -85,16 +86,32 @@ public:
 
 #pragma endregion
 
+#pragma region PICKING
+	void Transform_Picking_ToLocalSpace(const _matrix* pWorldMatrixInverse);
+	_bool Picking_InWorldSpace(const _float3& vPointA, const _float3& vPointB, const _float3& vPointC, _float3* pOut);
+	_bool Picking_InLocalSpace(const _float3& vPointA, const _float3& vPointB, const _float3& vPointC, _float3* pOut);
+
+#pragma endregion
+
+#pragma region LIGHT_MANAGER
+	const LIGHT_DESC* Get_LightDesc(_uint iIndex) const;
+	HRESULT Add_Light(const LIGHT_DESC& LightDesc);
+#pragma endregion
+
+
+
 private:
 	class CGraphic_Device*			m_pGraphic_Device = { nullptr };
+	class CKey_Manager*				m_pKey_Manager = { nullptr };
+	class CMouse_Manager*			m_pMouse_Manager = { nullptr };
 	class CTimer_Manager*			m_pTimer_Manager = { nullptr };
 	class CLevel_Manager*			m_pLevel_Manager = { nullptr };
 	class CPrototype_Manager*		m_pPrototype_Manager = { nullptr };
 	class CObject_Manager*			m_pObject_Manager = { nullptr };
 	class CRenderer*				m_pRenderer = { nullptr };
-	class CMouse_Manager*			m_pMouse_Manager = { nullptr };
-	class CKey_Manager*				m_pKey_Manager = { nullptr };
+	class CPicking*					 m_pPicking = { nullptr };
 	class CPipeLine*				m_pPipeLine = { nullptr };
+	class CLight_Manager*			m_pLight_Manager = { nullptr };
 
 public:
 	void Release_Engine();

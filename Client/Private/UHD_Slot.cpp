@@ -62,14 +62,10 @@ HRESULT CUHD_Slot::Render()
 	if (FAILED(m_pVIBufferCom->Bind_Resources()))
 		return E_FAIL;
 
-	__super::Begin();
-	__super::Blend_Begin();
 
 	if (FAILED(m_pVIBufferCom->Render()))
 		return E_FAIL;
 
-	__super::Blend_End();
-	__super::End();
 
 
 	return S_OK;

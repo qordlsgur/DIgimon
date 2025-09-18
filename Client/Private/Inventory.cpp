@@ -57,7 +57,7 @@ void CInventory::Update(_float fTimeDelta)
 		m_vSlots[i]->Set_Parent_WorldPos(m_pTransformCom->Get_State(STATE::POSITION));
 	}
 
-	m_pExit->Set_Parent_WorldPos(m_pTransformCom->Get_State(STATE::POSITION));
+	//m_pExit->Set_Parent_WorldPos(m_pTransformCom->Get_State(STATE::POSITION));
 
 	m_pWeapon_Type->Set_Parent_WorldPos(m_pTransformCom->Get_State(STATE::POSITION));
 	m_pSoby_Type->Set_Parent_WorldPos(m_pTransformCom->Get_State(STATE::POSITION));
@@ -93,8 +93,6 @@ HRESULT CInventory::Render()
 		if (FAILED(m_pVIBufferCom->Bind_Resources()))
 			return E_FAIL;
 
-		__super::Begin();
-		__super::Blend_Begin();
 
 		if (FAILED(m_pVIBufferCom->Render()))
 			return E_FAIL;
@@ -104,15 +102,13 @@ HRESULT CInventory::Render()
 			m_vSlots[i]->Render();
 		}
 
-		m_pExit->Render();
+		//m_pExit->Render();
 
 		m_pWeapon_Type->Render();
 		m_pSoby_Type->Render();
 		m_pGita_Type->Render();
 		m_pLineUp_Type->Render();
 
-		__super::Blend_End();
-		__super::End();
 	}
 
 	return S_OK;
@@ -133,8 +129,8 @@ void CInventory::OnClick()
 			}
 		}
 
-		if (PtInRect(m_pExit->Get_Pos(), pPt))
-			m_pExit->Hover();
+		//if (PtInRect(m_pExit->Get_Pos(), pPt))
+		//	m_pExit->Hover();
 	}
 }
 
@@ -198,10 +194,10 @@ HRESULT CInventory::Create_Slot(const _wstring& strLayerTag)
 	}
 
 
-	m_pExit = static_cast<CExit_Button*>(m_pGameInstance->Add_GameObject_ToLayer_ToCreate(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Exit_Button"),
-		ENUM_CLASS(LEVEL::GAMEPLAY), strLayerTag));
+	//m_pExit = static_cast<CExit_Button*>(m_pGameInstance->Add_GameObject_ToLayer_ToCreate(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Exit_Button"),
+	//	ENUM_CLASS(LEVEL::GAMEPLAY), strLayerTag));
 
-	m_pExit->Set_Move(1040, -50);
+	//m_pExit->Set_Move(1040, -50);
 
 
 
@@ -262,5 +258,5 @@ void CInventory::Free()
 	Safe_Release(m_pShaderCom);
 
 	Safe_Release(m_pSlot);
-	Safe_Release(m_pExit);
+	//Safe_Release(m_pExit);
 }

@@ -113,6 +113,15 @@ HRESULT CShader::Initialize(void* pArg)
 	return S_OK;
 }
 
+HRESULT CShader::Bind_RawValue(const _char* pConstantName, const void* pData, _uint iLength)
+{
+	ID3DX11EffectVariable* pVariable = m_pEffect->GetVariableByName(pConstantName);
+	if (nullptr == pVariable)
+		return E_FAIL;
+
+	return pVariable->SetRawValue(pData, 0, iLength);
+}
+
 HRESULT CShader::Bind_Matrix(const _char* pConstanName, const _float4x4* pMatrix)
 {
 	// 우선 셰이더 안에 받은 이름이 있나 없나 검사를 해줌

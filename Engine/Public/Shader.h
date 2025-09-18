@@ -18,6 +18,7 @@ public:
 public:
 	// 셰이더에 있는 전역 변수들에게 값을 넘기기 위해 
 	// g_WorldMatrix, g_ViewMatrix, g_ProjMatrix등등 을 이용하기 위해서 만듬
+	HRESULT Bind_RawValue(const _char* pConstantName, const void* pData, _uint iLength);
 	HRESULT Bind_Matrix(const _char* pConstanName, const _float4x4* pMatrix);
 	HRESULT Bind_Matrices(const _char* pConstantName, const _float4x4* pMatrix, _uint iNumMatrices);
 

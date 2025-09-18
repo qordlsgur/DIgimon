@@ -61,9 +61,6 @@
     <Filter Include="03.UI\Item">
       <UniqueIdentifier>{c243ede8-6f50-41f9-8f5b-c1129b993563}</UniqueIdentifier>
     </Filter>
-    <Filter Include="04.Mouse">
-      <UniqueIdentifier>{c398de9c-7b4c-4eae-8079-cb52dc15849d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02.GameObjects\Terrain">
       <UniqueIdentifier>{45c04ebe-174d-49f1-aad2-e285bc5c24a8}</UniqueIdentifier>
     </Filter>
@@ -120,6 +117,45 @@
     </Filter>
     <Filter Include="02.GameObjects\Monster">
       <UniqueIdentifier>{75469210-586e-4a90-a02a-6b87bba29dc5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Camera\Manager">
+      <UniqueIdentifier>{62bcb2a0-fadb-4d9c-97ec-b1b9a431fcce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Player">
+      <UniqueIdentifier>{921734f8-f2bf-4f2f-bc7a-94280a2671cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Sky">
+      <UniqueIdentifier>{af8ca886-5e24-4106-ac87-5cf2064ebe20}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Tennis">
+      <UniqueIdentifier>{743f5837-1c29-4534-b48e-280ed011a55b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Bilding">
+      <UniqueIdentifier>{baf9da26-6792-4ef5-987c-a6b8ba183209}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Bilding\BldA">
+      <UniqueIdentifier>{694a6a35-9ae4-4fe9-8990-437a17855695}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Bilding\BldB">
+      <UniqueIdentifier>{ef451530-fa6c-4e4e-a8c0-0abc1218a0e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Bilding\BldC">
+      <UniqueIdentifier>{7707c7c0-c067-4e2e-bd1f-10f7bb9afe2e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Bilding\BldD">
+      <UniqueIdentifier>{8136e897-b0c3-4ddd-81ea-3239418e823e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Bilding\BldE">
+      <UniqueIdentifier>{22d8d5ac-8a1f-4e18-ab26-a3d2532cf9f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Bilding\BldH">
+      <UniqueIdentifier>{4ad7d789-b0e5-4532-8e5f-d51158e2af1c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Bilding\BldJ">
+      <UniqueIdentifier>{c680a680-754f-4c82-bc65-3775504cd3ba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Bilding\BldK">
+      <UniqueIdentifier>{a3a3c330-1ac0-4372-bbe6-6ee25ae03f29}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -221,6 +257,42 @@
     </ClInclude>
     <ClInclude Include="..\public\Monster.h">
       <Filter>02.GameObjects\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\Camera_Manager.h">
+      <Filter>02.GameObjects\Camera\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\BldA.h">
+      <Filter>02.GameObjects\Bilding\BldA</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\BldB.h">
+      <Filter>02.GameObjects\Bilding\BldB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\BldC.h">
+      <Filter>02.GameObjects\Bilding\BldC</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\BldD.h">
+      <Filter>02.GameObjects\Bilding\BldD</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\BldE.h">
+      <Filter>02.GameObjects\Bilding\BldE</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\BldH.h">
+      <Filter>02.GameObjects\Bilding\BldH</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\BldJ.h">
+      <Filter>02.GameObjects\Bilding\BldJ</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\BldK.h">
+      <Filter>02.GameObjects\Bilding\BldK</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\Player.h">
+      <Filter>02.GameObjects\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Tennis.h">
+      <Filter>02.GameObjects\Tennis</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Sky.h">
+      <Filter>02.GameObjects\Sky</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -324,6 +396,42 @@
     <ClCompile Include="..\private\Monster.cpp">
       <Filter>02.GameObjects\Monster</Filter>
     </ClCompile>
+    <ClCompile Include="..\private\Camera_Manager.cpp">
+      <Filter>02.GameObjects\Camera\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\BldA.cpp">
+      <Filter>02.GameObjects\Bilding\BldA</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\BldB.cpp">
+      <Filter>02.GameObjects\Bilding\BldB</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\BldC.cpp">
+      <Filter>02.GameObjects\Bilding\BldC</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\BldD.cpp">
+      <Filter>02.GameObjects\Bilding\BldD</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\BldE.cpp">
+      <Filter>02.GameObjects\Bilding\BldE</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\BldH.cpp">
+      <Filter>02.GameObjects\Bilding\BldH</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\BldJ.cpp">
+      <Filter>02.GameObjects\Bilding\BldJ</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\BldK.cpp">
+      <Filter>02.GameObjects\Bilding\BldK</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\Player.cpp">
+      <Filter>02.GameObjects\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Tennis.cpp">
+      <Filter>02.GameObjects\Tennis</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Sky.cpp">
+      <Filter>02.GameObjects\Sky</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxPosTex.hlsl">
@@ -351,6 +459,9 @@
       <Filter>97.ShaderFiles</Filter>
     </FxCompile>
     <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxMesh.hlsl">
+      <Filter>97.ShaderFiles</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxCube.hlsl">
       <Filter>97.ShaderFiles</Filter>
     </FxCompile>
   </ItemGroup>

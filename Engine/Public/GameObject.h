@@ -33,6 +33,10 @@ public:
 
 	class CComponent* Find_Component(const _wstring& strComponentTag);
 
+	virtual _vector Get_Transform();
+	virtual void Set_Matrix(_float4x4 Matrix);
+
+
 public:
 	virtual void OnClick();
 

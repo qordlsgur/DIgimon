@@ -3,12 +3,15 @@
 #include "Prototype_Manager.h"
 #include "Object_Manager.h"
 #include "Graphic_Device.h"
+
 #include "Level_Manager.h"
 #include "Timer_Manager.h"
 #include "Mouse_Manager.h"
+#include "Light_Manager.h"
 #include "Key_Manager.h"
 #include "Renderer.h"
 #include "PipeLine.h"
+#include "Picking.h"
 
 IMPLEMENT_SINGLETON(CGameInstance)
 
@@ -20,6 +23,10 @@ HRESULT CGameInstance::Initialize_Engine(const ENGINE_DESC& EngineDesc, ID3D11De
 {
 	m_pGraphic_Device = CGraphic_Device::Create(EngineDesc.hWnd, EngineDesc.eWindowMode, EngineDesc.iWinSizeX, EngineDesc.iWinSizeY, ppDevice, ppContext);
 	if (nullptr == m_pGraphic_Device)
+		return E_FAIL;
+
+	m_pLight_Manager = CLight_Manager::Create();
+	if (nullptr == m_pLight_Manager)
 		return E_FAIL;
 
 	m_pTimer_Manager = CTimer_Manager::Create();
@@ -52,6 +59,10 @@ HRESULT CGameInstance::Initialize_Engine(const ENGINE_DESC& EngineDesc, ID3D11De
 
 	m_pKey_Manager = CKey_Manager::Create(EngineDesc.hInstance, EngineDesc.hWnd);
 	if (nullptr == m_pKey_Manager)
+		return E_FAIL;
+
+	m_pPicking = CPicking::Create(*ppDevice, *ppContext, EngineDesc.hWnd);
+	if (nullptr == m_pPicking)
 		return E_FAIL;
 
 	return S_OK;
@@ -233,6 +244,16 @@ _long CGameInstance::Mouse_Drag(MOUSEMOVESTATE eMouseState)
 	return m_pKey_Manager->Mouse_Drag(eMouseState);
 }
 
+_long CGameInstance::Mouse_WheelUp()
+{
+	return m_pKey_Manager->Mouse_WheelUp();
+}
+
+_long CGameInstance::Mouse_WheelDown()
+{
+	return m_pKey_Manager->Mouse_WheelDown();
+}
+
 #pragma endregion
 
 #pragma region PIPELINE
@@ -259,13 +280,46 @@ const _float4* CGameInstance::Get_CamPosition()
 
 #pragma endregion
 
+#pragma region PICKING
+
+void CGameInstance::Transform_Picking_ToLocalSpace(const _matrix* pWorldMatrixInverse)
+{
+	m_pPicking->Transform_ToLocalSpace(pWorldMatrixInverse);
+}
+
+_bool CGameInstance::Picking_InWorldSpace(const _float3& vPointA, const _float3& vPointB, const _float3& vPointC, _float3* pOut)
+{
+	return m_pPicking->Picking_InWorldSpace(vPointA, vPointB, vPointC, pOut);
+}
+
+_bool CGameInstance::Picking_InLocalSpace(const _float3& vPointA, const _float3& vPointB, const _float3& vPointC, _float3* pOut)
+{
+	return m_pPicking->Picking_InLocalSpace(vPointA, vPointB, vPointC, pOut);
+}
+
+#pragma endregion
+
+#pragma region LIGHT_MANAGER
+
+const LIGHT_DESC* CGameInstance::Get_LightDesc(_uint iIndex) const
+{
+	return m_pLight_Manager->Get_LightDesc(iIndex);
+}
+
+HRESULT CGameInstance::Add_Light(const LIGHT_DESC& LightDesc)
+{
+	return m_pLight_Manager->Add_Light(LightDesc);
+}
+
 void CGameInstance::Release_Engine()
 {
 	DestroyInstance();
 
-	Safe_Release(m_pMouse_Manager);
+	Safe_Release(m_pLight_Manager);
 	Safe_Release(m_pPipeLine);
+	Safe_Release(m_pPicking);
 	Safe_Release(m_pKey_Manager);
+	Safe_Release(m_pMouse_Manager);
 	Safe_Release(m_pTimer_Manager);
 	Safe_Release(m_pRenderer);
 	Safe_Release(m_pPrototype_Manager);

@@ -32,10 +32,8 @@ public:
 	virtual RECT* Get_Pos() { return &m_pRect; }
 
 protected:
-	HRESULT Begin();
-	HRESULT End();
 
-	virtual void Set_Active() { m_bActive = !m_bActive; }
+	virtual void Set_Active();
 
 	virtual void OnClick() override;
 	virtual void IsHover() { m_bHover = !m_bHover; }
@@ -54,8 +52,6 @@ protected:
 
 	RECT					m_pRect{};
 
-	ID3D11DepthStencilState* m_pDepthDisable = nullptr;  // 깊이 테스트 OFF
-	ID3D11DepthStencilState* m_pDepthEnable = nullptr;   // 깊이 테스트 ON
 
 public:
 	virtual CGameObject* Clone(void* pArg) = 0;

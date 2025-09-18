@@ -21,7 +21,7 @@ void CDigiDex_Manager::DigiDex(CDigiDex* pDigiDex)
 	m_pDigiDex = pDigiDex;
 }
 
-_bool CDigiDex_Manager::Digimon_Data_Loder(const _tchar* pBinFilePath, vector<Digimon_Data>& Data)
+_bool CDigiDex_Manager::Digimon_Data_Loder(const _tchar* pBinFilePath, vector<DIGIMON_DATA>& Data)
 {
 	ifstream in(pBinFilePath, ios::binary);
 	if (!in) {
@@ -37,7 +37,7 @@ _bool CDigiDex_Manager::Digimon_Data_Loder(const _tchar* pBinFilePath, vector<Di
 	}
 
 	Data.resize(size);
-	in.read(reinterpret_cast<char*>(Data.data()), sizeof(Digimon_Data) * size);
+	in.read(reinterpret_cast<char*>(Data.data()), sizeof(DIGIMON_DATA) * size);
 	if (!in) {
 		cerr << "데이터 읽기 실패\n";
 		return false;

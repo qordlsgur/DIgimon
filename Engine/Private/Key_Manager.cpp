@@ -93,6 +93,17 @@ _bool CKey_Manager::Mouse_Pressing(MOUSEKEYSTATE eState)
     return (m_byCurrent_MouseStates.rgbButtons[static_cast<_uint>(eState)] & 0x80);
 }
 
+_bool CKey_Manager::Mouse_WheelUp()
+{
+    return m_byCurrent_MouseStates.lZ > 0;
+}
+
+_bool CKey_Manager::Mouse_WheelDown()
+{
+    return m_byCurrent_MouseStates.lZ < 0;
+}
+
+
 _long CKey_Manager::Mouse_Drag(MOUSEMOVESTATE eMouseState)
 {
     return *((reinterpret_cast<_int*>(&m_byCurrent_MouseStates)) + static_cast<_uint>(eMouseState));

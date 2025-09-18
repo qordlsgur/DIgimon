@@ -49,6 +49,8 @@ public:
 	// 스케일 값이 바뀔때 이거를 사용한다.
 	void Set_Scale(_float fX, _float fY, _float fZ);
 
+	void Set_WorldMatrix(_float4x4 Matrix) { m_WorldMatrix = Matrix; }
+
 public:
 	virtual HRESULT Initialize_Prototype();
 	virtual HRESULT Initialize(void* pArg);
@@ -79,6 +81,14 @@ public:
 	// 이 함수는 물체를 Look 처다보게 해 주는 함수이다.
 	void LookAt(_fvector vAt);
 
+public:
+	void Jump(_float fHight);
+	void Go_Straight(_float fTimeDelta, class CNavigation* pNavigation = nullptr);
+	_bool FollowPlayer(_vector fTarget, _float fFollowDistance, _float fTimeDelta);
+	void Look(_vector Angle, _float fTimeDeata);
+	void LookAtPlayer(_vector fTarger, _float fTimeDelta);
+	void TurnY(_float fAngle, _float fTimeDelta);
+
 private:
 	// 오브젝트의 이동 속도
 	_float				m_fSpeedPerSec = {};
@@ -89,7 +99,8 @@ private:
 	// 월드 매트릭스
 	_float4x4			m_WorldMatrix{};
 
-
+	_bool				m_bisMove = false;
+	_bool				isFollow = false;
 public:
 	static CTransform* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	virtual CComponent* Clone(void* pArg) override;

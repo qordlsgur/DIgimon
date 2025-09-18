@@ -63,12 +63,8 @@ HRESULT CExit_Button::Render()
 	if (FAILED(m_pVIBufferCom->Bind_Resources()))
 		return E_FAIL;
 
-	__super::Begin();
-
 	if (FAILED(m_pVIBufferCom->Render()))
 		return E_FAIL;
-
-	__super::End();
 
 	return S_OK;
 }
@@ -107,7 +103,7 @@ HRESULT CExit_Button::Ready_Components()
 		return E_FAIL;
 
 	/* Com_Shader */
-	if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::STATIC), TEXT("Prototype_Component_Shader_VtxPosTex"),
+	if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::STATIC), TEXT("Prototype_Component_Shader_Hover"),
 		TEXT("Com_Shader"), reinterpret_cast<CComponent**>(&m_pShaderCom))))
 		return E_FAIL;
 

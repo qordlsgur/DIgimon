@@ -139,6 +139,33 @@
     <ClInclude Include="..\public\Model.h">
       <Filter>01.Utility\03.Components\Model</Filter>
     </ClInclude>
+    <ClInclude Include="..\public\ContainerObject.h">
+      <Filter>01.Utility\02.GameObjects\ContainerObject</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\PartObject.h">
+      <Filter>01.Utility\02.GameObjects\PartObject</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\Navigation.h">
+      <Filter>01.Utility\03.Components\Navigation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\VIBuffer_Cell.h">
+      <Filter>01.Utility\03.Components\VIBuffer\Cell</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\Cell.h">
+      <Filter>01.Utility\03.Components\Navigation\Cell</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\VIBuffer_Cube.h">
+      <Filter>01.Utility\03.Components\VIBuffer\Cube</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\Light.h">
+      <Filter>01.Utility\09.Light</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\Light_Manager.h">
+      <Filter>01.Utility\09.Light\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\Picking.h">
+      <Filter>01.Utility\09.Picking</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Private\Base.cpp">
@@ -236,6 +263,33 @@
     </ClCompile>
     <ClCompile Include="..\private\Model.cpp">
       <Filter>01.Utility\03.Components\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\ContainerObject.cpp">
+      <Filter>01.Utility\02.GameObjects\ContainerObject</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Public\PartObject.cpp">
+      <Filter>01.Utility\02.GameObjects\PartObject</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Navigation.cpp">
+      <Filter>01.Utility\03.Components\Navigation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\VIBuffer_Cell.cpp">
+      <Filter>01.Utility\03.Components\VIBuffer\Cell</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\Cell.cpp">
+      <Filter>01.Utility\03.Components\Navigation\Cell</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\VIBuffer_Cube.cpp">
+      <Filter>01.Utility\03.Components\VIBuffer\Cube</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\Light.cpp">
+      <Filter>01.Utility\09.Light</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\Light_Manager.cpp">
+      <Filter>01.Utility\09.Light\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\Picking.cpp">
+      <Filter>01.Utility\09.Picking</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -356,6 +410,36 @@
     <Filter Include="01.Utility\03.Components\Model\Mesh">
       <UniqueIdentifier>{b2d58bd2-481e-443c-a9ab-3bec6f2d78af}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01.Utility\02.GameObjects\ContainerObject">
+      <UniqueIdentifier>{b9f90002-dd78-4721-9974-ecd8f7ea6364}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Utility\02.GameObjects\PartObject">
+      <UniqueIdentifier>{edf03908-1fc5-477c-bc27-a85de8eb1831}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Utility\03.Components\Navigation">
+      <UniqueIdentifier>{5c457372-8321-49e6-a68e-ec5d502fae7e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Utility\03.Components\Navigation\Cell">
+      <UniqueIdentifier>{467528b5-d9a3-40db-8ccb-f07891ae1db6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Utility\03.Components\VIBuffer\Cube">
+      <UniqueIdentifier>{e3d8d529-7a8b-43c8-8fdb-b96ccd2bba76}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Utility\03.Components\VIBuffer\Cell">
+      <UniqueIdentifier>{46f91a5d-8aa7-4e37-8390-566767aa523d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Utility\09.Light">
+      <UniqueIdentifier>{6f20e49d-4ea0-45ec-8427-7da3244e90b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Utility\09.Light\Manager">
+      <UniqueIdentifier>{25c1ef4c-4e9c-4e4d-9c83-fd5f89852b00}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Utility\09.Picking">
+      <UniqueIdentifier>{c7602235-90f4-4cb5-8d71-9a09b8799c00}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="98.ShaderFiles">
+      <UniqueIdentifier>{746fcb63-5413-474d-b59a-62af8b033721}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\EngineSDK\Inc\FMOD\fmod.cs">
@@ -367,5 +451,13 @@
     <None Include="..\..\EngineSDK\Inc\FMOD\fmod_errors.cs">
       <Filter>02.FMOD</Filter>
     </None>
+    <None Include="..\Bin\ShaderFiles\Engine_Shader_Defines.hlsli">
+      <Filter>98.ShaderFiles</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="..\Bin\ShaderFiles\Shader_Cell.hlsl">
+      <Filter>98.ShaderFiles</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>

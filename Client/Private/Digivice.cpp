@@ -82,7 +82,6 @@ HRESULT CDigivice::Render()
 		if (FAILED(m_pVIBufferCom->Bind_Resources()))
 			return E_FAIL;
 
-		__super::Begin();
 
 		if (FAILED(m_pVIBufferCom->Render()))
 			return E_FAIL;
@@ -93,7 +92,6 @@ HRESULT CDigivice::Render()
 			m_pBattle_Mask[i]->Render();
 		}
 
-		__super::End();
 	}
 	return S_OK;
 }
@@ -210,11 +208,19 @@ void CDigivice::Free()
 {
 	__super::Free();
 
+	for (auto& Sloat : m_pBattle_Slot)
+		Safe_Release(Sloat);
+	m_pBattle_Slot.clear();
+
+	for (auto& Mask : m_pBattle_Mask)
+		Safe_Release(Mask);
+	m_pBattle_Mask.clear();
+
 	Safe_Release(m_pVIBufferCom);
 	Safe_Release(m_pTextureCom);
 	Safe_Release(m_pShaderCom);
 
 	Safe_Release(m_pDigivice_Slot);
 	Safe_Release(m_pDigivice_Mask);
-	Safe_Release(m_pDigimon_Manager);
+	//Safe_Release(m_pDigimon_Manager);
 }

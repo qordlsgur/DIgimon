@@ -34,14 +34,9 @@ public:
 	virtual RECT* Get_Pos() { return &m_pRect; }
 
 protected:
-	HRESULT Begin();
-	HRESULT End();
-
-	HRESULT Blend_Begin();
-	HRESULT Blend_End();
 
 
-	virtual void Set_Active() { m_bActive = !m_bActive; }
+	virtual void Set_Active();
 
 protected:
 	// 기본적인 UI들은 이제 회면 가장 앞에 위치해 있다.
@@ -64,12 +59,6 @@ protected:
 	_float					m_fWinSizeX{}, m_fWinSizeY{};
 
 	RECT					m_pRect{};
-
-	ID3D11BlendState*		m_pBS = { nullptr };
-
-
-	ID3D11DepthStencilState* m_pDepthStencilState_Disable = nullptr;
-	ID3D11DepthStencilState* m_pDepthStencilState_Enable = nullptr;
 
 public:
 	virtual CGameObject* Clone(void* pArg) = 0;

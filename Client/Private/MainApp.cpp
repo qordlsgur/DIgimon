@@ -5,7 +5,6 @@
 #include "Level_Loading.h"
 
 #include "Camera_Free.h"
-
 Client::CMainApp::CMainApp()
 	: m_pGameInstance{ CGameInstance::GetInstance() }
 {
@@ -95,12 +94,6 @@ HRESULT CMainApp::Ready_Prototypes()
 		CCamera_Free::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
-
-	/* For.Prototype_Component_Texture_BackGround */
-	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::STATIC), TEXT("Prototype_Component_Texture_BackGround"),
-		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/Default%d.jpg"), 2))))
-		return E_FAIL;
-
 	return S_OK;
 }
 
@@ -127,4 +120,6 @@ void Client::CMainApp::Free()
 	m_pGameInstance->Release_Engine();
 
 	Safe_Release(m_pGameInstance);
+
+
 }

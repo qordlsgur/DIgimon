@@ -62,12 +62,8 @@ HRESULT CDigiDex_Slot::Render()
 	if (FAILED(m_pVIBufferCom->Bind_Resources()))
 		return E_FAIL;
 
-	__super::Begin();
-
 	if (FAILED(m_pVIBufferCom->Render()))
 		return E_FAIL;
-
-	__super::End();
 
 	return S_OK;
 }

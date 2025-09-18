@@ -24,6 +24,9 @@ public:
 	_bool Mouse_Up(MOUSEKEYSTATE eState);
 	_bool Mouse_Pressing(MOUSEKEYSTATE eState);
 
+	_bool Mouse_WheelUp();
+	_bool Mouse_WheelDown();
+
 	_long Mouse_Drag(MOUSEMOVESTATE eMouseState);
 private:
 	   LPDIRECTINPUT8			m_pDInput = nullptr;
