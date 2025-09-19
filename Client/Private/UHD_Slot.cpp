@@ -130,6 +130,8 @@ HRESULT CUHD_Slot::Ready_Components()
 		TEXT("Com_Shader"), reinterpret_cast<CComponent**>(&m_pShaderCom))))
 		return E_FAIL;
 
+
+	return S_OK;
 }
 
 HRESULT CUHD_Slot::Bind_ShaderResources()

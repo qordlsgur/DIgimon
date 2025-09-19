@@ -21,7 +21,7 @@ public:
 public:
 	void Set_AnimationIndex(const _char* szAnimName, _bool isLoop = true);
 	void Start_AnimationIndex(_int iAnimIndex) { m_iCurrentAnimIndex = iAnimIndex; }
-
+	_int Set_AnimationIndex(const _char* szAnimName, _int a = 0);
 public:
 	virtual HRESULT Initialize_Prototype(MODEL eType, const _char* pModelFilePath, _fmatrix PreTransformMatrix);
 	virtual HRESULT Initialize(void* pArg) override;
@@ -35,7 +35,7 @@ public:
 
 	void Set_Anim() { m_bAnimEnd = false; }
 
-
+	void Set_AnimSpeed(const _char* szAnimName, _uint Speed);
 	_float Get_CurrentTrackPosition() { return m_fCurrentTrackPosition; }
 
 

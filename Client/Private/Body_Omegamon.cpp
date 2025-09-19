@@ -38,6 +38,10 @@ HRESULT CBody_Omegamon::Initialize(void* pArg)
 
     if (FAILED(Ready_Components()))
         return E_FAIL;
+
+    m_pModelCom->Set_AnimSpeed("Skill_3", 30.f);
+
+    return S_OK;
 }
 
 void CBody_Omegamon::Priority_Update(_float fTimeDelta)
@@ -46,7 +50,7 @@ void CBody_Omegamon::Priority_Update(_float fTimeDelta)
 
 void CBody_Omegamon::Update(_float fTimeDelta)
 {
-    m_isAnimFinish = m_pModelCom->Play_Animation(fTimeDelta);\
+    m_isAnimFinish = m_pModelCom->Play_Animation(fTimeDelta);
 
     Canon();
 
@@ -66,7 +70,7 @@ HRESULT CBody_Omegamon::Render()
 
     _uint		iNumMeshes = m_pModelCom->Get_NumMeshes();
 
-    for (size_t i = 0; i < iNumMeshes; i++)
+    for (_uint i = 0; i < iNumMeshes; i++)
     {
         if (FAILED(m_pModelCom->Bind_BoneMatrices(i, m_pShaderCom, "g_BoneMatrices")))
             return E_FAIL;
@@ -87,8 +91,9 @@ HRESULT CBody_Omegamon::Render()
             if (FAILED(m_pModelCom->Render(1)))
                 return E_FAIL;
         }
-
     }
+
+    return S_OK;
 }
 
 void CBody_Omegamon::Set_Animation(const _char* szName, _bool bisLoop)
@@ -98,11 +103,14 @@ void CBody_Omegamon::Set_Animation(const _char* szName, _bool bisLoop)
 
 void CBody_Omegamon::Canon()
 {
-    if (m_pModelCom->Get_CurrentTrackPosition() <= 13)
-        isCanon = true;
+    if (m_eState == DIGIMONSTATE::SKILL3)
+    {
+        if (m_pModelCom->Get_CurrentTrackPosition() >= 18)
+            isCanon = true;
 
-    if (m_pModelCom->Get_CurrentTrackPosition() <= 103)
-        isCanon = false;
+        if (m_pModelCom->Get_CurrentTrackPosition() > 105)
+            isCanon = false;
+    }
 }
 
 HRESULT CBody_Omegamon::Ready_Components()

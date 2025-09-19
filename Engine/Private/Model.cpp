@@ -111,10 +111,26 @@ void CModel::Set_AnimationIndex(const _char* szAnimName, _bool isLoop)
 	}
 }
 
+_int CModel::Set_AnimationIndex(const _char* szAnimName, _int a)
+{
+	_int Index = { -1 };
+
+	for (_uint i = 0; i < m_AnimNames.size(); ++i)
+	{
+		if (m_AnimNames[i] == szAnimName)
+		{
+			Index = i;
+			break;
+		}
+	}
+
+	return Index;
+}
+
 HRESULT CModel::Initialize_Prototype(MODEL eType, const _char* pModelFilePath, _fmatrix PreTransformMatrix)
 {
 	_tchar		szPerfectPath[MAX_PATH] = {};
-	MultiByteToWideChar(CP_ACP, 0, pModelFilePath, strlen(pModelFilePath),
+	MultiByteToWideChar(CP_ACP, 0, pModelFilePath, (int)strlen(pModelFilePath),
 		szPerfectPath, MAX_PATH);
 
 	if (MODEL::NONANIM == eType)
@@ -199,6 +215,7 @@ _bool CModel::Play_Animation(_float fTimeDelta)
 			m_Animations[m_iPreviousAnimIndex]->Reset();
 			m_Animations[m_iCurrentAnimIndex]->CompareStringVectors(m_Lerp);
 			m_Change_Anim = false;
+			m_fCurrentTrackPosition = 0.f;
 		}
 		/* 모든 뼈를 순회하면서 CombinedTransformationMatrix를 갱신한다. */
 
@@ -212,6 +229,7 @@ _bool CModel::Play_Animation(_float fTimeDelta)
 			//XMStoreFloat4x4(Get_BoneMatrixPtr("Root"), Root);
 			pBone->Update_CombinedTransformationMatrix(m_Bones, XMLoadFloat4x4(&m_PreTransformMatrix));
 		}
+
 	}
 
 	else
@@ -469,6 +487,11 @@ void CModel::Load_AnimModel(const _tchar* szFileName, ANIM_DATA& Data)
 			}
 		}
 	}
+}
+
+void CModel::Set_AnimSpeed(const _char* szAnimName, _uint Speed)
+{
+	m_Animations[Set_AnimationIndex(szAnimName, 0)]->Set_Animamtion_Speed(Speed);
 }
 
 HRESULT CModel::Ready_BinMeshes()
