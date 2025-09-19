@@ -19,13 +19,14 @@ public:
 	HRESULT Initialize();
 
 	void DigiDex(class CDigiDex* pDigiDex);
+
+	//HRESULT Add_Digimon(const _wstring& strDigimon_Name, class CContainerObject)
 private:
-	_bool Digimon_Data_Loder(const _tchar* pBinFilePath, vector<DIGIMON_DATA>& Data);
 
 	class CDigiDex* m_pDigiDex = { nullptr };
+	map<const wstring, class CContainerObject*> Digimons;
 
 private:
-	vector<DIGIMON_DATA> Digimon_Datas;
 
 private:
 	virtual void Free() override;

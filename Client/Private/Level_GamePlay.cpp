@@ -24,20 +24,20 @@ HRESULT CLevel_GamePlay::Initialize()
 	m_pDigiDex_Manager->Initialize();
 
 
-	//if (FAILED(Ready_Lights()))
-	//	return E_FAIL;
+	if (FAILED(Ready_Lights()))
+		return E_FAIL;
 
-	//if (FAILED(Ready_Layer_Camera(TEXT("Layer_Camera"))))
-	//	return E_FAIL;
+	if (FAILED(Ready_Layer_Camera(TEXT("Layer_Camera"))))
+		return E_FAIL;
 
-	//if (FAILED(Ready_Layer_BackGround(TEXT("Layer_BackGround"))))
-	//	return E_FAIL;
+	if (FAILED(Ready_Layer_BackGround(TEXT("Layer_BackGround"))))
+		return E_FAIL;
 
-	//if (FAILED(Ready_Layer_Player(TEXT("Layer_Player"))))
-	//	return E_FAIL;
+	if (FAILED(Ready_Layer_Player(TEXT("Layer_Player"))))
+		return E_FAIL;
 
-	//if (FAILED(Ready_Layer_Digimon(TEXT("Layer_Digimon"))))
-	//	return E_FAIL;
+	if (FAILED(Ready_Layer_Digimon(TEXT("Layer_Digimon"))))
+		return E_FAIL;
 
 	//if (FAILED(Ready_Layer_Monster(TEXT("Layer_Monster"))))
 	//	return E_FAIL;
@@ -45,17 +45,17 @@ HRESULT CLevel_GamePlay::Initialize()
 	//if (FAILED(Ready_Layer_Effect(TEXT("Layer_Effect"))))
 	//	return E_FAIL;	
 
-	//if (FAILED(Ready_Layer_Inventory(TEXT("Layer_Inventory"))))
-	//	return E_FAIL;
+	if (FAILED(Ready_Layer_Inventory(TEXT("Layer_Inventory"))))
+		return E_FAIL;
 
-	//if (FAILED(Ready_Layer_DigiDex(TEXT("Layer_DigiDex"))))
-	//	return E_FAIL;
+	if (FAILED(Ready_Layer_DigiDex(TEXT("Layer_DigiDex"))))
+		return E_FAIL;
 
-	//if (FAILED(Ready_Layer_Digivice(TEXT("Layer_Digivice"))))
-	//	return E_FAIL;
+	if (FAILED(Ready_Layer_Digivice(TEXT("Layer_Digivice"))))
+		return E_FAIL;
 
-	/*if (FAILED(Ready_Layer_UHD(TEXT("Layer_UHD"))))
-		return E_FAIL;*/
+	if (FAILED(Ready_Layer_UHD(TEXT("Layer_UHD"))))
+		return E_FAIL;
 
 
 
@@ -144,7 +144,7 @@ HRESULT CLevel_GamePlay::Ready_Layer_Camera(const _wstring& strLayerTag)
 	CameraDesc.fFovy = XMConvertToRadians(60.0f);
 	CameraDesc.fNear = 0.1f;
 	CameraDesc.fFar = 1500.f;
-	CameraDesc.vEye = _float3(0.f, 130.f, -50.f);
+	CameraDesc.vEye = _float3(0.f, 30.f, -50.f);
 	CameraDesc.vAt = _float3(0.f, 0.f, 30.f);
 	CameraDesc.fSpeedPerSec = 5.f;
 	CameraDesc.fRotationPerSec = XMConvertToRadians(90.0f);
@@ -162,7 +162,6 @@ HRESULT CLevel_GamePlay::Ready_Layer_Player(const _wstring& strLayerTag)
 	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Player"),
 		ENUM_CLASS(LEVEL::GAMEPLAY), strLayerTag)))
 		return E_FAIL;
-
 	return S_OK;
 }
 
@@ -174,6 +173,10 @@ HRESULT CLevel_GamePlay::Ready_Layer_Digimon(const _wstring& strLayerTag)
 		ENUM_CLASS(LEVEL::GAMEPLAY), strLayerTag)))
 		return E_FAIL;
 
+	// 오메가몬
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Omegamon"),
+		ENUM_CLASS(LEVEL::GAMEPLAY), strLayerTag)))
+		return E_FAIL;
 
 	return S_OK;
 }

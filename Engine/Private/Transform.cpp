@@ -62,7 +62,7 @@ HRESULT CTransform::Bind_ShaderResource(CShader* pShader, const _char* pConstant
 
 }
 
-void CTransform::Go_Straight(_float fTimeDelta)
+void CTransform::Go_Straight(_float fTimeDelta, _int a)
 {
 	// 이 함수는 앞으로 가기 위한 함수이다.
 	// 
@@ -270,6 +270,16 @@ void CTransform::Jump(_float fHight)
 	_vector		vUp = Get_State(STATE::UP);
 
 	vPosition += XMVector3Normalize(vUp) * fHight;
+
+	Set_State(STATE::POSITION, vPosition);
+}
+
+void CTransform::Set_Y(_float y)
+{
+	_vector		vPosition = Get_State(STATE::POSITION);
+	_vector		vUp = Get_State(STATE::UP);
+
+	vPosition.m128_f32[1] = y;
 
 	Set_State(STATE::POSITION, vPosition);
 }

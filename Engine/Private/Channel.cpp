@@ -31,6 +31,7 @@ HRESULT CChannel::Initialize(const CModel* pModel, CHANNEL& mChannel)
 	return S_OK;
 }
 
+
 void CChannel::Update_TransformationMatrix(const vector<class CBone*>& Bones, _float fCurrentTrackPosition, _uint* pCurrentKeyFrameIndex)
 {
 	// 포지션이 0이 되면 뼈들의 순서도 다시 0으로

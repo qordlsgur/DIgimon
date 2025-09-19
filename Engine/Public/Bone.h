@@ -19,6 +19,10 @@ public:
 	_matrix Get_CombinedTransformationMatrix() const {
 		return XMLoadFloat4x4(&m_CombinedTransformationMatrix);
 	}
+	_float4x4* Get_CombinedTransformationMatrixPtr() {
+		return &m_CombinedTransformationMatrix;
+	}
+
 	_bool Compare_Name(const _char* pBoneName) const {
 		return !strcmp(pBoneName, m_szName);
 	}
@@ -36,11 +40,6 @@ private:
 	_float4x4			m_TransformationMatrix = {}; /* 이 뼈만의 상태변환행렬 */
 	_float4x4			m_CombinedTransformationMatrix = {}; /* m_TransformatinoMatrix * Parent`s m_CombinedTransformationMatrix */
 	_int				m_iParentBoneIndex = { -1 };
-	/*CBone*				m_pParent = 
-	
-	
-	
-	;*/
 
 public:
 	static CBone* Create(BONE_DATA& mData, _int iParentIndex);

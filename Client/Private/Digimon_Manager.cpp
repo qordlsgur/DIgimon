@@ -55,6 +55,16 @@ void CDigimon_Manager::Digimon_Storage(CDigimon_Storage* pDigimon_Storage)
 	m_pDigimon_Storage = pDigimon_Storage;
 }
 
+void CDigimon_Manager::Player(CGameObject* pPlayer)
+{
+	m_pPlayer = pPlayer;
+}
+
+_vector CDigimon_Manager::PlayerPos()
+{
+	return m_pPlayer->Get_Transform();
+}
+
 void CDigimon_Manager::Free()
 {
 	__super::Free();

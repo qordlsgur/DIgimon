@@ -120,7 +120,7 @@ void CInventory::OnClick()
 
 	if (PtInRect(&m_pRect, pPt))
 	{
-		for (int i = 0; i < m_iSlotCount; ++i)
+		for (_uint i = 0; i < m_iSlotCount; ++i)
 		{
 			if (PtInRect(m_vSlots[i]->Get_Pos(), pPt))
 			{
@@ -184,8 +184,8 @@ HRESULT CInventory::Create_Slot(const _wstring& strLayerTag)
 
 	for (_uint i = 0; i < m_iSlotCount; ++i)
 	{
-		_float col = i % 8;
-		_float row = i / 8;
+		_float col = static_cast<_float>(i % 8);
+		_float row = static_cast<_float>(i / 8);
 
 		_float startX = -165.f + col * (40 + 7);
 		_float startY = -140.f + row * (40 + 7);

@@ -77,7 +77,7 @@ HRESULT CPartyUHD::Create_Slot(const _wstring& strLayerTag)
 
 	for (_uint i = 0; i < m_iSlotCount; ++i)
 	{
-		_float row = i % 3;
+		_float row = static_cast<_float>(i % 3);
 
 		_float StartX = 70.f;
 		_float StartY = 60.f + row * (90 + 10);

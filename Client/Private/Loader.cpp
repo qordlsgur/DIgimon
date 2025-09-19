@@ -1,10 +1,9 @@
 #include "Loader.h"
 
 #include "BackGround.h"
+
 #pragma region UI
-
 #include "Item.h"
-
 #include "DigiDex.h"
 #include "Digimon_Storage.h"
 #include "Digivice.h"
@@ -12,23 +11,18 @@
 #include "Digivice_Mask.h"
 #include "PartyUHD.h"
 #include "UHD_Slot.h"
-
 #include "Inventory.h"
 #include "Equipment.h"
 #include "Slot.h"
 #include "Storage.h"
-
 #pragma endregion
 
 #pragma region Button
-
 #include "ItemType_Button.h"
 #include "Exit_Button.h"
-
 #pragma endregion
 
 #pragma region Map
-
 #include "Terrain.h"
 #include "BldA.h"
 #include "BldB.h"
@@ -39,12 +33,20 @@
 #include "BldJ.h"
 #include "BldK.h"
 #include "Tennis.h"
+#pragma endregion
+
+#pragma region Digimon
+#include "Player.h"
+#include "Body_Player.h"
+#include "Angewomon.h"
+#include "Body_Angewomon.h"
+#include "Omegamon.h"
+#include "Body_Omegamon.h"
 
 #pragma endregion
 
 //#include "Effect.h"
 #include "Terrain.h"
-#include "Player.h"
 #include "Monster.h"
 #include "Sky.h"
 #include "Navigation.h"
@@ -197,7 +199,7 @@ HRESULT CLoader::Loading_For_GamePlay()
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/UI/LineUP_Button.png"), 1))))
 		return E_FAIL;
 
-	//디지몬------------------------------------------------------------------------------------------------------------------------------------------------------
+	//디지바이스------------------------------------------------------------------------------------------------------------------------------------------------------
 
 	/* For.Prototype_Component_Texture_DigiDex */
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_DigiDex"),
@@ -329,7 +331,7 @@ HRESULT CLoader::Loading_For_GamePlay()
 
 	/* For.Prototype_Component_Model_Player */
 	PreTransformMatrix = XMMatrixRotationY(XMConvertToRadians(180.0f));
-	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Model_Fiona"),
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Model_Player"),
 		CModel::Create(m_pDevice, m_pContext, MODEL::ANIM, "../Bin/Resources/Models/Player/Player.bin", PreTransformMatrix))))
 		return E_FAIL;
 
@@ -337,6 +339,12 @@ HRESULT CLoader::Loading_For_GamePlay()
 	PreTransformMatrix = XMMatrixScaling(0.1f, 0.1f, 0.1f) * XMMatrixRotationY(XMConvertToRadians(180.0f));
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Model_Angewomon"),
 		CModel::Create(m_pDevice, m_pContext, MODEL::ANIM, "../Bin/Resources/Models/Angewomon/Angewomon.bin", PreTransformMatrix))))
+		return E_FAIL;
+
+	/* For.Prototype_Component_Model_Omegamon*/
+	PreTransformMatrix = XMMatrixScaling(0.1f, 0.1f, 0.1f) * XMMatrixRotationY(XMConvertToRadians(180.0f));
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Model_Omegamon"),
+		CModel::Create(m_pDevice, m_pContext, MODEL::ANIM, "../Bin/Resources/Models/Omegamon/Omegamon.bin", PreTransformMatrix))))
 		return E_FAIL;
 
 	//-----------------------------------------------------------------------------------------------------------------------------------
@@ -524,25 +532,42 @@ HRESULT CLoader::Loading_For_GamePlay()
 
 	//디지몬------------------------------------------------------------------------------------------------------------------------------
 
-	//	/* For.Prototype_GameObject_Angewomon */
-	//if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Angewomon"),
-	//	CAngewomon::Create(m_pDevice, m_pContext))))
-	//	return E_FAIL;
 
-	///* For.Prototype_GameObject_Body_Angewomon */
-	//if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Body_Angewomon"),
-	//	CBody_Angewomon::Create(m_pDevice, m_pContext))))
-	//	return E_FAIL;
 
-	///* For.Prototype_GameObject_Player */
-	//if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Player"),
-	//	CPlayer::Create(m_pDevice, m_pContext))))
-	//	return E_FAIL;
 
-	///* For.Prototype_GameObject_Body_Player*/
-	//if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Body_Player"),
-	//	CBody_Player::Create(m_pDevice, m_pContext))))
-	//	return E_FAIL;
+
+		/* For.Prototype_GameObject_Angewomon */
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Angewomon"),
+		CAngewomon::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	/* For.Prototype_GameObject_Body_Angewomon */
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Body_Angewomon"),
+		CBody_Angewomon::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	/* For.Prototype_GameObject_Omegamon*/
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Omegamon"),
+		COmegamon::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	/* For.Prototype_GameObject_Body_Omegamon*/
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Body_Omegamon"),
+		CBody_Omegamon::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	/* For.Prototype_GameObject_Player */
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Player"),
+		CPlayer::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	/* For.Prototype_GameObject_Body_Player*/
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Body_Player"),
+		CBody_Player::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+
+
 
 	//------------------------------------------------------------------------------------------------------------------------------
 

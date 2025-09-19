@@ -21,5 +21,7 @@ namespace Engine
 	enum class PLAYER_STATE { STAND, MOVE };
 	enum class NAVI_POINT { A, B, C, END };
 	enum class NAVI_LINE { AB, BC, CA, END };
+	enum class DIGIMON_STAGE {BABY, INTAINING, ROOKIE, CHAMPION, ULTIMATE, MEGA};
+	enum class DIGIMON_ATTRIBUTE {DATA, VIRUS, VACCINE};
 }
 #endif // Engine_Enum_h__

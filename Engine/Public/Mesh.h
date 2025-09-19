@@ -22,6 +22,9 @@ public:
 	virtual HRESULT Initialize(void* pArg) override;
 	HRESULT Bind_BoneMatrices(const vector<class CBone*>& Bones, class CShader* pShader, const _char* pConstantName);
 
+	_float4x4* Get_matrix() { return m_pBoneMatrices; }
+	void  Set_matrix(_float4x4* matrix) { m_pBoneMatrices = matrix; }
+
 private:
 	_char				m_szName[MAX_PATH] = {};
 	_uint				m_iMaterialIndex = {};

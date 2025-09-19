@@ -58,6 +58,10 @@ void CCamera_Free::Priority_Update(_float fTimeDelta)
 {
 	_long		MouseMove = {};
 
+	if (m_pCamera_Manager->HasPlayer() == true)
+	{
+		m_pCamera_Manager->PlayerPos(m_fPlayerPos);
+	}
 
 	if (m_pGameInstance->Mouse_WheelUp())
 	{
@@ -69,10 +73,7 @@ void CCamera_Free::Priority_Update(_float fTimeDelta)
 		m_fCameraDistanceOffset = XMVectorLerp(m_fCameraDistanceOffset, m_fMaxCameraDistance, m_fLerp);
 	}
 
-	if (m_pCamera_Manager->HasPlayer() == true)
-	{
-		m_pCamera_Manager->PlayerPos(m_fPlayerPos);
-	}
+
 
 	if (m_bRightClick)
 	{
@@ -169,7 +170,6 @@ void CCamera_Free::LookPlayer(_float fTimeDelta)
 {
 	if (m_pCamera_Manager->HasPlayer() == true)
 	{
-
 		_vector vPlayerPos = m_fPlayerPos;
 		_vector Offset = m_fCameraDistanceOffset;
 

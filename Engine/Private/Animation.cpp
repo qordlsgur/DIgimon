@@ -25,7 +25,9 @@ CAnimation::CAnimation(const CAnimation& Prototype)
 HRESULT CAnimation::Initialize(CModel* pModel, ANIMATION& mAnim)
 {
 	// 애니메이션 이름
-	strcpy_s(m_szName, mAnim.mName);
+	strcpy_s(m_szCpyName, mAnim.mName);
+
+	strcpy_s(m_szName, strchr(m_szCpyName, '|') + 1);
 
 	// 총 길이
 	m_fDuration = mAnim.mfDuration;
@@ -50,12 +52,22 @@ HRESULT CAnimation::Initialize(CModel* pModel, ANIMATION& mAnim)
 	return S_OK;
 }
 
-void CAnimation::Update_TransformationMatrices(const vector<class CBone*>& Bones, _float fTimeDelta)
+_bool CAnimation::Update_TransformationMatrices(const vector<class CBone*>& Bones, _bool isLoop, _float fTimeDelta)
 {
 	/* 내 애니메이션의 현재 재생위치. */
 	// 틱마다 중첩해서 값을 증가 시킴
 	m_fCurrentTrackPosition += m_fTickPerSecond * fTimeDelta;
 
+	if (m_fCurrentTrackPosition >= m_fDuration)
+	{
+		if (true == isLoop)
+			m_fCurrentTrackPosition = 0.f;
+		else
+		{
+			m_bFnishi = true;
+			return true;
+		}
+	}
 
 	// 최대 길이보다 길면 0으로 초기화
 	if (m_fCurrentTrackPosition >= m_fDuration)
@@ -70,6 +82,8 @@ void CAnimation::Update_TransformationMatrices(const vector<class CBone*>& Bones
 		// 0이라 하면 0번에 본의 갯수만큼 돌려줌 한 프레임에 최대 갯수를 다 바꿔줌
 		pChannel->Update_TransformationMatrix(Bones, m_fCurrentTrackPosition, &m_CurrentKeyFrameIndices[iIndex++]);
 	}
+
+	return false;
 }
 
 void CAnimation::Change_TransformationMatrices(class CModel* pModel, const vector<class CBone*>& Bones, _float fTimeDelta, const vector<LERP>& mLerp)
@@ -108,7 +122,7 @@ void CAnimation::Save_TransformationMatrices(const vector<class CBone*>& Bones, 
 void CAnimation::CompareStringVectors(vector<LERP>& mLerp)
 {
 	m_NextKeyFrames.clear();
-	for (size_t i = 0; i < m_Channels.size(); ++i)
+	for (_uint i = 0; i < m_Channels.size(); ++i)
 	{
 		for (size_t j = 0; j < mLerp.size(); ++j)
 		{
@@ -120,6 +134,12 @@ void CAnimation::CompareStringVectors(vector<LERP>& mLerp)
 		}
 	}
 }
+
+void CAnimation::Set_Animamtion_Speed(_uint iSpeed)
+{
+	m_fTickPerSecond = iSpeed;
+}
+
 
 void CAnimation::Reset()
 {

@@ -241,6 +241,22 @@ namespace Engine
 		vector<ANIMATION> mAnimation;
 	}ANIM_DATA;
 
+	typedef struct Digimon_Info
+	{
+		wstring DigimonName;
+		wstring Digimon_Map;
+		int DigimonId{};
+		wstring DigimonInfo;
+		DIGIMON_STAGE Stage;
+		DIGIMON_ATTRIBUTE Attribute;
+		int Hp{};
+		int Sp{};
+		int Damage{};
+		int AttackSpeed{};
+		int Exp{};
+		int Lv{};
+	}DIGIMON_INFO;
+
 }
 
 #endif // Engine_Struct_h__

@@ -3,6 +3,10 @@
 #include "Client_Defines.h"
 #include "Base.h"
 
+NS_BEGIN(Engine)
+class CGameObject;
+NS_END
+
 NS_BEGIN(Client)
 
 class CDigimon_Manager final : public CBase
@@ -29,6 +33,9 @@ public:
 	void Digivice(class CDigivice* pDigivice);
 	void Digimon_Storage(class CDigimon_Storage* pDigimon_Storage);
 
+	void Player(CGameObject* pPlayer);
+	_vector PlayerPos();
+
 private:
 	class CPartyUHD* m_pPartyUHD = { nullptr };
 	class CDigivice* m_pDigivice = { nullptr };
@@ -39,6 +46,8 @@ private:
 
 	vector<class CDigimon_Storage*> m_vDigimon_Storage_Slot;
 	_uint m_iDigimon_Storage_Slot_Number{};
+
+	CGameObject* m_pPlayer = { nullptr };
 
 
 

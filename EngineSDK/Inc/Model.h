@@ -17,9 +17,9 @@ public:
 	}
 
 	_int Get_BoneIndex(const _char* pBoneName) const;
-
+	_float4x4* Get_BoneMatrixPtr(const _char* pBoneName);
 public:
-	void Set_AnimationIndex(_int iAnimIndex);
+	void Set_AnimationIndex(const _char* szAnimName, _bool isLoop = true);
 	void Start_AnimationIndex(_int iAnimIndex) { m_iCurrentAnimIndex = iAnimIndex; }
 
 public:
@@ -27,7 +27,7 @@ public:
 	virtual HRESULT Initialize(void* pArg) override;
 	HRESULT Bind_BoneMatrices(_uint iMeshIndex, class CShader* pShader, const _char* pConstantName);
 	HRESULT Bind_Material(_uint iMeshIndex, class CShader* pShader, const _char* pConstantName, _uint iTextureIndex);
-	void Play_Animation(_float fTimeDelta);
+	_bool Play_Animation(_float fTimeDelta);
 	virtual HRESULT Render(_uint iMeshIndex);
 
 	void Load_Model(const _tchar* szFileName, NONANIM_DATA& Data);
@@ -35,9 +35,16 @@ public:
 
 	void Set_Anim() { m_bAnimEnd = false; }
 
+
+	_float Get_CurrentTrackPosition() { return m_fCurrentTrackPosition; }
+
+
 private:
 	NONANIM_DATA					m_Data;
 	ANIM_DATA						m_AnimData;
+
+	_float					m_fCurrentTrackPosition{};
+
 
 	vector<LERP>			m_Lerp;
 	MODEL					m_eType = {};
@@ -53,9 +60,12 @@ private:
 
 	_int						m_iCurrentAnimIndex = { -1 };
 	_int						m_iPreviousAnimIndex = { 0 };
-	_uint						m_iNumAnimations = {};
+	_int						m_iNumAnimations = {};
 	vector<class CAnimation*>	m_Animations;
+	vector<string>				m_AnimNames;
 
+	_bool						m_isLoop = { false };
+	_bool						m_isFinish = { false };
 	_bool						m_Change_Anim = false;
 	_bool						m_bAnimEnd = false;
 

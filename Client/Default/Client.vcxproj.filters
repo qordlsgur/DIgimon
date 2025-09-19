@@ -73,20 +73,8 @@
     <Filter Include="03.UI\PartyHUD">
       <UniqueIdentifier>{f393a3d0-f8d3-48bc-9024-368e06523d73}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03.UI\Manager">
-      <UniqueIdentifier>{c06e1ed9-6732-49ac-bbfe-d9c865b02768}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="03.UI\Manager\Digimon_Manager">
-      <UniqueIdentifier>{bbf095f0-ac54-4c49-ae56-40b3dd914917}</UniqueIdentifier>
-    </Filter>
     <Filter Include="05.DigimonInfo">
       <UniqueIdentifier>{2d80d47d-d079-45b3-99d3-6392f413ee0f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="03.UI\Manager\Inventory_Manager">
-      <UniqueIdentifier>{27a24dd8-ac77-4fe7-a202-e302e667e509}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="03.UI\Manager\DigiDex_Manager">
-      <UniqueIdentifier>{f983c745-1507-4474-8d57-126ea2223af8}</UniqueIdentifier>
     </Filter>
     <Filter Include="03.UI\Inventory\Button">
       <UniqueIdentifier>{04c1327b-5966-4506-a009-e515cb77c291}</UniqueIdentifier>
@@ -157,6 +145,84 @@
     <Filter Include="02.GameObjects\Bilding\BldK">
       <UniqueIdentifier>{a3a3c330-1ac0-4372-bbe6-6ee25ae03f29}</UniqueIdentifier>
     </Filter>
+    <Filter Include="04.FSM">
+      <UniqueIdentifier>{3bd77dc0-2294-4af2-806c-48dd5205d43a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04.FSM\BattleBack">
+      <UniqueIdentifier>{d1d42d1e-104d-4b6c-8162-14b6d032f24e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04.FSM\BattleDash">
+      <UniqueIdentifier>{6195200d-f046-41de-9570-03a1ff9a9593}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04.FSM\Death">
+      <UniqueIdentifier>{c9912230-7c76-402f-8916-c88b528b87ea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04.FSM\Fail">
+      <UniqueIdentifier>{aef1424a-815c-401d-b1b8-56d63822bfa7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04.FSM\Jump">
+      <UniqueIdentifier>{6dc7bae2-4a18-4049-bbff-aacb5fa4d75c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04.FSM\LookAround">
+      <UniqueIdentifier>{4b9e2339-67e0-462b-a17c-232e29f40d7f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04.FSM\Rour">
+      <UniqueIdentifier>{94e63c3a-f272-466d-9544-53a858627663}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04.FSM\Run">
+      <UniqueIdentifier>{681450d9-dcc8-4c4a-9096-77f694ce8dff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04.FSM\Skill1">
+      <UniqueIdentifier>{bae86b83-a4c6-4cbf-92f1-06de3d307249}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04.FSM\Skill2">
+      <UniqueIdentifier>{18115b34-6023-44c0-9c25-1a8091a1a22d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04.FSM\Skill3">
+      <UniqueIdentifier>{f3dce1d9-b633-440b-81b3-7c5a6e4a9dc9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04.FSM\StandBattle">
+      <UniqueIdentifier>{d9a618ea-53f2-41e0-bcea-e6b63fd6b8b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04.FSM\Stand">
+      <UniqueIdentifier>{906d93ab-41d5-4fd7-ac5a-4eaee5eead9a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04.FSM\State">
+      <UniqueIdentifier>{512510d2-05e3-4361-bee0-c34921a6ce7d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04.FSM\StateMachine">
+      <UniqueIdentifier>{813aa41c-382b-4e71-9b76-43af88853b6b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04.FSM\Hit">
+      <UniqueIdentifier>{f98a8506-a62c-48bc-9c10-f28340122c8b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Player\Body">
+      <UniqueIdentifier>{bb4217e3-1b46-4301-bb83-87ca6e1dc55e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="06.Manager">
+      <UniqueIdentifier>{c06e1ed9-6732-49ac-bbfe-d9c865b02768}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="06.Manager\Digimon_Manager">
+      <UniqueIdentifier>{bbf095f0-ac54-4c49-ae56-40b3dd914917}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="06.Manager\Inventory_Manager">
+      <UniqueIdentifier>{27a24dd8-ac77-4fe7-a202-e302e667e509}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="06.Manager\DigiDex_Manager">
+      <UniqueIdentifier>{f983c745-1507-4474-8d57-126ea2223af8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Digimon\Angewomon">
+      <UniqueIdentifier>{e56ac3e1-8b01-4bd9-b7aa-4d129f5d9b37}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Digimon\Angewomon\Body_Angewomon">
+      <UniqueIdentifier>{e5341517-9227-4121-b00d-f10d4d4876e6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Digimon\Omegamon">
+      <UniqueIdentifier>{d50a5fe1-d52f-49c4-8c23-8d86017a69db}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Digimon\Omegamon\Body_Omegamon">
+      <UniqueIdentifier>{c41f9e12-afd2-4c76-8e89-2e0ac964cd68}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -223,7 +289,7 @@
       <Filter>03.UI\PartyHUD</Filter>
     </ClInclude>
     <ClInclude Include="..\public\Digimon_Manager.h">
-      <Filter>03.UI\Manager\Digimon_Manager</Filter>
+      <Filter>06.Manager\Digimon_Manager</Filter>
     </ClInclude>
     <ClInclude Include="..\public\DigimonInfo.h">
       <Filter>05.DigimonInfo</Filter>
@@ -241,13 +307,13 @@
       <Filter>03.UI\Slot\Digivice_Slot</Filter>
     </ClInclude>
     <ClInclude Include="..\public\Inventory_Manager.h">
-      <Filter>03.UI\Manager\Inventory_Manager</Filter>
+      <Filter>06.Manager\Inventory_Manager</Filter>
     </ClInclude>
     <ClInclude Include="..\public\UHD_Slot.h">
       <Filter>03.UI\Slot\UHD_Slot</Filter>
     </ClInclude>
     <ClInclude Include="..\public\DigiDex_Manager.h">
-      <Filter>03.UI\Manager\DigiDex_Manager</Filter>
+      <Filter>06.Manager\DigiDex_Manager</Filter>
     </ClInclude>
     <ClInclude Include="..\public\DigiDex_Slot.h">
       <Filter>03.UI\Slot\DIgiDex_Slot</Filter>
@@ -293,6 +359,69 @@
     </ClInclude>
     <ClInclude Include="..\Public\Sky.h">
       <Filter>02.GameObjects\Sky</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\BattleBack.h">
+      <Filter>04.FSM\BattleBack</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\BattleDash.h">
+      <Filter>04.FSM\BattleDash</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Death.h">
+      <Filter>04.FSM\Death</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Fail.h">
+      <Filter>04.FSM\Fail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Hit.h">
+      <Filter>04.FSM\Hit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Jump.h">
+      <Filter>04.FSM\Jump</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\LookAround.h">
+      <Filter>04.FSM\LookAround</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Roar.h">
+      <Filter>04.FSM\Rour</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Run.h">
+      <Filter>04.FSM\Run</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Skill1.h">
+      <Filter>04.FSM\Skill1</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Skill2.h">
+      <Filter>04.FSM\Skill2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Skill3.h">
+      <Filter>04.FSM\Skill3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\StandBattle.h">
+      <Filter>04.FSM\StandBattle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Stand.h">
+      <Filter>04.FSM\Stand</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\State.h">
+      <Filter>04.FSM\State</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\StateMachine.h">
+      <Filter>04.FSM\StateMachine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\Body_Player.h">
+      <Filter>02.GameObjects\Player\Body</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\Omegamon.h">
+      <Filter>02.GameObjects\Digimon\Omegamon</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\Body_Omegamon.h">
+      <Filter>02.GameObjects\Digimon\Omegamon\Body_Omegamon</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\Body_Angewomon.h">
+      <Filter>02.GameObjects\Digimon\Angewomon\Body_Angewomon</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\Angewomon.h">
+      <Filter>02.GameObjects\Digimon\Angewomon</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -361,7 +490,7 @@
       <Filter>03.UI\PartyHUD</Filter>
     </ClCompile>
     <ClCompile Include="..\private\Digimon_Manager.cpp">
-      <Filter>03.UI\Manager\Digimon_Manager</Filter>
+      <Filter>06.Manager\Digimon_Manager</Filter>
     </ClCompile>
     <ClCompile Include="..\private\DigimonInfo.cpp">
       <Filter>05.DigimonInfo</Filter>
@@ -379,13 +508,13 @@
       <Filter>03.UI\Slot\Digivice_Slot</Filter>
     </ClCompile>
     <ClCompile Include="..\private\Inventory_Manager.cpp">
-      <Filter>03.UI\Manager\Inventory_Manager</Filter>
+      <Filter>06.Manager\Inventory_Manager</Filter>
     </ClCompile>
     <ClCompile Include="..\private\UHD_Slot.cpp">
       <Filter>03.UI\Slot\UHD_Slot</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\DigiDex_Manager.cpp">
-      <Filter>03.UI\Manager\DigiDex_Manager</Filter>
+      <Filter>06.Manager\DigiDex_Manager</Filter>
     </ClCompile>
     <ClCompile Include="..\private\DigiDex_Slot.cpp">
       <Filter>03.UI\Slot\DIgiDex_Slot</Filter>
@@ -431,6 +560,69 @@
     </ClCompile>
     <ClCompile Include="..\Private\Sky.cpp">
       <Filter>02.GameObjects\Sky</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\BattleBack.cpp">
+      <Filter>04.FSM\BattleBack</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\BattleDash.cpp">
+      <Filter>04.FSM\BattleDash</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Death.cpp">
+      <Filter>04.FSM\Death</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Fail.cpp">
+      <Filter>04.FSM\Fail</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Hit.cpp">
+      <Filter>04.FSM\Hit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Jump.cpp">
+      <Filter>04.FSM\Jump</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\LookAround.cpp">
+      <Filter>04.FSM\LookAround</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Roar.cpp">
+      <Filter>04.FSM\Rour</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Run.cpp">
+      <Filter>04.FSM\Run</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Skill1.cpp">
+      <Filter>04.FSM\Skill1</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Skill2.cpp">
+      <Filter>04.FSM\Skill2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Skill3.cpp">
+      <Filter>04.FSM\Skill3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\StandBattle.cpp">
+      <Filter>04.FSM\StandBattle</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Stand.cpp">
+      <Filter>04.FSM\Stand</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\State.cpp">
+      <Filter>04.FSM\State</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\StateMachine.cpp">
+      <Filter>04.FSM\StateMachine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\Body_Player.cpp">
+      <Filter>02.GameObjects\Player\Body</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\Omegamon.cpp">
+      <Filter>02.GameObjects\Digimon\Omegamon</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\Body_Omegamon.cpp">
+      <Filter>02.GameObjects\Digimon\Omegamon\Body_Omegamon</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\Body_Angewomon.cpp">
+      <Filter>02.GameObjects\Digimon\Angewomon\Body_Angewomon</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\Angewomon.cpp">
+      <Filter>02.GameObjects\Digimon\Angewomon</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -1,70 +1,68 @@
-//#pragma once
-//#include "Client_Defines.h"
-//#include "ContainerObject.h"
-//
-//NS_BEGIN(Engine)
-//class CNavigation;
-//
-//NS_END
-//
-//NS_BEGIN(Client)
-//
-//class CPlayer final : public CContainerObject
-//{
-//public:
-//
-//private:
-//	CPlayer(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
-//	CPlayer(const CPlayer& Prototype);
-//	virtual ~CPlayer() = default;
-//
-//public:
-//	virtual HRESULT Initialize_Prototype() override;
-//	virtual HRESULT Initialize(void* pArg) override;
-//	virtual void Priority_Update(_float fTimeDelta) override;
-//	virtual void Update(_float fTimeDelta) override;
-//	virtual void Late_Update(_float fTimeDelta) override;
-//	virtual HRESULT Render() override;
-//
-//
-//private:
-//	void Jump(_float fTimeDelta);
-//	void LockCamera();
-//
-//	virtual _float4x4 Get_Matrix() override;
-//
-//private:
-//	class CPartObject* m_pPart_Body = { nullptr };
-//	class CStateMachine* m_pFsm = { nullptr };
-//	CNavigation* m_pNavigationCom = { nullptr };
-//
-//	class CCamera_Manager* m_pCamera_Manager = { nullptr };
-//	class CDigimon_Manager* m_pDigimon_Manager = { nullptr };
-//
-//	_bool m_bMove = false;
-//	_bool Skill = false;
-//
-//	PLAYER_STATE m_eCurrentState;
-//	PLAYER_STATE m_ePreviousState;
-//
-//
-//	_bool	m_bisJump = false;
-//	_float	m_fJumpStart{};
-//	_float	m_fHight{};
-//	_float	m_fGravity{};
-//	_float	m_fJumpPower{};
-//	_float	m_fJumpTime{};
-//	_float	m_fMax_Jump{};
-//
-//
-//private:
-//	HRESULT Ready_Components();
-//	HRESULT Ready_PartObjects();
-//
-//public:
-//	static CPlayer* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
-//	virtual CGameObject* Clone(void* pArg) override;
-//	virtual void Free() override;
-//};
-//
-//NS_END
+#pragma once
+#include "Client_Defines.h"
+#include "ContainerObject.h"
+
+NS_BEGIN(Engine)
+class CNavigation;
+class CPartObject;
+NS_END
+
+NS_BEGIN(Client)
+
+class CPlayer final : public CContainerObject
+{
+public:
+
+private:
+	CPlayer(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
+	CPlayer(const CPlayer& Prototype);
+	virtual ~CPlayer() = default;
+
+public:
+	virtual HRESULT Initialize_Prototype() override;
+	virtual HRESULT Initialize(void* pArg) override;
+	virtual void Priority_Update(_float fTimeDelta) override;
+	virtual void Update(_float fTimeDelta) override;
+	virtual void Late_Update(_float fTimeDelta) override;
+	virtual HRESULT Render() override;
+
+
+private:
+	void Jump(_float fTimeDelta);
+	void LockCamera();
+
+
+private:
+	CPartObject* m_pPart_Body = { nullptr };
+	CNavigation* m_pNavigationCom = { nullptr };
+
+	class CStateMachine* m_pFsm = { nullptr };
+	class CCamera_Manager* m_pCamera_Manager = { nullptr };
+	class CDigimon_Manager* m_pDigimon_Manager = { nullptr };
+
+	_bool m_bMove = false;
+	_bool Skill = false;
+
+	PLAYER_STATE m_eCurrentState;
+	PLAYER_STATE m_ePreviousState;
+
+	_bool	m_bisJump = false;
+	_float	m_fJumpStart{};
+	_float	m_fHight{};
+	_float	m_fGravity{};
+	_float	m_fJumpPower{};
+	_float	m_fJumpTime{};
+	_float	m_fMax_Jump{};
+
+
+private:
+	HRESULT Ready_Components();
+	HRESULT Ready_PartObjects();
+
+public:
+	static CPlayer* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
+	virtual CGameObject* Clone(void* pArg) override;
+	virtual void Free() override;
+};
+
+NS_END

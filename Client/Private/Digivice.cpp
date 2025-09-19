@@ -148,7 +148,7 @@ HRESULT CDigivice::Create_Slot(const _wstring& strLayerTag)
 	for (_uint i = 0; i < m_iDigivice_Battle_Slot_Number; ++i)
 	{
 
-		_float row = i % 3;
+		_float row = static_cast<_float>(i % 3);
 
 		_float startX = 100.f;
 		_float startY = 20.f + row * 105;
@@ -163,7 +163,7 @@ HRESULT CDigivice::Create_Slot(const _wstring& strLayerTag)
 	for (_uint i = 3; i < m_iDigivice_Battle_Slot_Number; ++i)
 	{
 
-		_float row = i % 5;
+		_float row = static_cast<_float>(i % 5);
 
 		_float startX = 100.f;
 		_float startY = 430.f + row * 105;

@@ -61,7 +61,7 @@ public:
 
 public:
 	// 말 그대로 앞,뒤,좌,우 이동을 하는 함수
-	void Go_Straight(_float fTimeDelta);
+	void Go_Straight(_float fTimeDelta, _int a = 0);
 	void Go_Backward(_float fTimeDelta);
 	void Go_Left(_float fTimeDelta);
 	void Go_Right(_float fTimeDelta);
@@ -83,6 +83,7 @@ public:
 
 public:
 	void Jump(_float fHight);
+	void Set_Y(_float y);
 	void Go_Straight(_float fTimeDelta, class CNavigation* pNavigation = nullptr);
 	_bool FollowPlayer(_vector fTarget, _float fFollowDistance, _float fTimeDelta);
 	void Look(_vector Angle, _float fTimeDeata);

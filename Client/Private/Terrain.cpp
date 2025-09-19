@@ -48,7 +48,7 @@ void CTerrain::Priority_Update(_float fTimeDelta)
 
 void CTerrain::Update(_float fTimeDelta)
 {
-
+	m_pNavigationCom->Update(XMLoadFloat4x4(m_pTransformCom->Get_WorldMatrixPtr()));
 }
 
 void CTerrain::Late_Update(_float fTimeDelta)
@@ -70,6 +70,10 @@ HRESULT CTerrain::Render()
 
 	if (FAILED(m_pVIBufferCom->Render()))
 		return E_FAIL;
+
+#ifdef _DEBUG
+	m_pNavigationCom->Render();
+#endif
 
 	return S_OK;
 }
@@ -146,7 +150,6 @@ void CTerrain::LoadObject(const wstring& strPrototype, _float4x4 worldMatrix)
 		ENUM_CLASS(LEVEL::GAMEPLAY), strName));
 
 	m_pObject->Set_Matrix(worldMatrix);
-	Safe_AddRef(m_pObject);
 
 	m_vObjects.push_back(m_pObject);
 }
@@ -238,8 +241,7 @@ void CTerrain::Free()
 {
 	__super::Free();
 
-	for (auto& pObj : m_vObjects)
-		Safe_Release(pObj);
+
 	m_vObjects.clear();
 	m_vLoadDate.clear();
 

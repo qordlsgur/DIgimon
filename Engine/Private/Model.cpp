@@ -20,6 +20,7 @@ CModel::CModel(const CModel& Prototype)
 	, m_Materials{ Prototype.m_Materials }
 	, m_PreTransformMatrix{ Prototype.m_PreTransformMatrix }
 	, m_iNumAnimations{ Prototype.m_iNumAnimations }
+	, m_AnimNames{ Prototype.m_AnimNames }
 {
 	for (auto& pPrototypeBone : Prototype.m_Bones)
 		m_Bones.push_back(pPrototypeBone->Clone());
@@ -55,15 +56,59 @@ _int CModel::Get_BoneIndex(const _char* pBoneName) const
 	return iBoneIndex;
 }
 
-void CModel::Set_AnimationIndex(_int iAnimIndex)
+_float4x4* CModel::Get_BoneMatrixPtr(const _char* pBoneName)
 {
-	if (-1 < m_iCurrentAnimIndex && m_iCurrentAnimIndex < m_iNumAnimations)
-		m_iPreviousAnimIndex = m_iCurrentAnimIndex;
+	auto	iter = find_if(m_Bones.begin(), m_Bones.end(), [&](CBone* pBone)->_bool
+		{
+			if (true == pBone->Compare_Name(pBoneName))
+				return true;
 
-	m_iCurrentAnimIndex = iAnimIndex;
-	m_Change_Anim = true;
-	m_bAnimEnd = true;
+			return false;
+		});
 
+
+	return (*iter)->Get_CombinedTransformationMatrixPtr();
+}
+
+void CModel::Set_AnimationIndex(const _char* szAnimName, _bool isLoop)
+{
+	_int Index = { -1 };
+
+	for (_uint i = 0; i < m_AnimNames.size(); ++i)
+	{
+		if (m_AnimNames[i] == szAnimName)
+		{
+			Index = i;
+			break;
+		}
+	}
+
+	if (Index == -1)
+	{
+		m_iCurrentAnimIndex = 0;
+		m_isLoop = true;
+		m_Change_Anim = true;
+		m_bAnimEnd = true;
+		return;
+	}
+
+	else
+	{
+		// 만약 인덱스랑 지금 실행중인 애니메이션이 똑같으면 그냥 리턴
+		if (m_iCurrentAnimIndex == Index)
+			return;
+
+		// 인덱스가 -1보다 크고 인덱스가 애니메이션 갯수보다 작으면 이전 애니메이션은 현재 애니메이션이 되고
+		// 현재 애니메이션은 인덱스가 된다.
+		if (-1 < m_iCurrentAnimIndex && m_iCurrentAnimIndex < m_iNumAnimations)
+			m_iPreviousAnimIndex = m_iCurrentAnimIndex;
+
+		m_iCurrentAnimIndex = Index;
+		m_isLoop = isLoop;
+
+		m_Change_Anim = true;
+		m_bAnimEnd = true;
+	}
 }
 
 HRESULT CModel::Initialize_Prototype(MODEL eType, const _char* pModelFilePath, _fmatrix PreTransformMatrix)
@@ -104,7 +149,7 @@ HRESULT CModel::Initialize_Prototype(MODEL eType, const _char* pModelFilePath, _
 		if (FAILED(Ready_Animations(m_AnimData)))
 			return E_FAIL;
 
-		m_iCurrentAnimIndex = 0.f;
+		m_iCurrentAnimIndex = 0;
 	}
 	return S_OK;
 }
@@ -137,16 +182,19 @@ HRESULT CModel::Bind_Material(_uint iMeshIndex, CShader* pShader, const _char* p
 
 }
 
-void CModel::Play_Animation(_float fTimeDelta)
+_bool CModel::Play_Animation(_float fTimeDelta)
 {
 	if (-1 == m_iCurrentAnimIndex ||
 		m_iCurrentAnimIndex >= m_iNumAnimations)
-		return;
+		return false;
+
+
 
 	if (m_bAnimEnd == true)
 	{
 		if (m_Change_Anim == true)
 		{
+			m_Animations[m_iPreviousAnimIndex]->Set_Finishi();
 			m_Animations[m_iPreviousAnimIndex]->Save_TransformationMatrices(m_Bones, fTimeDelta, m_Lerp);
 			m_Animations[m_iPreviousAnimIndex]->Reset();
 			m_Animations[m_iCurrentAnimIndex]->CompareStringVectors(m_Lerp);
@@ -158,6 +206,10 @@ void CModel::Play_Animation(_float fTimeDelta)
 
 		for (auto& pBone : m_Bones)
 		{
+			//_matrix Root = XMLoadFloat4x4(Get_BoneMatrixPtr("Root"));
+			//Root.r[3] = XMVectorSet(0.f, 0.f, 0.f, 1.f);
+
+			//XMStoreFloat4x4(Get_BoneMatrixPtr("Root"), Root);
 			pBone->Update_CombinedTransformationMatrix(m_Bones, XMLoadFloat4x4(&m_PreTransformMatrix));
 		}
 	}
@@ -165,15 +217,24 @@ void CModel::Play_Animation(_float fTimeDelta)
 	else
 	{
 		/* 내가 재생하고자하는 애니메이션(공격모션)이 이용하고 있는 뼈들의 상태 변환정보(TransformationMatrix)를 갱신해준다.*/
-		m_Animations[m_iCurrentAnimIndex]->Update_TransformationMatrices(m_Bones, fTimeDelta);
+		m_Animations[m_iCurrentAnimIndex]->Update_TransformationMatrices(m_Bones, m_isLoop, fTimeDelta);
 
+		m_fCurrentTrackPosition = m_Animations[m_iCurrentAnimIndex]->Get_CurrentTrackPosition();
 
 		/* 모든 뼈를 순회하면서 CombinedTransformationMatrix를 갱신한다. */
 		for (auto& pBone : m_Bones)
 		{
+			//_matrix Root = XMLoadFloat4x4(Get_BoneMatrixPtr("Root"));
+			//Root.r[3] = XMVectorSet(0.f, 0.f, 0.f, 1.f);
+
+			//XMStoreFloat4x4(Get_BoneMatrixPtr("Root"), Root);
 			pBone->Update_CombinedTransformationMatrix(m_Bones, XMLoadFloat4x4(&m_PreTransformMatrix));
 		}
 	}
+
+	m_isFinish = m_Animations[m_iCurrentAnimIndex]->Get_Finishi();
+
+	return m_isFinish;
 }
 
 HRESULT CModel::Render(_uint iMeshIndex)
@@ -253,7 +314,7 @@ void CModel::Load_Model(const _tchar* szFileName, NONANIM_DATA& Data)
 				in.read(reinterpret_cast<_char*>(&length), sizeof(length));
 				wstr.resize(length);
 				if (length > 0)
-					in.read(reinterpret_cast<_char*>(&wstr[0]), length * sizeof(_tchar));
+					in.read(reinterpret_cast<_char*>(wstr.data()), length * sizeof(_tchar));
 			}
 		}
 	}
@@ -408,7 +469,6 @@ void CModel::Load_AnimModel(const _tchar* szFileName, ANIM_DATA& Data)
 			}
 		}
 	}
-	int a = 10;
 }
 
 HRESULT CModel::Ready_BinMeshes()
@@ -455,6 +515,7 @@ HRESULT CModel::Ready_Animations(ANIM_DATA& mData)
 			return E_FAIL;
 
 		m_Animations.push_back(pAnimation);
+		m_AnimNames.push_back(m_Animations[i]->Get_Name());
 	}
 
 	return S_OK;
@@ -472,7 +533,6 @@ HRESULT CModel::Ready_AnimBones(ANIM_DATA& mData)
 		m_Bones.push_back(pBone);
 
 	}
-
 	return S_OK;
 }
 
@@ -488,6 +548,7 @@ HRESULT CModel::Ready_BinAinmMeshes()
 
 		m_Meshes.push_back(pMesh);
 	}
+
 
 	return S_OK;
 }

@@ -15,15 +15,26 @@ private:
 
 public:
 	HRESULT Initialize(class CModel* pModel, ANIMATION& mAnim);
-	void Update_TransformationMatrices(const vector<class CBone*>& Bones, _float fTimeDelta);
+	_bool Update_TransformationMatrices(const vector<class CBone*>& Bones, _bool isLoop, _float fTimeDelta);
 
 	void Change_TransformationMatrices(class CModel* pModel, const vector<class CBone*>& Bones, _float fTimeDelta, const vector<LERP>& mLerp);
 	void Save_TransformationMatrices(const vector<class CBone*>& Bones, _float fTimeDelta, vector<LERP>& mLerp);
 	void CompareStringVectors(vector<LERP>& mLerp);
 
+	_bool Get_Finishi() { return m_bFnishi; }
+	void Set_Finishi() { m_bFnishi = false; }
+
+	void Set_Animamtion_Speed(_uint iSpeed);
+
+
+	_char* Get_Name() { return m_szName; }
+
+	_float Get_CurrentTrackPosition() { return m_fCurrentTrackPosition; }
+
 	void Reset();
 private:
-	_char					m_szName[MAX_PATH] = {};
+	_char						m_szCpyName[MAX_PATH] = {};
+	_char						m_szName[MAX_PATH] = {};
 
 	_float						m_fCurrentTrackPosition = {};
 	/* 애니메이션 재생을 위한 전체 길이 */
@@ -36,7 +47,7 @@ private:
 	_float						m_fTick{};
 	_float						m_Lerp{};
 
-	_bool						m_bStart = true;
+	_bool						m_bFnishi = false;
 
 	_uint						m_iNumChannels = {};
 	vector<class CChannel*>		m_Channels;
