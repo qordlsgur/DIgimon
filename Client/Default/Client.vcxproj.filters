@@ -103,9 +103,6 @@
     <Filter Include="03.UI\Slot\Digivice_Slot\Mask">
       <UniqueIdentifier>{249eef68-99dd-4582-9e82-a8622007df1e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02.GameObjects\Monster">
-      <UniqueIdentifier>{75469210-586e-4a90-a02a-6b87bba29dc5}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02.GameObjects\Camera\Manager">
       <UniqueIdentifier>{62bcb2a0-fadb-4d9c-97ec-b1b9a431fcce}</UniqueIdentifier>
     </Filter>
@@ -223,6 +220,42 @@
     <Filter Include="02.GameObjects\Digimon\Omegamon\Body_Omegamon">
       <UniqueIdentifier>{c41f9e12-afd2-4c76-8e89-2e0ac964cd68}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.GameObjects\Digimon\Devilmon">
+      <UniqueIdentifier>{a10a99eb-136e-4a5a-b822-f83f280e74fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Digimon\Ladydevimon">
+      <UniqueIdentifier>{a765615a-f695-402e-b1ff-fa773304e956}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Digimon\Leomon">
+      <UniqueIdentifier>{b6c05760-5120-4e59-81e5-2fb632ed382b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Digimon\Devilmon\Body_Devilmon">
+      <UniqueIdentifier>{10382507-b400-4409-a35f-71da2863fc3e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Digimon\Ladydevimon\Body_Ladydevimon">
+      <UniqueIdentifier>{04745193-2e51-4356-8a4c-7403ff14a2ba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Digimon\Leomon\Body_Leomon">
+      <UniqueIdentifier>{ae16d8d5-51dd-4032-a91c-a13ce469e6e6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Digimon\Metalgreymon">
+      <UniqueIdentifier>{94360ceb-6def-48c7-8e9e-0bbd16873cee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Digimon\Metalgreymon\Body_Metalgreymon">
+      <UniqueIdentifier>{0a82151d-09d0-4bd8-8133-826a009949d7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Digimon\Metalgarumon">
+      <UniqueIdentifier>{9af62704-9eaf-4ba8-9e9c-2ca3602fdd9b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Digimon\Metalgarumon\Body_Metalgarumon">
+      <UniqueIdentifier>{ed08e13a-0171-4092-82e4-5ba2df84de48}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Digimon\Wargreymon">
+      <UniqueIdentifier>{7fec29f7-c94f-480f-b0d1-74b6a3a1a1f9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Digimon\Wargreymon\Body_Wargreymon">
+      <UniqueIdentifier>{40a2a9e7-d57e-4e29-8fc0-60562e1132df}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -321,9 +354,6 @@
     <ClInclude Include="..\Public\Digivice_Mask.h">
       <Filter>03.UI\Slot\Digivice_Slot\Mask</Filter>
     </ClInclude>
-    <ClInclude Include="..\public\Monster.h">
-      <Filter>02.GameObjects\Monster</Filter>
-    </ClInclude>
     <ClInclude Include="..\public\Camera_Manager.h">
       <Filter>02.GameObjects\Camera\Manager</Filter>
     </ClInclude>
@@ -417,11 +447,47 @@
     <ClInclude Include="..\public\Body_Omegamon.h">
       <Filter>02.GameObjects\Digimon\Omegamon\Body_Omegamon</Filter>
     </ClInclude>
+    <ClInclude Include="..\public\Angewomon.h">
+      <Filter>02.GameObjects\Digimon\Angewomon</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\Devilmon.h">
+      <Filter>02.GameObjects\Digimon\Devilmon</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\Ladydevimon.h">
+      <Filter>02.GameObjects\Digimon\Ladydevimon</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\Metalgarumon.h">
+      <Filter>02.GameObjects\Digimon\Metalgarumon</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\Metalgreymon.h">
+      <Filter>02.GameObjects\Digimon\Metalgreymon</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\Leomon.h">
+      <Filter>02.GameObjects\Digimon\Leomon</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\Body_Devilmon.h">
+      <Filter>02.GameObjects\Digimon\Devilmon\Body_Devilmon</Filter>
+    </ClInclude>
     <ClInclude Include="..\public\Body_Angewomon.h">
       <Filter>02.GameObjects\Digimon\Angewomon\Body_Angewomon</Filter>
     </ClInclude>
-    <ClInclude Include="..\public\Angewomon.h">
-      <Filter>02.GameObjects\Digimon\Angewomon</Filter>
+    <ClInclude Include="..\public\Body_Ladydevimon.h">
+      <Filter>02.GameObjects\Digimon\Ladydevimon\Body_Ladydevimon</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\Body_Leomon.h">
+      <Filter>02.GameObjects\Digimon\Leomon\Body_Leomon</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\Body_Metalgreymon.h">
+      <Filter>02.GameObjects\Digimon\Metalgreymon\Body_Metalgreymon</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\Body_Metalgarumon.h">
+      <Filter>02.GameObjects\Digimon\Metalgarumon\Body_Metalgarumon</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\Body_Wargreymon.h">
+      <Filter>02.GameObjects\Digimon\Wargreymon\Body_Wargreymon</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\Wargreymon.h">
+      <Filter>02.GameObjects\Digimon\Wargreymon</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -522,9 +588,6 @@
     <ClCompile Include="..\Private\Digivice_Mask.cpp">
       <Filter>03.UI\Slot\Digivice_Slot\Mask</Filter>
     </ClCompile>
-    <ClCompile Include="..\private\Monster.cpp">
-      <Filter>02.GameObjects\Monster</Filter>
-    </ClCompile>
     <ClCompile Include="..\private\Camera_Manager.cpp">
       <Filter>02.GameObjects\Camera\Manager</Filter>
     </ClCompile>
@@ -618,11 +681,47 @@
     <ClCompile Include="..\private\Body_Omegamon.cpp">
       <Filter>02.GameObjects\Digimon\Omegamon\Body_Omegamon</Filter>
     </ClCompile>
+    <ClCompile Include="..\private\Angewomon.cpp">
+      <Filter>02.GameObjects\Digimon\Angewomon</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\Devilmon.cpp">
+      <Filter>02.GameObjects\Digimon\Devilmon</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\Ladydevimon.cpp">
+      <Filter>02.GameObjects\Digimon\Ladydevimon</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\Metalgarumon.cpp">
+      <Filter>02.GameObjects\Digimon\Metalgarumon</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\Metalgreymon.cpp">
+      <Filter>02.GameObjects\Digimon\Metalgreymon</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\Leomon.cpp">
+      <Filter>02.GameObjects\Digimon\Leomon</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\Body_Devilmon.cpp">
+      <Filter>02.GameObjects\Digimon\Devilmon\Body_Devilmon</Filter>
+    </ClCompile>
     <ClCompile Include="..\private\Body_Angewomon.cpp">
       <Filter>02.GameObjects\Digimon\Angewomon\Body_Angewomon</Filter>
     </ClCompile>
-    <ClCompile Include="..\private\Angewomon.cpp">
-      <Filter>02.GameObjects\Digimon\Angewomon</Filter>
+    <ClCompile Include="..\private\Body_Ladydevimon.cpp">
+      <Filter>02.GameObjects\Digimon\Ladydevimon\Body_Ladydevimon</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\Body_Leomon.cpp">
+      <Filter>02.GameObjects\Digimon\Leomon\Body_Leomon</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\Body_Metalgreymon.cpp">
+      <Filter>02.GameObjects\Digimon\Metalgreymon\Body_Metalgreymon</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\Body_Metalgarumon.cpp">
+      <Filter>02.GameObjects\Digimon\Metalgarumon\Body_Metalgarumon</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\Body_Wargreymon.cpp">
+      <Filter>02.GameObjects\Digimon\Wargreymon\Body_Wargreymon</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\Wargreymon.cpp">
+      <Filter>02.GameObjects\Digimon\Wargreymon</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -1,6 +1,7 @@
 #include "Body_Omegamon.h"
 #include "GameInstance.h"
 
+
 CBody_Omegamon::CBody_Omegamon(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
     : CPartObject{ pDevice, pContext }
 {
@@ -14,13 +15,11 @@ CBody_Omegamon::CBody_Omegamon(const CBody_Omegamon& Prototype)
 _float4x4* CBody_Omegamon::Get_BoneMatrixPtr(const _char* pBoneName)
 {
     return m_pModelCom->Get_BoneMatrixPtr(pBoneName);
-
 }
 
 _bool CBody_Omegamon::isFinish_Att()
 {
     return false;
-
 }
 
 HRESULT CBody_Omegamon::Initialize_Prototype()
@@ -39,7 +38,9 @@ HRESULT CBody_Omegamon::Initialize(void* pArg)
     if (FAILED(Ready_Components()))
         return E_FAIL;
 
-    m_pModelCom->Set_AnimSpeed("Skill_3", 30.f);
+    m_pModelCom->Set_AnimSpeed("Skill_1", 30);
+    m_pModelCom->Set_AnimSpeed("Skill_2", 35);
+    m_pModelCom->Set_AnimSpeed("Skill_3", 30);
 
     return S_OK;
 }
@@ -166,7 +167,7 @@ CBody_Omegamon* CBody_Omegamon::Create(ID3D11Device* pDevice, ID3D11DeviceContex
         MSG_BOX("Failed to Created : CBody_Omegamon");
         Safe_Release(pInstance);
     }
-
+        
     return pInstance;
 }
 

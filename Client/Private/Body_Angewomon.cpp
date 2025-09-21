@@ -38,6 +38,9 @@ HRESULT CBody_Angewomon::Initialize(void* pArg)
     if (FAILED(Ready_Components()))
         return E_FAIL;
 
+    m_pModelCom->Set_AnimSpeed("Skill_1", 30);
+    m_pModelCom->Set_AnimSpeed("Skill_2", 35);
+    m_pModelCom->Set_AnimSpeed("Skill_3", 30);
 
     return S_OK;
 }
@@ -67,7 +70,7 @@ HRESULT CBody_Angewomon::Render()
 
     _uint		iNumMeshes = m_pModelCom->Get_NumMeshes();
 
-    for (size_t i = 0; i < iNumMeshes; i++)
+    for (_uint i = 0; i < iNumMeshes; i++)
     {
         if (FAILED(m_pModelCom->Bind_BoneMatrices(i, m_pShaderCom, "g_BoneMatrices")))
             return E_FAIL;

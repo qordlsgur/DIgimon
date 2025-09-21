@@ -128,7 +128,7 @@ HRESULT CDigivice_Mask::Bind_ShaderResources()
 	if (m_bHasDigimon)
 	{
 		m_pShaderCom->Bind_Int("HasDigimon", 1);
-		if (FAILED(m_pDigimonTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture2", 5)))
+		if (FAILED(m_pDigimonTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture2", 0)))
 			return E_FAIL;
 	}
 
