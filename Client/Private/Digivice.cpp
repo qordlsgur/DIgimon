@@ -208,12 +208,12 @@ void CDigivice::Free()
 {
 	__super::Free();
 
-	for (auto& Sloat : m_pBattle_Slot)
-		Safe_Release(Sloat);
+	//for (auto& Sloat : m_pBattle_Slot)
+	//	Safe_Release(Sloat);
 	m_pBattle_Slot.clear();
 
-	for (auto& Mask : m_pBattle_Mask)
-		Safe_Release(Mask);
+	//for (auto& Mask : m_pBattle_Mask)
+	//	Safe_Release(Mask);
 	m_pBattle_Mask.clear();
 
 	Safe_Release(m_pVIBufferCom);

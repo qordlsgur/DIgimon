@@ -54,6 +54,8 @@
 #include "Body_Metalgreymon.h"
 #include "Wargreymon.h"
 #include "Body_Wargreymon.h"
+#include "Blackwargreymon.h"
+#include "Body_Blackwargreymon.h"
 
 #pragma endregion
 
@@ -401,6 +403,12 @@ HRESULT CLoader::Loading_For_GamePlay()
 		CModel::Create(m_pDevice, m_pContext, MODEL::ANIM, "../Bin/Resources/Models/Wargreymon/Wargreymon.bin", PreTransformMatrix))))
 		return E_FAIL;
 
+	/* For.Prototype_Component_Model_Blackwargreymon*/
+	PreTransformMatrix = XMMatrixScaling(0.1f, 0.1f, 0.1f) * XMMatrixRotationY(XMConvertToRadians(180.0f));
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Model_Blackwargreymon"),
+		CModel::Create(m_pDevice, m_pContext, MODEL::ANIM, "../Bin/Resources/Models/Blackwargreymon/Blackwargreymon.bin", PreTransformMatrix))))
+		return E_FAIL;
+
 	//-----------------------------------------------------------------------------------------------------------------------------------
 
 	// 오브젝트
@@ -682,6 +690,16 @@ HRESULT CLoader::Loading_For_GamePlay()
 	/* For.Prototype_GameObject_Body_Wargreymon*/
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Body_Wargreymon"),
 		CBody_Wargreymon::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	/* For.Prototype_GameObject_Blackwargreymon*/
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Blackwargreymon"),
+		CBlackwargreymon::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	/* For.Prototype_GameObject_Body_Blackwargreymon*/
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Body_Blackwargreymon"),
+		CBody_Blackwargreymon::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 	
 

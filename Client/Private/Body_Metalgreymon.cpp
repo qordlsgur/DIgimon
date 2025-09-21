@@ -38,8 +38,8 @@ HRESULT CBody_Metalgreymon::Initialize(void* pArg)
 		return E_FAIL;
 
 	m_pModelCom->Set_AnimSpeed("Skill_1", 30);
-	m_pModelCom->Set_AnimSpeed("Skill_2", 35);
-	m_pModelCom->Set_AnimSpeed("Skill_3", 30);
+	m_pModelCom->Set_AnimSpeed("Skill_2", 20);
+	m_pModelCom->Set_AnimSpeed("Skill_3", 20);
 
 	return S_OK;
 }

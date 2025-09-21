@@ -58,9 +58,6 @@
     <Filter Include="03.UI\Slot">
       <UniqueIdentifier>{97a84a0e-a44c-4bf5-a642-4f35e246163b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03.UI\Item">
-      <UniqueIdentifier>{c243ede8-6f50-41f9-8f5b-c1129b993563}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02.GameObjects\Terrain">
       <UniqueIdentifier>{45c04ebe-174d-49f1-aad2-e285bc5c24a8}</UniqueIdentifier>
     </Filter>
@@ -256,6 +253,12 @@
     <Filter Include="02.GameObjects\Digimon\Wargreymon\Body_Wargreymon">
       <UniqueIdentifier>{40a2a9e7-d57e-4e29-8fc0-60562e1132df}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.GameObjects\Digimon\Blackwargreymon">
+      <UniqueIdentifier>{3b5e93c3-df3b-4ede-87bb-728ca441a207}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Digimon\Blackwargreymon\Body_Blackwargreymon">
+      <UniqueIdentifier>{c33dd4a4-c8bd-4944-b294-31d5165558b3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -308,9 +311,6 @@
     </ClInclude>
     <ClInclude Include="..\public\Equipment.h">
       <Filter>03.UI\Equipment</Filter>
-    </ClInclude>
-    <ClInclude Include="..\public\Item.h">
-      <Filter>03.UI\Item</Filter>
     </ClInclude>
     <ClInclude Include="..\public\Terrain.h">
       <Filter>02.GameObjects\Terrain</Filter>
@@ -489,6 +489,12 @@
     <ClInclude Include="..\public\Wargreymon.h">
       <Filter>02.GameObjects\Digimon\Wargreymon</Filter>
     </ClInclude>
+    <ClInclude Include="..\public\Body_Blackwargreymon.h">
+      <Filter>02.GameObjects\Digimon\Blackwargreymon\Body_Blackwargreymon</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\Blackwargreymon.h">
+      <Filter>02.GameObjects\Digimon\Blackwargreymon</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Client.ico">
@@ -542,9 +548,6 @@
     </ClCompile>
     <ClCompile Include="..\private\Equipment.cpp">
       <Filter>03.UI\Equipment</Filter>
-    </ClCompile>
-    <ClCompile Include="..\private\Item.cpp">
-      <Filter>03.UI\Item</Filter>
     </ClCompile>
     <ClCompile Include="..\private\Terrain.cpp">
       <Filter>02.GameObjects\Terrain</Filter>
@@ -722,6 +725,12 @@
     </ClCompile>
     <ClCompile Include="..\private\Wargreymon.cpp">
       <Filter>02.GameObjects\Digimon\Wargreymon</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\Blackwargreymon.cpp">
+      <Filter>02.GameObjects\Digimon\Blackwargreymon</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Body_Blackwargreymon.cpp">
+      <Filter>02.GameObjects\Digimon\Blackwargreymon\Body_Blackwargreymon</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

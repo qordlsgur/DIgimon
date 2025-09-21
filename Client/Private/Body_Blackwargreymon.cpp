@@ -1,33 +1,33 @@
-#include "Body_Ladydevimon.h"
+#include "Body_Blackwargreymon.h"
 #include "GameInstance.h"
 
-
-CBody_Ladydevimon::CBody_Ladydevimon(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
+CBody_Blackwargreymon::CBody_Blackwargreymon(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CPartObject{ pDevice, pContext }
 {
 }
 
-CBody_Ladydevimon::CBody_Ladydevimon(const CBody_Ladydevimon& Prototype)
+CBody_Blackwargreymon::CBody_Blackwargreymon(const CBody_Blackwargreymon& Prototype)
 	: CPartObject{ Prototype }
 {
 }
 
-_float4x4* CBody_Ladydevimon::Get_BoneMatrixPtr(const _char* pBoneName)
+_float4x4* CBody_Blackwargreymon::Get_BoneMatrixPtr(const _char* pBoneName)
 {
 	return m_pModelCom->Get_BoneMatrixPtr(pBoneName);
 }
 
-_bool CBody_Ladydevimon::isFinish_Att()
+
+_bool CBody_Blackwargreymon::isFinish_Att()
 {
 	return false;
 }
 
-HRESULT CBody_Ladydevimon::Initialize_Prototype()
+HRESULT CBody_Blackwargreymon::Initialize_Prototype()
 {
 	return S_OK;
 }
 
-HRESULT CBody_Ladydevimon::Initialize(void* pArg)
+HRESULT CBody_Blackwargreymon::Initialize(void* pArg)
 {
 	BODY_PLAYER_DESC* pDesc = static_cast<BODY_PLAYER_DESC*>(pArg);
 
@@ -37,18 +37,18 @@ HRESULT CBody_Ladydevimon::Initialize(void* pArg)
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 
-	m_pModelCom->Set_AnimSpeed("Skill_1", 40);
+	m_pModelCom->Set_AnimSpeed("Skill_1", 30);
 	m_pModelCom->Set_AnimSpeed("Skill_2", 35);
-	m_pModelCom->Set_AnimSpeed("Skill_3", 40);
+	m_pModelCom->Set_AnimSpeed("Skill_3", 35);
 
 	return S_OK;
 }
 
-void CBody_Ladydevimon::Priority_Update(_float fTimeDelta)
+void CBody_Blackwargreymon::Priority_Update(_float fTimeDelta)
 {
 }
 
-void CBody_Ladydevimon::Update(_float fTimeDelta)
+void CBody_Blackwargreymon::Update(_float fTimeDelta)
 {
 	m_isAnimFinish = m_pModelCom->Play_Animation(fTimeDelta);
 
@@ -56,12 +56,12 @@ void CBody_Ladydevimon::Update(_float fTimeDelta)
 		XMLoadFloat4x4(m_pTransformCom->Get_WorldMatrixPtr()) * XMLoadFloat4x4(m_pParentTransformCom->Get_WorldMatrixPtr()));
 }
 
-void CBody_Ladydevimon::Late_Update(_float fTimeDelta)
+void CBody_Blackwargreymon::Late_Update(_float fTimeDelta)
 {
 	m_pGameInstance->Add_RenderGroup(RENDER::NONBLEND, this);
 }
 
-HRESULT CBody_Ladydevimon::Render()
+HRESULT CBody_Blackwargreymon::Render()
 {
 	if (FAILED(Bind_ShaderResources()))
 		return E_FAIL;
@@ -90,15 +90,15 @@ HRESULT CBody_Ladydevimon::Render()
 	return S_OK;
 }
 
-void CBody_Ladydevimon::Set_Animation(const _char* szName, _bool bisLoop)
+void CBody_Blackwargreymon::Set_Animation(const _char* szName, _bool bisLoop)
 {
 	m_pModelCom->Set_AnimationIndex(szName, bisLoop);
 }
 
-HRESULT CBody_Ladydevimon::Ready_Components()
+HRESULT CBody_Blackwargreymon::Ready_Components()
 {
 	/* Com_Model */
-	if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Model_Ladydevimon"),
+	if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Model_Blackwargreymon"),
 		TEXT("Com_Model"), reinterpret_cast<CComponent**>(&m_pModelCom))))
 		return E_FAIL;
 
@@ -110,7 +110,7 @@ HRESULT CBody_Ladydevimon::Ready_Components()
 	return S_OK;
 }
 
-HRESULT CBody_Ladydevimon::Bind_ShaderResources()
+HRESULT CBody_Blackwargreymon::Bind_ShaderResources()
 {
 	/*m_pShaderCom->Bind_Matrix("g_WorldMatrix", );*/
 	if (FAILED(m_pShaderCom->Bind_Matrix("g_WorldMatrix", &m_CombinedWorldMatrix)))
@@ -139,33 +139,33 @@ HRESULT CBody_Ladydevimon::Bind_ShaderResources()
 	return S_OK;
 }
 
-CBody_Ladydevimon* CBody_Ladydevimon::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
+CBody_Blackwargreymon* CBody_Blackwargreymon::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 {
-	CBody_Ladydevimon* pInstance = new CBody_Ladydevimon(pDevice, pContext);
+	CBody_Blackwargreymon* pInstance = new CBody_Blackwargreymon(pDevice, pContext);
 
 	if (FAILED(pInstance->Initialize_Prototype()))
 	{
-		MSG_BOX("Failed to Created : CBody_Ladydevimon");
+		MSG_BOX("Failed to Created : CBody_Blackwargreymon");
 		Safe_Release(pInstance);
 	}
 
 	return pInstance;
 }
 
-CGameObject* CBody_Ladydevimon::Clone(void* pArg)
+CGameObject* CBody_Blackwargreymon::Clone(void* pArg)
 {
-	CBody_Ladydevimon* pInstance = new CBody_Ladydevimon(*this);
+	CBody_Blackwargreymon* pInstance = new CBody_Blackwargreymon(*this);
 
 	if (FAILED(pInstance->Initialize(pArg)))
 	{
-		MSG_BOX("Failed to Cloned : CBody_Ladydevimon");
+		MSG_BOX("Failed to Cloned : CBody_Blackwargreymon");
 		Safe_Release(pInstance);
 	}
 
 	return pInstance;
 }
 
-void CBody_Ladydevimon::Free()
+void CBody_Blackwargreymon::Free()
 {
 	__super::Free();
 

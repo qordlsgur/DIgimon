@@ -35,7 +35,7 @@ HRESULT CTerrain::Initialize(void* pArg)
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 
-	Load_Object(TEXT("../Bin/Resources/Textures/Objects.bin"));
+	//Load_Object(TEXT("../Bin/Resources/Textures/Objects.bin"));
 	 
 
 	return S_OK;

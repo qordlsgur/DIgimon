@@ -157,6 +157,7 @@
     <ClInclude Include="..\Public\BackGround.h" />
     <ClInclude Include="..\Public\BattleBack.h" />
     <ClInclude Include="..\Public\BattleDash.h" />
+    <ClInclude Include="..\public\Blackwargreymon.h" />
     <ClInclude Include="..\Public\BldA.h" />
     <ClInclude Include="..\Public\BldB.h" />
     <ClInclude Include="..\Public\BldC.h" />
@@ -166,6 +167,7 @@
     <ClInclude Include="..\Public\BldJ.h" />
     <ClInclude Include="..\Public\BldK.h" />
     <ClInclude Include="..\public\Body_Angewomon.h" />
+    <ClInclude Include="..\public\Body_Blackwargreymon.h" />
     <ClInclude Include="..\public\Body_Devilmon.h" />
     <ClInclude Include="..\public\Body_Ladydevimon.h" />
     <ClInclude Include="..\public\Body_Leomon.h" />
@@ -194,7 +196,6 @@
     <ClInclude Include="..\Public\Hit.h" />
     <ClInclude Include="..\public\Inventory.h" />
     <ClInclude Include="..\public\Inventory_Manager.h" />
-    <ClInclude Include="..\public\Item.h" />
     <ClInclude Include="..\public\ItemType_Button.h" />
     <ClInclude Include="..\Public\Jump.h" />
     <ClInclude Include="..\public\Ladydevimon.h" />
@@ -236,6 +237,7 @@
     <ClCompile Include="..\Private\BackGround.cpp" />
     <ClCompile Include="..\Private\BattleBack.cpp" />
     <ClCompile Include="..\Private\BattleDash.cpp" />
+    <ClCompile Include="..\private\Blackwargreymon.cpp" />
     <ClCompile Include="..\Private\BldA.cpp" />
     <ClCompile Include="..\Private\BldB.cpp" />
     <ClCompile Include="..\Private\BldC.cpp" />
@@ -245,6 +247,7 @@
     <ClCompile Include="..\Private\BldJ.cpp" />
     <ClCompile Include="..\Private\BldK.cpp" />
     <ClCompile Include="..\private\Body_Angewomon.cpp" />
+    <ClCompile Include="..\Private\Body_Blackwargreymon.cpp" />
     <ClCompile Include="..\private\Body_Devilmon.cpp" />
     <ClCompile Include="..\private\Body_Ladydevimon.cpp" />
     <ClCompile Include="..\private\Body_Leomon.cpp" />
@@ -272,7 +275,6 @@
     <ClCompile Include="..\Private\Hit.cpp" />
     <ClCompile Include="..\private\Inventory.cpp" />
     <ClCompile Include="..\private\Inventory_Manager.cpp" />
-    <ClCompile Include="..\private\Item.cpp" />
     <ClCompile Include="..\private\ItemType_Button.cpp" />
     <ClCompile Include="..\Private\Jump.cpp" />
     <ClCompile Include="..\private\Ladydevimon.cpp" />
