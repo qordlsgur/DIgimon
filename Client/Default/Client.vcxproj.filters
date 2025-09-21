@@ -259,6 +259,9 @@
     <Filter Include="02.GameObjects\Digimon\Blackwargreymon\Body_Blackwargreymon">
       <UniqueIdentifier>{c33dd4a4-c8bd-4944-b294-31d5165558b3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="03.UI\Slot\Digivice_Slot\Target">
+      <UniqueIdentifier>{c72bf2aa-5aae-4b68-9f24-18b625e47a13}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -494,6 +497,9 @@
     </ClInclude>
     <ClInclude Include="..\public\Blackwargreymon.h">
       <Filter>02.GameObjects\Digimon\Blackwargreymon</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\Digivice_Target.h">
+      <Filter>03.UI\Slot\Digivice_Slot\Target</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -731,6 +737,9 @@
     </ClCompile>
     <ClCompile Include="..\Private\Body_Blackwargreymon.cpp">
       <Filter>02.GameObjects\Digimon\Blackwargreymon\Body_Blackwargreymon</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Digivice_Target.cpp">
+      <Filter>03.UI\Slot\Digivice_Slot\Target</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

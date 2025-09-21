@@ -135,7 +135,7 @@ void CAnimation::CompareStringVectors(vector<LERP>& mLerp)
 	}
 }
 
-void CAnimation::Set_Animamtion_Speed(_uint iSpeed)
+void CAnimation::Set_Animamtion_Speed(_float iSpeed)
 {
 	m_fTickPerSecond = iSpeed;
 }

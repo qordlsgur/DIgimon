@@ -40,6 +40,22 @@ HRESULT CMetalgreymon::Initialize(void* pArg)
 
 	m_pTransformCom->Set_State(STATE::POSITION, XMVectorSet(10.f, 0.f, 190.f, 1.f));
 
+	Digimon_Info Info;
+
+	Info.DigimonName = TEXT("메탈그레이몬");
+	Info.DigimonId = 0;
+	Info.Stage = DIGIMON_STAGE::ULTIMATE;
+	Info.Attribute = DIGIMON_ATTRIBUTE::VACCINE;
+	Info.DigimonInfo = TEXT("몸의 절반 이상을 기계화한 사이보그형 디지몬");
+	Info.Hp = 5000;
+	Info.Sp = 100;
+	Info.Damage = 500;
+	Info.AttackSpeed = 100;
+	Info.Exp = 0;
+	Info.Lv = 50;
+
+	__super::Set_Digimon_Info(Info);
+
 	return S_OK;
 }
 

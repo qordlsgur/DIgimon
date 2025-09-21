@@ -22,11 +22,10 @@ public:
 public:
 
 	virtual wstring Get_Digimon_Name();
-	virtual wstring Get_Digimon_Map_Name();
 	virtual _int Get_ID();
 	virtual DIGIMON_STAGE Get_Stage();
-	virtual wstring Get_Digimon_Info();
 	virtual DIGIMON_ATTRIBUTE Get_Attribute();
+	virtual wstring Get_Digimon_Info();
 	virtual _int Get_Hp();
 	virtual _int Get_Sp();
 	virtual _int Get_Damage();
@@ -35,17 +34,26 @@ public:
 	virtual _int Get_Lv();
 
 
-	virtual void Set_Hp(_int Hp);
-	virtual void Set_Sp(_int Sp);
-	virtual void Set_Damage(_int Damage);
-	virtual void Set_AttackSpeed(_int AttackSpeed);
-	virtual void Set_Exp(_int Exp);
-	virtual void Set_Lv(_int Lv);
+	virtual void Set_Digimon_Info(DIGIMON_INFO Digimon_Info);
+
 
 protected:
 	map<const _wstring, class CPartObject*>			m_PartObjects;
 
 	DIGIMON_INFO Info;
+
+	wstring m_strDigimon_Name;
+	_int m_iDigimon_ID{};
+	DIGIMON_STAGE m_eState;
+	DIGIMON_ATTRIBUTE m_eAttribute;
+	wstring m_strDigimon_Info;
+	_int m_iHp{};
+	_int m_iSp{};
+	_int m_iDamage{};
+	_int m_iAttackSpeed{};
+	_int m_iExp{};
+	_int m_iLv{};
+
 
 protected:
 	class CPartObject* Find_PartObject(const _wstring& strPartTag);

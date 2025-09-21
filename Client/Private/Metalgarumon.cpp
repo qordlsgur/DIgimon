@@ -40,6 +40,22 @@ HRESULT CMetalgarumon::Initialize(void* pArg)
 
 	m_pTransformCom->Set_State(STATE::POSITION, XMVectorSet(10.f, 0.f, 190.f, 1.f));
 
+	Digimon_Info Info;
+
+	Info.DigimonName = TEXT("메탈가루몬");
+	Info.DigimonId = 0;
+	Info.Stage = DIGIMON_STAGE::MEGA;
+	Info.Attribute = DIGIMON_ATTRIBUTE::DATA;
+	Info.DigimonInfo = TEXT("전신의 대부분을 메탈화 한 것으로 파워업한 가루몬의 최종형태");
+	Info.Hp = 7000;
+	Info.Sp = 130;
+	Info.Damage = 1000;
+	Info.AttackSpeed = 130;
+	Info.Exp = 0;
+	Info.Lv = 90;
+
+	__super::Set_Digimon_Info(Info);
+
 	return S_OK;
 }
 

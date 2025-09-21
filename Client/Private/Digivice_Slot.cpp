@@ -68,8 +68,6 @@ HRESULT CDigivice_Slot::Render()
 	if (FAILED(m_pVIBufferCom->Render()))
 		return E_FAIL;
 
-
-
 	return S_OK;
 }
 
@@ -96,6 +94,11 @@ HRESULT CDigivice_Slot::Ready_Components()
 		TEXT("Com_Digivice_Slot_Texture"), reinterpret_cast<CComponent**>(&m_pSlotTextureCom))))
 		return E_FAIL;
 
+	/* Com_Digivice_Mask_Texture */
+	if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Digivice_Mask"),
+		TEXT("Com_Digivice_Mask_Texture"), reinterpret_cast<CComponent**>(&m_pMaskTextureCom))))
+		return E_FAIL;
+
 	/* Com_Shader */
 	if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Shader_Digivice"),
 		TEXT("Com_Shader"), reinterpret_cast<CComponent**>(&m_pShaderCom))))
@@ -114,9 +117,9 @@ HRESULT CDigivice_Slot::Bind_ShaderResources()
 	if (FAILED(m_pShaderCom->Bind_Matrix("g_ProjMatrix", &m_ProjMatrix)))
 		return E_FAIL;
 	if (FAILED(m_pSlotTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture1", 0)))
-
 		return E_FAIL;
-
+	if (FAILED(m_pMaskTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture2", 0)))
+		return E_FAIL;
 	return S_OK;
 }
 

@@ -168,10 +168,10 @@ HRESULT CLevel_GamePlay::Ready_Layer_Player(const _wstring& strLayerTag)
 HRESULT CLevel_GamePlay::Ready_Layer_Digimon(const _wstring& strLayerTag)
 {
 
-	////엔젤우몬
-	//if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Angewomon"),
-	//	ENUM_CLASS(LEVEL::GAMEPLAY), strLayerTag)))
-	//	return E_FAIL;
+	//엔젤우몬
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Angewomon"),
+		ENUM_CLASS(LEVEL::GAMEPLAY), strLayerTag)))
+		return E_FAIL;
 
 	//// 오메가몬
 	//if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Omegamon"),
@@ -225,7 +225,7 @@ HRESULT CLevel_GamePlay::Ready_Layer_Monster(const _wstring& strLayerTag)
 	//		ENUM_CLASS(LEVEL::GAMEPLAY), strLayerTag)))
 	//		return E_FAIL;
 	//}
-	//return S_OK;
+	return S_OK;
 }
 
 HRESULT CLevel_GamePlay::Ready_Layer_Effect(const _wstring& strLayerTag)

@@ -40,6 +40,22 @@ HRESULT CLeomon::Initialize(void* pArg)
 
 	m_pTransformCom->Set_State(STATE::POSITION, XMVectorSet(10.f, 0.f, 190.f, 1.f));
 
+	Digimon_Info Info;
+
+	Info.DigimonName = TEXT("레오몬");
+	Info.DigimonId = 0;
+	Info.Stage = DIGIMON_STAGE::CHAMPION;
+	Info.Attribute = DIGIMON_ATTRIBUTE::VACCINE;
+	Info.DigimonInfo = TEXT("백수의 왕, 고상한 용사라 불리는 수인형 디지몬");
+	Info.Hp = 2500;
+	Info.Sp = 100;
+	Info.Damage = 300;
+	Info.AttackSpeed = 70;
+	Info.Exp = 0;
+	Info.Lv = 15;
+
+	__super::Set_Digimon_Info(Info);
+
 	return S_OK;
 }
 

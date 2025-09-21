@@ -32,6 +32,9 @@ public:
 
 	void Set_Digimon_ID(_uint ID) { m_iDigimon_ID = ID; }
 
+	_bool Get_HasDigimon() { return m_bHasDigimon; }
+	void Set_HasDigimon(_bool HasDigimon) { m_bHasDigimon = HasDigimon; }
+
 private:
 	CVIBuffer_Rect* m_pVIBufferCom = { nullptr };
 	CTexture* m_pMaskTextureCom = { nullptr };

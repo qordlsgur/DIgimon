@@ -22,13 +22,17 @@ public:
 	HRESULT Initialize();
 
 public:
-	void Swap_Digimon();
+	void Swap_Digimon(_int Sour, _int Dest);
 	void Digimon_UHD();
 
-	void Acquire_Digimon();
+	void Acquire_Digimon(_int ID);
+	void Release_Digimon(_int ID);
+
+	void Set_Digivice_Slot(_int ID, _bool Has);
 
 	//void Copy_Digimon();
 
+public:
 	void PartyUHD(class CPartyUHD* pPartyUHD);
 	void Digivice(class CDigivice* pDigivice);
 	void Digimon_Storage(class CDigimon_Storage* pDigimon_Storage);
@@ -36,12 +40,14 @@ public:
 	void Player(CGameObject* pPlayer);
 	_vector PlayerPos();
 
+	HRESULT Digimon_Add(_int Digimon_ID,DIGIMON_INFO Info);
+
 private:
 	class CPartyUHD* m_pPartyUHD = { nullptr };
 	class CDigivice* m_pDigivice = { nullptr };
 	class CDigimon_Storage* m_pDigimon_Storage = { nullptr };
 
-	vector<class CDigivice*> m_vDigivice_Battle_Slot;
+	vector<_bool> m_vDigivice_Battle_Slot;
 	_uint m_iDigivice_Number{};
 
 	vector<class CDigimon_Storage*> m_vDigimon_Storage_Slot;
@@ -49,7 +55,10 @@ private:
 
 	CGameObject* m_pPlayer = { nullptr };
 
+	map<_int, DIGIMON_INFO> m_Digimon_Info;
 
+private:
+	DIGIMON_INFO* Find_Digimon(_int Digimon_ID);
 
 public:
 	virtual void Free() override;

@@ -223,10 +223,10 @@ _bool CModel::Play_Animation(_float fTimeDelta)
 
 		for (auto& pBone : m_Bones)
 		{
-			//_matrix Root = XMLoadFloat4x4(Get_BoneMatrixPtr("Root"));
-			//Root.r[3] = XMVectorSet(0.f, 0.f, 0.f, 1.f);
+			_matrix Root = XMLoadFloat4x4(Get_BoneMatrixPtr("Root"));
+			Root.r[3] = XMVectorSet(0.f, 0.f, 0.f, 1.f);
 
-			//XMStoreFloat4x4(Get_BoneMatrixPtr("Root"), Root);
+			XMStoreFloat4x4(Get_BoneMatrixPtr("Root"), Root);
 			pBone->Update_CombinedTransformationMatrix(m_Bones, XMLoadFloat4x4(&m_PreTransformMatrix));
 		}
 
@@ -242,10 +242,10 @@ _bool CModel::Play_Animation(_float fTimeDelta)
 		/* 모든 뼈를 순회하면서 CombinedTransformationMatrix를 갱신한다. */
 		for (auto& pBone : m_Bones)
 		{
-			//_matrix Root = XMLoadFloat4x4(Get_BoneMatrixPtr("Root"));
-			//Root.r[3] = XMVectorSet(0.f, 0.f, 0.f, 1.f);
+			_matrix Root = XMLoadFloat4x4(Get_BoneMatrixPtr("Root"));
+			Root.r[3] = XMVectorSet(0.f, 0.f, 0.f, 1.f);
 
-			//XMStoreFloat4x4(Get_BoneMatrixPtr("Root"), Root);
+			XMStoreFloat4x4(Get_BoneMatrixPtr("Root"), Root);
 			pBone->Update_CombinedTransformationMatrix(m_Bones, XMLoadFloat4x4(&m_PreTransformMatrix));
 		}
 	}
@@ -489,7 +489,7 @@ void CModel::Load_AnimModel(const _tchar* szFileName, ANIM_DATA& Data)
 	}
 }
 
-void CModel::Set_AnimSpeed(const _char* szAnimName, _uint Speed)
+void CModel::Set_AnimSpeed(const _char* szAnimName, _float Speed)
 {
 	m_Animations[Set_AnimationIndex(szAnimName, 0)]->Set_Animamtion_Speed(Speed);
 }

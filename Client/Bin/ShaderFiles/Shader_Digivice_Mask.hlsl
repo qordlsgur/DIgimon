@@ -60,7 +60,10 @@ PS_OUT PS_MAIN(PS_IN In)
 {
     PS_OUT Out;
 
-    if (HasDigimon != 0)
+    if (HasDigimon == 0)
+        Out.vColor = g_Texture1.Sample(DefaultSampler, In.vTexcoord);
+    
+    else
     {
         float4 tex1 = g_Texture1.Sample(DefaultSampler, In.vTexcoord);
         float4 tex2 = g_Texture2.Sample(DefaultSampler, In.vTexcoord);
@@ -75,11 +78,9 @@ PS_OUT PS_MAIN(PS_IN In)
         
         Out.vColor = color;
     }
+       
     
-    else
-        Out.vColor = g_Texture1.Sample(DefaultSampler, In.vTexcoord);
-    
-    if (Out.vColor.a < 0.3f)
+    if (Out.vColor.a < 0.4f)
         discard;
     
     return Out;

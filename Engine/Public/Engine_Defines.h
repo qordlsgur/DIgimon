@@ -13,6 +13,13 @@
 #include "DirectXTK/WICTextureLoader.h"
 #include "FX11/d3dx11effect.h"
 
+#include "DirectXTK/VertexTypes.h"
+#include "DirectXTK/PrimitiveBatch.h"
+#include "DirectXTK/Effects.h"
+
+#include "DirectXTK/SpriteBatch.h"
+#include "DirectXTK/SpriteFont.h"
+
 using namespace DirectX;
 
 #include <vector>

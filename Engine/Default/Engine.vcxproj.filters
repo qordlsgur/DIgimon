@@ -166,6 +166,12 @@
     <ClInclude Include="..\public\Picking.h">
       <Filter>01.Utility\09.Picking</Filter>
     </ClInclude>
+    <ClInclude Include="..\public\Font.h">
+      <Filter>01.Utility\10.Font</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\Font_Manager.h">
+      <Filter>01.Utility\10.Font\Manager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Private\Base.cpp">
@@ -290,6 +296,12 @@
     </ClCompile>
     <ClCompile Include="..\private\Picking.cpp">
       <Filter>01.Utility\09.Picking</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\Font.cpp">
+      <Filter>01.Utility\10.Font</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\Font_Manager.cpp">
+      <Filter>01.Utility\10.Font\Manager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -439,6 +451,12 @@
     </Filter>
     <Filter Include="98.ShaderFiles">
       <UniqueIdentifier>{746fcb63-5413-474d-b59a-62af8b033721}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Utility\10.Font">
+      <UniqueIdentifier>{9d042196-e934-479e-892b-74444601a7ab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Utility\10.Font\Manager">
+      <UniqueIdentifier>{afa789d2-fd82-4fe5-aab4-abd439594d06}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

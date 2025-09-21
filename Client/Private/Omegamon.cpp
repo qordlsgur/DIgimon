@@ -41,6 +41,22 @@ HRESULT COmegamon::Initialize(void* pArg)
 
 	m_pTransformCom->Set_State(STATE::POSITION, XMVectorSet(10.f, 0.f, 190.f, 1.f));
 
+	Digimon_Info Info;
+
+	Info.DigimonName = TEXT("오메가몬");
+	Info.DigimonId = 0;
+	Info.Stage = DIGIMON_STAGE::MEGA;
+	Info.Attribute = DIGIMON_ATTRIBUTE::VACCINE;
+	Info.DigimonInfo = TEXT("선을 바라는 사람들의 강한 의지에 의해서 융햡해 탄생한 성기사형 디지몬");
+	Info.Hp = 10000;
+	Info.Sp = 150;
+	Info.Damage = 1300;
+	Info.AttackSpeed = 150;
+	Info.Exp = 0;
+	Info.Lv = 90;
+
+	__super::Set_Digimon_Info(Info);
+
 	return S_OK;
 }
 

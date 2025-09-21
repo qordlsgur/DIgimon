@@ -40,6 +40,22 @@ HRESULT CLadydevimon::Initialize(void* pArg)
 
 	m_pTransformCom->Set_State(STATE::POSITION, XMVectorSet(10.f, 0.f, 190.f, 1.f));
 
+	Digimon_Info Info;
+
+	Info.DigimonName = TEXT("레이디데블몬");
+	Info.DigimonId = 0;
+	Info.Stage = DIGIMON_STAGE::ULTIMATE;
+	Info.Attribute = DIGIMON_ATTRIBUTE::VIRUS;
+	Info.DigimonInfo = TEXT("고귀한 존재인 여성형 타천사 디지몬");
+	Info.Hp = 5000;
+	Info.Sp = 100;
+	Info.Damage = 500;
+	Info.AttackSpeed = 100;
+	Info.Exp = 0;
+	Info.Lv = 50;
+
+	__super::Set_Digimon_Info(Info);
+
 	return S_OK;
 }
 

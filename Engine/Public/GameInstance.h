@@ -98,6 +98,10 @@ public:
 	HRESULT Add_Light(const LIGHT_DESC& LightDesc);
 #pragma endregion
 
+#pragma region FONT_MANAGER
+	HRESULT Add_Font(const _wstring& strFontTag, const _tchar* pFontFilePath);
+	HRESULT Render_Text(const _wstring& strFontTag, const _tchar* pText, const _float2& vPosition, _fvector vColor = XMVectorSet(1.f, 1.f, 1.f, 1.f));
+#pragma endregion
 
 
 private:
@@ -112,6 +116,7 @@ private:
 	class CPicking*					 m_pPicking = { nullptr };
 	class CPipeLine*				m_pPipeLine = { nullptr };
 	class CLight_Manager*			m_pLight_Manager = { nullptr };
+	class CFont_Manager*			m_pFont_Manager = { nullptr };
 
 public:
 	void Release_Engine();

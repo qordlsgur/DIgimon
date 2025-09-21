@@ -79,10 +79,10 @@ HRESULT CVIBuffer_Terrain::Initialize_Prototype(const _tchar* pHeightMapFilePath
 	ZeroMemory(m_pVertexPositions, sizeof(_float3) * m_iNumVertices);
 
 	// Z√‡
-	for (size_t i = 0; i < m_iNumVerticesZ; i++)
+	for (_uint i = 0; i < m_iNumVerticesZ; i++)
 	{
 		// X√‡
-		for (size_t j = 0; j < m_iNumVerticesX; j++)
+		for (_uint j = 0; j < m_iNumVerticesX; j++)
 		{
 			// X√‡¿∏∑Œ ¡°¿ª ¬Ô¥¬µ• ∞°∑Œ¡Ÿ¿ª ¬” ±Úæ∆µ–¥Ÿ.
 			_uint		iIndex = i * m_iNumVerticesX + j;

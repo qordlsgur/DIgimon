@@ -62,6 +62,18 @@ void CDigivice::Update(_float fTimeDelta)
 		m_pBattle_Slot[i]->Set_Parent_WorldPos(m_pTransformCom->Get_State(STATE::POSITION));
 		m_pBattle_Mask[i]->Set_Parent_WorldPos(m_pTransformCom->Get_State(STATE::POSITION));
 	}
+
+	if (m_pGameInstance->Key_Down(DIK_Z))
+		Acquire_Digimon(1);
+
+	if (m_pGameInstance->Key_Down(DIK_X))
+		Acquire_Digimon(0);
+
+	if (m_pGameInstance->Key_Down(DIK_C))
+		Acquire_Digimon(3);
+
+	if (m_pGameInstance->Key_Down(DIK_B))
+		Release_Digimon(0);
 }
 
 void CDigivice::Late_Update(_float fTimeDelta)
@@ -82,18 +94,48 @@ HRESULT CDigivice::Render()
 		if (FAILED(m_pVIBufferCom->Bind_Resources()))
 			return E_FAIL;
 
-
 		if (FAILED(m_pVIBufferCom->Render()))
 			return E_FAIL;
 
 		for (_uint i = 0; i < m_iDigivice_Battle_Slot_Number; ++i)
 		{
 			m_pBattle_Slot[i]->Render();
-			m_pBattle_Mask[i]->Render();
+			if (m_pBattle_Mask[i]->Get_HasDigimon())
+				m_pBattle_Mask[i]->Render();
 		}
+
+		m_pGameInstance->Render_Text(TEXT("18"), TEXT("다지바이스"), _float2(600.f, 70.f), XMVectorSet(0.f, 0.f, 1.f, 1.f));
+
 
 	}
 	return S_OK;
+}
+
+void CDigivice::Acquire_Digimon(_int ID)
+{
+	for (_uint i = 0; i < m_iDigivice_Battle_Slot_Number; ++i)
+	{
+		if (false == m_pBattle_Mask[i]->Get_HasDigimon())
+		{
+			m_pBattle_Mask[i]->Set_Digimon_ID(ID);
+			m_pBattle_Mask[i]->Set_HasDigimon(true);
+			m_pDigimon_Manager->Set_Digivice_Slot(i, true);
+			return;
+		}
+	}
+}
+
+void CDigivice::Release_Digimon(_int ID)
+{
+	if (true == m_pBattle_Mask[ID]->Get_HasDigimon())
+	{
+		m_pBattle_Mask[ID]->Set_Digimon_ID(-1);
+		m_pBattle_Mask[ID]->Set_HasDigimon(false);
+		m_pDigimon_Manager->Set_Digivice_Slot(ID, false);
+
+	}
+	else
+		return;
 }
 
 HRESULT CDigivice::Ready_Components()
@@ -147,8 +189,7 @@ HRESULT CDigivice::Create_Slot(const _wstring& strLayerTag)
 
 	for (_uint i = 0; i < m_iDigivice_Battle_Slot_Number; ++i)
 	{
-
-		_float row = static_cast<_float>(i % 3);
+		_float row = static_cast<_float>(i);
 
 		_float startX = 100.f;
 		_float startY = 20.f + row * 105;
@@ -162,8 +203,7 @@ HRESULT CDigivice::Create_Slot(const _wstring& strLayerTag)
 
 	for (_uint i = 3; i < m_iDigivice_Battle_Slot_Number; ++i)
 	{
-
-		_float row = static_cast<_float>(i % 5);
+		_float row = static_cast<_float>(i - 3);
 
 		_float startX = 100.f;
 		_float startY = 430.f + row * 105;
@@ -220,7 +260,7 @@ void CDigivice::Free()
 	Safe_Release(m_pTextureCom);
 	Safe_Release(m_pShaderCom);
 
-	Safe_Release(m_pDigivice_Slot);
-	Safe_Release(m_pDigivice_Mask);
+	//Safe_Release(m_pDigivice_Slot);
+	//Safe_Release(m_pDigivice_Mask);
 	//Safe_Release(m_pDigimon_Manager);
 }

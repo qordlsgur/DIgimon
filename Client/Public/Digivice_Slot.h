@@ -30,13 +30,17 @@ public:
 	void Set_Parent_WorldPos(_vector fParent_World);
 	void Set_Move(_float fX, _float fY);
 
+	void Set_HasDigimon(_bool Digimon) { m_bHasDigimon = Digimon;}
+	_bool Get_HasDigimon() { return m_bHasDigimon; }
+
 private:
 	CVIBuffer_Rect* m_pVIBufferCom = { nullptr };
 	CTexture*		m_pSlotTextureCom = { nullptr };
 	CShader*		m_pShaderCom = { nullptr };
+	CTexture*		m_pMaskTextureCom = { nullptr };
 
 	_uint			m_iDigimon_ID{};
-
+	_bool			m_bHasDigimon = false;
 
 private:
 	HRESULT Ready_Components();

@@ -60,6 +60,46 @@ HRESULT Client::CMainApp::Render()
 HRESULT CMainApp::Ready_Default_Setting()
 {
 
+	if (FAILED(m_pGameInstance->Add_Font(TEXT("1"), TEXT("../Bin/Resources/Fonts/154.1ex_Fast.spritefont"))))
+		return E_FAIL;
+	if (FAILED(m_pGameInstance->Add_Font(TEXT("2"), TEXT("../Bin/Resources/Fonts/154.2ex_Fast.spritefont"))))
+		return E_FAIL;
+	if (FAILED(m_pGameInstance->Add_Font(TEXT("3"), TEXT("../Bin/Resources/Fonts/154.3ex_Fast.spritefont"))))
+		return E_FAIL;
+	if (FAILED(m_pGameInstance->Add_Font(TEXT("4"), TEXT("../Bin/Resources/Fonts/154.4ex_Fast.spritefont"))))
+		return E_FAIL;
+	if (FAILED(m_pGameInstance->Add_Font(TEXT("5"), TEXT("../Bin/Resources/Fonts/154.5ex_Fast.spritefont"))))
+		return E_FAIL;
+	if (FAILED(m_pGameInstance->Add_Font(TEXT("6"), TEXT("../Bin/Resources/Fonts/154.6ex_Fast.spritefont"))))
+		return E_FAIL;
+	if (FAILED(m_pGameInstance->Add_Font(TEXT("7"), TEXT("../Bin/Resources/Fonts/154.7ex_Fast.spritefont"))))
+		return E_FAIL;
+	if (FAILED(m_pGameInstance->Add_Font(TEXT("8"), TEXT("../Bin/Resources/Fonts/154.8ex_Fast.spritefont"))))
+		return E_FAIL;
+	if (FAILED(m_pGameInstance->Add_Font(TEXT("9"), TEXT("../Bin/Resources/Fonts/154.9ex_Fast.spritefont"))))
+		return E_FAIL;
+	if (FAILED(m_pGameInstance->Add_Font(TEXT("10"), TEXT("../Bin/Resources/Fonts/154.10ex_Fast.spritefont"))))
+		return E_FAIL;
+	if (FAILED(m_pGameInstance->Add_Font(TEXT("11"), TEXT("../Bin/Resources/Fonts/154.11ex_Fast.spritefont"))))
+		return E_FAIL;
+	if (FAILED(m_pGameInstance->Add_Font(TEXT("12"), TEXT("../Bin/Resources/Fonts/154.12ex_Fast.spritefont"))))
+		return E_FAIL;
+	if (FAILED(m_pGameInstance->Add_Font(TEXT("13"), TEXT("../Bin/Resources/Fonts/154.13ex_Fast.spritefont"))))
+		return E_FAIL;
+	if (FAILED(m_pGameInstance->Add_Font(TEXT("14"), TEXT("../Bin/Resources/Fonts/154.14ex_Fast.spritefont"))))
+		return E_FAIL;
+	if (FAILED(m_pGameInstance->Add_Font(TEXT("15"), TEXT("../Bin/Resources/Fonts/154.15ex_Fast.spritefont"))))
+		return E_FAIL;	
+	if (FAILED(m_pGameInstance->Add_Font(TEXT("18"), TEXT("../Bin/Resources/Fonts/154.18ex_Fast.spritefont"))))
+		return E_FAIL;
+	if (FAILED(m_pGameInstance->Add_Font(TEXT("24"), TEXT("../Bin/Resources/Fonts/154.24ex_Fast.spritefont"))))
+		return E_FAIL;	
+	if (FAILED(m_pGameInstance->Add_Font(TEXT("30"), TEXT("../Bin/Resources/Fonts/154.30ex_Fast.spritefont"))))
+		return E_FAIL;
+	if (FAILED(m_pGameInstance->Add_Font(TEXT("36"), TEXT("../Bin/Resources/Fonts/154.36ex_Fast.spritefont"))))
+		return E_FAIL;
+	if (FAILED(m_pGameInstance->Add_Font(TEXT("42"), TEXT("../Bin/Resources/Fonts/154.42ex_Fast.spritefont"))))
+		return E_FAIL;
 
 	return S_OK;
 }
@@ -93,6 +133,7 @@ HRESULT CMainApp::Ready_Prototypes()
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::STATIC), TEXT("Prototype_GameObject_Camera_Free"),
 		CCamera_Free::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
+
 
 	return S_OK;
 }

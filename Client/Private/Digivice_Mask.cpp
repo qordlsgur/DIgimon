@@ -35,7 +35,7 @@ HRESULT CDigivice_Mask::Initialize(void* pArg)
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 
-	m_bHasDigimon = true;
+	m_bHasDigimon = false;
 
 	return S_OK;
 }
@@ -66,10 +66,8 @@ HRESULT CDigivice_Mask::Render()
 	if (FAILED(m_pVIBufferCom->Bind_Resources()))
 		return E_FAIL;
 
-
 	if (FAILED(m_pVIBufferCom->Render()))
 		return E_FAIL;
-
 
 	return S_OK;
 }
@@ -122,13 +120,14 @@ HRESULT CDigivice_Mask::Bind_ShaderResources()
 		return E_FAIL;
 	if (FAILED(m_pShaderCom->Bind_Matrix("g_ProjMatrix", &m_ProjMatrix)))
 		return E_FAIL;
-	if (FAILED(m_pMaskTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture1", 0)))
-		return E_FAIL;
+
 
 	if (m_bHasDigimon)
 	{
-		m_pShaderCom->Bind_Int("HasDigimon", 1);
-		if (FAILED(m_pDigimonTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture2", 0)))
+		if (FAILED(m_pMaskTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture1", 0)))
+			return E_FAIL;
+		m_pShaderCom->Bind_Int("HasDigimon", m_bHasDigimon);
+		if (FAILED(m_pDigimonTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture2", m_iDigimon_ID)))
 			return E_FAIL;
 	}
 

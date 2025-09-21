@@ -52,10 +52,10 @@ HRESULT CPartyUHD::Render()
 {
 	for (_uint i = 0; i < m_iSlotCount; ++i)
 	{
-		//if (m_vSlots[i]->Get_Digimon())
-		//{
+		if (m_vSlots[i]->Get_Digimon())
+		{
 			m_vSlots[i]->Render();
-		//}
+		}
 	}
     return S_OK;
 }
@@ -118,6 +118,5 @@ void CPartyUHD::Free()
 {
 	__super::Free();
 
-	Safe_Release(m_pDigimon_Manager);
-	Safe_Release(m_pUHD_Slot);
+	//Safe_Release(m_pUHD_Slot);
 }

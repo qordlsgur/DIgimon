@@ -244,7 +244,6 @@ namespace Engine
 	typedef struct Digimon_Info
 	{
 		wstring DigimonName;
-		wstring Digimon_Map;
 		int DigimonId{};
 		wstring DigimonInfo;
 		DIGIMON_STAGE Stage;

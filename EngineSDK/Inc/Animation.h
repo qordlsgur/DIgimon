@@ -24,7 +24,7 @@ public:
 	_bool Get_Finishi() { return m_bFnishi; }
 	void Set_Finishi() { m_bFnishi = false; }
 
-	void Set_Animamtion_Speed(_uint iSpeed);
+	void Set_Animamtion_Speed(_float iSpeed);
 
 
 	_char* Get_Name() { return m_szName; }

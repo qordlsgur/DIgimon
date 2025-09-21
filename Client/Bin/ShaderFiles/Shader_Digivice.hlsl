@@ -2,6 +2,7 @@
 matrix g_WorldMatrix, g_ViewMatrix, g_ProjMatrix;
 
 Texture2D g_Texture1;
+Texture2D g_Texture2;
 
 
 sampler DefaultSampler = sampler_state
@@ -58,11 +59,32 @@ PS_OUT PS_MAIN(PS_IN In)
 {
     PS_OUT Out;
 
-    Out.vColor = g_Texture1.Sample(DefaultSampler, In.vTexcoord);
-    
+    // 1번 텍스처 샘플링
+    float4 color1 = g_Texture1.Sample(DefaultSampler, In.vTexcoord);
+
+    // 2번 텍스처용 UV와 위치/크기 정의
+    float2 tex2Pos = float2(0.04f, 0.02f); // 2번 텍스처 시작 위치 (0~1 범위)
+    float2 tex2Size = float2(0.32f, 0.95f); // 2번 텍스처 크기 (0~1 범위)
+
+    // 현재 픽셀이 2번 텍스처 영역 안에 있는지 체크
+    float2 localUV = (In.vTexcoord - tex2Pos) / tex2Size;
+    bool inside = all(localUV >= 0.0f && localUV <= 1.0f);
+
+    float4 color = color1;
+
+    if (inside)
+    {
+        // 2번 텍스처 샘플링
+        float4 color2 = g_Texture2.Sample(DefaultSampler, localUV);
+        if (color2.a > 0)
+            color = color2;
+    }
+
+    Out.vColor = color;
+
     if (Out.vColor.a < 0.3f)
         discard;
-    
+
     return Out;
 }
 

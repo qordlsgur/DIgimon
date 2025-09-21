@@ -56,11 +56,6 @@ wstring CContainerObject::Get_Digimon_Name()
 	return Info.DigimonName;
 }
 
-wstring CContainerObject::Get_Digimon_Map_Name()
-{
-	return Info.Digimon_Map;
-}
-
 _int CContainerObject::Get_ID()
 {
 	return Info.DigimonId;
@@ -111,34 +106,19 @@ wstring CContainerObject::Get_Digimon_Info()
 	return Info.DigimonInfo;
 }
 
-void CContainerObject::Set_Hp(_int Hp)
+void CContainerObject::Set_Digimon_Info(DIGIMON_INFO Digimon_Info)
 {
-
-}
-
-void CContainerObject::Set_Sp(_int Sp)
-{
-
-}
-
-void CContainerObject::Set_Damage(_int Damage)
-{
-
-}
-
-void CContainerObject::Set_AttackSpeed(_int AttackSpeed)
-{
-
-}
-
-void CContainerObject::Set_Exp(_int Exp)
-{
-
-}
-
-void CContainerObject::Set_Lv(_int Lv)
-{
-
+	m_strDigimon_Name = Digimon_Info.DigimonName;
+	m_iDigimon_ID = Digimon_Info.DigimonId;
+	m_eState = Digimon_Info.Stage;
+	m_eAttribute = Digimon_Info.Attribute;
+	m_strDigimon_Info = Digimon_Info.DigimonInfo;
+	m_iHp = Digimon_Info.Hp;
+	m_iSp = Digimon_Info.Sp;
+	m_iDamage = Digimon_Info.Damage;
+	m_iAttackSpeed = Digimon_Info.AttackSpeed;
+	m_iExp = Digimon_Info.Exp;
+	m_iLv = Digimon_Info.Lv;
 }
 
 CPartObject* CContainerObject::Find_PartObject(const _wstring& strPartTag)

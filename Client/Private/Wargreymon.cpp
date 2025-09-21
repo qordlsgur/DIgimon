@@ -40,6 +40,22 @@ HRESULT CWargreymon::Initialize(void* pArg)
 
 	m_pTransformCom->Set_State(STATE::POSITION, XMVectorSet(10.f, 0.f, 190.f, 1.f));
 
+	Digimon_Info Info;
+
+	Info.DigimonName = TEXT("워그레이몬");
+	Info.DigimonId = 0;
+	Info.Stage = DIGIMON_STAGE::MEGA;
+	Info.Attribute = DIGIMON_ATTRIBUTE::VACCINE;
+	Info.DigimonInfo = TEXT("초금속 크롬디지조이드의 값옷을 입고 있는 최강의 용전사");
+	Info.Hp = 7000;
+	Info.Sp = 130;
+	Info.Damage = 1000;
+	Info.AttackSpeed = 130;
+	Info.Exp = 0;
+	Info.Lv = 90;
+
+	__super::Set_Digimon_Info(Info);
+
 	return S_OK;
 }
 

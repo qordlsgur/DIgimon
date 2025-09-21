@@ -190,6 +190,7 @@
     <ClInclude Include="..\public\Digivice.h" />
     <ClInclude Include="..\Public\Digivice_Mask.h" />
     <ClInclude Include="..\public\Digivice_Slot.h" />
+    <ClInclude Include="..\public\Digivice_Target.h" />
     <ClInclude Include="..\public\Equipment.h" />
     <ClInclude Include="..\public\Exit_Button.h" />
     <ClInclude Include="..\Public\Fail.h" />
@@ -269,6 +270,7 @@
     <ClCompile Include="..\private\Digivice.cpp" />
     <ClCompile Include="..\Private\Digivice_Mask.cpp" />
     <ClCompile Include="..\private\Digivice_Slot.cpp" />
+    <ClCompile Include="..\Private\Digivice_Target.cpp" />
     <ClCompile Include="..\private\Equipment.cpp" />
     <ClCompile Include="..\private\Exit_Button.cpp" />
     <ClCompile Include="..\Private\Fail.cpp" />

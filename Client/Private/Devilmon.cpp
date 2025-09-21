@@ -40,6 +40,22 @@ HRESULT CDevilmon::Initialize(void* pArg)
 
 	m_pTransformCom->Set_State(STATE::POSITION, XMVectorSet(10.f, 0.f, 190.f, 1.f));
 
+	Digimon_Info Info;
+
+	Info.DigimonName = TEXT("µ¥ºô¸ó");
+	Info.DigimonId = 1;
+	Info.Stage = DIGIMON_STAGE::CHAMPION;
+	Info.Attribute = DIGIMON_ATTRIBUTE::VIRUS;
+	Info.DigimonInfo = TEXT("Ä¥ÈæÀÇ ¿ÊÀ¸·Î ¸öÀ» °¨½Î°í ÀÖ´Â Å¸Ãµ»çÇü µðÁö¸ó");
+	Info.Hp = 2500;
+	Info.Sp = 100;
+	Info.Damage = 300;
+	Info.AttackSpeed = 70;
+	Info.Exp = 0;
+	Info.Lv = 15;
+
+	__super::Set_Digimon_Info(Info);
+
 	return S_OK;
 }
 

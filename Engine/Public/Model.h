@@ -35,7 +35,7 @@ public:
 
 	void Set_Anim() { m_bAnimEnd = false; }
 
-	void Set_AnimSpeed(const _char* szAnimName, _uint Speed);
+	void Set_AnimSpeed(const _char* szAnimName, _float Speed);
 	_float Get_CurrentTrackPosition() { return m_fCurrentTrackPosition; }
 
 

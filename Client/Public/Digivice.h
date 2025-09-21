@@ -29,6 +29,10 @@ public:
 public:
 	//void Digimon_Swap();
 
+	void Acquire_Digimon(_int ID);
+	void Release_Digimon(_int ID);
+
+
 private:
 	CVIBuffer_Rect* m_pVIBufferCom = { nullptr };
 	CTexture* m_pTextureCom = { nullptr };

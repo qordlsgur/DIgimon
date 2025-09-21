@@ -16,12 +16,17 @@ HRESULT CDigimon_Manager::Initialize()
 
 	m_iDigimon_Storage_Slot_Number = 10;
 
+	m_vDigivice_Battle_Slot.resize(m_iDigivice_Number);
+
 	return S_OK;
 }
 
-void CDigimon_Manager::Swap_Digimon()
+void CDigimon_Manager::Swap_Digimon(_int Sour, _int Dest)
 {
+	if (m_vDigivice_Battle_Slot[Dest] == false)
+	{
 
+	}
 }
 
 void CDigimon_Manager::Digimon_UHD()
@@ -29,14 +34,22 @@ void CDigimon_Manager::Digimon_UHD()
 
 }
 
-void CDigimon_Manager::Acquire_Digimon()
+void CDigimon_Manager::Acquire_Digimon(_int ID)
 {
-	for (_uint i = 0; i < m_iDigivice_Number; ++i)
+	m_pDigivice->Acquire_Digimon(ID);
+}
+
+void CDigimon_Manager::Release_Digimon(_int ID)
+{
+	m_pDigivice->Release_Digimon(ID);
+}
+
+void CDigimon_Manager::Set_Digivice_Slot(_int ID, _bool Has)
+{
+	m_vDigivice_Battle_Slot[ID] = Has;
+	if (ID < 4)
 	{
-		if (m_vDigivice_Battle_Slot[i] != nullptr)
-		{
-			//m_vDigivice_Battle_Slot[i];
-		}
+
 	}
 }
 
@@ -65,19 +78,32 @@ _vector CDigimon_Manager::PlayerPos()
 	return m_pPlayer->Get_Transform();
 }
 
+HRESULT CDigimon_Manager::Digimon_Add(_int Digimon_ID, DIGIMON_INFO Info)
+{
+	if (nullptr != Find_Digimon(Digimon_ID))
+		return E_FAIL;
+
+	m_Digimon_Info.emplace(Digimon_ID, Info);
+
+	return S_OK;
+}
+
+DIGIMON_INFO* CDigimon_Manager::Find_Digimon(_int Digimon_ID)
+{
+	auto iter = m_Digimon_Info.find(Digimon_ID);
+
+	if (iter == m_Digimon_Info.end())
+		return nullptr;
+
+	return &iter->second;
+}
+
 void CDigimon_Manager::Free()
 {
 	__super::Free();
 
-	/*Safe_Release(m_pPartyUHD);
-	Safe_Release(m_pDigivice);
-	Safe_Release(m_pDigimon_Storage);*/
+	//for (auto& Pair : m_Digimon_Info)
+	//	Safe_Release(Pair.second);
 
-	//for (auto& Slot : m_vDigimon_Storage_Slot)
-	//	Safe_Release(Slot);
-	//m_vDigimon_Storage_Slot.clear();
-
-	//for (auto& Slot : m_vDigivice_Battle_Slot)
-	//	Safe_Release(Slot);
 	m_vDigivice_Battle_Slot.clear();
 }
