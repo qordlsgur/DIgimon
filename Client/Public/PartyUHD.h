@@ -26,11 +26,11 @@ public:
 	virtual HRESULT Render() override;
 
 public:
-	void Set_Digimon_ID(_uint Slot, _uint ID);
+	void Set_Digimon_ID(_uint Slot, _bool HasDigimon, _uint ID);
 
 private:
 	class CDigimon_Manager*					m_pDigimon_Manager = { nullptr };
-	class CUHD_Slot*						m_pUHD_Slot			= { nullptr };
+	class CUHD_Slot*						m_pUHD_Slot		   = { nullptr };
 
 	vector<class CUHD_Slot*>				m_vSlots;
 

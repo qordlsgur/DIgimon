@@ -83,7 +83,7 @@ void CUHD_Slot::OnClick()
 {
 }
 
-void CUHD_Slot::Set_Digimon_ID(_uint ID)
+void CUHD_Slot::Set_Digimon_ID(_int ID)
 {
 	m_iDigimon_ID = ID;
 }

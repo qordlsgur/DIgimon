@@ -43,7 +43,7 @@ HRESULT CDevilmon::Initialize(void* pArg)
 	Digimon_Info Info;
 
 	Info.DigimonName = TEXT("µ¥ºô¸ó");
-	Info.DigimonId = 1;
+	Info.DigimonId = 2;
 	Info.Stage = DIGIMON_STAGE::CHAMPION;
 	Info.Attribute = DIGIMON_ATTRIBUTE::VIRUS;
 	Info.DigimonInfo = TEXT("Ä¥ÈæÀÇ ¿ÊÀ¸·Î ¸öÀ» °¨½Î°í ÀÖ´Â Å¸Ãµ»çÇü µðÁö¸ó");
@@ -55,6 +55,7 @@ HRESULT CDevilmon::Initialize(void* pArg)
 	Info.Lv = 15;
 
 	__super::Set_Digimon_Info(Info);
+	m_pDigimon_Manager->Digimon_Add(Info.DigimonId, Info);
 
 	return S_OK;
 }

@@ -63,10 +63,10 @@ void CSlot::Update(_float fTimeDelta)
 
 	// RECT는 화면 좌상단 기준으로 변환
 	m_pRect = {
-		long(Pos.x - m_fSizeX * 0.5f + m_fWinSizeX * 0.5f),
-		long(-Pos.y - m_fSizeY * 0.f - m_fWinSizeY * 0.5f),
-		long(Pos.x + m_fSizeX * 0.5f + m_fWinSizeX * 0.5f),
-		long(-Pos.y + m_fSizeY * 0.f - m_fWinSizeY * 0.5f)
+		long(Pos.x - m_fSizeX * 0.5f),
+		long(Pos.y - m_fSizeY * 0.5f),
+		long(Pos.x + m_fSizeX * 0.5f),
+		long(Pos.y + m_fSizeY * 0.5f)
 	};
 }
 

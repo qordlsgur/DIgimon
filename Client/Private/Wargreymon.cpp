@@ -43,7 +43,7 @@ HRESULT CWargreymon::Initialize(void* pArg)
 	Digimon_Info Info;
 
 	Info.DigimonName = TEXT("워그레이몬");
-	Info.DigimonId = 0;
+	Info.DigimonId = 8;
 	Info.Stage = DIGIMON_STAGE::MEGA;
 	Info.Attribute = DIGIMON_ATTRIBUTE::VACCINE;
 	Info.DigimonInfo = TEXT("초금속 크롬디지조이드의 값옷을 입고 있는 최강의 용전사");
@@ -55,6 +55,7 @@ HRESULT CWargreymon::Initialize(void* pArg)
 	Info.Lv = 90;
 
 	__super::Set_Digimon_Info(Info);
+	m_pDigimon_Manager->Digimon_Add(Info.DigimonId, Info);
 
 	return S_OK;
 }

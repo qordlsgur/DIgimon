@@ -43,7 +43,7 @@ HRESULT CMetalgreymon::Initialize(void* pArg)
 	Digimon_Info Info;
 
 	Info.DigimonName = TEXT("메탈그레이몬");
-	Info.DigimonId = 0;
+	Info.DigimonId = 6;
 	Info.Stage = DIGIMON_STAGE::ULTIMATE;
 	Info.Attribute = DIGIMON_ATTRIBUTE::VACCINE;
 	Info.DigimonInfo = TEXT("몸의 절반 이상을 기계화한 사이보그형 디지몬");
@@ -55,6 +55,7 @@ HRESULT CMetalgreymon::Initialize(void* pArg)
 	Info.Lv = 50;
 
 	__super::Set_Digimon_Info(Info);
+	m_pDigimon_Manager->Digimon_Add(Info.DigimonId, Info);
 
 	return S_OK;
 }

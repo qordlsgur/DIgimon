@@ -40,6 +40,23 @@ HRESULT CBlackwargreymon::Initialize(void* pArg)
 
 	m_pTransformCom->Set_State(STATE::POSITION, XMVectorSet(10.f, 0.f, 190.f, 1.f));
 
+	Digimon_Info Info;
+
+	Info.DigimonName = TEXT("블렉워그레이몬");
+	Info.DigimonId = 1;
+	Info.Stage = DIGIMON_STAGE::MEGA;
+	Info.Attribute = DIGIMON_ATTRIBUTE::VIRUS;
+	Info.DigimonInfo = TEXT("칠흑의 용 전사 라고 불리는 두려운 존재인 바이러스종 워그레이몬");
+	Info.Hp = 7000;
+	Info.Sp = 130;
+	Info.Damage = 1000;
+	Info.AttackSpeed = 130;
+	Info.Exp = 0;
+	Info.Lv = 90;
+
+	__super::Set_Digimon_Info(Info);
+	m_pDigimon_Manager->Digimon_Add(Info.DigimonId, Info);
+
 	return S_OK;
 }
 

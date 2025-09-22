@@ -43,7 +43,7 @@ HRESULT CMetalgarumon::Initialize(void* pArg)
 	Digimon_Info Info;
 
 	Info.DigimonName = TEXT("메탈가루몬");
-	Info.DigimonId = 0;
+	Info.DigimonId = 5;
 	Info.Stage = DIGIMON_STAGE::MEGA;
 	Info.Attribute = DIGIMON_ATTRIBUTE::DATA;
 	Info.DigimonInfo = TEXT("전신의 대부분을 메탈화 한 것으로 파워업한 가루몬의 최종형태");
@@ -55,6 +55,7 @@ HRESULT CMetalgarumon::Initialize(void* pArg)
 	Info.Lv = 90;
 
 	__super::Set_Digimon_Info(Info);
+	m_pDigimon_Manager->Digimon_Add(Info.DigimonId, Info);
 
 	return S_OK;
 }

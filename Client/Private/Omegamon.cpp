@@ -44,7 +44,7 @@ HRESULT COmegamon::Initialize(void* pArg)
 	Digimon_Info Info;
 
 	Info.DigimonName = TEXT("오메가몬");
-	Info.DigimonId = 0;
+	Info.DigimonId = 7;
 	Info.Stage = DIGIMON_STAGE::MEGA;
 	Info.Attribute = DIGIMON_ATTRIBUTE::VACCINE;
 	Info.DigimonInfo = TEXT("선을 바라는 사람들의 강한 의지에 의해서 융햡해 탄생한 성기사형 디지몬");
@@ -56,6 +56,7 @@ HRESULT COmegamon::Initialize(void* pArg)
 	Info.Lv = 90;
 
 	__super::Set_Digimon_Info(Info);
+	m_pDigimon_Manager->Digimon_Add(Info.DigimonId, Info);
 
 	return S_OK;
 }

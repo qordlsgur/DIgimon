@@ -42,6 +42,8 @@ HRESULT CDigivice::Initialize(void* pArg)
 	if (FAILED(Create_Slot(L"Layout_Digivice_Slot")))
 		return E_FAIL;
 
+	Acquire_Digimon(0);
+
 	return S_OK;
 }
 
@@ -55,13 +57,14 @@ void CDigivice::Update(_float fTimeDelta)
 		Set_Active();
 
 	m_pTransformCom->Set_Scale(m_fSizeX, m_fSizeY, 1.f);
-	m_pTransformCom->Set_State(STATE::POSITION, XMVectorSet(m_fX - m_fWinSizeX * 0.5f, -m_fY + m_fWinSizeY * 0.5f, 0.f, 1.f));
-
 	for (_uint i = 0; i < m_iDigivice_Battle_Slot_Number; ++i)
 	{
 		m_pBattle_Slot[i]->Set_Parent_WorldPos(m_pTransformCom->Get_State(STATE::POSITION));
 		m_pBattle_Mask[i]->Set_Parent_WorldPos(m_pTransformCom->Get_State(STATE::POSITION));
 	}
+
+	if (m_bActive)
+		OnClick();
 
 	if (m_pGameInstance->Key_Down(DIK_Z))
 		Acquire_Digimon(1);
@@ -119,7 +122,9 @@ void CDigivice::Acquire_Digimon(_int ID)
 		{
 			m_pBattle_Mask[i]->Set_Digimon_ID(ID);
 			m_pBattle_Mask[i]->Set_HasDigimon(true);
-			m_pDigimon_Manager->Set_Digivice_Slot(i, true);
+			m_pBattle_Slot[i]->Set_Info(ID);
+			m_pBattle_Slot[i]->Set_HasDigimon(true);
+			m_pDigimon_Manager->Set_Digivice_Slot(i, true, ID);
 			return;
 		}
 	}
@@ -131,11 +136,32 @@ void CDigivice::Release_Digimon(_int ID)
 	{
 		m_pBattle_Mask[ID]->Set_Digimon_ID(-1);
 		m_pBattle_Mask[ID]->Set_HasDigimon(false);
-		m_pDigimon_Manager->Set_Digivice_Slot(ID, false);
+		m_pBattle_Slot[ID]->Set_HasDigimon(false);
+		m_pDigimon_Manager->Set_Digivice_Slot(ID, false, -1);
 
 	}
 	else
 		return;
+}
+
+void CDigivice::OnClick()
+{
+	POINT pPt = m_pGameInstance->Get_Mouse();
+
+	pPt.x -= m_fWinSizeX * 0.5f;
+	pPt.y -= m_fWinSizeY * 0.5f;
+
+	for (_int i = 0; i < m_iDigivice_Battle_Slot_Number; ++i)
+	{
+		if (m_pGameInstance->Mouse_Down(MOUSEKEYSTATE::LBUTTON))
+		{
+			if (PtInRect(m_pBattle_Slot[i]->Get_Pos(), pPt))
+			{
+				m_pBattle_Slot[i]->OnClick();
+				return;
+			}
+		}
+	}
 }
 
 HRESULT CDigivice::Ready_Components()
@@ -191,12 +217,35 @@ HRESULT CDigivice::Create_Slot(const _wstring& strLayerTag)
 	{
 		_float row = static_cast<_float>(i);
 
-		_float startX = 100.f;
-		_float startY = 20.f + row * 105;
+		_float startX = -300.f;
+		_float startY = -170.f + row * 55;
 
 		_float maskstartX = -50.f;
 
 		m_pBattle_Slot[i]->Set_Move(startX, startY);
+	}
+
+	for (_uint i = 3; i < m_iDigivice_Battle_Slot_Number; ++i)
+	{
+		_float row = static_cast<_float>(i - 3);
+
+		_float startX = -300.f;
+		_float startY = 30.f + row * 55;
+
+		_float maskstartX = -50.f;
+
+		m_pBattle_Slot[i]->Set_Move(startX, startY);
+	}
+
+	for (_uint i = 0; i < m_iDigivice_Battle_Slot_Number; ++i)
+	{
+		_float row = static_cast<_float>(i);
+
+		_float startX = 100.f;
+		_float startY = 10.f + row * 110;
+
+		_float maskstartX = -50.f;
+
 		m_pBattle_Mask[i]->Set_Move(maskstartX, startY);
 
 	}
@@ -206,11 +255,10 @@ HRESULT CDigivice::Create_Slot(const _wstring& strLayerTag)
 		_float row = static_cast<_float>(i - 3);
 
 		_float startX = 100.f;
-		_float startY = 430.f + row * 105;
+		_float startY = 411.f + row * 110;
 
 		_float maskstartX = -50.f;
 
-		m_pBattle_Slot[i]->Set_Move(startX, startY);
 		m_pBattle_Mask[i]->Set_Move(maskstartX, startY);
 	}
 
@@ -248,19 +296,10 @@ void CDigivice::Free()
 {
 	__super::Free();
 
-	//for (auto& Sloat : m_pBattle_Slot)
-	//	Safe_Release(Sloat);
 	m_pBattle_Slot.clear();
-
-	//for (auto& Mask : m_pBattle_Mask)
-	//	Safe_Release(Mask);
 	m_pBattle_Mask.clear();
 
 	Safe_Release(m_pVIBufferCom);
 	Safe_Release(m_pTextureCom);
 	Safe_Release(m_pShaderCom);
-
-	//Safe_Release(m_pDigivice_Slot);
-	//Safe_Release(m_pDigivice_Mask);
-	//Safe_Release(m_pDigimon_Manager);
 }

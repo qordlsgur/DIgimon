@@ -56,6 +56,7 @@ HRESULT CAngewomon::Initialize(void* pArg)
 	Info.Lv = 50;
 
 	__super::Set_Digimon_Info(Info);
+	m_pDigimon_Manager->Digimon_Add(Info.DigimonId, Info);
 
 	return S_OK;
 }

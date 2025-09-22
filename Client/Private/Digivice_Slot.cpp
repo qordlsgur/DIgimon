@@ -1,30 +1,33 @@
 #include "Digivice_Slot.h"
-
+#include "Digimon_Manager.h"
 #include "GameInstance.h"
 
 CDigivice_Slot::CDigivice_Slot(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
-    : CUIObject{ pDevice, pContext }
+	: CUIObject{ pDevice, pContext }
 {
 }
 
 CDigivice_Slot::CDigivice_Slot(const CDigivice_Slot& Prototype)
-    : CUIObject{ Prototype }
+	: CUIObject{ Prototype }
 {
 }
 
 HRESULT CDigivice_Slot::Initialize_Prototype()
 {
-    return S_OK;
+	return S_OK;
 }
 
 HRESULT CDigivice_Slot::Initialize(void* pArg)
 {
 	CUIObject::UIOBJECT_DESC	Desc{};
 
-	Desc.fX = 100.f;
-	Desc.fY = 100.f;
-	Desc.fSizeX = 495.f;
-	Desc.fSizeY = 95.f;
+	Desc.fX = -100.f;
+	Desc.fY = 0.f;
+	Desc.fSizeX = 241.f;
+	Desc.fSizeY = 50.f;
+
+	m_pRect = { long(Desc.fX - Desc.fSizeX * 0.5f), long(Desc.fY - Desc.fSizeY * 0.5f), long(Desc.fX + Desc.fSizeX * 0.5f), long(Desc.fY + Desc.fSizeY * 0.5f) };
+
 
 	if (FAILED(__super::Initialize(&Desc)))
 		return E_FAIL;
@@ -32,8 +35,9 @@ HRESULT CDigivice_Slot::Initialize(void* pArg)
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 
+	m_pManager = CDigimon_Manager::GetInstance();
 
-
+	m_bHasDigimon = false;
 
 	return S_OK;
 }
@@ -44,13 +48,31 @@ void CDigivice_Slot::Priority_Update(_float fTimeDelta)
 
 void CDigivice_Slot::Update(_float fTimeDelta)
 {
+	_itow_s(m_Info.Lv, m_szDigimonLv, MAX_PATH, 10);
+	wcscpy_s(m_szLv, MAX_PATH, L"LV");
+	wcscat_s(m_szLv, MAX_PATH, m_szDigimonLv);
+
 }
 
 void CDigivice_Slot::Late_Update(_float fTimeDelta)
 {
-	m_pTransformCom->Set_State(STATE::POSITION, XMVectorSet(m_fX - m_fWinSizeX * 0.5f, -m_fY + m_fWinSizeY * 0.5f, 0.f, 1.f) + XMLoadFloat4(&m_fParent_WorldPos));
-	m_pTransformCom->Set_Scale(m_fSizeX, m_fSizeY, 1.f);
+	_vector vWorldPos = XMVectorSet(m_fX + m_fParent_WorldPos.x, -(m_fY)+m_fParent_WorldPos.y, 0.f, 1.f);
 
+	m_pTransformCom->Set_Scale(m_fSizeX, m_fSizeY, 1.f);
+	m_pTransformCom->Set_State(STATE::POSITION, vWorldPos);
+
+	_float4 Pos;
+	XMStoreFloat4(&Pos, vWorldPos);
+
+	m_pRect = {
+		long(Pos.x - m_fSizeX * 0.5f),
+		long(-Pos.y - m_fSizeY * 0.5f),
+		long(Pos.x + m_fSizeX * 0.5f),
+		long(-Pos.y + m_fSizeY * 0.5f)
+	};
+
+	m_fPos.x = m_pTransformCom->Get_State(STATE::POSITION).m128_f32[0];
+	m_fPos.y = m_pTransformCom->Get_State(STATE::POSITION).m128_f32[1];
 }
 
 HRESULT CDigivice_Slot::Render()
@@ -64,9 +86,14 @@ HRESULT CDigivice_Slot::Render()
 	if (FAILED(m_pVIBufferCom->Bind_Resources()))
 		return E_FAIL;
 
-
 	if (FAILED(m_pVIBufferCom->Render()))
 		return E_FAIL;
+
+	if (m_bHasDigimon)
+	{
+		m_pGameInstance->Render_Text(TEXT("10"), m_szLv, _float2(660.f + m_fPos.x, 340.f + (-m_fPos.y)), XMVectorSet(1.f, 1.f, 1.f, 1.f));
+		m_pGameInstance->Render_Text(TEXT("10"), m_Info.DigimonName.c_str(), _float2(640.f + m_fPos.x, 370.f + (-m_fPos.y)), XMVectorSet(1.f, 1.f, 1.f, 1.f));
+	}
 
 	return S_OK;
 }
@@ -80,6 +107,21 @@ void CDigivice_Slot::Set_Move(_float fX, _float fY)
 {
 	m_fX = fX;
 	m_fY = fY;
+}
+
+void CDigivice_Slot::Set_Digimon_ID(_int ID)
+{
+	m_iDigimon_ID = ID;
+}
+
+void CDigivice_Slot::Set_Info(_int ID)
+{
+	m_Info = *m_pManager->Search_Digimon(ID);
+}
+
+void CDigivice_Slot::OnClick()
+{
+	int a = 10;
 }
 
 HRESULT CDigivice_Slot::Ready_Components()
@@ -155,6 +197,7 @@ void CDigivice_Slot::Free()
 {
 	__super::Free();
 
+	Safe_Release(m_pMaskTextureCom);
 	Safe_Release(m_pVIBufferCom);
 	Safe_Release(m_pSlotTextureCom);
 	Safe_Release(m_pShaderCom);

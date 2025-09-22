@@ -1,7 +1,6 @@
 #include "Digimon_Manager.h"
 #include "PartyUHD.h"
 #include "Digivice.h"
-#include "Digimon_Storage.h"
 
 
 IMPLEMENT_SINGLETON(CDigimon_Manager)
@@ -13,8 +12,6 @@ CDigimon_Manager::CDigimon_Manager()
 HRESULT CDigimon_Manager::Initialize()
 {
 	m_iDigivice_Number = 8;
-
-	m_iDigimon_Storage_Slot_Number = 10;
 
 	m_vDigivice_Battle_Slot.resize(m_iDigivice_Number);
 
@@ -44,13 +41,23 @@ void CDigimon_Manager::Release_Digimon(_int ID)
 	m_pDigivice->Release_Digimon(ID);
 }
 
-void CDigimon_Manager::Set_Digivice_Slot(_int ID, _bool Has)
+void CDigimon_Manager::Set_Digivice_Slot(_int SlotID, _bool Has, _int Digimon_ID)
 {
-	m_vDigivice_Battle_Slot[ID] = Has;
-	if (ID < 4)
+	m_vDigivice_Battle_Slot[SlotID] = Has;
+	if (SlotID <= 2)
 	{
-
+		m_pPartyUHD->Set_Digimon_ID(SlotID, Has,Digimon_ID);
 	}
+}
+
+DIGIMON_INFO* CDigimon_Manager::Search_Digimon(_int ID)
+{
+	auto iter = Find_Digimon(ID);
+		
+	if (nullptr == iter)
+		return nullptr;
+
+	return iter;
 }
 
 void CDigimon_Manager::PartyUHD(CPartyUHD* pPartyUHD)
@@ -61,11 +68,6 @@ void CDigimon_Manager::PartyUHD(CPartyUHD* pPartyUHD)
 void CDigimon_Manager::Digivice(CDigivice* pDigivice)
 {
 	m_pDigivice = pDigivice;
-}
-
-void CDigimon_Manager::Digimon_Storage(CDigimon_Storage* pDigimon_Storage)
-{
-	m_pDigimon_Storage = pDigimon_Storage;
 }
 
 void CDigimon_Manager::Player(CGameObject* pPlayer)

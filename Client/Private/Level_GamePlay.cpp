@@ -4,15 +4,13 @@
 #include "Camera_Free.h"
 #include "Camera_Manager.h"
 #include "Digimon_Manager.h"
-#include "Inventory_Manager.h"
-#include "DigiDex_Manager.h"
+#include "Battle_Manager.h"
 
 CLevel_GamePlay::CLevel_GamePlay(ID3D11Device* pDevice, ID3D11DeviceContext* pContext, LEVEL eLevelID)
 	: CLevel{ pDevice, pContext, ENUM_CLASS(eLevelID) }
-	, m_pDigiDex_Manager{ CDigiDex_Manager::GetInstance() }
-	, m_pInventort_Manager{ CInventory_Manager::GetInstance() }
 	, m_pCamera_Manager{ CCamera_Manager::GetInstance() }
 	, m_pDigimon_Manager{ CDigimon_Manager::GetInstance() }
+	, m_pBattle_Manager{ CBattle_Manager::GetInstance() }
 {
 
 }
@@ -21,8 +19,7 @@ HRESULT CLevel_GamePlay::Initialize()
 {
 	m_pCamera_Manager->Initialize();
 	m_pDigimon_Manager->Initialize();
-	m_pDigiDex_Manager->Initialize();
-
+	m_pBattle_Manager->Initialize();
 
 	if (FAILED(Ready_Lights()))
 		return E_FAIL;
@@ -45,19 +42,11 @@ HRESULT CLevel_GamePlay::Initialize()
 	//if (FAILED(Ready_Layer_Effect(TEXT("Layer_Effect"))))
 	//	return E_FAIL;	
 
-	if (FAILED(Ready_Layer_Inventory(TEXT("Layer_Inventory"))))
-		return E_FAIL;
-
-	if (FAILED(Ready_Layer_DigiDex(TEXT("Layer_DigiDex"))))
+	if (FAILED(Ready_Layer_UHD(TEXT("Layer_UHD"))))
 		return E_FAIL;
 
 	if (FAILED(Ready_Layer_Digivice(TEXT("Layer_Digivice"))))
 		return E_FAIL;
-
-	if (FAILED(Ready_Layer_UHD(TEXT("Layer_UHD"))))
-		return E_FAIL;
-
-
 
 	return S_OK;
 }
@@ -69,24 +58,6 @@ void CLevel_GamePlay::Update(_float fTimeDelta)
 HRESULT CLevel_GamePlay::Render()
 {
 	SetWindowText(g_hWnd, TEXT("게임플레이레벨이빈다"));
-	return S_OK;
-}
-
-HRESULT CLevel_GamePlay::Ready_Layer_Inventory(const _wstring& strLayerTag)
-{
-	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Inventory"),
-		ENUM_CLASS(LEVEL::GAMEPLAY), strLayerTag)))
-		return E_FAIL;
-
-	return S_OK;
-}
-
-HRESULT CLevel_GamePlay::Ready_Layer_DigiDex(const _wstring& strLayerTag)
-{
-	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_DigiDex"),
-		ENUM_CLASS(LEVEL::GAMEPLAY), strLayerTag)))
-		return E_FAIL;
-
 	return S_OK;
 }
 
@@ -127,6 +98,10 @@ HRESULT CLevel_GamePlay::Ready_Lights()
 HRESULT CLevel_GamePlay::Ready_Layer_BackGround(const _wstring& strLayerTag)
 {
 	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Terrain"),
+		ENUM_CLASS(LEVEL::GAMEPLAY), strLayerTag)))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Battle_Terrain"),
 		ENUM_CLASS(LEVEL::GAMEPLAY), strLayerTag)))
 		return E_FAIL;
 
@@ -173,46 +148,45 @@ HRESULT CLevel_GamePlay::Ready_Layer_Digimon(const _wstring& strLayerTag)
 		ENUM_CLASS(LEVEL::GAMEPLAY), strLayerTag)))
 		return E_FAIL;
 
-	//// 오메가몬
-	//if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Omegamon"),
-	//	ENUM_CLASS(LEVEL::GAMEPLAY), strLayerTag)))
-	//	return E_FAIL;
+	// 오메가몬
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Omegamon"),
+		ENUM_CLASS(LEVEL::GAMEPLAY), strLayerTag)))
+		return E_FAIL;
 
-	//// 데빌몬
-	//if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Devilmon"),
-	//	ENUM_CLASS(LEVEL::GAMEPLAY), strLayerTag)))
-	//	return E_FAIL;
+	// 데빌몬
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Devilmon"),
+		ENUM_CLASS(LEVEL::GAMEPLAY), strLayerTag)))
+		return E_FAIL;
 
-	//// 레이디 데빌몬
-	//if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Ladydevimon"),
-	//	ENUM_CLASS(LEVEL::GAMEPLAY), strLayerTag)))
-	//	return E_FAIL;
+	// 레이디 데빌몬
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Ladydevimon"),
+		ENUM_CLASS(LEVEL::GAMEPLAY), strLayerTag)))
+		return E_FAIL;
 	
-	//// 레오몬
-	//if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Leomon"),
-	//	ENUM_CLASS(LEVEL::GAMEPLAY), strLayerTag)))
-	//	return E_FAIL;
+	// 레오몬
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Leomon"),
+		ENUM_CLASS(LEVEL::GAMEPLAY), strLayerTag)))
+		return E_FAIL;
 
-	//// 메탈 가루몬
-	//if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Metalgarumon"),
-	//	ENUM_CLASS(LEVEL::GAMEPLAY), strLayerTag)))
-	//	return E_FAIL;
+	// 메탈 가루몬
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Metalgarumon"),
+		ENUM_CLASS(LEVEL::GAMEPLAY), strLayerTag)))
+		return E_FAIL;
 
-	//// 메탈 그레이몬
-	//if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Metalgreymon"),
-	//	ENUM_CLASS(LEVEL::GAMEPLAY), strLayerTag)))
-	//	return E_FAIL;
+	// 메탈 그레이몬
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Metalgreymon"),
+		ENUM_CLASS(LEVEL::GAMEPLAY), strLayerTag)))
+		return E_FAIL;
 
-	//// 워 그레이몬
-	//if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Wargreymon"),
-	//	ENUM_CLASS(LEVEL::GAMEPLAY), strLayerTag)))
-	//	return E_FAIL;
+	// 워 그레이몬
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Wargreymon"),
+		ENUM_CLASS(LEVEL::GAMEPLAY), strLayerTag)))
+		return E_FAIL;
 
-
-	//// 블렉 워 그레이몬
-	//if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Blackwargreymon"),
-	//	ENUM_CLASS(LEVEL::GAMEPLAY), strLayerTag)))
-	//	return E_FAIL;
+	// 블렉 워 그레이몬
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Blackwargreymon"),
+		ENUM_CLASS(LEVEL::GAMEPLAY), strLayerTag)))
+		return E_FAIL;
 
 	return S_OK;
 }
@@ -258,7 +232,6 @@ void CLevel_GamePlay::Free()
 	__super::Free();
 
 	Safe_Release(m_pCamera_Manager);
-	Safe_Release(m_pDigiDex_Manager);
-	Safe_Release(m_pInventort_Manager);
 	Safe_Release(m_pDigimon_Manager);
+	Safe_Release(m_pBattle_Manager);
 }

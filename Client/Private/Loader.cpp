@@ -3,22 +3,14 @@
 #include "BackGround.h"
 
 #pragma region UI
-#include "Item.h"
-#include "DigiDex.h"
-#include "Digimon_Storage.h"
 #include "Digivice.h"
 #include "Digivice_Slot.h"
 #include "Digivice_Mask.h"
 #include "PartyUHD.h"
 #include "UHD_Slot.h"
-#include "Inventory.h"
-#include "Equipment.h"
-#include "Slot.h"
-#include "Storage.h"
 #pragma endregion
 
 #pragma region Button
-#include "ItemType_Button.h"
 #include "Exit_Button.h"
 #pragma endregion
 
@@ -61,6 +53,7 @@
 
 //#include "Effect.h"
 #include "Terrain.h"
+#include "Battle_Terrain.h"
 #include "Monster.h"
 #include "Sky.h"
 #include "Navigation.h"
@@ -166,58 +159,7 @@ HRESULT CLoader::Loading_For_GamePlay()
 #pragma  region TEXTURE
 	m_strMessage = TEXT("텍스쳐를(을) 로딩 중 입니다.");
 
-	//인벤토리------------------------------------------------------------------------------------------------------------------------------------------------------
-	/* For.Prototype_Component_Texture_Inventory */
-	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Inventory"),
-		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/UI/Inven.png"), 1))))
-		return E_FAIL;
-
-	/* For.Prototype_Component_Texture_Inventory_Slot */
-	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Inventory_Slot"),
-		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/UI/Inventory_Slot%d.png"), 2))))
-		return E_FAIL;
-
-	///* For.Prototype_Component_Texture_Weapon */
-	//if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Weapon"),
-	//	CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/UI/Weapon.png"), 1))))
-	//	return E_FAIL;
-
-	///* For.Prototype_Component_Texture_Soby */
-	//if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Soby"),
-	//	CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/UI/Soby.png"), 1))))
-	//	return E_FAIL;
-
-	///* For.Prototype_Component_Texture_Gita */
-	//if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Gita"),
-	//	CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/UI/Gita.png"), 1))))
-	//	return E_FAIL;
-
-	/* For.Prototype_Component_Texture_Weapon_Item_Button */
-	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Weapon_Item_Button"),
-		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/UI/Weapon_Button.png"), 1))))
-		return E_FAIL;
-
-	/* For.Prototype_Component_Texture_Soby_Item_Button */
-	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Soby_Item_Button"),
-		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/UI/Soby_Button.png"), 1))))
-		return E_FAIL;
-
-	/* For.Prototype_Component_Texture_Gita_Item_Button */
-	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Gita_Item_Button"),
-		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/UI/Gita_Button.png"), 1))))
-		return E_FAIL;
-
-	/* For.Prototype_Component_Texture_LineUp_Buttom */
-	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_LineUp_Buttom"),
-		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/UI/LineUP_Button.png"), 1))))
-		return E_FAIL;
-
 	//디지바이스------------------------------------------------------------------------------------------------------------------------------------------------------
-
-	/* For.Prototype_Component_Texture_DigiDex */
-	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_DigiDex"),
-		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/UI/DigiDex.png"), 1))))
-		return E_FAIL;
 
 	/* For.Prototype_Component_Texture_DigiVice*/
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Digivice"),
@@ -271,6 +213,12 @@ HRESULT CLoader::Loading_For_GamePlay()
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/HUD/BattleDigimon_EVP.png"), 1))))
 		return E_FAIL;
 
+	/* For.Prototype_Component_Texture_Exit_Button */
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Exit_Button"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/UI/Exit_Button.png"), 1))))
+		return E_FAIL;
+
+
 	//디지몬UI이미지-------------------------------------------------------------------------------------------------------------------------------------------
 
 #pragma region Flarelizamon
@@ -292,11 +240,8 @@ HRESULT CLoader::Loading_For_GamePlay()
 
 #pragma endregion
 
-	//공용버튼---------------------------------------------------------------------------------------------------------------------------------------------------------
-	/* For.Prototype_Component_Texture_Exit_Button */
-	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Exit_Button"),
-		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/UI/Exit_Button.png"), 1))))
-		return E_FAIL;
+#pragma region Default;
+
 
 	/* For.Prototype_Component_Texture_Terrain */
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Terrain"),
@@ -329,11 +274,14 @@ HRESULT CLoader::Loading_For_GamePlay()
 
 	m_strMessage = TEXT("모델를(을) 로딩 중 입니다.");
 
-
-
 	/* For.Prototype_Component_VIBuffer_Terrain */
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_VIBuffer_Terrain"),
 		CVIBuffer_Terrain::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/Terrain/Terrain.bmp")))))
+		return E_FAIL;
+
+	/* For.Prototype_Component_VIBuffer_Battle_Terrain */
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_VIBuffer_Battle_Terrain"),
+		CVIBuffer_Terrain::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/Terrain/Battle_Terrain.bmp")))))
 		return E_FAIL;
 
 	/* For.Prototype_Component_VIBuffer_Cube */
@@ -359,59 +307,65 @@ HRESULT CLoader::Loading_For_GamePlay()
 		CModel::Create(m_pDevice, m_pContext, MODEL::ANIM, "../Bin/Resources/Models/Angewomon/Angewomon.bin", PreTransformMatrix))))
 		return E_FAIL;
 
-	///* For.Prototype_Component_Model_Omegamon*/
-	//PreTransformMatrix = XMMatrixScaling(0.1f, 0.1f, 0.1f) * XMMatrixRotationY(XMConvertToRadians(180.0f));
-	//if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Model_Omegamon"),
-	//	CModel::Create(m_pDevice, m_pContext, MODEL::ANIM, "../Bin/Resources/Models/Omegamon/Omegamon.bin", PreTransformMatrix))))
-	//	return E_FAIL;
+	/* For.Prototype_Component_Model_Omegamon*/
+	PreTransformMatrix = XMMatrixScaling(0.1f, 0.1f, 0.1f) * XMMatrixRotationY(XMConvertToRadians(180.0f));
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Model_Omegamon"),
+		CModel::Create(m_pDevice, m_pContext, MODEL::ANIM, "../Bin/Resources/Models/Omegamon/Omegamon.bin", PreTransformMatrix))))
+		return E_FAIL;
 
-	///* For.Prototype_Component_Model_Metalgraymon*/
-	//PreTransformMatrix = XMMatrixScaling(0.1f, 0.1f, 0.1f) * XMMatrixRotationY(XMConvertToRadians(180.0f));
-	//if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Model_Metalgraymon"),
-	//	CModel::Create(m_pDevice, m_pContext, MODEL::ANIM, "../Bin/Resources/Models/Metalgraymon/Metalgraymon.bin", PreTransformMatrix))))
-	//	return E_FAIL;
+	/* For.Prototype_Component_Model_Metalgraymon*/
+	PreTransformMatrix = XMMatrixScaling(0.1f, 0.1f, 0.1f) * XMMatrixRotationY(XMConvertToRadians(180.0f));
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Model_Metalgraymon"),
+		CModel::Create(m_pDevice, m_pContext, MODEL::ANIM, "../Bin/Resources/Models/Metalgraymon/Metalgraymon.bin", PreTransformMatrix))))
+		return E_FAIL;
 
-	///* For.Prototype_Component_Model_Devilmon*/
-	//PreTransformMatrix = XMMatrixScaling(0.1f, 0.1f, 0.1f) * XMMatrixRotationY(XMConvertToRadians(180.0f));
-	//if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Model_Devilmon"),
-	//	CModel::Create(m_pDevice, m_pContext, MODEL::ANIM, "../Bin/Resources/Models/Devilmon/Devilmon.bin", PreTransformMatrix))))
-	//	return E_FAIL;
+	/* For.Prototype_Component_Model_Devilmon*/
+	PreTransformMatrix = XMMatrixScaling(0.1f, 0.1f, 0.1f) * XMMatrixRotationY(XMConvertToRadians(180.0f));
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Model_Devilmon"),
+		CModel::Create(m_pDevice, m_pContext, MODEL::ANIM, "../Bin/Resources/Models/Devilmon/Devilmon.bin", PreTransformMatrix))))
+		return E_FAIL;
 
-	///* For.Prototype_Component_Model_Ladydevimon*/
-	//PreTransformMatrix = XMMatrixScaling(0.06f, 0.06f, 0.06f) * XMMatrixRotationY(XMConvertToRadians(180.0f));
-	//if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Model_Ladydevimon"),
-	//	CModel::Create(m_pDevice, m_pContext, MODEL::ANIM, "../Bin/Resources/Models/Ladydevimon/Ladydevimon.bin", PreTransformMatrix))))
-	//	return E_FAIL;
+	/* For.Prototype_Component_Model_Ladydevimon*/
+	PreTransformMatrix = XMMatrixScaling(0.06f, 0.06f, 0.06f) * XMMatrixRotationY(XMConvertToRadians(180.0f));
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Model_Ladydevimon"),
+		CModel::Create(m_pDevice, m_pContext, MODEL::ANIM, "../Bin/Resources/Models/Ladydevimon/Ladydevimon.bin", PreTransformMatrix))))
+		return E_FAIL;
 
-	///* For.Prototype_Component_Model_Leomon*/
-	//PreTransformMatrix = XMMatrixScaling(0.1f, 0.1f, 0.1f) * XMMatrixRotationY(XMConvertToRadians(180.0f));
-	//if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Model_Leomon"),
-	//	CModel::Create(m_pDevice, m_pContext, MODEL::ANIM, "../Bin/Resources/Models/Leomon/Leomon.bin", PreTransformMatrix))))
-	//	return E_FAIL;
+	/* For.Prototype_Component_Model_Leomon*/
+	PreTransformMatrix = XMMatrixScaling(0.1f, 0.1f, 0.1f) * XMMatrixRotationY(XMConvertToRadians(180.0f));
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Model_Leomon"),
+		CModel::Create(m_pDevice, m_pContext, MODEL::ANIM, "../Bin/Resources/Models/Leomon/Leomon.bin", PreTransformMatrix))))
+		return E_FAIL;
 
-	///* For.Prototype_Component_Model_Metalgreymon*/
-	//PreTransformMatrix = XMMatrixScaling(0.1f, 0.1f, 0.1f) * XMMatrixRotationY(XMConvertToRadians(180.0f));
-	//if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Model_Metalgreymon"),
-	//	CModel::Create(m_pDevice, m_pContext, MODEL::ANIM, "../Bin/Resources/Models/Metalgreymon/Metalgreymon.bin", PreTransformMatrix))))
-	//	return E_FAIL;
+	/* For.Prototype_Component_Model_Metalgreymon*/
+	PreTransformMatrix = XMMatrixScaling(0.1f, 0.1f, 0.1f) * XMMatrixRotationY(XMConvertToRadians(180.0f));
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Model_Metalgreymon"),
+		CModel::Create(m_pDevice, m_pContext, MODEL::ANIM, "../Bin/Resources/Models/Metalgreymon/Metalgreymon.bin", PreTransformMatrix))))
+		return E_FAIL;
 
-	///* For.Prototype_Component_Model_Metalgarumon*/
-	//PreTransformMatrix = XMMatrixScaling(0.1f, 0.1f, 0.1f) * XMMatrixRotationY(XMConvertToRadians(180.0f));
-	//if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Model_Metalgarumon"),
-	//	CModel::Create(m_pDevice, m_pContext, MODEL::ANIM, "../Bin/Resources/Models/Metalgarumon/Metalgarumon.bin", PreTransformMatrix))))
-	//	return E_FAIL;
+	/* For.Prototype_Component_Model_Metalgarumon*/
+	PreTransformMatrix = XMMatrixScaling(0.1f, 0.1f, 0.1f) * XMMatrixRotationY(XMConvertToRadians(180.0f));
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Model_Metalgarumon"),
+		CModel::Create(m_pDevice, m_pContext, MODEL::ANIM, "../Bin/Resources/Models/Metalgarumon/Metalgarumon.bin", PreTransformMatrix))))
+		return E_FAIL;
 
-	///* For.Prototype_Component_Model_Wargreymon*/
-	//PreTransformMatrix = XMMatrixScaling(0.1f, 0.1f, 0.1f) * XMMatrixRotationY(XMConvertToRadians(180.0f));
-	//if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Model_Wargreymon"),
-	//	CModel::Create(m_pDevice, m_pContext, MODEL::ANIM, "../Bin/Resources/Models/Wargreymon/Wargreymon.bin", PreTransformMatrix))))
-	//	return E_FAIL;
+	/* For.Prototype_Component_Model_Wargreymon*/
+	PreTransformMatrix = XMMatrixScaling(0.1f, 0.1f, 0.1f) * XMMatrixRotationY(XMConvertToRadians(180.0f));
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Model_Wargreymon"),
+		CModel::Create(m_pDevice, m_pContext, MODEL::ANIM, "../Bin/Resources/Models/Wargreymon/Wargreymon.bin", PreTransformMatrix))))
+		return E_FAIL;
 
-	///* For.Prototype_Component_Model_Blackwargreymon*/
-	//PreTransformMatrix = XMMatrixScaling(0.1f, 0.1f, 0.1f) * XMMatrixRotationY(XMConvertToRadians(180.0f));
-	//if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Model_Blackwargreymon"),
-	//	CModel::Create(m_pDevice, m_pContext, MODEL::ANIM, "../Bin/Resources/Models/Blackwargreymon/Blackwargreymon.bin", PreTransformMatrix))))
-	//	return E_FAIL;
+	/* For.Prototype_Component_Model_Blackwargreymon*/
+	PreTransformMatrix = XMMatrixScaling(0.1f, 0.1f, 0.1f) * XMMatrixRotationY(XMConvertToRadians(180.0f));
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Model_Blackwargreymon"),
+		CModel::Create(m_pDevice, m_pContext, MODEL::ANIM, "../Bin/Resources/Models/Blackwargreymon/Blackwargreymon.bin", PreTransformMatrix))))
+		return E_FAIL;
+
+	/* For.Prototype_Component_Model_Beelzebumon*/
+	PreTransformMatrix = XMMatrixScaling(0.1f, 0.1f, 0.1f) * XMMatrixRotationY(XMConvertToRadians(180.0f));
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Model_Beelzebumon"),
+		CModel::Create(m_pDevice, m_pContext, MODEL::ANIM, "../Bin/Resources/Models/Beelzebumon/Beelzebumon.bin", PreTransformMatrix))))
+		return E_FAIL;
 
 	//-----------------------------------------------------------------------------------------------------------------------------------
 
@@ -533,26 +487,14 @@ HRESULT CLoader::Loading_For_GamePlay()
 		CTerrain::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
+	/* For.Prototype_GameObject_Terrain */
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Battle_Terrain"),
+		CBattle_Terrain::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
 
 	/* For.Prototype_GameObject_Sky */
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Sky"),
 		CSky::Create(m_pDevice, m_pContext))))
-		return E_FAIL;
-
-	//인벤토리---------------------------------------------------------------------------------------------------------------------------------------------------------
-	//* For.Prototype_GameObject_Inventory */
-	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Inventory"),
-		CInventory::Create(m_pDevice, m_pContext))))
-		return E_FAIL;
-
-	//* For.Prototype_GameObject_Slot */
-	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Slot"),
-		CSlot::Create(m_pDevice, m_pContext))))
-		return E_FAIL;
-
-	//* For.Prototype_GameObject_ItemType_Button */
-	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_ItemType_Button"),
-		CItemType_Button::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
 	//디지바이스---------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -572,13 +514,6 @@ HRESULT CLoader::Loading_For_GamePlay()
 		CDigivice_Mask::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
-	/* For.Prototype_GameObject_DigiDex */
-	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_DigiDex"),
-		CDigiDex::Create(m_pDevice, m_pContext))))
-		return E_FAIL;
-
-	//Party_HUD---------------------------------------------------------------------------------------------------------------------------------------------------------
-
 	//* For.Prototype_GameObject_PartyUHD */
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_PartyUHD"),
 		CPartyUHD::Create(m_pDevice, m_pContext))))
@@ -588,8 +523,6 @@ HRESULT CLoader::Loading_For_GamePlay()
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_UHDSlot"),
 		CUHD_Slot::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
-
-	//---------------------------------------------------------------------------------------------------------------------------------------------------------
 
 	//* For.Prototype_GameObject_Exit_Button */
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Exit_Button"),
@@ -609,7 +542,7 @@ HRESULT CLoader::Loading_For_GamePlay()
 		return E_FAIL;
 
 
-		/* For.Prototype_GameObject_Angewomon */
+	/* For.Prototype_GameObject_Angewomon */
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Angewomon"),
 		CAngewomon::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
@@ -705,7 +638,7 @@ HRESULT CLoader::Loading_For_GamePlay()
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Body_Blackwargreymon"),
 		CBody_Blackwargreymon::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
-	
+
 
 	//------------------------------------------------------------------------------------------------------------------------------
 

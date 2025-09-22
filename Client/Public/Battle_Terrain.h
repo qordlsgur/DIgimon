@@ -1,23 +1,29 @@
 #pragma once
 
 #include "Client_Defines.h"
-#include "UIObject.h"
+#include "GameObject.h"
 
 NS_BEGIN(Engine)
-class CVIBuffer_Rect;
+class CVIBuffer_Terrain;
 class CTexture;
-class Chader;
+class CShader;
+class CNavigation;
 NS_END
 
 NS_BEGIN(Client)
 
-class CDigiDex_Slot final : public CUIObject
+class CBattle_Terrain final : public CGameObject
 {
+public:
+	typedef struct Object_Data
+	{
+		_uint Object_Type{};
+		_float4x4 World_Matrix{};
+	}OBJECT_DATA;
 private:
-	CDigiDex_Slot(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
-	CDigiDex_Slot(const CDigiDex_Slot& Prototype);
-	virtual ~CDigiDex_Slot() = default;
-
+	CBattle_Terrain(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
+	CBattle_Terrain(const CBattle_Terrain& Prototype);
+	virtual ~CBattle_Terrain() = default;
 
 public:
 	virtual HRESULT Initialize_Prototype() override;
@@ -27,31 +33,20 @@ public:
 	virtual void Late_Update(_float fTimeDelta) override;
 	virtual HRESULT Render() override;
 
-public:
-	void Set_Parent_WorldPos(_vector fParent_World);
-	void Set_Move(_float fX, _float fY);
-
-	virtual void OnClick() override;
-
 private:
-	CVIBuffer_Rect* m_pVIBufferCom = { nullptr };
+	CVIBuffer_Terrain* m_pVIBufferCom = { nullptr };
 	CTexture* m_pTextureCom = { nullptr };
 	CShader* m_pShaderCom = { nullptr };
-
-	_bool	m_bHover = { false };
 
 
 private:
 	HRESULT Ready_Components();
 	HRESULT Bind_ShaderResources();
 
-	_float4 m_fParent_WorldPos{};
-
 public:
-	static CDigiDex_Slot* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
+	static CBattle_Terrain* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	virtual CGameObject* Clone(void* pArg) override;
 	virtual void Free() override;
-
 };
 
 NS_END

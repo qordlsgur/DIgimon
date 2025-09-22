@@ -32,6 +32,7 @@ public:
 	void Acquire_Digimon(_int ID);
 	void Release_Digimon(_int ID);
 
+	void OnClick();
 
 private:
 	CVIBuffer_Rect* m_pVIBufferCom = { nullptr };

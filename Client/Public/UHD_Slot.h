@@ -27,28 +27,30 @@ public:
 	virtual HRESULT Render() override;
 
 public:
-	void Set_Move(_float fX, _float fY);
+	void	Set_Move(_float fX, _float fY);
 	_bool	Get_Digimon() { return m_bDigimon; }
+	void	Set_Digimon(_bool HasDigimon) { m_bDigimon = HasDigimon; }
 	virtual void OnClick() override;
 
-	void Set_Digimon_ID(_uint ID);
+	void Set_Digimon_ID(_int ID);
 
 private:
 	CVIBuffer_Rect* m_pVIBufferCom = { nullptr };
-
 	CTexture*  m_pFrameTextureCom = { nullptr };
 	CTexture*  m_pMaskTextureCom = { nullptr };
 	CTexture*  m_pSPTextureCom = { nullptr };
 	CTexture*  m_pHPTextureCom = { nullptr };
 	CTexture*  m_pEVPTextureCom = { nullptr };
-			  
 	CTexture*  m_pDigimonTextureCom = { nullptr };
-			  
 	CShader*   m_pShaderCom = { nullptr };
 			   
-	_uint	   m_iDigimon_ID{};
-			   
-	_bool	   m_bDigimon = false;
+	class CDigimon_Manager* m_pManager = { nullptr };
+
+	_int		m_iDigimon_ID{};
+			    
+	_bool		m_bDigimon = false;
+
+
 
 private:
 	HRESULT Ready_Components();

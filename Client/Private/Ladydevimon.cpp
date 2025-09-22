@@ -43,7 +43,7 @@ HRESULT CLadydevimon::Initialize(void* pArg)
 	Digimon_Info Info;
 
 	Info.DigimonName = TEXT("레이디데블몬");
-	Info.DigimonId = 0;
+	Info.DigimonId = 3;
 	Info.Stage = DIGIMON_STAGE::ULTIMATE;
 	Info.Attribute = DIGIMON_ATTRIBUTE::VIRUS;
 	Info.DigimonInfo = TEXT("고귀한 존재인 여성형 타천사 디지몬");
@@ -55,6 +55,7 @@ HRESULT CLadydevimon::Initialize(void* pArg)
 	Info.Lv = 50;
 
 	__super::Set_Digimon_Info(Info);
+	m_pDigimon_Manager->Digimon_Add(Info.DigimonId, Info);
 
 	return S_OK;
 }

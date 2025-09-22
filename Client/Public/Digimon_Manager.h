@@ -28,30 +28,28 @@ public:
 	void Acquire_Digimon(_int ID);
 	void Release_Digimon(_int ID);
 
-	void Set_Digivice_Slot(_int ID, _bool Has);
+	void Set_Digivice_Slot(_int SlotID, _bool Has, _int Digimon_ID);
 
 	//void Copy_Digimon();
 
 public:
 	void PartyUHD(class CPartyUHD* pPartyUHD);
 	void Digivice(class CDigivice* pDigivice);
-	void Digimon_Storage(class CDigimon_Storage* pDigimon_Storage);
 
 	void Player(CGameObject* pPlayer);
 	_vector PlayerPos();
 
 	HRESULT Digimon_Add(_int Digimon_ID,DIGIMON_INFO Info);
 
+	DIGIMON_INFO* Search_Digimon(_int ID);
+
 private:
 	class CPartyUHD* m_pPartyUHD = { nullptr };
 	class CDigivice* m_pDigivice = { nullptr };
-	class CDigimon_Storage* m_pDigimon_Storage = { nullptr };
 
 	vector<_bool> m_vDigivice_Battle_Slot;
 	_uint m_iDigivice_Number{};
 
-	vector<class CDigimon_Storage*> m_vDigimon_Storage_Slot;
-	_uint m_iDigimon_Storage_Slot_Number{};
 
 	CGameObject* m_pPlayer = { nullptr };
 

@@ -33,10 +33,9 @@ private:
 
 
 private:
-	class CDigiDex_Manager* m_pDigiDex_Manager = { nullptr };
-	class CInventory_Manager* m_pInventort_Manager = { nullptr };
 	class CDigimon_Manager* m_pDigimon_Manager = { nullptr };
 	class CCamera_Manager* m_pCamera_Manager = { nullptr };
+	class CBattle_Manager* m_pBattle_Manager= { nullptr };
 
 
 public:

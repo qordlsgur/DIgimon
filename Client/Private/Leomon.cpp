@@ -43,7 +43,7 @@ HRESULT CLeomon::Initialize(void* pArg)
 	Digimon_Info Info;
 
 	Info.DigimonName = TEXT("레오몬");
-	Info.DigimonId = 0;
+	Info.DigimonId = 4;
 	Info.Stage = DIGIMON_STAGE::CHAMPION;
 	Info.Attribute = DIGIMON_ATTRIBUTE::VACCINE;
 	Info.DigimonInfo = TEXT("백수의 왕, 고상한 용사라 불리는 수인형 디지몬");
@@ -55,6 +55,7 @@ HRESULT CLeomon::Initialize(void* pArg)
 	Info.Lv = 15;
 
 	__super::Set_Digimon_Info(Info);
+	m_pDigimon_Manager->Digimon_Add(Info.DigimonId, Info);
 
 	return S_OK;
 }
