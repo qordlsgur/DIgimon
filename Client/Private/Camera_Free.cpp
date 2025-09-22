@@ -85,11 +85,11 @@ void CCamera_Free::Priority_Update(_float fTimeDelta)
 		if (MouseMove = m_pGameInstance->Mouse_Drag(MOUSEMOVESTATE::Y))
 		{
 			m_fX += fTimeDelta * MouseMove * m_fMouseSensor;
+			if (m_fX < XMConvertToRadians(-110.f))
+				m_fX = XMConvertToRadians(-110.f);
+			else if (m_fX > XMConvertToRadians(40.f))
+				m_fX = XMConvertToRadians(40.f);
 
-			if (m_fX < -80.f)
-				m_fX = -80.f;
-			else if (m_fX > 80.f)
-				m_fX = 80.f;
 		}
 	}
 

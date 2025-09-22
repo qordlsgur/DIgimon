@@ -182,7 +182,7 @@ HRESULT CPlayer::Ready_Components()
 {
 	/* Com_Navigation */
 	CNavigation::NAVIGATION_DESC		NavigationDesc{};
-	NavigationDesc.iCurrentCellIndex = 0;
+	NavigationDesc.iCurrentCellIndex = 5;
 	if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Navigation"),
 		TEXT("Com_Navigation"), reinterpret_cast<CComponent**>(&m_pNavigationCom), &NavigationDesc)))
 		return E_FAIL;
