@@ -59,6 +59,11 @@ private:
 	_vector m_fCameraPlayerLook{};		// 카메라 플레이어 바라보는 방향
 	_vector m_fCameraPlayerChase{};		// 카메라 플레이어 따라다니는 위치
 
+	_vector m_fBottomCamera{};
+	_float m_fSaveCamera{};
+
+	_bool m_bSaveCamera = false;
+
 	_vector m_fRotation{};
 
 	_vector m_fPlayerPos{};
