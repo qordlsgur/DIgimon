@@ -51,6 +51,15 @@ HRESULT CContainerObject::Render()
 	return S_OK;
 }
 
+CComponent* CContainerObject::Get_Component(const _wstring& strPartTag, const _wstring& strComponentTag)
+{
+	CPartObject* pPartObject = Find_PartObject(strPartTag);
+	if (nullptr == pPartObject)
+		return nullptr;
+
+	return pPartObject->Find_Component(strComponentTag);
+}
+
 wstring CContainerObject::Get_Digimon_Name()
 {
 	return Info.DigimonName;
@@ -119,6 +128,28 @@ void CContainerObject::Set_Digimon_Info(DIGIMON_INFO Digimon_Info)
 	m_iAttackSpeed = Digimon_Info.AttackSpeed;
 	m_iExp = Digimon_Info.Exp;
 	m_iLv = Digimon_Info.Lv;
+}
+
+void CContainerObject::Skill1()
+{
+}
+
+void CContainerObject::Skill2()
+{
+}
+
+void CContainerObject::Skill3()
+{
+}
+
+void CContainerObject::LookAt(_float iRadian)
+{
+	m_pTransformCom->Rotation(XMVectorSet(0.f, 1.f, 0.f, 0.f), XMConvertToRadians(iRadian));
+}
+
+void CContainerObject::Set_Position(_float fX, _float fZ)
+{
+	m_pTransformCom->Set_State(STATE::POSITION, XMVectorSet(fX, 0.f, fZ, 1.f));
 }
 
 CPartObject* CContainerObject::Find_PartObject(const _wstring& strPartTag)

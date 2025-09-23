@@ -192,6 +192,7 @@
     <ClInclude Include="..\Public\Exit_Button.h" />
     <ClInclude Include="..\Public\Fail.h" />
     <ClInclude Include="..\Public\Hit.h" />
+    <ClInclude Include="..\public\Interaction_Manager.h" />
     <ClInclude Include="..\Public\Jump.h" />
     <ClInclude Include="..\public\Ladydevimon.h" />
     <ClInclude Include="..\public\Leomon.h" />
@@ -212,6 +213,7 @@
     <ClInclude Include="..\Public\Skill2.h" />
     <ClInclude Include="..\Public\Skill3.h" />
     <ClInclude Include="..\Public\Sky.h" />
+    <ClInclude Include="..\public\Spawner.h" />
     <ClInclude Include="..\Public\Stand.h" />
     <ClInclude Include="..\Public\StandBattle.h" />
     <ClInclude Include="..\Public\State.h" />
@@ -264,6 +266,7 @@
     <ClCompile Include="..\Private\Exit_Button.cpp" />
     <ClCompile Include="..\Private\Fail.cpp" />
     <ClCompile Include="..\Private\Hit.cpp" />
+    <ClCompile Include="..\private\Interaction_Manager.cpp" />
     <ClCompile Include="..\Private\Jump.cpp" />
     <ClCompile Include="..\private\Ladydevimon.cpp" />
     <ClCompile Include="..\private\Leomon.cpp" />
@@ -284,6 +287,7 @@
     <ClCompile Include="..\Private\Skill2.cpp" />
     <ClCompile Include="..\Private\Skill3.cpp" />
     <ClCompile Include="..\Private\Sky.cpp" />
+    <ClCompile Include="..\private\Spawner.cpp" />
     <ClCompile Include="..\Private\Stand.cpp" />
     <ClCompile Include="..\Private\StandBattle.cpp" />
     <ClCompile Include="..\Private\State.cpp" />

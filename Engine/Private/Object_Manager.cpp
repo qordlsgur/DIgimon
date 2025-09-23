@@ -5,18 +5,27 @@
 #include "GameObject.h"
 
 CObject_Manager::CObject_Manager()
-	: m_pGameInstance { CGameInstance::GetInstance() }
+	: m_pGameInstance{ CGameInstance::GetInstance() }
 {
 	Safe_AddRef(m_pGameInstance);
 }
 
 CComponent* CObject_Manager::Get_Component(_uint iLevelIndex, const _wstring& strLayerTag, const _wstring& strComponentTag, _uint iIndex)
 {
-	CLayer*		pLayer = Find_Layer(iLevelIndex, strLayerTag);
+	CLayer* pLayer = Find_Layer(iLevelIndex, strLayerTag);
 	if (nullptr == pLayer)
 		return nullptr;
 
-	return pLayer->Get_Component(strComponentTag, iIndex);	
+	return pLayer->Get_Component(strComponentTag, iIndex);
+}
+
+CComponent* CObject_Manager::Get_PartObject_Component(_uint iLevelIndex, const _wstring& strLayerTag, const _wstring& strPartTag, const _wstring& strComponentTag, _uint iIndex)
+{
+	CLayer* pLayer = Find_Layer(iLevelIndex, strLayerTag);
+	if (nullptr == pLayer)
+		return nullptr;
+
+	return pLayer->Get_PartObject_Component(strPartTag, strComponentTag, iIndex);
 }
 
 HRESULT CObject_Manager::Initialize(_uint iNumLevels)
@@ -30,11 +39,11 @@ HRESULT CObject_Manager::Initialize(_uint iNumLevels)
 
 HRESULT CObject_Manager::Add_GameObject_ToLayer(_uint iPrototypeLevelIndex, const _wstring& strPrototypeTag, _uint iLayerLevelIndex, const _wstring& strLayerTag, void* pArg)
 {
-	CGameObject*	pGameObject = dynamic_cast<CGameObject*>(m_pGameInstance->Clone_Prototype(PROTOTYPE::GAMEOBJECT, iPrototypeLevelIndex, strPrototypeTag, pArg));
+	CGameObject* pGameObject = dynamic_cast<CGameObject*>(m_pGameInstance->Clone_Prototype(PROTOTYPE::GAMEOBJECT, iPrototypeLevelIndex, strPrototypeTag, pArg));
 	if (nullptr == pGameObject)
 		return E_FAIL;
 
-	CLayer*		pLayer = Find_Layer(iLayerLevelIndex, strLayerTag);
+	CLayer* pLayer = Find_Layer(iLayerLevelIndex, strLayerTag);
 	if (nullptr == pLayer)
 	{
 		pLayer = CLayer::Create();
@@ -44,7 +53,7 @@ HRESULT CObject_Manager::Add_GameObject_ToLayer(_uint iPrototypeLevelIndex, cons
 		m_pLayers[iLayerLevelIndex].emplace(strLayerTag, pLayer);
 	}
 	else
-		pLayer->Add_GameObject(pGameObject);	
+		pLayer->Add_GameObject(pGameObject);
 
 	return S_OK;
 }
@@ -100,7 +109,7 @@ void CObject_Manager::Late_Update(_float fTimeDelta)
 void CObject_Manager::Clear(_uint iLevelIndex)
 {
 	for (auto& Pair : m_pLayers[iLevelIndex])
-	{		
+	{
 		Pair.second->Clear();
 		Safe_Release(Pair.second);
 	}
@@ -126,7 +135,7 @@ CLayer* CObject_Manager::Find_Layer(_uint iLayerLevelIndex, const _wstring& strL
 		return nullptr;
 
 	auto	iter = m_pLayers[iLayerLevelIndex].find(strLayerTag);
-	if(iter == m_pLayers[iLayerLevelIndex].end())		
+	if (iter == m_pLayers[iLayerLevelIndex].end())
 		return nullptr;
 
 	return iter->second;

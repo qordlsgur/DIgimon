@@ -47,9 +47,9 @@ HRESULT CCamera_Free::Initialize(void* pArg)
 	m_fMinDistanceZ = -2.f;
 	m_fMinCameraDistance = XMVectorSet(0.f, m_fMinDistanceY, m_fMinDistanceZ, 0.f);
 
-	m_fBottomCamera = XMVectorSet(0.f, m_fMinDistanceY, 1.f, 0.f);
+	m_fBottomCamera = XMVectorSet(0.f, -10.f, -3.f, 0.f);
 
-	m_fLerp = 0.2f;
+	m_fLerp = 0.1f;
 
 
 	return S_OK;
@@ -92,25 +92,25 @@ void CCamera_Free::Priority_Update(_float fTimeDelta)
 			else if (m_fX > XMConvertToRadians(40.f))
 				m_fX = XMConvertToRadians(40.f);
 
-			if (m_fX < XMConvertToRadians(-40.f))
-			{
-				if (!m_bSaveCamera)
-				{
-					m_fSaveCamera = XMVectorGetZ(m_fCameraDistanceOffset);
-					m_bSaveCamera = true;
-				}
-				m_fCameraDistanceOffset = XMVectorLerp(m_fCameraDistanceOffset, m_fBottomCamera, fTimeDelta);
-			}
-			else
-			{
-				if (m_bSaveCamera)
-				{
-					m_fCameraDistanceOffset.m128_f32[2] = m_fSaveCamera;
-					m_bSaveCamera = false;
-				}
-				m_fCameraDistanceOffset = XMVectorLerp(m_fCameraDistanceOffset, m_fBottomCamera, fTimeDelta);
+			//if (m_fX < XMConvertToRadians(0.f))
+			//{
+			//	if (!m_bSaveCamera)
+			//	{
+			//		m_fSaveCamera = XMVectorGetZ(m_fCameraDistanceOffset);
+			//		m_bSaveCamera = true;
+			//	}
+			//	m_fCameraDistanceOffset = XMVectorLerp(m_fCameraDistanceOffset, m_fBottomCamera, fTimeDelta);
+			//}
+			//else
+			//{
+			//	if (m_bSaveCamera)
+			//	{
+			//		m_fCameraDistanceOffset.m128_f32[2] = m_fSaveCamera;
+			//		m_bSaveCamera = false;
+			//	}
+			//	m_fCameraDistanceOffset = XMVectorLerp(m_fCameraDistanceOffset, m_fBottomCamera, fTimeDelta);
 
-			}
+			//}
 		}
 	}
 

@@ -1,5 +1,6 @@
 #include "Battle_Terrain.h"
 #include "GameInstance.h"
+#include "Battle_Manager.h"
 
 CBattle_Terrain::CBattle_Terrain(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CGameObject{ pDevice, pContext }
@@ -24,6 +25,18 @@ HRESULT CBattle_Terrain::Initialize(void* pArg)
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 
+	m_pBattle_Manager = CBattle_Manager::GetInstance();
+
+	m_iMaxDigimon = 5;
+
+	for (_int i = 0; i < m_iMaxDigimon; ++i)
+	{
+		_float fX = 15.f * static_cast<_float>(i);
+
+		m_vPlayerDigimonPos[i] = XMVectorSet(130.f - fX, 0.f, 130.f, 1.f);
+		m_vMonsterDigimonPos[i] = XMVectorSet(130.f - fX, 0.f, 70.f, 1.f);
+	}
+
 	return S_OK;
 }
 
@@ -34,26 +47,37 @@ void CBattle_Terrain::Priority_Update(_float fTimeDelta)
 
 void CBattle_Terrain::Update(_float fTimeDelta)
 {
+	m_bBattle = m_pBattle_Manager->Get_Battle();
+
+	if (m_pGameInstance->Key_Down(DIK_1))
+		m_pBattle_Manager->Set_Battle(true);
+
+	if (m_pGameInstance->Key_Down(DIK_2))
+		m_pBattle_Manager->Set_Battle(false);
 }
 
 void CBattle_Terrain::Late_Update(_float fTimeDelta)
 {
-	m_pGameInstance->Add_RenderGroup(RENDER::NONBLEND, this);
+	if (m_bBattle)
+		m_pGameInstance->Add_RenderGroup(RENDER::NONBLEND, this);
 }
 
 HRESULT CBattle_Terrain::Render()
 {
-	if (FAILED(Bind_ShaderResources()))
-		return E_FAIL;
+	if (m_bBattle)
+	{
+		if (FAILED(Bind_ShaderResources()))
+			return E_FAIL;
 
-	if (FAILED(m_pShaderCom->Begin(0)))
-		return E_FAIL;
+		if (FAILED(m_pShaderCom->Begin(0)))
+			return E_FAIL;
 
-	if (FAILED(m_pVIBufferCom->Bind_Resources()))
-		return E_FAIL;
+		if (FAILED(m_pVIBufferCom->Bind_Resources()))
+			return E_FAIL;
 
-	if (FAILED(m_pVIBufferCom->Render()))
-		return E_FAIL;
+		if (FAILED(m_pVIBufferCom->Render()))
+			return E_FAIL;
+	}
 
 	return S_OK;
 }

@@ -38,6 +38,14 @@ private:
 	CTexture* m_pTextureCom = { nullptr };
 	CShader* m_pShaderCom = { nullptr };
 
+	class CBattle_Manager* m_pBattle_Manager = { nullptr };
+
+	_bool m_bBattle = { false };
+
+	_int m_iMaxDigimon{};
+
+	_vector m_vPlayerDigimonPos[5] = {};
+	_vector m_vMonsterDigimonPos[5] = {};
 
 private:
 	HRESULT Ready_Components();

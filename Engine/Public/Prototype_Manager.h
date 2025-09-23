@@ -1,9 +1,10 @@
 #pragma once
 
 #include "Model.h"
-#include "Texture.h"
-#include "Transform.h"
 #include "Shader.h"
+#include "Texture.h"
+#include "Collider.h"
+#include "Transform.h"
 #include "VIBuffer_Cube.h"
 #include "VIBuffer_Rect.h"
 #include "VIBuffer_Terrain.h"

@@ -69,23 +69,12 @@ void CBlackwargreymon::Update(_float fTimeDelta)
 {
 	if (!Skill)
 	{
-		if (m_pGameInstance->Key_Down(DIK_1))
-		{
-			m_pFsm->Enter(DIGIMONSTATE::SKILL1, m_pPart_Body, false, false);
-			Skill = true;
-		}
+		//if (m_pGameInstance->Key_Down(DIK_2))
+		//{
+		//	m_pFsm->Enter(DIGIMONSTATE::SKILL2, m_pPart_Body, false, false);
+		//	Skill = true;
+		//}
 
-		if (m_pGameInstance->Key_Down(DIK_2))
-		{
-			m_pFsm->Enter(DIGIMONSTATE::SKILL2, m_pPart_Body, false, false);
-			Skill = true;
-		}
-
-		if (m_pGameInstance->Key_Down(DIK_3))
-		{
-			m_pFsm->Enter(DIGIMONSTATE::SKILL3, m_pPart_Body, false, false);
-			Skill = true;
-		}
 		if (m_pGameInstance->Key_Down(DIK_4))
 		{
 			m_pFsm->Enter(DIGIMONSTATE::BATTLEBACK, m_pPart_Body, false, false);
@@ -158,6 +147,22 @@ HRESULT CBlackwargreymon::Render()
 {
 	return S_OK;
 }
+
+void CBlackwargreymon::Skill1()
+{
+	m_pFsm->Enter(DIGIMONSTATE::SKILL1, m_pPart_Body, false, false);
+}
+
+void CBlackwargreymon::Skill2()
+{
+	m_pFsm->Enter(DIGIMONSTATE::SKILL2, m_pPart_Body, false, false);
+}
+
+void CBlackwargreymon::Skill3()
+{
+	m_pFsm->Enter(DIGIMONSTATE::SKILL3, m_pPart_Body, false, false);
+}
+
 
 HRESULT CBlackwargreymon::Ready_PartObjects()
 {

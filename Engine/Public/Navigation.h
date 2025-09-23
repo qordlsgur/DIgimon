@@ -24,8 +24,8 @@ public:
 	}
 
 	_bool isMove(_fvector vPosition);
+	_bool Find_Cell(_fvector vPosition);
 	void Compute_Height(class CTransform* pTransform);
-
 #ifdef _DEBUG
 public:
 	HRESULT Render();
@@ -34,7 +34,6 @@ public:
 private:
 	_int							m_iCurrentCellIndex = { -1 };
 	vector<class CCell*>			m_Cells;
-	vector<class CCell*>			m_Cellss;
 	static _float4x4				m_WorldMatrix;
 
 #ifdef _DEBUG

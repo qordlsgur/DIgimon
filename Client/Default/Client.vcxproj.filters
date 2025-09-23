@@ -232,6 +232,12 @@
     <Filter Include="06.Manager\Battle_Manager">
       <UniqueIdentifier>{a6804e18-3b79-473e-acf8-008b8b0f656c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="06.Manager\Interaction_Manager">
+      <UniqueIdentifier>{3b7babbb-9bc1-4871-b273-f3c318f519ab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Spawner">
+      <UniqueIdentifier>{ff5b5246-8279-4076-86d3-e1bfe472393f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -446,6 +452,12 @@
     </ClInclude>
     <ClInclude Include="..\public\Battle_Manager.h">
       <Filter>06.Manager\Battle_Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\Interaction_Manager.h">
+      <Filter>06.Manager\Interaction_Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\Spawner.h">
+      <Filter>02.GameObjects\Spawner</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -662,6 +674,12 @@
     </ClCompile>
     <ClCompile Include="..\private\Battle_Manager.cpp">
       <Filter>06.Manager\Battle_Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\Interaction_Manager.cpp">
+      <Filter>06.Manager\Interaction_Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\Spawner.cpp">
+      <Filter>02.GameObjects\Spawner</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -39,6 +39,7 @@ private:
 	class CStateMachine* m_pFsm = { nullptr };
 	class CCamera_Manager* m_pCamera_Manager = { nullptr };
 	class CDigimon_Manager* m_pDigimon_Manager = { nullptr };
+	class CBattle_Manager* m_pBattle_Manager = { nullptr };
 
 	_bool m_bMove = false;
 	_bool Skill = false;
@@ -54,6 +55,7 @@ private:
 	_float	m_fJumpTime{};
 	_float	m_fMax_Jump{};
 
+	_bool	m_FindCell = { false };
 
 private:
 	HRESULT Ready_Components();

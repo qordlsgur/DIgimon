@@ -11,6 +11,7 @@
 #include "BldJ.h"
 #include "BldK.h"
 #include "Navigation.h"
+#include "Battle_Manager.h"
 
 CTerrain::CTerrain(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CGameObject{ pDevice, pContext }
@@ -35,8 +36,9 @@ HRESULT CTerrain::Initialize(void* pArg)
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 
-	//Load_Object(TEXT("../Bin/Resources/Textures/Objects.bin"));
-	 
+	Load_Object(TEXT("../Bin/Resources/Textures/Objects.bin"));
+
+	m_pBattle_Manager = CBattle_Manager::GetInstance();
 
 	return S_OK;
 }
@@ -48,31 +50,46 @@ void CTerrain::Priority_Update(_float fTimeDelta)
 
 void CTerrain::Update(_float fTimeDelta)
 {
-	m_pNavigationCom->Update(XMLoadFloat4x4(m_pTransformCom->Get_WorldMatrixPtr()));
+	m_bBattle = m_pBattle_Manager->Get_Battle();
+	if (!m_bBattle)
+	{
+		m_pNavigationCom->Update(XMLoadFloat4x4(m_pTransformCom->Get_WorldMatrixPtr()));
+	}
 }
 
 void CTerrain::Late_Update(_float fTimeDelta)
 {
-	m_pGameInstance->Add_RenderGroup(RENDER::NONBLEND, this);
+	if (!m_bBattle)
+	{
+		m_pGameInstance->Add_RenderGroup(RENDER::NONBLEND, this);
+	}
 }
 
 HRESULT CTerrain::Render()
 {
-	if (FAILED(Bind_ShaderResources()))
-		return E_FAIL;
+	if (!m_bBattle)
+	{
+		if (FAILED(Bind_ShaderResources()))
+			return E_FAIL;
 
-	if (FAILED(m_pShaderCom->Begin(0)))
-		return E_FAIL;
+		if (FAILED(m_pShaderCom->Begin(0)))
+			return E_FAIL;
 
-	if (FAILED(m_pVIBufferCom->Bind_Resources()))
-		return E_FAIL;
+		if (FAILED(m_pVIBufferCom->Bind_Resources()))
+			return E_FAIL;
 
-	if (FAILED(m_pVIBufferCom->Render()))
-		return E_FAIL;
+		if (FAILED(m_pVIBufferCom->Render()))
+			return E_FAIL;
 
 #ifdef _DEBUG
-	m_pNavigationCom->Render();
+		m_pNavigationCom->Render();
 #endif
+		for (size_t i = 0; i < m_vObjects.size(); ++i)
+		{
+			m_vObjects[i]->Render();
+		}
+
+	}
 
 	return S_OK;
 }

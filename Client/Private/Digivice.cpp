@@ -42,7 +42,7 @@ HRESULT CDigivice::Initialize(void* pArg)
 	if (FAILED(Create_Slot(L"Layout_Digivice_Slot")))
 		return E_FAIL;
 
-	Acquire_Digimon(0);
+	//Acquire_Digimon(0);
 
 	return S_OK;
 }

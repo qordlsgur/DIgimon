@@ -81,7 +81,6 @@ _bool CNavigation::isMove(_fvector vPosition)
 	// 우선 받아온 포지션에 역행렬을 넣어서 월드에서 로컬로 내려준다.
 	_vector		vLocalPos = XMVector3TransformCoord(vPosition, XMMatrixInverse(nullptr, XMLoadFloat4x4(&m_WorldMatrix)));
 
-	// 
 	_int		iNeighborIndex = { -1 };
 
 	// 지금 플레이어가 셀 안에 있나 없나 검사를 한다.
@@ -102,14 +101,10 @@ _bool CNavigation::isMove(_fvector vPosition)
 				// 만약 없으면 false
 				if (-1 == iNeighborIndex)
 					return false;
-
-
 				// 만약 
 				if (true == m_Cells[iNeighborIndex]->isIn(vLocalPos, &iNeighborIndex))
 					break;
 			}
-
-
 			m_iCurrentCellIndex = iNeighborIndex;
 			return true;
 		}
@@ -118,6 +113,22 @@ _bool CNavigation::isMove(_fvector vPosition)
 	}
 }
 
+_bool CNavigation::Find_Cell(_fvector vPosition)
+{
+	_vector		vLocalPos = XMVector3TransformCoord(vPosition, XMMatrixInverse(nullptr, XMLoadFloat4x4(&m_WorldMatrix)));
+
+	for (_uint i = 0; i < m_Cells.size(); ++i)
+	{
+		_int dummy = -1;
+		if (!m_Cells[i]->isIn(vLocalPos, &dummy))
+		{
+			m_iCurrentCellIndex = i;
+			return true;
+		}
+	}
+
+	return false;
+}
 
 void CNavigation::Compute_Height(CTransform* pTransform)
 {

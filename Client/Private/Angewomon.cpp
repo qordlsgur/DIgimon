@@ -68,26 +68,8 @@ void CAngewomon::Priority_Update(_float fTimeDelta)
 
 void CAngewomon::Update(_float fTimeDelta)
 {
-
 	if (!Skill)
 	{
-		if (m_pGameInstance->Key_Down(DIK_1))
-		{
-			m_pFsm->Enter(DIGIMONSTATE::SKILL1, m_pPart_Body, false, false);
-			Skill = true;
-		}
-
-		if (m_pGameInstance->Key_Down(DIK_2))
-		{
-			m_pFsm->Enter(DIGIMONSTATE::SKILL2, m_pPart_Body, false, false);
-			Skill = true;
-		}
-
-		if (m_pGameInstance->Key_Down(DIK_3))
-		{
-			m_pFsm->Enter(DIGIMONSTATE::SKILL3, m_pPart_Body, false, false);
-			Skill = true;
-		}
 		if (m_pGameInstance->Key_Down(DIK_4))
 		{
 			m_pFsm->Enter(DIGIMONSTATE::BATTLEBACK, m_pPart_Body, false, false);
@@ -130,22 +112,39 @@ void CAngewomon::Update(_float fTimeDelta)
 		Skill = false;
 	}
 
-	if (!Skill)
+	if (!m_bBattle)
 	{
-		m_pTransformCom->LookAtPlayer(m_pDigimon_Manager->PlayerPos(), fTimeDelta);
-		m_bMove = false;
-		if (m_pTransformCom->FollowPlayer(m_pDigimon_Manager->PlayerPos(), 30, fTimeDelta))
+		if (!Skill)
 		{
-			m_pFsm->Enter(DIGIMONSTATE::RUN, m_pPart_Body);
-			m_bMove = true;
+			m_pTransformCom->LookAtPlayer(m_pDigimon_Manager->PlayerPos(), fTimeDelta);
+			m_bMove = false;
+			if (m_pTransformCom->FollowPlayer(m_pDigimon_Manager->PlayerPos(), 30, fTimeDelta))
+			{
+				m_pFsm->Enter(DIGIMONSTATE::RUN, m_pPart_Body);
+				m_bMove = true;
+			}
+
+			if (!m_bMove)
+				m_pFsm->Enter(DIGIMONSTATE::STAND, m_pPart_Body);
+		}
+	}
+	else
+		if (!Skill)
+		{
+			m_pTransformCom->Rotation(XMVectorSet(0.f, 1.f, 0.f, 0.f), XMConvertToRadians(0));
+			m_bMove = false;
+			//m_pFsm->Enter(DIGIMONSTATE::BATTLEDASH, m_pPart_Body);
+			//m_bMove = true;
+			if (!m_bMove)
+				m_pFsm->Enter(DIGIMONSTATE::STANDBATTLE, m_pPart_Body);
 		}
 
-		if (!m_bMove)
-			m_pFsm->Enter(DIGIMONSTATE::STAND, m_pPart_Body);
-	}
-
-
 	m_pFsm->Update(fTimeDelta);
+
+	//_vector a = XMVectorSet(85.f, 0.f, 65.f, 1.f);
+
+	//m_pTransformCom->Set_State(STATE::POSITION, a);
+	//m_pTransformCom->Rotation(XMVectorSet(0.f, 1.f, 0.f, 0.f), XMConvertToRadians(0));
 
 	__super::Update(fTimeDelta);
 }
@@ -158,6 +157,21 @@ void CAngewomon::Late_Update(_float fTimeDelta)
 HRESULT CAngewomon::Render()
 {
 	return S_OK;
+}
+
+void CAngewomon::Skill1()
+{
+	m_pFsm->Enter(DIGIMONSTATE::SKILL1, m_pPart_Body, false, false);
+}
+
+void CAngewomon::Skill2()
+{
+	m_pFsm->Enter(DIGIMONSTATE::SKILL2, m_pPart_Body, false, false);
+}
+
+void CAngewomon::Skill3()
+{
+	m_pFsm->Enter(DIGIMONSTATE::SKILL3, m_pPart_Body, false, false);
 }
 
 HRESULT CAngewomon::Ready_PartObjects()

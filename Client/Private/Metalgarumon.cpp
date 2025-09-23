@@ -69,23 +69,6 @@ void CMetalgarumon::Update(_float fTimeDelta)
 {
 	if (!Skill)
 	{
-		if (m_pGameInstance->Key_Down(DIK_1))
-		{
-			m_pFsm->Enter(DIGIMONSTATE::SKILL1, m_pPart_Body, false, false);
-			Skill = true;
-		}
-
-		if (m_pGameInstance->Key_Down(DIK_2))
-		{
-			m_pFsm->Enter(DIGIMONSTATE::SKILL2, m_pPart_Body, false, false);
-			Skill = true;
-		}
-
-		if (m_pGameInstance->Key_Down(DIK_3))
-		{
-			m_pFsm->Enter(DIGIMONSTATE::SKILL3, m_pPart_Body, false, false);
-			Skill = true;
-		}
 		if (m_pGameInstance->Key_Down(DIK_4))
 		{
 			m_pFsm->Enter(DIGIMONSTATE::BATTLEBACK, m_pPart_Body, false, false);
@@ -156,6 +139,21 @@ void CMetalgarumon::Late_Update(_float fTimeDelta)
 HRESULT CMetalgarumon::Render()
 {
 	return S_OK;
+}
+
+void CMetalgarumon::Skill1()
+{
+	m_pFsm->Enter(DIGIMONSTATE::SKILL1, m_pPart_Body, false, false);
+}
+
+void CMetalgarumon::Skill2()
+{
+	m_pFsm->Enter(DIGIMONSTATE::SKILL2, m_pPart_Body, false, false);
+}
+
+void CMetalgarumon::Skill3()
+{
+	m_pFsm->Enter(DIGIMONSTATE::SKILL3, m_pPart_Body, false, false);
 }
 
 HRESULT CMetalgarumon::Ready_PartObjects()

@@ -7,7 +7,7 @@ NS_BEGIN(Engine)
 class ENGINE_DLL CContainerObject abstract : public CGameObject
 {
 protected:
-	CContainerObject(ID3D11Device * pDevice, ID3D11DeviceContext * pContext);
+	CContainerObject(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	CContainerObject(const CContainerObject& Prototype);
 	virtual ~CContainerObject() = default;
 
@@ -18,6 +18,9 @@ public:
 	virtual void Update(_float fTimeDelta);
 	virtual void Late_Update(_float fTimeDelta);
 	virtual HRESULT Render();
+
+public:
+	CComponent* Get_Component(const _wstring& strPartTag, const _wstring& strComponentTag);
 
 public:
 
@@ -33,9 +36,17 @@ public:
 	virtual _int Get_Exp();
 	virtual _int Get_Lv();
 
-
 	virtual void Set_Digimon_Info(DIGIMON_INFO Digimon_Info);
 
+	virtual void Skill1();
+	virtual void Skill2();
+	virtual void Skill3();
+
+	virtual void Set_Battle(_bool Battle) { m_bBattle = Battle; }
+	virtual _bool Get_Battle() { return m_bBattle; }
+
+	virtual void LookAt(_float iRadian);
+	virtual void Set_Position(_float fX, _float fZ);
 
 protected:
 	map<const _wstring, class CPartObject*>			m_PartObjects;
@@ -54,6 +65,7 @@ protected:
 	_int m_iExp{};
 	_int m_iLv{};
 
+	_bool m_bBattle = { false };
 
 protected:
 	class CPartObject* Find_PartObject(const _wstring& strPartTag);

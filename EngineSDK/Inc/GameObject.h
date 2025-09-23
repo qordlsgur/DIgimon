@@ -40,7 +40,6 @@ public:
 public:
 	virtual void OnClick();
 
-
 protected:
 	int											m_iData;
 	ID3D11Device*								m_pDevice = { nullptr };

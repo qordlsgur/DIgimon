@@ -37,7 +37,6 @@ void CBldJ::Update(_float fTimeDelta)
 
 void CBldJ::Late_Update(_float fTimeDelta)
 {
-    m_pGameInstance->Add_RenderGroup(RENDER::NONBLEND, this);
 }
 
 HRESULT CBldJ::Render()

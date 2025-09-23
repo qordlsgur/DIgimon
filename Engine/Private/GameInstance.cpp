@@ -49,7 +49,7 @@ HRESULT CGameInstance::Initialize_Engine(const ENGINE_DESC& EngineDesc, ID3D11De
 	m_pLevel_Manager = CLevel_Manager::Create();
 	if (nullptr == m_pLevel_Manager)
 		return E_FAIL;
-	
+
 	m_pRenderer = CRenderer::Create(*ppDevice, *ppContext);
 	if (nullptr == m_pRenderer)
 		return E_FAIL;
@@ -109,12 +109,12 @@ void CGameInstance::Clear_Resources(_uint iLevelIndex)
 
 _float CGameInstance::Random_Normal()
 {
-	return static_cast<_float>(rand()) / RAND_MAX;	
+	return static_cast<_float>(rand()) / RAND_MAX;
 }
 
 _float CGameInstance::Random(_float fMin, _float fMax)
 {
-	return fMin + Random_Normal() * (fMax - fMin);	
+	return fMin + Random_Normal() * (fMax - fMin);
 }
 
 #pragma region GRAPHIC_DEVICE
@@ -179,7 +179,12 @@ CBase* CGameInstance::Clone_Prototype(PROTOTYPE ePrototype, _uint iLevelIndex, c
 
 CComponent* CGameInstance::Get_Component(_uint iLevelIndex, const _wstring& strLayerTag, const _wstring& strComponentTag, _uint iIndex)
 {
-	return m_pObject_Manager->Get_Component(iLevelIndex, strLayerTag, strComponentTag, iIndex);	
+	return m_pObject_Manager->Get_Component(iLevelIndex, strLayerTag, strComponentTag, iIndex);
+}
+
+CComponent* CGameInstance::Get_PartObject_Component(_uint iLevelIndex, const _wstring& strLayerTag, const _wstring& strPartTag, const _wstring& strComponentTag, _uint iIndex)
+{
+	return m_pObject_Manager->Get_PartObject_Component(iLevelIndex, strLayerTag, strPartTag, strComponentTag, iIndex);
 }
 
 HRESULT CGameInstance::Add_GameObject_ToLayer(_uint iPrototypeLevelIndex, const _wstring& strPrototypeTag, _uint iLayerLevelIndex, const _wstring& strLayerTag, void* pArg)
@@ -322,7 +327,7 @@ HRESULT CGameInstance::Add_Light(const LIGHT_DESC& LightDesc)
 
 HRESULT CGameInstance::Add_Font(const _wstring& strFontTag, const _tchar* pFontFilePath)
 {
-	return m_pFont_Manager->Add_Font(strFontTag, pFontFilePath); 
+	return m_pFont_Manager->Add_Font(strFontTag, pFontFilePath);
 }
 
 HRESULT CGameInstance::Render_Text(const _wstring& strFontTag, const _tchar* pText, const _float2& vPosition, _fvector vColor)
@@ -345,7 +350,7 @@ void CGameInstance::Release_Engine()
 	Safe_Release(m_pRenderer);
 	Safe_Release(m_pPrototype_Manager);
 	Safe_Release(m_pObject_Manager);
-	Safe_Release(m_pLevel_Manager);	
+	Safe_Release(m_pLevel_Manager);
 	Safe_Release(m_pKey_Manager);
 	Safe_Release(m_pMouse_Manager);
 	Safe_Release(m_pGraphic_Device);
@@ -355,5 +360,5 @@ void CGameInstance::Free()
 {
 	__super::Free();
 
-	
+
 }

@@ -12,6 +12,7 @@ private:
 
 public:
 	class CComponent* Get_Component(const _wstring& strComponentTag, _uint iIndex = 0);
+	class CComponent* Get_PartObject_Component(const _wstring& strPartTag, const _wstring& strComponentTag, _uint iIndex = 0);
 
 public:
 	HRESULT Add_GameObject(class CGameObject* pGameObject);

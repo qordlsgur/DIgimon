@@ -71,23 +71,6 @@ void COmegamon::Update(_float fTimeDelta)
 
 	if (!Skill)
 	{
-		if (m_pGameInstance->Key_Down(DIK_1))
-		{
-			m_pFsm->Enter(DIGIMONSTATE::SKILL1, m_pPart_Body, false, false);
-			Skill = true;
-		}
-
-		if (m_pGameInstance->Key_Down(DIK_2))
-		{
-			m_pFsm->Enter(DIGIMONSTATE::SKILL2, m_pPart_Body, false, false);
-			Skill = true;
-		}
-
-		if (m_pGameInstance->Key_Down(DIK_3))
-		{
-			m_pFsm->Enter(DIGIMONSTATE::SKILL3, m_pPart_Body, false, false);
-			Skill = true;
-		}
 		if (m_pGameInstance->Key_Down(DIK_4))
 		{
 			m_pFsm->Enter(DIGIMONSTATE::BATTLEBACK, m_pPart_Body, false, false);
@@ -147,6 +130,8 @@ void COmegamon::Update(_float fTimeDelta)
 
 	m_pFsm->Update(fTimeDelta);
 
+
+
 	__super::Update(fTimeDelta);
 }
 
@@ -158,6 +143,21 @@ void COmegamon::Late_Update(_float fTimeDelta)
 HRESULT COmegamon::Render()
 {
 	return S_OK;
+}
+
+void COmegamon::Skill1()
+{
+	m_pFsm->Enter(DIGIMONSTATE::SKILL1, m_pPart_Body, false, false);
+}
+
+void COmegamon::Skill2()
+{
+	m_pFsm->Enter(DIGIMONSTATE::SKILL2, m_pPart_Body, false, false);
+}
+
+void COmegamon::Skill3()
+{
+	m_pFsm->Enter(DIGIMONSTATE::SKILL3, m_pPart_Body, false, false);
 }
 
 HRESULT COmegamon::Ready_PartObjects()

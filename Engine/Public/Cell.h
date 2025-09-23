@@ -22,7 +22,6 @@ public:
 public:
 	HRESULT Initialize(const _float3* vPoints, _uint iIndex);
 	_bool isIn(_fvector vPosition, _int* pNeighborIndex);
-
 	_bool Compare(_fvector vSourPoint, _fvector vDestPoint);
 	_float Compute_Height(_fvector vPoint);
 

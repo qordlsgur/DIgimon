@@ -6,6 +6,7 @@
 #include "StateMachine.h"
 #include "Digimon_Manager.h"
 #include "Navigation.h"
+#include "Battle_Manager.h"
 
 CPlayer::CPlayer(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CContainerObject{ pDevice, pContext }
@@ -43,6 +44,8 @@ HRESULT CPlayer::Initialize(void* pArg)
 	m_pDigimon_Manager = CDigimon_Manager::GetInstance();
 	m_pDigimon_Manager->Player(this);
 
+	m_pBattle_Manager = CBattle_Manager::GetInstance();
+
 	m_pFsm = CStateMachine::Create();
 
 	m_pFsm->Initialize();
@@ -58,6 +61,8 @@ HRESULT CPlayer::Initialize(void* pArg)
 
 	m_eCurrentState = PLAYER_STATE::STAND;
 	m_ePreviousState = PLAYER_STATE::STAND;
+
+
 	return S_OK;
 }
 
@@ -69,71 +74,85 @@ void CPlayer::Priority_Update(_float fTimeDelta)
 
 void CPlayer::Update(_float fTimeDelta)
 {
-
-	_vector Angle = XMVectorZero();
-
-	if (m_pGameInstance->Key_Down(DIK_SPACE))
+	m_bBattle = m_pBattle_Manager->Get_Battle();
+	if (!m_FindCell)
 	{
-		m_fJumpStart = 0;
-		m_pFsm->Enter(DIGIMONSTATE::JUMP, m_pPart_Body, false, false);
-		m_bisJump = true;
+		m_pNavigationCom->Find_Cell(m_pTransformCom->Get_State(STATE::POSITION));
+		m_FindCell = true;
 	}
 
-	m_bMove = false;
-	if (m_pGameInstance->Key_Pressing(DIK_W))
+	if (!m_bBattle)
 	{
-		m_pFsm->Enter(DIGIMONSTATE::RUN, m_pPart_Body);
-		Angle = XMVectorAdd(Angle, XMVectorSet(0.f, 0.f, 1.f, 0.f));
-		m_bMove = true;
+		_vector Angle = XMVectorZero();
+
+		if (m_pGameInstance->Key_Down(DIK_SPACE))
+		{
+			m_fJumpStart = 0;
+			m_pFsm->Enter(DIGIMONSTATE::JUMP, m_pPart_Body, false, false);
+			m_bisJump = true;
+		}
+
+		m_bMove = false;
+		if (m_pGameInstance->Key_Pressing(DIK_W))
+		{
+			m_pFsm->Enter(DIGIMONSTATE::RUN, m_pPart_Body);
+			Angle = XMVectorAdd(Angle, XMVectorSet(0.f, 0.f, 1.f, 0.f));
+			m_bMove = true;
+		}
+
+		if (m_pGameInstance->Key_Pressing(DIK_S))
+		{
+			m_pFsm->Enter(DIGIMONSTATE::RUN, m_pPart_Body);
+			Angle = XMVectorAdd(Angle, XMVectorSet(0.f, 0.f, -1.f, 0.f));
+			m_bMove = true;
+		}
+
+		if (m_pGameInstance->Key_Pressing(DIK_A))
+		{
+			m_pFsm->Enter(DIGIMONSTATE::RUN, m_pPart_Body);
+			Angle = XMVectorAdd(Angle, XMVectorSet(-1.f, 0.f, 0.f, 0.f));
+			m_bMove = true;
+		}
+
+		if (m_pGameInstance->Key_Pressing(DIK_D))
+		{
+			m_pFsm->Enter(DIGIMONSTATE::RUN, m_pPart_Body);
+			Angle = XMVectorAdd(Angle, XMVectorSet(1.f, 0.f, 0.f, 0.f));
+			m_bMove = true;
+		}
+
+		if (m_bMove)
+		{
+			m_eCurrentState = PLAYER_STATE::MOVE;
+			if (!XMVector3Equal(Angle, XMVectorZero()))
+				XMVector3Normalize(Angle);
+
+			_matrix CameraY = XMMatrixRotationY(m_pCamera_Manager->Get_Angle());
+			_vector Pos = XMVector3TransformNormal(Angle, CameraY);
+
+			m_pTransformCom->Look(Pos, fTimeDelta);
+			m_pTransformCom->Go_Straight(fTimeDelta, m_pNavigationCom);
+		}
+
+		if (!m_bMove && !m_bisJump)
+		{
+			m_eCurrentState = PLAYER_STATE::STAND;
+			m_pFsm->Enter(DIGIMONSTATE::STAND, m_pPart_Body);
+			m_pNavigationCom->Compute_Height(m_pTransformCom);
+		}
+
+		if (m_bisJump)
+			Jump(fTimeDelta);
 	}
 
-	if (m_pGameInstance->Key_Pressing(DIK_S))
-	{
-		m_pFsm->Enter(DIGIMONSTATE::RUN, m_pPart_Body);
-		Angle = XMVectorAdd(Angle, XMVectorSet(0.f, 0.f, -1.f, 0.f));
-		m_bMove = true;
-	}
-
-	if (m_pGameInstance->Key_Pressing(DIK_A))
-	{
-		m_pFsm->Enter(DIGIMONSTATE::RUN, m_pPart_Body);
-		Angle = XMVectorAdd(Angle, XMVectorSet(-1.f, 0.f, 0.f, 0.f));
-		m_bMove = true;
-	}
-
-	if (m_pGameInstance->Key_Pressing(DIK_D))
-	{
-		m_pFsm->Enter(DIGIMONSTATE::RUN, m_pPart_Body);
-		Angle = XMVectorAdd(Angle, XMVectorSet(1.f, 0.f, 0.f, 0.f));
-		m_bMove = true;
-	}
-
-	if (m_bMove)
-	{
-		m_eCurrentState = PLAYER_STATE::MOVE;
-		if (!XMVector3Equal(Angle, XMVectorZero()))
-			XMVector3Normalize(Angle);
-
-		_matrix CameraY = XMMatrixRotationY(m_pCamera_Manager->Get_Angle());
-		_vector Pos = XMVector3TransformNormal(Angle, CameraY);
-
-		m_pTransformCom->Look(Pos, fTimeDelta);
-		m_pTransformCom->Go_Straight(fTimeDelta, m_pNavigationCom);
-	}
-
-	if (!m_bMove && !m_bisJump)
+	else
 	{
 		m_eCurrentState = PLAYER_STATE::STAND;
 		m_pFsm->Enter(DIGIMONSTATE::STAND, m_pPart_Body);
-		m_pNavigationCom->Compute_Height(m_pTransformCom);
+		LookAt(-180.f);
+		Set_Position(100.f, 140.f);
 	}
-
-
-	if (m_bisJump)
-		Jump(fTimeDelta);
-
 	m_pFsm->Update(fTimeDelta);
-
 
 	__super::Update(fTimeDelta);
 }
@@ -182,7 +201,7 @@ HRESULT CPlayer::Ready_Components()
 {
 	/* Com_Navigation */
 	CNavigation::NAVIGATION_DESC		NavigationDesc{};
-	NavigationDesc.iCurrentCellIndex = 5;
+	NavigationDesc.iCurrentCellIndex = 150;
 	if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Navigation"),
 		TEXT("Com_Navigation"), reinterpret_cast<CComponent**>(&m_pNavigationCom), &NavigationDesc)))
 		return E_FAIL;
@@ -237,6 +256,6 @@ void CPlayer::Free()
 	__super::Free();
 
 	Safe_Release(m_pNavigationCom);
-	Safe_Release(m_pPart_Body);
 	Safe_Release(m_pFsm);
+	Safe_Release(m_pPart_Body);
 }

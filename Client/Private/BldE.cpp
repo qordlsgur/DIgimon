@@ -39,7 +39,6 @@ void CBldE::Update(_float fTimeDelta)
 
 void CBldE::Late_Update(_float fTimeDelta)
 {
-    m_pGameInstance->Add_RenderGroup(RENDER::NONBLEND, this);
 }
 
 HRESULT CBldE::Render()

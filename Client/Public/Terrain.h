@@ -49,6 +49,9 @@ private:
 	vector<OBJECT_DATA>		m_vLoadDate;
 	CGameObject* m_pObject = { nullptr };
 
+	class CBattle_Manager* m_pBattle_Manager = { nullptr };
+
+	_bool m_bBattle = { false };
 
 private:
 	HRESULT Ready_Components();
