@@ -8,6 +8,7 @@
 #include "Digivice_Mask.h"
 #include "PartyUHD.h"
 #include "UHD_Slot.h"
+#include "Interaction.h"
 #pragma endregion
 
 #pragma region Button
@@ -308,16 +309,10 @@ HRESULT CLoader::Loading_For_GamePlay()
 		CModel::Create(m_pDevice, m_pContext, MODEL::ANIM, "../Bin/Resources/Models/Angewomon/Angewomon.bin", PreTransformMatrix))))
 		return E_FAIL;
 
-	/* For.Prototype_Component_Model_Omegamon*/
+	/* For.Prototype_Component_Model_Blackwargreymon*/
 	PreTransformMatrix = XMMatrixScaling(0.1f, 0.1f, 0.1f) * XMMatrixRotationY(XMConvertToRadians(180.0f));
-	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Model_Omegamon"),
-		CModel::Create(m_pDevice, m_pContext, MODEL::ANIM, "../Bin/Resources/Models/Omegamon/Omegamon.bin", PreTransformMatrix))))
-		return E_FAIL;
-
-	/* For.Prototype_Component_Model_Metalgraymon*/
-	PreTransformMatrix = XMMatrixScaling(0.1f, 0.1f, 0.1f) * XMMatrixRotationY(XMConvertToRadians(180.0f));
-	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Model_Metalgraymon"),
-		CModel::Create(m_pDevice, m_pContext, MODEL::ANIM, "../Bin/Resources/Models/Metalgraymon/Metalgraymon.bin", PreTransformMatrix))))
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Model_Blackwargreymon"),
+		CModel::Create(m_pDevice, m_pContext, MODEL::ANIM, "../Bin/Resources/Models/Blackwargreymon/Blackwargreymon.bin", PreTransformMatrix))))
 		return E_FAIL;
 
 	/* For.Prototype_Component_Model_Devilmon*/
@@ -338,28 +333,28 @@ HRESULT CLoader::Loading_For_GamePlay()
 		CModel::Create(m_pDevice, m_pContext, MODEL::ANIM, "../Bin/Resources/Models/Leomon/Leomon.bin", PreTransformMatrix))))
 		return E_FAIL;
 
-	/* For.Prototype_Component_Model_Metalgreymon*/
-	PreTransformMatrix = XMMatrixScaling(0.1f, 0.1f, 0.1f) * XMMatrixRotationY(XMConvertToRadians(180.0f));
-	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Model_Metalgreymon"),
-		CModel::Create(m_pDevice, m_pContext, MODEL::ANIM, "../Bin/Resources/Models/Metalgreymon/Metalgreymon.bin", PreTransformMatrix))))
-		return E_FAIL;
-
 	/* For.Prototype_Component_Model_Metalgarumon*/
 	PreTransformMatrix = XMMatrixScaling(0.1f, 0.1f, 0.1f) * XMMatrixRotationY(XMConvertToRadians(180.0f));
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Model_Metalgarumon"),
 		CModel::Create(m_pDevice, m_pContext, MODEL::ANIM, "../Bin/Resources/Models/Metalgarumon/Metalgarumon.bin", PreTransformMatrix))))
 		return E_FAIL;
 
+	/* For.Prototype_Component_Model_Metalgreymon*/
+	PreTransformMatrix = XMMatrixScaling(0.1f, 0.1f, 0.1f) * XMMatrixRotationY(XMConvertToRadians(180.0f));
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Model_Metalgreymon"),
+		CModel::Create(m_pDevice, m_pContext, MODEL::ANIM, "../Bin/Resources/Models/Metalgreymon/Metalgreymon.bin", PreTransformMatrix))))
+		return E_FAIL;
+
+	/* For.Prototype_Component_Model_Omegamon*/
+	PreTransformMatrix = XMMatrixScaling(0.07f, 0.07f, 0.07f) * XMMatrixRotationY(XMConvertToRadians(180.0f));
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Model_Omegamon"),
+		CModel::Create(m_pDevice, m_pContext, MODEL::ANIM, "../Bin/Resources/Models/Omegamon/Omegamon.bin", PreTransformMatrix))))
+		return E_FAIL;
+
 	/* For.Prototype_Component_Model_Wargreymon*/
 	PreTransformMatrix = XMMatrixScaling(0.1f, 0.1f, 0.1f) * XMMatrixRotationY(XMConvertToRadians(180.0f));
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Model_Wargreymon"),
 		CModel::Create(m_pDevice, m_pContext, MODEL::ANIM, "../Bin/Resources/Models/Wargreymon/Wargreymon.bin", PreTransformMatrix))))
-		return E_FAIL;
-
-	/* For.Prototype_Component_Model_Blackwargreymon*/
-	PreTransformMatrix = XMMatrixScaling(0.1f, 0.1f, 0.1f) * XMMatrixRotationY(XMConvertToRadians(180.0f));
-	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Model_Blackwargreymon"),
-		CModel::Create(m_pDevice, m_pContext, MODEL::ANIM, "../Bin/Resources/Models/Blackwargreymon/Blackwargreymon.bin", PreTransformMatrix))))
 		return E_FAIL;
 
 	/* For.Prototype_Component_Model_Beelzebumon*/
@@ -482,19 +477,10 @@ HRESULT CLoader::Loading_For_GamePlay()
 #pragma region COLLIER
 
 	m_strMessage = TEXT("콜라이더를(을) 로딩 중 입니다.");
-	/* For.Prototype_Component_Collider_AABB */
-	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Collider_AABB"),
-		CCollider::Create(m_pDevice, m_pContext, COLLIDER::AABB))))
-		return E_FAIL;
-
-	/* For.Prototype_Component_Collider_OBB */
-	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Collider_OBB"),
-		CCollider::Create(m_pDevice, m_pContext, COLLIDER::OBB))))
-		return E_FAIL;
 
 	/* For.Prototype_Component_Collider_Sphere */
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Collider_Sphere"),
-		CCollider::Create(m_pDevice, m_pContext, COLLIDER::SPHERE))))
+		CCollider::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
 #pragma endregion
@@ -517,6 +503,12 @@ HRESULT CLoader::Loading_For_GamePlay()
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Sky"),
 		CSky::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
+
+	/* For.Prototype_GameObject_Interaction*/
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Interaction"),
+		CInteraction::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+	
 
 	//디지바이스---------------------------------------------------------------------------------------------------------------------------------------------------------
 

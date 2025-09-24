@@ -5,7 +5,9 @@
 
 NS_BEGIN(Engine)
 class CGameInstance;
+class CGameObject;
 class CContainerObject;
+class CCollider;
 NS_END
 
 NS_BEGIN(Client)
@@ -19,12 +21,21 @@ private:
 	virtual ~CInteraction_Manager() = default;
 
 public:
+	HRESULT Initialize();
 
+public:
+	void Set_Player(CContainerObject* pPlayer);
+	void Set_Player_Collider(CCollider* pCollider);
+	void Set_Enemy_Digimon(CContainerObject* Enemy);
+
+	void Update();
 
 private:
 	CGameInstance* m_pGameInstance = { nullptr };
+	CContainerObject* m_pPlayer = { nullptr };
+	CCollider* m_pPlayer_Collider = { nullptr };
 
-private:
+	vector<CContainerObject*> m_pEnemy_Digimon;
 
 
 public:

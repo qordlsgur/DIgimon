@@ -5,6 +5,7 @@
 NS_BEGIN(Engine)
 class CNavigation;
 class CPartObject;
+class CCollider;
 NS_END
 
 NS_BEGIN(Client)
@@ -26,6 +27,8 @@ public:
 	virtual void Late_Update(_float fTimeDelta) override;
 	virtual HRESULT Render() override;
 
+public:
+	virtual _bool Intersect() override;
 
 private:
 	void Jump(_float fTimeDelta);
@@ -35,11 +38,14 @@ private:
 private:
 	CPartObject* m_pPart_Body = { nullptr };
 	CNavigation* m_pNavigationCom = { nullptr };
+	CCollider* m_pColliderCom = { nullptr };
 
 	class CStateMachine* m_pFsm = { nullptr };
 	class CCamera_Manager* m_pCamera_Manager = { nullptr };
 	class CDigimon_Manager* m_pDigimon_Manager = { nullptr };
 	class CBattle_Manager* m_pBattle_Manager = { nullptr };
+	class CInteraction_Manager* m_pInteraction_Manager = { nullptr };
+
 
 	_bool m_bMove = false;
 	_bool Skill = false;

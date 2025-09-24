@@ -238,6 +238,9 @@
     <Filter Include="02.GameObjects\Spawner">
       <UniqueIdentifier>{ff5b5246-8279-4076-86d3-e1bfe472393f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.GameObjects\Interaction">
+      <UniqueIdentifier>{cd3c67c8-d65e-4a19-b04d-2e793f545687}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -458,6 +461,9 @@
     </ClInclude>
     <ClInclude Include="..\public\Spawner.h">
       <Filter>02.GameObjects\Spawner</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\Interaction.h">
+      <Filter>02.GameObjects\Interaction</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -680,6 +686,9 @@
     </ClCompile>
     <ClCompile Include="..\private\Spawner.cpp">
       <Filter>02.GameObjects\Spawner</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\Interaction.cpp">
+      <Filter>02.GameObjects\Interaction</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

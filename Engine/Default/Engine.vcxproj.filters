@@ -175,17 +175,11 @@
     <ClInclude Include="..\public\DebugDraw.h">
       <Filter>01.Utility\03.Components\Collider\DebugDraw</Filter>
     </ClInclude>
-    <ClInclude Include="..\public\Bounding_AABB.h">
-      <Filter>01.Utility\03.Components\Collider\Bounding\AABB</Filter>
-    </ClInclude>
     <ClInclude Include="..\public\Collider.h">
       <Filter>01.Utility\03.Components\Collider</Filter>
     </ClInclude>
     <ClInclude Include="..\public\Bounding_Sphere.h">
       <Filter>01.Utility\03.Components\Collider\Bounding\Sphere</Filter>
-    </ClInclude>
-    <ClInclude Include="..\public\Bounding_OBB.h">
-      <Filter>01.Utility\03.Components\Collider\Bounding\OBB</Filter>
     </ClInclude>
     <ClInclude Include="..\public\Bounding.h">
       <Filter>01.Utility\03.Components\Collider\Bounding</Filter>
@@ -324,17 +318,11 @@
     <ClCompile Include="..\private\DebugDraw.cpp">
       <Filter>01.Utility\03.Components\Collider\DebugDraw</Filter>
     </ClCompile>
-    <ClCompile Include="..\private\Bounding_AABB.cpp">
-      <Filter>01.Utility\03.Components\Collider\Bounding\AABB</Filter>
-    </ClCompile>
     <ClCompile Include="..\private\Collider.cpp">
       <Filter>01.Utility\03.Components\Collider</Filter>
     </ClCompile>
     <ClCompile Include="..\private\Bounding_Sphere.cpp">
       <Filter>01.Utility\03.Components\Collider\Bounding\Sphere</Filter>
-    </ClCompile>
-    <ClCompile Include="..\private\Bounding_OBB.cpp">
-      <Filter>01.Utility\03.Components\Collider\Bounding\OBB</Filter>
     </ClCompile>
     <ClCompile Include="..\private\Bounding.cpp">
       <Filter>01.Utility\03.Components\Collider\Bounding</Filter>
@@ -499,12 +487,6 @@
     </Filter>
     <Filter Include="01.Utility\03.Components\Collider\Bounding">
       <UniqueIdentifier>{6ac9a57f-ef83-4ae2-b25b-82a10c595378}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01.Utility\03.Components\Collider\Bounding\AABB">
-      <UniqueIdentifier>{3fb85f2c-c809-4c4e-b0c7-b2cb521f9d7b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01.Utility\03.Components\Collider\Bounding\OBB">
-      <UniqueIdentifier>{ce0e8f90-d263-4a7a-b675-ebdf04744008}</UniqueIdentifier>
     </Filter>
     <Filter Include="01.Utility\03.Components\Collider\Bounding\Sphere">
       <UniqueIdentifier>{a0451ead-a6d9-4aaa-9c99-eff179a95eff}</UniqueIdentifier>

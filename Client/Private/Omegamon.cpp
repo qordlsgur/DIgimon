@@ -71,6 +71,24 @@ void COmegamon::Update(_float fTimeDelta)
 
 	if (!Skill)
 	{
+		if (m_pGameInstance->Key_Down(DIK_1))
+		{
+			m_pFsm->Enter(DIGIMONSTATE::SKILL1, m_pPart_Body, false, false);
+			Skill = true;
+		}
+
+		if (m_pGameInstance->Key_Down(DIK_2))
+		{
+			m_pFsm->Enter(DIGIMONSTATE::SKILL2, m_pPart_Body, false, false);
+			Skill = true;
+		}
+
+		if (m_pGameInstance->Key_Down(DIK_3))
+		{
+			m_pFsm->Enter(DIGIMONSTATE::SKILL3, m_pPart_Body, false, false);
+			Skill = true;
+		}
+
 		if (m_pGameInstance->Key_Down(DIK_4))
 		{
 			m_pFsm->Enter(DIGIMONSTATE::BATTLEBACK, m_pPart_Body, false, false);
@@ -130,6 +148,7 @@ void COmegamon::Update(_float fTimeDelta)
 
 	m_pFsm->Update(fTimeDelta);
 
+	m_pColliderCom->Update(XMLoadFloat4x4(m_pTransformCom->Get_WorldMatrixPtr()));
 
 
 	__super::Update(fTimeDelta);
@@ -138,10 +157,16 @@ void COmegamon::Update(_float fTimeDelta)
 void COmegamon::Late_Update(_float fTimeDelta)
 {
 	__super::Late_Update(fTimeDelta);
+
+	m_pGameInstance->Add_RenderGroup(RENDER::NONBLEND, this);
+
 }
 
 HRESULT COmegamon::Render()
 {
+#ifdef _DEBUG
+	m_pColliderCom->Render();
+#endif
 	return S_OK;
 }
 
@@ -172,6 +197,15 @@ HRESULT COmegamon::Ready_PartObjects()
 		return E_FAIL;
 
 	m_pPart_Body = dynamic_cast<CBody_Omegamon*>(Find_PartObject(TEXT("Part_Body_Omrgamon")));
+
+	/* Com_Sphere*/
+	CBounding_Sphere::BOUNDING_SPHERE_DESC SphereDesc{};
+	SphereDesc.fRadius = 15.f;
+	SphereDesc.vCenter = _float3(0.f, SphereDesc.fRadius, 0.f);
+
+	if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Collider_Sphere"),
+		TEXT("Com_Collider_Sphere"), reinterpret_cast<CComponent**>(&m_pColliderCom), &SphereDesc)))
+		return E_FAIL;
 
 	return S_OK;
 }
@@ -208,6 +242,7 @@ void COmegamon::Free()
 
 	Safe_Release(m_pFsm);
 	Safe_Release(m_pPart_Body);
+	Safe_Release(m_pColliderCom);
 
 }
 

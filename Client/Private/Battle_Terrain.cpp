@@ -49,10 +49,10 @@ void CBattle_Terrain::Update(_float fTimeDelta)
 {
 	m_bBattle = m_pBattle_Manager->Get_Battle();
 
-	if (m_pGameInstance->Key_Down(DIK_1))
+	if (m_pGameInstance->Key_Down(DIK_N))
 		m_pBattle_Manager->Set_Battle(true);
 
-	if (m_pGameInstance->Key_Down(DIK_2))
+	if (m_pGameInstance->Key_Down(DIK_M))
 		m_pBattle_Manager->Set_Battle(false);
 }
 

@@ -152,6 +152,11 @@ void CContainerObject::Set_Position(_float fX, _float fZ)
 	m_pTransformCom->Set_State(STATE::POSITION, XMVectorSet(fX, 0.f, fZ, 1.f));
 }
 
+_bool CContainerObject::Intersect()
+{
+	return _bool();
+}
+
 CPartObject* CContainerObject::Find_PartObject(const _wstring& strPartTag)
 {
 	auto    iter = m_PartObjects.find(strPartTag);

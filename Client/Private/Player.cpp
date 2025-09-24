@@ -7,6 +7,7 @@
 #include "Digimon_Manager.h"
 #include "Navigation.h"
 #include "Battle_Manager.h"
+#include "Interaction_Manager.h"
 
 CPlayer::CPlayer(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CContainerObject{ pDevice, pContext }
@@ -46,6 +47,8 @@ HRESULT CPlayer::Initialize(void* pArg)
 
 	m_pBattle_Manager = CBattle_Manager::GetInstance();
 
+	m_pInteraction_Manager = CInteraction_Manager::GetInstance();
+
 	m_pFsm = CStateMachine::Create();
 
 	m_pFsm->Initialize();
@@ -62,6 +65,7 @@ HRESULT CPlayer::Initialize(void* pArg)
 	m_eCurrentState = PLAYER_STATE::STAND;
 	m_ePreviousState = PLAYER_STATE::STAND;
 
+	m_pInteraction_Manager->Set_Player(this);
 
 	return S_OK;
 }
@@ -153,6 +157,7 @@ void CPlayer::Update(_float fTimeDelta)
 		Set_Position(100.f, 140.f);
 	}
 	m_pFsm->Update(fTimeDelta);
+	m_pColliderCom->Update(XMLoadFloat4x4(m_pTransformCom->Get_WorldMatrixPtr()));
 
 	__super::Update(fTimeDelta);
 }
@@ -160,11 +165,24 @@ void CPlayer::Update(_float fTimeDelta)
 void CPlayer::Late_Update(_float fTimeDelta)
 {
 	__super::Late_Update(fTimeDelta);
+
+	m_pGameInstance->Add_RenderGroup(RENDER::NONBLEND, this);
+
 }
 
 HRESULT CPlayer::Render()
 {
+#ifdef _DEBUG
+	m_pNavigationCom->Render();
+	m_pColliderCom->Render();
+#endif
+
 	return S_OK;
+}
+
+_bool CPlayer::Intersect()
+{
+	return _bool();
 }
 
 void CPlayer::Jump(_float fTimeDelta)
@@ -206,6 +224,15 @@ HRESULT CPlayer::Ready_Components()
 		TEXT("Com_Navigation"), reinterpret_cast<CComponent**>(&m_pNavigationCom), &NavigationDesc)))
 		return E_FAIL;
 
+	/* Com_Sphere*/
+	CBounding_Sphere::BOUNDING_SPHERE_DESC SphereDesc{};
+	SphereDesc.fRadius = 5.f;
+	SphereDesc.vCenter = _float3(0.f, SphereDesc.fRadius, 0.f);
+
+	if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Collider_Sphere"),
+		TEXT("Com_Collider_Sphere"), reinterpret_cast<CComponent**>(&m_pColliderCom), &SphereDesc)))
+		return E_FAIL;
+	
 	return S_OK;
 }
 
@@ -257,5 +284,6 @@ void CPlayer::Free()
 
 	Safe_Release(m_pNavigationCom);
 	Safe_Release(m_pFsm);
+	Safe_Release(m_pColliderCom);
 	Safe_Release(m_pPart_Body);
 }

@@ -22,7 +22,7 @@ public:
 public:
 	HRESULT Initialize(const void* pDesc);
 	virtual void Update(_fmatrix WorldMatrix)override;
-	virtual _bool Intersect(COLLIDER eType, class CBounding* pTarget)override;
+	virtual _bool Intersect(class CBounding* pTarget)override;
 #ifdef _DEBUG
 public:
 	virtual HRESULT Render(PrimitiveBatch<VertexPositionColor>* pBatch, _fvector vColor)override;

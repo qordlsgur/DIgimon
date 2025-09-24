@@ -8,7 +8,6 @@ namespace Engine
 	enum class STATE { RIGHT, UP, LOOK, POSITION, END };
 	enum class LIGHT { DIRECTIONAL, POINT, SPOT, END };
 	enum class D3DTS { VIEW, PROJ, END };
-	enum class COLLIDER { AABB, OBB, SPHERE, END };
 	enum class MODEL { ANIM, NONANIM };
 	enum class RENDER { PRIORITY, NONBLEND, BLEND, UI, BLENDUI, END};
 	enum class TEXTURE { PLANE, CUBE, END };

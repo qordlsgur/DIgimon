@@ -48,6 +48,8 @@ public:
 	virtual void LookAt(_float iRadian);
 	virtual void Set_Position(_float fX, _float fZ);
 
+	virtual _bool Intersect();
+
 protected:
 	map<const _wstring, class CPartObject*>			m_PartObjects;
 

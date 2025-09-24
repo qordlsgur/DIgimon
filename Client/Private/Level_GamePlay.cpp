@@ -5,6 +5,7 @@
 #include "Camera_Manager.h"
 #include "Digimon_Manager.h"
 #include "Battle_Manager.h"
+#include "Interaction_Manager.h"
 #include "Spawner.h"
 
 CLevel_GamePlay::CLevel_GamePlay(ID3D11Device* pDevice, ID3D11DeviceContext* pContext, LEVEL eLevelID)
@@ -12,6 +13,7 @@ CLevel_GamePlay::CLevel_GamePlay(ID3D11Device* pDevice, ID3D11DeviceContext* pCo
 	, m_pCamera_Manager{ CCamera_Manager::GetInstance() }
 	, m_pDigimon_Manager{ CDigimon_Manager::GetInstance() }
 	, m_pBattle_Manager{ CBattle_Manager::GetInstance() }
+	, m_pIntertaction_Manager{ CInteraction_Manager::GetInstance() }
 {
 
 }
@@ -21,6 +23,7 @@ HRESULT CLevel_GamePlay::Initialize()
 	m_pCamera_Manager->Initialize();
 	m_pDigimon_Manager->Initialize();
 	m_pBattle_Manager->Initialize();
+	m_pIntertaction_Manager->Initialize();
 
 	if (FAILED(Ready_Lights()))
 		return E_FAIL;
@@ -44,6 +47,9 @@ HRESULT CLevel_GamePlay::Initialize()
 		return E_FAIL;
 
 	if (FAILED(Ready_Layer_Digivice(TEXT("Layer_Digivice"))))
+		return E_FAIL;
+
+	if (FAILED(Ready_Layer_Interaction(TEXT("Layer_Interaction"))))
 		return E_FAIL;
 
 	//if (FAILED(Ready_Layer_Effect(TEXT("Layer_Effect"))))
@@ -144,15 +150,15 @@ HRESULT CLevel_GamePlay::Ready_Layer_Player(const _wstring& strLayerTag)
 HRESULT CLevel_GamePlay::Ready_Layer_Digimon(const _wstring& strLayerTag)
 {
 
-	//엔젤우몬
-	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Angewomon"),
-		ENUM_CLASS(LEVEL::GAMEPLAY), strLayerTag)))
-		return E_FAIL;
-
-	//// 오메가몬
-	//if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Omegamon"),
+	////엔젤우몬
+	//if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Angewomon"),
 	//	ENUM_CLASS(LEVEL::GAMEPLAY), strLayerTag)))
 	//	return E_FAIL;
+
+	// 오메가몬
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Omegamon"),
+		ENUM_CLASS(LEVEL::GAMEPLAY), strLayerTag)))
+		return E_FAIL;
 
 	//// 데빌몬
 	//if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Devilmon"),
@@ -192,6 +198,15 @@ HRESULT CLevel_GamePlay::Ready_Layer_Digimon(const _wstring& strLayerTag)
 	return S_OK;
 }
 
+HRESULT CLevel_GamePlay::Ready_Layer_Interaction(const _wstring& strLayerTag)
+{
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Interaction"),
+		ENUM_CLASS(LEVEL::GAMEPLAY), strLayerTag)))
+		return E_FAIL;
+
+	return S_OK;
+}
+
 HRESULT CLevel_GamePlay::Ready_Layer_Monster(const _wstring& strLayerTag)
 {
 	CSpawner::SPAWNER_POS   SpawnPos[4]{};
@@ -201,6 +216,13 @@ HRESULT CLevel_GamePlay::Ready_Layer_Monster(const _wstring& strLayerTag)
 	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Spawner"),
 		ENUM_CLASS(LEVEL::GAMEPLAY), strLayerTag, &SpawnPos[0])))
 		return E_FAIL;
+
+	//SpawnPos[1].SpawnerPos = XMVectorSet(770.f, 0.f, 650.f, 0.f);
+	//SpawnPos[1].strPrototypeTag = TEXT("Prototype_GameObject_Angewomon");
+
+	//if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Spawner"),
+	//	ENUM_CLASS(LEVEL::GAMEPLAY), strLayerTag, &SpawnPos[1])))
+	//	return E_FAIL;
 
 	return S_OK;
 }
@@ -237,4 +259,5 @@ void CLevel_GamePlay::Free()
 	Safe_Release(m_pCamera_Manager);
 	Safe_Release(m_pDigimon_Manager);
 	Safe_Release(m_pBattle_Manager);
+	Safe_Release(m_pIntertaction_Manager);
 }

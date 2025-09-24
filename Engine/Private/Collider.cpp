@@ -8,7 +8,6 @@ CCollider::CCollider(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 
 CCollider::CCollider(const CCollider& Prototype)
 	: CComponent{ Prototype }
-	, m_eType{ Prototype.m_eType }
 #ifdef _DEBUG
 	, m_pBatch{ Prototype.m_pBatch }
 	, m_pEffect{ Prototype.m_pEffect }
@@ -21,9 +20,8 @@ CCollider::CCollider(const CCollider& Prototype)
 
 }
 
-HRESULT CCollider::Initialize_Prototype(COLLIDER eType)
+HRESULT CCollider::Initialize_Prototype()
 {
-	m_eType = eType;
 
 #ifdef _DEBUG
 	m_pBatch = new PrimitiveBatch<VertexPositionColor>(m_pContext);
@@ -46,19 +44,7 @@ HRESULT CCollider::Initialize_Prototype(COLLIDER eType)
 
 HRESULT CCollider::Initialize(void* pArg)
 {
-
-	switch (m_eType)
-	{
-	case COLLIDER::AABB:
-		m_pBounding = CBounding_AABB::Create(m_pDevice, m_pContext, pArg);
-		break;
-	case COLLIDER::OBB:
-		m_pBounding = CBounding_OBB::Create(m_pDevice, m_pContext, pArg);
-		break;
-	case COLLIDER::SPHERE:
-		m_pBounding = CBounding_Sphere::Create(m_pDevice, m_pContext, pArg);
-		break;
-	}
+	m_pBounding = CBounding_Sphere::Create(m_pDevice, m_pContext, pArg);
 
 	return S_OK;
 }
@@ -89,18 +75,18 @@ HRESULT CCollider::Render()
 
 _bool CCollider::Intersect(CCollider* pTarget)
 {
-	m_isColl = m_pBounding->Intersect(pTarget->m_eType, pTarget->m_pBounding);
+	m_isColl = m_pBounding->Intersect(pTarget->m_pBounding);
 
 	return m_isColl;
 }
 
 #endif
 
-CCollider* CCollider::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext, COLLIDER eType)
+CCollider* CCollider::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 {
 	CCollider* pInstance = new CCollider(pDevice, pContext);
 
-	if (FAILED(pInstance->Initialize_Prototype(eType)))
+	if (FAILED(pInstance->Initialize_Prototype()))
 	{
 		MSG_BOX("Failed to Created : CCollider");
 		Safe_Release(pInstance);

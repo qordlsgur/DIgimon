@@ -192,6 +192,7 @@
     <ClInclude Include="..\Public\Exit_Button.h" />
     <ClInclude Include="..\Public\Fail.h" />
     <ClInclude Include="..\Public\Hit.h" />
+    <ClInclude Include="..\public\Interaction.h" />
     <ClInclude Include="..\public\Interaction_Manager.h" />
     <ClInclude Include="..\Public\Jump.h" />
     <ClInclude Include="..\public\Ladydevimon.h" />
@@ -266,6 +267,7 @@
     <ClCompile Include="..\Private\Exit_Button.cpp" />
     <ClCompile Include="..\Private\Fail.cpp" />
     <ClCompile Include="..\Private\Hit.cpp" />
+    <ClCompile Include="..\private\Interaction.cpp" />
     <ClCompile Include="..\private\Interaction_Manager.cpp" />
     <ClCompile Include="..\Private\Jump.cpp" />
     <ClCompile Include="..\private\Ladydevimon.cpp" />

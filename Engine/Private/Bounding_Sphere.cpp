@@ -1,5 +1,3 @@
-#include "Bounding_AABB.h"
-#include "Bounding_OBB.h"
 #include "Bounding_Sphere.h"
 #include "DebugDraw.h"
 
@@ -23,22 +21,12 @@ void CBounding_Sphere::Update(_fmatrix WorldMatrix)
 	m_pOriginalDesc->Transform(*m_pDesc, WorldMatrix);
 }
 
-_bool CBounding_Sphere::Intersect(COLLIDER eType, CBounding* pTarget)
+_bool CBounding_Sphere::Intersect(CBounding* pTarget)
 {
 	_bool		isColl = { false };
 
-	switch (eType)
-	{
-	case COLLIDER::AABB:
-		isColl = m_pDesc->Intersects(*static_cast<CBounding_AABB*>(pTarget)->Get_Desc());
-		break;
-	case COLLIDER::OBB:
-		isColl = m_pDesc->Intersects(*static_cast<CBounding_OBB*>(pTarget)->Get_Desc());
-		break;
-	case COLLIDER::SPHERE:
-		isColl = m_pDesc->Intersects(*static_cast<CBounding_Sphere*>(pTarget)->Get_Desc());
-		break;
-	}
+	isColl = m_pDesc->Intersects(*static_cast<CBounding_Sphere*>(pTarget)->Get_Desc());
+
 	return isColl;
 }
 

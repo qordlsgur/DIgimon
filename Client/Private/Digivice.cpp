@@ -42,7 +42,7 @@ HRESULT CDigivice::Initialize(void* pArg)
 	if (FAILED(Create_Slot(L"Layout_Digivice_Slot")))
 		return E_FAIL;
 
-	//Acquire_Digimon(0);
+	Acquire_Digimon(7);
 
 	return S_OK;
 }
@@ -66,14 +66,8 @@ void CDigivice::Update(_float fTimeDelta)
 	if (m_bActive)
 		OnClick();
 
-	if (m_pGameInstance->Key_Down(DIK_Z))
-		Acquire_Digimon(1);
-
-	if (m_pGameInstance->Key_Down(DIK_X))
-		Acquire_Digimon(0);
-
 	if (m_pGameInstance->Key_Down(DIK_C))
-		Acquire_Digimon(3);
+		Acquire_Digimon(7);
 
 	if (m_pGameInstance->Key_Down(DIK_B))
 		Release_Digimon(0);
