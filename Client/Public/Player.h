@@ -6,6 +6,7 @@ NS_BEGIN(Engine)
 class CNavigation;
 class CPartObject;
 class CCollider;
+class CGameObject;
 NS_END
 
 NS_BEGIN(Client)
@@ -28,7 +29,8 @@ public:
 	virtual HRESULT Render() override;
 
 public:
-	virtual _bool Intersect() override;
+	void Intersect_Enemy(_int pEnemy);
+
 
 private:
 	void Jump(_float fTimeDelta);
@@ -39,6 +41,8 @@ private:
 	CPartObject* m_pPart_Body = { nullptr };
 	CNavigation* m_pNavigationCom = { nullptr };
 	CCollider* m_pColliderCom = { nullptr };
+
+	_int m_iEnemy;
 
 	class CStateMachine* m_pFsm = { nullptr };
 	class CCamera_Manager* m_pCamera_Manager = { nullptr };
@@ -62,6 +66,7 @@ private:
 	_float	m_fMax_Jump{};
 
 	_bool	m_FindCell = { false };
+	_bool	m_bOnInteract = { false };
 
 private:
 	HRESULT Ready_Components();

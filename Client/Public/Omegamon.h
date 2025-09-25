@@ -26,6 +26,9 @@ public:
 	virtual void Late_Update(_float fTimeDelta) override;
 	virtual HRESULT Render() override;
 
+public:
+	virtual _int Intersect(class CCollider* pPlayer_Collider) override;
+
 private:
 	CPartObject* m_pPart_Body = { nullptr };
 	CCollider* m_pColliderCom = { nullptr };

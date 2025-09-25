@@ -170,6 +170,14 @@ HRESULT COmegamon::Render()
 	return S_OK;
 }
 
+_int COmegamon::Intersect(CCollider* pPlayer_Collider)
+{
+	if (m_pColliderCom->Intersect(pPlayer_Collider))
+		return Get_ID();
+
+	return -1;
+}
+
 void COmegamon::Skill1()
 {
 	m_pFsm->Enter(DIGIMONSTATE::SKILL1, m_pPart_Body, false, false);
@@ -245,4 +253,3 @@ void COmegamon::Free()
 	Safe_Release(m_pColliderCom);
 
 }
-

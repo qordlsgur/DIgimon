@@ -24,11 +24,11 @@ public:
 
 public:
 
-	virtual wstring Get_Digimon_Name();
+	virtual const wstring& Get_Digimon_Name();
 	virtual _int Get_ID();
 	virtual DIGIMON_STAGE Get_Stage();
 	virtual DIGIMON_ATTRIBUTE Get_Attribute();
-	virtual wstring Get_Digimon_Info();
+	virtual const wstring& Get_Digimon_Info();
 	virtual _int Get_Hp();
 	virtual _int Get_Sp();
 	virtual _int Get_Damage();
@@ -48,7 +48,7 @@ public:
 	virtual void LookAt(_float iRadian);
 	virtual void Set_Position(_float fX, _float fZ);
 
-	virtual _bool Intersect();
+	virtual _int Intersect(class CCollider* pPlayer_Collider);
 
 protected:
 	map<const _wstring, class CPartObject*>			m_PartObjects;

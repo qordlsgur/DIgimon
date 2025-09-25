@@ -9,6 +9,7 @@
 #include "Battle_Manager.h"
 #include "Interaction_Manager.h"
 
+
 CPlayer::CPlayer(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CContainerObject{ pDevice, pContext }
 {
@@ -28,7 +29,7 @@ HRESULT CPlayer::Initialize(void* pArg)
 {
 	CGameObject::GAMEOBJECT_DESC	Desc{};
 	Desc.fRotationPerSec = XMConvertToRadians(180.0f);
-	Desc.fSpeedPerSec = 30.f;
+	Desc.fSpeedPerSec = 300.f;
 
 	if (FAILED(__super::Initialize(&Desc)))
 		return E_FAIL;
@@ -46,6 +47,7 @@ HRESULT CPlayer::Initialize(void* pArg)
 	m_pDigimon_Manager->Player(this);
 
 	m_pBattle_Manager = CBattle_Manager::GetInstance();
+	m_pBattle_Manager->Set_Player(this);
 
 	m_pInteraction_Manager = CInteraction_Manager::GetInstance();
 
@@ -66,6 +68,7 @@ HRESULT CPlayer::Initialize(void* pArg)
 	m_ePreviousState = PLAYER_STATE::STAND;
 
 	m_pInteraction_Manager->Set_Player(this);
+	m_pInteraction_Manager->Set_Player_Collider(m_pColliderCom);
 
 	return S_OK;
 }
@@ -154,10 +157,27 @@ void CPlayer::Update(_float fTimeDelta)
 		m_eCurrentState = PLAYER_STATE::STAND;
 		m_pFsm->Enter(DIGIMONSTATE::STAND, m_pPart_Body);
 		LookAt(-180.f);
-		Set_Position(100.f, 140.f);
 	}
 	m_pFsm->Update(fTimeDelta);
 	m_pColliderCom->Update(XMLoadFloat4x4(m_pTransformCom->Get_WorldMatrixPtr()));
+
+	if (m_bOnInteract)
+	{
+		if (m_pGameInstance->Key_Down(DIK_F))
+		{
+			m_pBattle_Manager->Set_Player_Pos(m_pTransformCom->Get_State(STATE::POSITION));
+			m_pBattle_Manager->EnemyDigimon_Info(m_iEnemy);
+			m_pBattle_Manager->Battle_System();
+
+			m_pBattle_Manager->Set_Battle(true);
+		}
+	}
+
+	if (m_pGameInstance->Key_Down(DIK_M))
+	{
+		m_pTransformCom->Set_State(STATE::POSITION, m_pBattle_Manager->Get_Player_Pos());
+		m_pBattle_Manager->Set_Battle(false);
+	}
 
 	__super::Update(fTimeDelta);
 }
@@ -180,10 +200,18 @@ HRESULT CPlayer::Render()
 	return S_OK;
 }
 
-_bool CPlayer::Intersect()
+void CPlayer::Intersect_Enemy(_int pEnemy)
 {
-	return _bool();
+	m_iEnemy = pEnemy;
+
+	if (m_iEnemy != -1)
+		m_bOnInteract = true;
+
+	else
+		m_bOnInteract = false;
 }
+
+
 
 void CPlayer::Jump(_float fTimeDelta)
 {
@@ -232,7 +260,7 @@ HRESULT CPlayer::Ready_Components()
 	if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Collider_Sphere"),
 		TEXT("Com_Collider_Sphere"), reinterpret_cast<CComponent**>(&m_pColliderCom), &SphereDesc)))
 		return E_FAIL;
-	
+
 	return S_OK;
 }
 

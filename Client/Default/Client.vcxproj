@@ -155,6 +155,7 @@
   <ItemGroup>
     <ClInclude Include="..\public\Angewomon.h" />
     <ClInclude Include="..\Public\BackGround.h" />
+    <ClInclude Include="..\public\Battle.h" />
     <ClInclude Include="..\Public\BattleBack.h" />
     <ClInclude Include="..\Public\BattleDash.h" />
     <ClInclude Include="..\public\Battle_Manager.h" />
@@ -231,6 +232,7 @@
   <ItemGroup>
     <ClCompile Include="..\private\Angewomon.cpp" />
     <ClCompile Include="..\Private\BackGround.cpp" />
+    <ClCompile Include="..\private\Battle.cpp" />
     <ClCompile Include="..\Private\BattleBack.cpp" />
     <ClCompile Include="..\Private\BattleDash.cpp" />
     <ClCompile Include="..\private\Battle_Manager.cpp" />

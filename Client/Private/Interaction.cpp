@@ -30,11 +30,11 @@ void CInteraction::Priority_Update(_float fTimeDelta)
 
 void CInteraction::Update(_float fTimeDelta)
 {
-	m_pInteraction_Manager->Update();
 }
 
 void CInteraction::Late_Update(_float fTimeDelta)
 {
+	m_pInteraction_Manager->Late_Update();
 }
 
 HRESULT CInteraction::Render()

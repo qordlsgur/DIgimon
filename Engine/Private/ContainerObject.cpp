@@ -1,6 +1,6 @@
 #include "ContainerObject.h"
 #include "PartObject.h"
-
+#include "Collider.h"
 #include "GameInstance.h"
 
 CContainerObject::CContainerObject(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
@@ -60,59 +60,59 @@ CComponent* CContainerObject::Get_Component(const _wstring& strPartTag, const _w
 	return pPartObject->Find_Component(strComponentTag);
 }
 
-wstring CContainerObject::Get_Digimon_Name()
+const wstring& CContainerObject::Get_Digimon_Name()
 {
-	return Info.DigimonName;
+	return m_strDigimon_Name;
 }
 
 _int CContainerObject::Get_ID()
 {
-	return Info.DigimonId;
+	return m_iDigimon_ID;
 }
 
 _int CContainerObject::Get_Hp()
 {
-	return Info.Hp;
+	return m_iHp;
 }
 
 _int CContainerObject::Get_Sp()
 {
-	return Info.Sp;
+	return m_iSp;
 }
 
 _int CContainerObject::Get_Damage()
 {
-	return Info.Damage;
+	return m_iDamage;
 }
 
 _int CContainerObject::Get_AttackSpeed()
 {
-	return Info.AttackSpeed;
+	return m_iAttackSpeed;
 }
 
 _int CContainerObject::Get_Exp()
 {
-	return Info.Exp;
+	return m_iExp;
 }
 
 _int CContainerObject::Get_Lv()
 {
-	return Info.Lv;
+	return m_iLv;
 }
 
 DIGIMON_STAGE CContainerObject::Get_Stage()
 {
-	return Info.Stage;
+	return m_eState;
 }
 
 DIGIMON_ATTRIBUTE CContainerObject::Get_Attribute()
 {
-	return Info.Attribute;
+	return m_eAttribute;
 }
 
-wstring CContainerObject::Get_Digimon_Info()
+const wstring& CContainerObject::Get_Digimon_Info()
 {
-	return Info.DigimonInfo;
+	return m_strDigimon_Info;
 }
 
 void CContainerObject::Set_Digimon_Info(DIGIMON_INFO Digimon_Info)
@@ -152,9 +152,9 @@ void CContainerObject::Set_Position(_float fX, _float fZ)
 	m_pTransformCom->Set_State(STATE::POSITION, XMVectorSet(fX, 0.f, fZ, 1.f));
 }
 
-_bool CContainerObject::Intersect()
+_int CContainerObject::Intersect(CCollider* pPlayer_Collider)
 {
-	return _bool();
+	return _int();
 }
 
 CPartObject* CContainerObject::Find_PartObject(const _wstring& strPartTag)

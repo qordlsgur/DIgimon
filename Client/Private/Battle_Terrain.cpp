@@ -1,6 +1,17 @@
 #include "Battle_Terrain.h"
 #include "GameInstance.h"
+#include "ContainerObject.h"
 #include "Battle_Manager.h"
+#include "Digimon_Manager.h"
+#include "Angewomon.h"
+#include "Blackwargreymon.h"
+#include "Devilmon.h"
+#include "Ladydevimon.h"
+#include "Leomon.h"
+#include "Metalgarumon.h"
+#include "Metalgreymon.h"
+#include "Omegamon.h"
+#include "Wargreymon.h"
 
 CBattle_Terrain::CBattle_Terrain(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CGameObject{ pDevice, pContext }
@@ -26,6 +37,10 @@ HRESULT CBattle_Terrain::Initialize(void* pArg)
 		return E_FAIL;
 
 	m_pBattle_Manager = CBattle_Manager::GetInstance();
+	m_pBattle_Manager->Set_Battle_Terrain(this);
+
+	m_pDigimon_Manager = CDigimon_Manager::GetInstance();
+	m_pDigimon_Manager->Player(this);
 
 	m_iMaxDigimon = 5;
 
@@ -37,6 +52,9 @@ HRESULT CBattle_Terrain::Initialize(void* pArg)
 		m_vMonsterDigimonPos[i] = XMVectorSet(130.f - fX, 0.f, 70.f, 1.f);
 	}
 
+	m_vPlayerPos = XMVectorSet(100.f, 0.f, 135.f, 1.f);
+
+	m_pBattle_Manager->Set_Battle_Pos(m_vMonsterDigimonPos, m_vPlayerDigimonPos, m_vPlayerPos);
 	return S_OK;
 }
 
@@ -48,12 +66,6 @@ void CBattle_Terrain::Priority_Update(_float fTimeDelta)
 void CBattle_Terrain::Update(_float fTimeDelta)
 {
 	m_bBattle = m_pBattle_Manager->Get_Battle();
-
-	if (m_pGameInstance->Key_Down(DIK_N))
-		m_pBattle_Manager->Set_Battle(true);
-
-	if (m_pGameInstance->Key_Down(DIK_M))
-		m_pBattle_Manager->Set_Battle(false);
 }
 
 void CBattle_Terrain::Late_Update(_float fTimeDelta)

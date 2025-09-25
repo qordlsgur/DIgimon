@@ -22,16 +22,18 @@ private:
 
 public:
 	HRESULT Initialize();
+	void Priority_Update();
+	void Update();
+	void Late_Update();
 
 public:
 	void Set_Player(CContainerObject* pPlayer);
 	void Set_Player_Collider(CCollider* pCollider);
 	void Set_Enemy_Digimon(CContainerObject* Enemy);
 
-	void Update();
 
 private:
-	CGameInstance* m_pGameInstance = { nullptr };
+	//CGameInstance* m_pGameInstance = { nullptr };
 	CContainerObject* m_pPlayer = { nullptr };
 	CCollider* m_pPlayer_Collider = { nullptr };
 

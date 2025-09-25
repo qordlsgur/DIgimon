@@ -6,18 +6,18 @@
 #include "Digimon_Manager.h"
 
 CLadydevimon::CLadydevimon(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
-    : CContainerObject{ pDevice, pContext }
+	: CContainerObject{ pDevice, pContext }
 {
 }
 
 CLadydevimon::CLadydevimon(const CLadydevimon& Prototype)
-    : CContainerObject{ Prototype }
+	: CContainerObject{ Prototype }
 {
 }
 
 HRESULT CLadydevimon::Initialize_Prototype()
 {
-    return S_OK;
+	return S_OK;
 }
 
 HRESULT CLadydevimon::Initialize(void* pArg)
@@ -136,7 +136,7 @@ void CLadydevimon::Update(_float fTimeDelta)
 				m_pFsm->Enter(DIGIMONSTATE::STANDBATTLE, m_pPart_Body);
 		}
 	}
-	
+
 
 	m_pFsm->Update(fTimeDelta);
 	m_pColliderCom->Update(XMLoadFloat4x4(m_pTransformCom->Get_WorldMatrixPtr()));
@@ -156,6 +156,14 @@ HRESULT CLadydevimon::Render()
 	m_pColliderCom->Render();
 #endif
 	return S_OK;
+}
+
+_int CLadydevimon::Intersect(CCollider* pPlayer_Collider)
+{
+	if (m_pColliderCom->Intersect(pPlayer_Collider))
+		return Get_ID();
+
+	return -1;
 }
 
 void CLadydevimon::Skill1()

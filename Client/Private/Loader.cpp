@@ -9,6 +9,7 @@
 #include "PartyUHD.h"
 #include "UHD_Slot.h"
 #include "Interaction.h"
+#include "Battle.h"
 #pragma endregion
 
 #pragma region Button
@@ -509,6 +510,10 @@ HRESULT CLoader::Loading_For_GamePlay()
 		CInteraction::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 	
+	/* For.Prototype_GameObject_Battle*/
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Battle"),
+		CBattle::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
 
 	//디지바이스---------------------------------------------------------------------------------------------------------------------------------------------------------
 

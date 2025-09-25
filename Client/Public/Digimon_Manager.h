@@ -44,6 +44,7 @@ public:
 	DIGIMON_INFO* Search_Digimon(_int ID);
 
 	const _wstring& Get_Model_ID(_int ID);
+	const _wstring& Get_Prototype_ID(_int ID);
 
 private:
 	class CPartyUHD* m_pPartyUHD = { nullptr };
@@ -56,11 +57,14 @@ private:
 	CGameObject* m_pPlayer = { nullptr };
 
 	map<_int, DIGIMON_INFO> m_Digimon_Info;
-	map<_int, const _wstring&> m_Digimon_Model;
+	map<_int, const _wstring> m_Digimon_Model;
+	map<_int, const _wstring> m_Digimon_Prototype;
 private:
 	void Model_Name();
+	void Digimon_Prototypr();
 	DIGIMON_INFO* Find_Digimon(_int Digimon_ID);
 	const _wstring* Find_Model(_int Digimon_ID);
+	const _wstring* Find_Prototype(_int Digimon_ID);
 
 public:
 	virtual void Free() override;

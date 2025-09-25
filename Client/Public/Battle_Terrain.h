@@ -8,6 +8,7 @@ class CVIBuffer_Terrain;
 class CTexture;
 class CShader;
 class CNavigation;
+class CContainerObject;
 NS_END
 
 NS_BEGIN(Client)
@@ -33,12 +34,14 @@ public:
 	virtual void Late_Update(_float fTimeDelta) override;
 	virtual HRESULT Render() override;
 
+
 private:
 	CVIBuffer_Terrain* m_pVIBufferCom = { nullptr };
 	CTexture* m_pTextureCom = { nullptr };
 	CShader* m_pShaderCom = { nullptr };
 
 	class CBattle_Manager* m_pBattle_Manager = { nullptr };
+	class CDigimon_Manager* m_pDigimon_Manager = { nullptr };
 
 	_bool m_bBattle = { false };
 
@@ -46,6 +49,7 @@ private:
 
 	_vector m_vPlayerDigimonPos[5] = {};
 	_vector m_vMonsterDigimonPos[5] = {};
+	_vector m_vPlayerPos{};
 
 private:
 	HRESULT Ready_Components();

@@ -117,6 +117,11 @@ _float CGameInstance::Random(_float fMin, _float fMax)
 	return fMin + Random_Normal() * (fMax - fMin);
 }
 
+_int CGameInstance::intRandom(_int iMin, _int iMax)
+{
+	return iMin + rand() % (iMax - iMin + 1);
+}
+
 #pragma region GRAPHIC_DEVICE
 
 void CGameInstance::Render_Begin(const _float4* pClearColor)

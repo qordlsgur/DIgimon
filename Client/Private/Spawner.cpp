@@ -53,7 +53,7 @@ void CSpawner::Update(_float fTimeDelta)
 			m_pMonster = static_cast<CContainerObject*>(m_pGameInstance->Add_GameObject_ToLayer_ToCreate(ENUM_CLASS(LEVEL::GAMEPLAY),
 				m_strTag, ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Layer_Monster")));
 
-			m_pMonster->Set_Position(m_pSpawnerPos.m128_f32[0] + m_pGameInstance->Random(1, 150), m_pSpawnerPos.m128_f32[2] + m_pGameInstance->Random(1, 150));
+			m_pMonster->Set_Position(m_pSpawnerPos.m128_f32[0] + m_pGameInstance->Random(1.f, 150.f), m_pSpawnerPos.m128_f32[2] + m_pGameInstance->Random(1.f, 150.f));
 
 			m_pMonsters.push_back(m_pMonster);
 			m_iMonsterCount++;

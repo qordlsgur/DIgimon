@@ -223,9 +223,6 @@
     <Filter Include="03.UI\Button">
       <UniqueIdentifier>{7e3985fc-90a4-4161-a8c3-6ab814523a1b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02.GameObjects\Terrain\BattleTerrain">
-      <UniqueIdentifier>{1d9957d4-b19c-4b27-9edd-f7d1dcb59541}</UniqueIdentifier>
-    </Filter>
     <Filter Include="06.Manager\Digimon_Manager">
       <UniqueIdentifier>{f35fa685-07b6-49fb-9f12-7a17a34a8501}</UniqueIdentifier>
     </Filter>
@@ -240,6 +237,12 @@
     </Filter>
     <Filter Include="02.GameObjects\Interaction">
       <UniqueIdentifier>{cd3c67c8-d65e-4a19-b04d-2e793f545687}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\BattleTerrain">
+      <UniqueIdentifier>{1d9957d4-b19c-4b27-9edd-f7d1dcb59541}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Battle">
+      <UniqueIdentifier>{b258059a-69cd-4cb0-b4b4-0b86bbdc3bb0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -448,7 +451,7 @@
       <Filter>03.UI\Button</Filter>
     </ClInclude>
     <ClInclude Include="..\public\Battle_Terrain.h">
-      <Filter>02.GameObjects\Terrain\BattleTerrain</Filter>
+      <Filter>02.GameObjects\BattleTerrain</Filter>
     </ClInclude>
     <ClInclude Include="..\public\Digimon_Manager.h">
       <Filter>06.Manager\Digimon_Manager</Filter>
@@ -464,6 +467,9 @@
     </ClInclude>
     <ClInclude Include="..\public\Interaction.h">
       <Filter>02.GameObjects\Interaction</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\Battle.h">
+      <Filter>02.GameObjects\Battle</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -673,7 +679,7 @@
       <Filter>03.UI\Button</Filter>
     </ClCompile>
     <ClCompile Include="..\private\Battle_Terrain.cpp">
-      <Filter>02.GameObjects\Terrain\BattleTerrain</Filter>
+      <Filter>02.GameObjects\BattleTerrain</Filter>
     </ClCompile>
     <ClCompile Include="..\private\Digimon_Manager.cpp">
       <Filter>06.Manager\Digimon_Manager</Filter>
@@ -689,6 +695,9 @@
     </ClCompile>
     <ClCompile Include="..\private\Interaction.cpp">
       <Filter>02.GameObjects\Interaction</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\Battle.cpp">
+      <Filter>02.GameObjects\Battle</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

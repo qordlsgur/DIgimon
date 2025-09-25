@@ -20,6 +20,7 @@ public:
 
 	_float Random_Normal();
 	_float Random(_float fMin, _float fMax);
+	_int intRandom(_int iMin, _int iMax);
 
 #pragma region GRAPHIC_DEVICE
 public:
