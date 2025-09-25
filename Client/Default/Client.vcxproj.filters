@@ -244,6 +244,9 @@
     <Filter Include="02.GameObjects\Battle">
       <UniqueIdentifier>{b258059a-69cd-4cb0-b4b4-0b86bbdc3bb0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.GameObjects\Camera\Battle_Camera">
+      <UniqueIdentifier>{a5e9221c-4ca1-4e6f-a656-182b34601ffe}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -471,6 +474,7 @@
     <ClInclude Include="..\public\Battle.h">
       <Filter>02.GameObjects\Battle</Filter>
     </ClInclude>
+    <ClInclude Include="..\public\Battle_Camera.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Client.ico">
@@ -699,6 +703,7 @@
     <ClCompile Include="..\private\Battle.cpp">
       <Filter>02.GameObjects\Battle</Filter>
     </ClCompile>
+    <ClCompile Include="..\private\Battle_Camera.cpp" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxPosTex.hlsl">

@@ -158,6 +158,7 @@
     <ClInclude Include="..\public\Battle.h" />
     <ClInclude Include="..\Public\BattleBack.h" />
     <ClInclude Include="..\Public\BattleDash.h" />
+    <ClInclude Include="..\public\Battle_Camera.h" />
     <ClInclude Include="..\public\Battle_Manager.h" />
     <ClInclude Include="..\public\Battle_Terrain.h" />
     <ClInclude Include="..\public\Blackwargreymon.h" />
@@ -235,6 +236,7 @@
     <ClCompile Include="..\private\Battle.cpp" />
     <ClCompile Include="..\Private\BattleBack.cpp" />
     <ClCompile Include="..\Private\BattleDash.cpp" />
+    <ClCompile Include="..\private\Battle_Camera.cpp" />
     <ClCompile Include="..\private\Battle_Manager.cpp" />
     <ClCompile Include="..\private\Battle_Terrain.cpp" />
     <ClCompile Include="..\private\Blackwargreymon.cpp" />
