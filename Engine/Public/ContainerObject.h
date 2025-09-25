@@ -68,6 +68,7 @@ protected:
 	_int m_iLv{};
 
 	_bool m_bBattle = { false };
+	_bool m_bLife = { false };
 
 protected:
 	class CPartObject* Find_PartObject(const _wstring& strPartTag);

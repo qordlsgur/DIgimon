@@ -15,6 +15,8 @@ HRESULT CDigimon_Manager::Initialize()
 
 	m_vDigivice_Battle_Slot.resize(m_iDigivice_Number);
 
+	Model_Name();
+
 	return S_OK;
 }
 
