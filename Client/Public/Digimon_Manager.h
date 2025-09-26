@@ -5,6 +5,8 @@
 
 NS_BEGIN(Engine)
 class CGameObject;
+class CContainerObject;
+class CGameInstance;
 NS_END
 
 NS_BEGIN(Client)
@@ -20,6 +22,20 @@ private:
 
 public:
 	HRESULT Initialize();
+
+public:
+	void Digimon_Info_Add();
+
+	void Angewomon();
+	void Blackwargreymon();
+	void Devilmon();
+	void LedyDevimon();
+	void Leomon();
+	void Metalgarumon();
+	void Metalgeymon();
+	void Omegamoon();
+	void Wargreymon();
+	void Beelzebumon();
 
 public:
 	void Swap_Digimon(_int Sour, _int Dest);
@@ -52,9 +68,13 @@ private:
 
 	vector<_bool> m_vDigivice_Battle_Slot;
 	_uint m_iDigivice_Number{};
+	wstring	 Not_found;
 
+	CContainerObject* m_pFirst_Digimon = { nullptr };
 
 	CGameObject* m_pPlayer = { nullptr };
+
+	CGameInstance* m_pGameInstance = { nullptr };
 
 	map<_int, DIGIMON_INFO> m_Digimon_Info;
 	map<_int, const _wstring> m_Digimon_Model;

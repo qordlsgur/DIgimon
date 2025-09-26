@@ -30,7 +30,8 @@ public:
 
 public:
 	void Intersect_Enemy(_int pEnemy);
-
+	void First_Digimon(CContainerObject* First) { m_pFirst_Digimon = First; }
+	CContainerObject* First_Digimon() { return m_pFirst_Digimon; }
 
 private:
 	void Jump(_float fTimeDelta);
@@ -44,12 +45,13 @@ private:
 
 	_int m_iEnemy;
 
+	CContainerObject* m_pFirst_Digimon = { nullptr };
+
 	class CStateMachine* m_pFsm = { nullptr };
 	class CCamera_Manager* m_pCamera_Manager = { nullptr };
 	class CDigimon_Manager* m_pDigimon_Manager = { nullptr };
 	class CBattle_Manager* m_pBattle_Manager = { nullptr };
 	class CInteraction_Manager* m_pInteraction_Manager = { nullptr };
-
 
 	_bool m_bMove = false;
 	_bool Skill = false;

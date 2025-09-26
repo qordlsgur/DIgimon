@@ -168,7 +168,6 @@ void CPlayer::Update(_float fTimeDelta)
 			m_pBattle_Manager->Set_Player_Pos(m_pTransformCom->Get_State(STATE::POSITION));
 			m_pBattle_Manager->EnemyDigimon_Info(m_iEnemy);
 			m_pBattle_Manager->Battle_System();
-
 			m_pBattle_Manager->Set_Battle(true);
 		}
 	}
@@ -210,8 +209,6 @@ void CPlayer::Intersect_Enemy(_int pEnemy)
 	else
 		m_bOnInteract = false;
 }
-
-
 
 void CPlayer::Jump(_float fTimeDelta)
 {
@@ -311,7 +308,7 @@ void CPlayer::Free()
 	__super::Free();
 
 	Safe_Release(m_pNavigationCom);
-	Safe_Release(m_pFsm);
 	Safe_Release(m_pColliderCom);
 	Safe_Release(m_pPart_Body);
+	Safe_Release(m_pFsm);
 }

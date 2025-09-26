@@ -32,6 +32,8 @@ public:
 private:
 	class CInteraction_Manager* m_pInteraction_Manager = { nullptr };
 
+	class CBattle_Manager* m_pBattlea_Manager = { nullptr };
+
 	_vector m_pSpawnerPos{};
 	_wstring m_strTag;
 

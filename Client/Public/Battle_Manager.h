@@ -25,6 +25,7 @@ public:
 	void Late_Update();
 public:
 	void Set_Player(CContainerObject* pPlayer);
+	void Set_Digivice(CGameObject* pDigivice);
 	void Set_Battle(CGameObject* pBattle);
 	void Set_Battle_Terrain(CGameObject* pBattle_Terrain);
 
@@ -33,15 +34,19 @@ public:
 
 	void Battle_System();
 
+	void Enemy_Position();
+	void Player_Digimon_Position();
+	void Current_Digimon(_int ID1, _int ID2, _int ID3);
+
 	void Digimon1_Skill();
 	void Digimon2_Skill();
 	void Digimon3_Skill();
 
 	void EnemyDigimon_Info(_int EnemyDigimonID);
 
-	CContainerObject* EnemyDigimon_Create(_int EnemyDigimonID);
+	CContainerObject* Digimon_Create(_int EnemyDigimonID);
 	template<typename T>
-	CContainerObject* EnemyDigimon(const wstring& strPrototype);
+	CContainerObject* Digimon(const wstring& strPrototype);
 
 	void Set_Player_Pos(_vector Pos);
 	_vector Get_Player_Pos();
@@ -51,14 +56,17 @@ public:
 	void Set_MyDigimon(CContainerObject* pPlayerDigimon);
 private:
 	_bool							m_bBattleOn = { false };
-	_int							m_iEnemyDigimonCount;
+	_int							m_iEnemyDigimonCount{};
+	_int							m_iPlayerDigimonCount{};
 	CGameInstance*					m_pGameInstance = { nullptr };
 
 	class CDigimon_Manager*			m_pDigimon_Manager = { nullptr };
 
 	vector<CContainerObject*>		m_pMyDigimon;
 	vector<CContainerObject*>		m_pEnemyDigimon = { nullptr };
+
 	CContainerObject*				m_pPlayer = { nullptr };
+	CGameObject*					m_pDigivice = { nullptr };
 
 	CGameObject*					m_pBattle_Terrain = { nullptr };
 

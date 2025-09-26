@@ -37,124 +37,120 @@ HRESULT CLadydevimon::Initialize(void* pArg)
 	m_pFsm = CStateMachine::Create();
 	m_pFsm->Initialize();
 	m_pFsm->Enter(DIGIMONSTATE::STAND, m_pPart_Body, false, false);
-
 	m_pTransformCom->Set_State(STATE::POSITION, XMVectorSet(10.f, 0.f, 190.f, 1.f));
 
-	Digimon_Info Info;
-
-	Info.DigimonName = TEXT("레이디데블몬");
-	Info.DigimonId = 3;
-	Info.Stage = DIGIMON_STAGE::ULTIMATE;
-	Info.Attribute = DIGIMON_ATTRIBUTE::VIRUS;
-	Info.DigimonInfo = TEXT("고귀한 존재인 여성형 타천사 디지몬");
-	Info.Hp = 5000;
-	Info.Sp = 100;
-	Info.Damage = 500;
-	Info.AttackSpeed = 100;
-	Info.Exp = 0;
-	Info.Lv = 50;
-
-	__super::Set_Digimon_Info(Info);
-	m_pDigimon_Manager->Digimon_Add(Info.DigimonId, Info);
+	__super::Set_Digimon_Info(m_pDigimon_Manager->Search_Digimon(3));
 
 	return S_OK;
 }
 
 void CLadydevimon::Priority_Update(_float fTimeDelta)
 {
-	__super::Priority_Update(fTimeDelta);
+	if (m_bLife)
+	{
+		__super::Priority_Update(fTimeDelta);
+	}
 }
 
 void CLadydevimon::Update(_float fTimeDelta)
 {
-	if (!m_bBattle)
+	if (m_bLife)
 	{
-		//m_pTransformCom->LookAtPlayer(m_pDigimon_Manager->PlayerPos(), fTimeDelta);
-		//m_bMove = false;
-		//if (m_pTransformCom->FollowPlayer(m_pDigimon_Manager->PlayerPos(), 30, fTimeDelta))
-		//{
-		//	m_pFsm->Enter(DIGIMONSTATE::RUN, m_pPart_Body);
-		//	m_bMove = true;
-		//}
-
-		if (!m_bMove)
-			m_pFsm->Enter(DIGIMONSTATE::STAND, m_pPart_Body);
-	}
-	else
-	{
-		if (!Skill)
+		if (!m_bBattle)
 		{
-			if (m_pGameInstance->Key_Down(DIK_4))
+			if (!m_bMonster)
 			{
-				m_pFsm->Enter(DIGIMONSTATE::BATTLEBACK, m_pPart_Body, false, false);
-				Skill = true;
+				m_pTransformCom->LookAtPlayer(m_pDigimon_Manager->PlayerPos(), fTimeDelta);
+				m_bMove = false;
+				if (m_pTransformCom->FollowPlayer(m_pDigimon_Manager->PlayerPos(), 30, fTimeDelta))
+				{
+					m_pFsm->Enter(DIGIMONSTATE::RUN, m_pPart_Body);
+					m_bMove = true;
+				}
 			}
-
-			if (m_pGameInstance->Key_Down(DIK_5))
-			{
-				m_pFsm->Enter(DIGIMONSTATE::BATTLEDASH, m_pPart_Body, false, false);
-				Skill = true;
-			}
-
-			if (m_pGameInstance->Key_Down(DIK_6))
-			{
-				m_pFsm->Enter(DIGIMONSTATE::HIT, m_pPart_Body, false, false);
-				Skill = true;
-			}
-
-			if (m_pGameInstance->Key_Down(DIK_7))
-			{
-				m_pFsm->Enter(DIGIMONSTATE::DEATH, m_pPart_Body, false, false);
-				Skill = true;
-			}
-
-			if (m_pGameInstance->Key_Down(DIK_8))
-			{
-				m_pFsm->Enter(DIGIMONSTATE::FAIL, m_pPart_Body, false, false);
-				Skill = true;
-			}
-
-			if (m_pGameInstance->Key_Down(DIK_9))
-			{
-				m_pFsm->Enter(DIGIMONSTATE::LOOKAROUND, m_pPart_Body, false, false);
-				Skill = true;
-			}
-		}
-
-		if (m_pPart_Body->Get_AnimFinish())
-		{
-			Skill = false;
-		}
-
-		if (!Skill)
-		{
-			m_pTransformCom->Rotation(XMVectorSet(0.f, 1.f, 0.f, 0.f), XMConvertToRadians(0));
-			m_bMove = false;
-			//m_pFsm->Enter(DIGIMONSTATE::BATTLEDASH, m_pPart_Body);
-			//m_bMove = true;
 			if (!m_bMove)
-				m_pFsm->Enter(DIGIMONSTATE::STANDBATTLE, m_pPart_Body);
+				m_pFsm->Enter(DIGIMONSTATE::STAND, m_pPart_Body);
 		}
+		else
+		{
+			if (!Skill)
+			{
+				if (m_pGameInstance->Key_Down(DIK_4))
+				{
+					m_pFsm->Enter(DIGIMONSTATE::BATTLEBACK, m_pPart_Body, false, false);
+					Skill = true;
+				}
+
+				if (m_pGameInstance->Key_Down(DIK_5))
+				{
+					m_pFsm->Enter(DIGIMONSTATE::BATTLEDASH, m_pPart_Body, false, false);
+					Skill = true;
+				}
+
+				if (m_pGameInstance->Key_Down(DIK_6))
+				{
+					m_pFsm->Enter(DIGIMONSTATE::HIT, m_pPart_Body, false, false);
+					Skill = true;
+				}
+
+				if (m_pGameInstance->Key_Down(DIK_7))
+				{
+					m_pFsm->Enter(DIGIMONSTATE::DEATH, m_pPart_Body, false, false);
+					Skill = true;
+				}
+
+				if (m_pGameInstance->Key_Down(DIK_8))
+				{
+					m_pFsm->Enter(DIGIMONSTATE::FAIL, m_pPart_Body, false, false);
+					Skill = true;
+				}
+
+				if (m_pGameInstance->Key_Down(DIK_9))
+				{
+					m_pFsm->Enter(DIGIMONSTATE::LOOKAROUND, m_pPart_Body, false, false);
+					Skill = true;
+				}
+			}
+
+			if (m_pPart_Body->Get_AnimFinish())
+			{
+				Skill = false;
+			}
+
+			if (!Skill)
+			{
+				m_bMove = false;
+				//m_pFsm->Enter(DIGIMONSTATE::BATTLEDASH, m_pPart_Body);
+				//m_bMove = true;
+				if (!m_bMove)
+					m_pFsm->Enter(DIGIMONSTATE::STANDBATTLE, m_pPart_Body);
+			}
+		}
+		m_pFsm->Update(fTimeDelta);
+		m_pColliderCom->Update(XMLoadFloat4x4(m_pTransformCom->Get_WorldMatrixPtr()));
+
+		__super::Update(fTimeDelta);
 	}
-
-
-	m_pFsm->Update(fTimeDelta);
-	m_pColliderCom->Update(XMLoadFloat4x4(m_pTransformCom->Get_WorldMatrixPtr()));
-
-	__super::Update(fTimeDelta);
 }
 
 void CLadydevimon::Late_Update(_float fTimeDelta)
 {
-	__super::Late_Update(fTimeDelta);
-	m_pGameInstance->Add_RenderGroup(RENDER::NONBLEND, this);
+	if (m_bLife)
+	{
+		__super::Late_Update(fTimeDelta);
+
+		m_pGameInstance->Add_RenderGroup(RENDER::NONBLEND, this);
+	}
 }
 
 HRESULT CLadydevimon::Render()
 {
+	if (m_bLife)
+	{
 #ifdef _DEBUG
-	m_pColliderCom->Render();
+		m_pColliderCom->Render();
 #endif
+	}
 	return S_OK;
 }
 
@@ -196,7 +192,7 @@ HRESULT CLadydevimon::Ready_PartObjects()
 
 	/* Com_Sphere*/
 	CBounding_Sphere::BOUNDING_SPHERE_DESC SphereDesc{};
-	SphereDesc.fRadius = 11.f;
+	SphereDesc.fRadius = 8.f;
 	SphereDesc.vCenter = _float3(0.f, SphereDesc.fRadius, 0.f);
 
 	if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Collider_Sphere"),

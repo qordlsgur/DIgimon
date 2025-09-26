@@ -11,12 +11,12 @@ NS_END
 
 NS_BEGIN(Client)
 
-class CMetalgarumon final : public CContainerObject
+class CBeelzebumon final : public CContainerObject
 {
 private:
-	CMetalgarumon(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
-	CMetalgarumon(const CMetalgarumon& Prototype);
-	virtual ~CMetalgarumon() = default;
+	CBeelzebumon(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
+	CBeelzebumon(const CBeelzebumon& Prototype);
+	virtual ~CBeelzebumon() = default;
 
 public:
 	virtual HRESULT Initialize_Prototype() override;
@@ -27,8 +27,8 @@ public:
 	virtual HRESULT Render() override;
 
 private:
-	CCollider* m_pColliderCom = { nullptr };
 	CPartObject* m_pPart_Body = { nullptr };
+	CCollider* m_pColliderCom = { nullptr };
 
 	class CDigimon_Manager* m_pDigimon_Manager = { nullptr };
 	class CStateMachine* m_pFsm = { nullptr };
@@ -45,7 +45,7 @@ private:
 	HRESULT Ready_PartObjects();
 
 public:
-	static CMetalgarumon* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
+	static CBeelzebumon* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	virtual CGameObject* Clone(void* pArg) override;
 	virtual void Free() override;
 };

@@ -37,107 +37,120 @@ HRESULT CMetalgarumon::Initialize(void* pArg)
 	m_pFsm = CStateMachine::Create();
 	m_pFsm->Initialize();
 	m_pFsm->Enter(DIGIMONSTATE::STAND, m_pPart_Body, false, false);
-
 	m_pTransformCom->Set_State(STATE::POSITION, XMVectorSet(10.f, 0.f, 190.f, 1.f));
 
-	Digimon_Info Info;
-
-	Info.DigimonName = TEXT("메탈가루몬");
-	Info.DigimonId = 5;
-	Info.Stage = DIGIMON_STAGE::MEGA;
-	Info.Attribute = DIGIMON_ATTRIBUTE::DATA;
-	Info.DigimonInfo = TEXT("전신의 대부분을 메탈화 한 것으로 파워업한 가루몬의 최종형태");
-	Info.Hp = 7000;
-	Info.Sp = 130;
-	Info.Damage = 1000;
-	Info.AttackSpeed = 130;
-	Info.Exp = 0;
-	Info.Lv = 90;
-
-	__super::Set_Digimon_Info(Info);
-	m_pDigimon_Manager->Digimon_Add(Info.DigimonId, Info);
+	__super::Set_Digimon_Info(m_pDigimon_Manager->Search_Digimon(5));
 
 	return S_OK;
 }
 
 void CMetalgarumon::Priority_Update(_float fTimeDelta)
 {
-	__super::Priority_Update(fTimeDelta);
+	if (m_bLife)
+	{
+		__super::Priority_Update(fTimeDelta);
+	}
 }
 
 void CMetalgarumon::Update(_float fTimeDelta)
 {
-	if (!Skill)
+	if (m_bLife)
 	{
-		if (m_pGameInstance->Key_Down(DIK_4))
+		if (!m_bBattle)
 		{
-			m_pFsm->Enter(DIGIMONSTATE::BATTLEBACK, m_pPart_Body, false, false);
-			Skill = true;
+			if (!m_bMonster)
+			{
+				m_pTransformCom->LookAtPlayer(m_pDigimon_Manager->PlayerPos(), fTimeDelta);
+				m_bMove = false;
+				if (m_pTransformCom->FollowPlayer(m_pDigimon_Manager->PlayerPos(), 30, fTimeDelta))
+				{
+					m_pFsm->Enter(DIGIMONSTATE::RUN, m_pPart_Body);
+					m_bMove = true;
+				}
+			}
+			if (!m_bMove)
+				m_pFsm->Enter(DIGIMONSTATE::STAND, m_pPart_Body);
 		}
+		else
+		{
+			if (!Skill)
+			{
+				if (m_pGameInstance->Key_Down(DIK_4))
+				{
+					m_pFsm->Enter(DIGIMONSTATE::BATTLEBACK, m_pPart_Body, false, false);
+					Skill = true;
+				}
 
-		if (m_pGameInstance->Key_Down(DIK_5))
-		{
-			m_pFsm->Enter(DIGIMONSTATE::BATTLEDASH, m_pPart_Body, false, false);
-			Skill = true;
-		}
+				if (m_pGameInstance->Key_Down(DIK_5))
+				{
+					m_pFsm->Enter(DIGIMONSTATE::BATTLEDASH, m_pPart_Body, false, false);
+					Skill = true;
+				}
 
-		if (m_pGameInstance->Key_Down(DIK_6))
-		{
-			m_pFsm->Enter(DIGIMONSTATE::HIT, m_pPart_Body, false, false);
-			Skill = true;
-		}
+				if (m_pGameInstance->Key_Down(DIK_6))
+				{
+					m_pFsm->Enter(DIGIMONSTATE::HIT, m_pPart_Body, false, false);
+					Skill = true;
+				}
 
-		if (m_pGameInstance->Key_Down(DIK_7))
-		{
-			m_pFsm->Enter(DIGIMONSTATE::DEATH, m_pPart_Body, false, false);
-			Skill = true;
-		}
+				if (m_pGameInstance->Key_Down(DIK_7))
+				{
+					m_pFsm->Enter(DIGIMONSTATE::DEATH, m_pPart_Body, false, false);
+					Skill = true;
+				}
 
-		if (m_pGameInstance->Key_Down(DIK_8))
-		{
-			m_pFsm->Enter(DIGIMONSTATE::FAIL, m_pPart_Body, false, false);
-			Skill = true;
-		}
+				if (m_pGameInstance->Key_Down(DIK_8))
+				{
+					m_pFsm->Enter(DIGIMONSTATE::FAIL, m_pPart_Body, false, false);
+					Skill = true;
+				}
 
-		if (m_pGameInstance->Key_Down(DIK_9))
-		{
-			m_pFsm->Enter(DIGIMONSTATE::LOOKAROUND, m_pPart_Body, false, false);
-			Skill = true;
+				if (m_pGameInstance->Key_Down(DIK_9))
+				{
+					m_pFsm->Enter(DIGIMONSTATE::LOOKAROUND, m_pPart_Body, false, false);
+					Skill = true;
+				}
+			}
+
+			if (m_pPart_Body->Get_AnimFinish())
+			{
+				Skill = false;
+			}
+
+			if (!Skill)
+			{
+				m_bMove = false;
+				//m_pFsm->Enter(DIGIMONSTATE::BATTLEDASH, m_pPart_Body);
+				//m_bMove = true;
+				if (!m_bMove)
+					m_pFsm->Enter(DIGIMONSTATE::STANDBATTLE, m_pPart_Body);
+			}
 		}
+		m_pFsm->Update(fTimeDelta);
+		m_pColliderCom->Update(XMLoadFloat4x4(m_pTransformCom->Get_WorldMatrixPtr()));
+
+		__super::Update(fTimeDelta);
 	}
-
-	if (m_pPart_Body->Get_AnimFinish())
-	{
-		Skill = false;
-	}
-
-	if (!Skill)
-	{
-		m_pTransformCom->LookAtPlayer(m_pDigimon_Manager->PlayerPos(), fTimeDelta);
-		m_bMove = false;
-		if (m_pTransformCom->FollowPlayer(m_pDigimon_Manager->PlayerPos(), 30, fTimeDelta))
-		{
-			m_pFsm->Enter(DIGIMONSTATE::RUN, m_pPart_Body);
-			m_bMove = true;
-		}
-
-		if (!m_bMove)
-			m_pFsm->Enter(DIGIMONSTATE::STAND, m_pPart_Body);
-	}
-
-
-	m_pFsm->Update(fTimeDelta);
-
-	__super::Update(fTimeDelta);
 }
 
 void CMetalgarumon::Late_Update(_float fTimeDelta)
 {
-	__super::Late_Update(fTimeDelta);
+	if (m_bLife)
+	{
+		__super::Late_Update(fTimeDelta);
+
+		m_pGameInstance->Add_RenderGroup(RENDER::NONBLEND, this);
+	}
 }
 
 HRESULT CMetalgarumon::Render()
 {
+	if (m_bLife)
+	{
+#ifdef _DEBUG
+		m_pColliderCom->Render();
+#endif
+	}
 	return S_OK;
 }
 
@@ -168,6 +181,15 @@ HRESULT CMetalgarumon::Ready_PartObjects()
 		return E_FAIL;
 
 	m_pPart_Body = dynamic_cast<CBody_Metalgarumon*>(Find_PartObject(TEXT("Part_Body_Metalgarumon")));
+
+	/* Com_Sphere*/
+	CBounding_Sphere::BOUNDING_SPHERE_DESC SphereDesc{};
+	SphereDesc.fRadius = 8.f;
+	SphereDesc.vCenter = _float3(0.f, SphereDesc.fRadius, 0.f);
+
+	if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Collider_Sphere"),
+		TEXT("Com_Collider_Sphere"), reinterpret_cast<CComponent**>(&m_pColliderCom), &SphereDesc)))
+		return E_FAIL;
 
 	return S_OK;
 }
@@ -204,5 +226,6 @@ void CMetalgarumon::Free()
 
 	Safe_Release(m_pFsm);
 	Safe_Release(m_pPart_Body);
+	Safe_Release(m_pColliderCom);
 
 }

@@ -114,9 +114,9 @@ void CDigivice_Slot::Set_Digimon_ID(_int ID)
 	m_iDigimon_ID = ID;
 }
 
-void CDigivice_Slot::Set_Info(_int ID)
+void CDigivice_Slot::Set_Info(DIGIMON_INFO* pInfo)
 {
-	m_Info = *m_pManager->Search_Digimon(ID);
+	m_Info = *pInfo;
 }
 
 void CDigivice_Slot::OnClick()

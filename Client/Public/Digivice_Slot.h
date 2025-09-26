@@ -35,7 +35,7 @@ public:
 
 	void Set_Digimon_ID(_int ID);
 
-	void Set_Info(_int ID);
+	void Set_Info(DIGIMON_INFO* pInfo);
 
 	virtual void OnClick() override;
 

@@ -23,6 +23,8 @@ HRESULT CContainerObject::Initialize(void* pArg)
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;
 
+	m_bLife = true;
+
 	return S_OK;
 }
 
@@ -100,6 +102,11 @@ _int CContainerObject::Get_Lv()
 	return m_iLv;
 }
 
+DIGIMON_INFO CContainerObject::CurrentInfo()
+{
+	return Info;
+}
+
 DIGIMON_STAGE CContainerObject::Get_Stage()
 {
 	return m_eState;
@@ -115,19 +122,52 @@ const wstring& CContainerObject::Get_Digimon_Info()
 	return m_strDigimon_Info;
 }
 
-void CContainerObject::Set_Digimon_Info(DIGIMON_INFO Digimon_Info)
+void CContainerObject::Set_Digimon_Info(DIGIMON_INFO* Digimon_Info)
 {
-	m_strDigimon_Name = Digimon_Info.DigimonName;
-	m_iDigimon_ID = Digimon_Info.DigimonId;
-	m_eState = Digimon_Info.Stage;
-	m_eAttribute = Digimon_Info.Attribute;
-	m_strDigimon_Info = Digimon_Info.DigimonInfo;
-	m_iHp = Digimon_Info.Hp;
-	m_iSp = Digimon_Info.Sp;
-	m_iDamage = Digimon_Info.Damage;
-	m_iAttackSpeed = Digimon_Info.AttackSpeed;
-	m_iExp = Digimon_Info.Exp;
-	m_iLv = Digimon_Info.Lv;
+	m_strDigimon_Name = Digimon_Info->DigimonName;
+	m_iDigimon_ID = Digimon_Info->DigimonId;
+	m_eState = Digimon_Info->Stage;
+	m_eAttribute = Digimon_Info->Attribute;
+	m_strDigimon_Info = Digimon_Info->DigimonInfo;
+	m_iHp = Digimon_Info->Hp;
+	m_iSp = Digimon_Info->Sp;
+	m_iDamage = Digimon_Info->Damage;
+	m_iAttackSpeed = Digimon_Info->AttackSpeed;
+	m_iExp = Digimon_Info->Exp;
+	m_iLv = Digimon_Info->Lv;
+}
+
+void CContainerObject::Set_Hp(_int Hp)
+{
+	m_iHp += Hp;
+}
+
+void CContainerObject::Set_Sp(_int Sp)
+{
+	m_iSp += Sp;
+}
+
+void CContainerObject::Set_Damage(_int Damage)
+{
+	m_iDamage += Damage;
+}
+
+void CContainerObject::Set_AttackSpeed(_int AttackSpeed)
+{
+	m_iAttackSpeed += static_cast<int>(m_eState) * AttackSpeed;
+}
+
+void CContainerObject::Set_Exp(_int Exp)
+{
+	m_iExp = (1000 * static_cast<int>(m_eState)) + Exp;
+}
+
+void CContainerObject::Set_Lv(_int Lv)
+{
+	int tens = Lv / 10;
+	int ones = Lv % 10;
+
+	m_iLv += static_cast<int>(m_eState) * tens + ones;
 }
 
 void CContainerObject::Skill1()

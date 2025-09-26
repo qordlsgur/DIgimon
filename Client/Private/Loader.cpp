@@ -51,6 +51,8 @@
 #include "Body_Wargreymon.h"
 #include "Blackwargreymon.h"
 #include "Body_Blackwargreymon.h"
+#include "Beelzebumon.h"
+#include "Body_Beelzebumon.h"
 
 #pragma endregion
 
@@ -228,17 +230,17 @@ HRESULT CLoader::Loading_For_GamePlay()
 
 		/* For.Prototype_Component_Texture_Digimon_HUD */
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Digimon_HUD"),
-		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/Digimon_UI/A/A%d.png"), 9))))
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/Digimon_UI/A/A%d.png"), 10))))
 		return E_FAIL;
 
 	/* For.Prototype_Component_Texture_Digimon_Digivice */
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Digimon_Digivice"),
-		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/Digimon_UI/B/B%d.png"), 9))))
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/Digimon_UI/B/B%d.png"), 10))))
 		return E_FAIL;
 
 	/* For.Prototype_Component_Texture_Digimon_Digidex */
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Digimon_Digidex"),
-		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/Digimon_UI/C/C%d.png"), 9))))
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/Digimon_UI/C/C%d.png"), 10))))
 		return E_FAIL;
 
 #pragma endregion
@@ -335,7 +337,7 @@ HRESULT CLoader::Loading_For_GamePlay()
 		return E_FAIL;
 
 	/* For.Prototype_Component_Model_Metalgarumon*/
-	PreTransformMatrix = XMMatrixScaling(0.1f, 0.1f, 0.1f) * XMMatrixRotationY(XMConvertToRadians(180.0f));
+	PreTransformMatrix = XMMatrixScaling(0.06f, 0.06f, 0.06f) * XMMatrixRotationY(XMConvertToRadians(180.0f));
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Model_Metalgarumon"),
 		CModel::Create(m_pDevice, m_pContext, MODEL::ANIM, "../Bin/Resources/Models/Metalgarumon/Metalgarumon.bin", PreTransformMatrix))))
 		return E_FAIL;
@@ -655,6 +657,16 @@ HRESULT CLoader::Loading_For_GamePlay()
 	/* For.Prototype_GameObject_Body_Blackwargreymon*/
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Body_Blackwargreymon"),
 		CBody_Blackwargreymon::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	/* For.Prototype_GameObject_Beelzebumon*/
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Beelzebumon"),
+		CBeelzebumon::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	/* For.Prototype_GameObject_Body_Beelzebumon*/
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Body_Beelzebumon"),
+		CBody_Beelzebumon::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
 

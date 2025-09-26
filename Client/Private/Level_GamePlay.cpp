@@ -37,8 +37,8 @@ HRESULT CLevel_GamePlay::Initialize()
 	if (FAILED(Ready_Layer_Player(TEXT("Layer_Player"))))
 		return E_FAIL;
 
-	if (FAILED(Ready_Layer_Digimon(TEXT("Layer_Digimon"))))
-		return E_FAIL;
+	//if (FAILED(Ready_Layer_Digimon(TEXT("Layer_Digimon"))))
+	//	return E_FAIL;
 
 	if (FAILED(Ready_Layer_Monster(TEXT("Layer_Monster"))))
 		return E_FAIL;
@@ -155,10 +155,10 @@ HRESULT CLevel_GamePlay::Ready_Layer_Digimon(const _wstring& strLayerTag)
 	//	ENUM_CLASS(LEVEL::GAMEPLAY), strLayerTag)))
 	//	//return E_FAIL;
 
-	 //오메가몬
-	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Omegamon"),
-		ENUM_CLASS(LEVEL::GAMEPLAY), strLayerTag)))
-		return E_FAIL;
+	// //오메가몬
+	//if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Omegamon"),
+	//	ENUM_CLASS(LEVEL::GAMEPLAY), strLayerTag)))
+	//	return E_FAIL;
 
 	//// 데빌몬
 	//if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Devilmon"),

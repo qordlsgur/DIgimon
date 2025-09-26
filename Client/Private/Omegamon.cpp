@@ -37,136 +37,121 @@ HRESULT COmegamon::Initialize(void* pArg)
 
 	m_pFsm = CStateMachine::Create();
 	m_pFsm->Initialize();
-	m_pFsm->Enter(DIGIMONSTATE::STAND, m_pPart_Body, false, false);
-
+	m_pFsm->Enter(DIGIMONSTATE::STAND, m_pPart_Body, false, false);	
 	m_pTransformCom->Set_State(STATE::POSITION, XMVectorSet(10.f, 0.f, 190.f, 1.f));
 
-	Digimon_Info Info;
-
-	Info.DigimonName = TEXT("오메가몬");
-	Info.DigimonId = 7;
-	Info.Stage = DIGIMON_STAGE::MEGA;
-	Info.Attribute = DIGIMON_ATTRIBUTE::VACCINE;
-	Info.DigimonInfo = TEXT("선을 바라는 사람들의 강한 의지에 의해서 융햡해 탄생한 성기사형 디지몬");
-	Info.Hp = 10000;
-	Info.Sp = 150;
-	Info.Damage = 1300;
-	Info.AttackSpeed = 150;
-	Info.Exp = 0;
-	Info.Lv = 90;
-
-	__super::Set_Digimon_Info(Info);
-	m_pDigimon_Manager->Digimon_Add(Info.DigimonId, Info);
+	__super::Set_Digimon_Info(m_pDigimon_Manager->Search_Digimon(7));
 
 	return S_OK;
 }
 
 void COmegamon::Priority_Update(_float fTimeDelta)
 {
-	__super::Priority_Update(fTimeDelta);
+	if (m_bLife)
+	{
+		__super::Priority_Update(fTimeDelta);
+	}
 }
 
 void COmegamon::Update(_float fTimeDelta)
 {
-
-	if (!Skill)
+	if (m_bLife)
 	{
-		if (m_pGameInstance->Key_Down(DIK_1))
+		if (!m_bBattle)
 		{
-			m_pFsm->Enter(DIGIMONSTATE::SKILL1, m_pPart_Body, false, false);
-			Skill = true;
+			if (!m_bMonster)
+			{
+				m_pTransformCom->LookAtPlayer(m_pDigimon_Manager->PlayerPos(), fTimeDelta);
+				m_bMove = false;
+				if (m_pTransformCom->FollowPlayer(m_pDigimon_Manager->PlayerPos(), 30, fTimeDelta))
+				{
+					m_pFsm->Enter(DIGIMONSTATE::RUN, m_pPart_Body);
+					m_bMove = true;
+				}
+			}
+			if (!m_bMove)
+				m_pFsm->Enter(DIGIMONSTATE::STAND, m_pPart_Body);
 		}
+		else
+		{
+			if (!Skill)
+			{
+				if (m_pGameInstance->Key_Down(DIK_4))
+				{
+					m_pFsm->Enter(DIGIMONSTATE::BATTLEBACK, m_pPart_Body, false, false);
+					Skill = true;
+				}
 
-		if (m_pGameInstance->Key_Down(DIK_2))
-		{
-			m_pFsm->Enter(DIGIMONSTATE::SKILL2, m_pPart_Body, false, false);
-			Skill = true;
-		}
+				if (m_pGameInstance->Key_Down(DIK_5))
+				{
+					m_pFsm->Enter(DIGIMONSTATE::BATTLEDASH, m_pPart_Body, false, false);
+					Skill = true;
+				}
 
-		if (m_pGameInstance->Key_Down(DIK_3))
-		{
-			m_pFsm->Enter(DIGIMONSTATE::SKILL3, m_pPart_Body, false, false);
-			Skill = true;
-		}
+				if (m_pGameInstance->Key_Down(DIK_6))
+				{
+					m_pFsm->Enter(DIGIMONSTATE::HIT, m_pPart_Body, false, false);
+					Skill = true;
+				}
 
-		if (m_pGameInstance->Key_Down(DIK_4))
-		{
-			m_pFsm->Enter(DIGIMONSTATE::BATTLEBACK, m_pPart_Body, false, false);
-			Skill = true;
-		}
+				if (m_pGameInstance->Key_Down(DIK_7))
+				{
+					m_pFsm->Enter(DIGIMONSTATE::DEATH, m_pPart_Body, false, false);
+					Skill = true;
+				}
 
-		if (m_pGameInstance->Key_Down(DIK_5))
-		{
-			m_pFsm->Enter(DIGIMONSTATE::BATTLEDASH, m_pPart_Body, false, false);
-			Skill = true;
-		}
+				if (m_pGameInstance->Key_Down(DIK_8))
+				{
+					m_pFsm->Enter(DIGIMONSTATE::FAIL, m_pPart_Body, false, false);
+					Skill = true;
+				}
 
-		if (m_pGameInstance->Key_Down(DIK_6))
-		{
-			m_pFsm->Enter(DIGIMONSTATE::HIT, m_pPart_Body, false, false);
-			Skill = true;
-		}
+				if (m_pGameInstance->Key_Down(DIK_9))
+				{
+					m_pFsm->Enter(DIGIMONSTATE::LOOKAROUND, m_pPart_Body, false, false);
+					Skill = true;
+				}
+			}
 
-		if (m_pGameInstance->Key_Down(DIK_7))
-		{
-			m_pFsm->Enter(DIGIMONSTATE::DEATH, m_pPart_Body, false, false);
-			Skill = true;
-		}
+			if (m_pPart_Body->Get_AnimFinish())
+			{
+				Skill = false;
+			}
 
-		if (m_pGameInstance->Key_Down(DIK_8))
-		{
-			m_pFsm->Enter(DIGIMONSTATE::FAIL, m_pPart_Body, false, false);
-			Skill = true;
+			if (!Skill)
+			{
+				m_bMove = false;
+				//m_pFsm->Enter(DIGIMONSTATE::BATTLEDASH, m_pPart_Body);
+				//m_bMove = true;
+				if (!m_bMove)
+					m_pFsm->Enter(DIGIMONSTATE::STANDBATTLE, m_pPart_Body);
+			}
 		}
+		m_pFsm->Update(fTimeDelta);
+		m_pColliderCom->Update(XMLoadFloat4x4(m_pTransformCom->Get_WorldMatrixPtr()));
 
-		if (m_pGameInstance->Key_Down(DIK_9))
-		{
-			m_pFsm->Enter(DIGIMONSTATE::LOOKAROUND, m_pPart_Body, false, false);
-			Skill = true;
-		}
+		__super::Update(fTimeDelta);
 	}
-
-	if (m_pPart_Body->Get_AnimFinish())
-	{
-		Skill = false;
-	}
-
-	if (!Skill)
-	{
-		m_pTransformCom->LookAtPlayer(m_pDigimon_Manager->PlayerPos(), fTimeDelta);
-		m_bMove = false;
-		if (m_pTransformCom->FollowPlayer(m_pDigimon_Manager->PlayerPos(), 30, fTimeDelta))
-		{
-			m_pFsm->Enter(DIGIMONSTATE::RUN, m_pPart_Body);
-			m_bMove = true;
-		}
-
-		if (!m_bMove)
-			m_pFsm->Enter(DIGIMONSTATE::STAND, m_pPart_Body);
-	}
-
-
-	m_pFsm->Update(fTimeDelta);
-
-	m_pColliderCom->Update(XMLoadFloat4x4(m_pTransformCom->Get_WorldMatrixPtr()));
-
-
-	__super::Update(fTimeDelta);
 }
 
 void COmegamon::Late_Update(_float fTimeDelta)
 {
-	__super::Late_Update(fTimeDelta);
+	if (m_bLife)
+	{
+		__super::Late_Update(fTimeDelta);
 
-	m_pGameInstance->Add_RenderGroup(RENDER::NONBLEND, this);
-
+		m_pGameInstance->Add_RenderGroup(RENDER::NONBLEND, this);
+	}
 }
 
 HRESULT COmegamon::Render()
 {
+	if (m_bLife)
+	{
 #ifdef _DEBUG
-	m_pColliderCom->Render();
+		m_pColliderCom->Render();
 #endif
+	}
 	return S_OK;
 }
 

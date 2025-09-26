@@ -2,6 +2,7 @@
 #include "GameInstance.h"
 #include "Digivice_Slot.h"
 #include "Digimon_Manager.h"
+#include "Battle_Manager.h"
 #include "Digivice_Mask.h"
 
 CDigivice::CDigivice(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
@@ -33,6 +34,9 @@ HRESULT CDigivice::Initialize(void* pArg)
 	m_pDigimon_Manager = CDigimon_Manager::GetInstance();
 	m_pDigimon_Manager->Digivice(this);
 
+	m_pBattle_Manager = CBattle_Manager::GetInstance();
+	m_pBattle_Manager->Set_Digivice(this);
+
 	if (FAILED(__super::Initialize(&Desc)))
 		return E_FAIL;
 
@@ -42,7 +46,11 @@ HRESULT CDigivice::Initialize(void* pArg)
 	if (FAILED(Create_Slot(L"Layout_Digivice_Slot")))
 		return E_FAIL;
 
-	Acquire_Digimon(7);
+	m_Digimon_ID.resize(8, -1);
+
+	Acquire_Digimon(9);
+	Acquire_Digimon(0);
+	Acquire_Digimon(8);
 
 	return S_OK;
 }
@@ -65,12 +73,6 @@ void CDigivice::Update(_float fTimeDelta)
 
 	if (m_bActive)
 		OnClick();
-
-	if (m_pGameInstance->Key_Down(DIK_C))
-		Acquire_Digimon(7);
-
-	if (m_pGameInstance->Key_Down(DIK_B))
-		Release_Digimon(0);
 }
 
 void CDigivice::Late_Update(_float fTimeDelta)
@@ -116,9 +118,11 @@ void CDigivice::Acquire_Digimon(_int ID)
 		{
 			m_pBattle_Mask[i]->Set_Digimon_ID(ID);
 			m_pBattle_Mask[i]->Set_HasDigimon(true);
-			m_pBattle_Slot[i]->Set_Info(ID);
+			m_pBattle_Slot[i]->Set_Info(Set_Info(ID));
 			m_pBattle_Slot[i]->Set_HasDigimon(true);
 			m_pDigimon_Manager->Set_Digivice_Slot(i, true, ID);
+			m_Digimon_ID[i] = ID;
+			Set_Info(ID);
 			return;
 		}
 	}
@@ -142,10 +146,10 @@ void CDigivice::OnClick()
 {
 	POINT pPt = m_pGameInstance->Get_Mouse();
 
-	pPt.x -= m_fWinSizeX * 0.5f;
-	pPt.y -= m_fWinSizeY * 0.5f;
+	pPt.x -= static_cast<_long>(m_fWinSizeX * 0.5);
+	pPt.y -= static_cast<_long>(m_fWinSizeY * 0.5);
 
-	for (_int i = 0; i < m_iDigivice_Battle_Slot_Number; ++i)
+	for (_uint i = 0; i < m_iDigivice_Battle_Slot_Number; ++i)
 	{
 		if (m_pGameInstance->Mouse_Down(MOUSEKEYSTATE::LBUTTON))
 		{
@@ -156,6 +160,32 @@ void CDigivice::OnClick()
 			}
 		}
 	}
+}
+
+void CDigivice::Update_Digimopn()
+{
+	m_pBattle_Manager->Current_Digimon(m_Digimon_ID[0], m_Digimon_ID[1], m_Digimon_ID[2]);
+}
+
+DIGIMON_INFO* CDigivice::Set_Info(_int ID)
+{
+	DIGIMON_INFO* pInfo = m_pDigimon_Manager->Search_Digimon(ID);
+
+	pInfo->Hp += m_pGameInstance->intRandom(500, 1000);
+	pInfo->Sp += m_pGameInstance->intRandom(250, 500);
+	pInfo->Damage += m_pGameInstance->intRandom(500, 1000);
+	pInfo->AttackSpeed += 20;
+
+	if (pInfo->Stage == DIGIMON_STAGE::MEGA)
+		pInfo->Lv += 5;
+	else if(pInfo->Stage == DIGIMON_STAGE::ULTIMATE)
+		pInfo->Lv += m_pGameInstance->intRandom(1, 44);
+	else if(pInfo->Stage == DIGIMON_STAGE::CHAMPION)
+		pInfo->Lv += m_pGameInstance->intRandom(1, 29);
+	else
+		pInfo->Lv += m_pGameInstance->intRandom(1, 14);
+
+	return pInfo;
 }
 
 HRESULT CDigivice::Ready_Components()

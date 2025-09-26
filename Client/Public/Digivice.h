@@ -34,6 +34,10 @@ public:
 
 	void OnClick();
 
+	void Update_Digimopn();
+
+	DIGIMON_INFO* Set_Info(_int ID);
+
 private:
 	CVIBuffer_Rect* m_pVIBufferCom = { nullptr };
 	CTexture* m_pTextureCom = { nullptr };
@@ -46,9 +50,12 @@ private:
 
 	vector<class CDigivice_Slot*> m_pBattle_Slot;
 	vector<class CDigivice_Mask*> m_pBattle_Mask;
+	vector<DIGIMON_INFO*> m_pDigimon_Info;
+	vector<_int> m_Digimon_ID;
 
 
 	class CDigimon_Manager* m_pDigimon_Manager = {nullptr};
+	class CBattle_Manager* m_pBattle_Manager = {nullptr};
 
 private:
 	HRESULT Ready_Components();

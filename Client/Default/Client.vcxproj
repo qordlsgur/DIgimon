@@ -161,6 +161,7 @@
     <ClInclude Include="..\public\Battle_Camera.h" />
     <ClInclude Include="..\public\Battle_Manager.h" />
     <ClInclude Include="..\public\Battle_Terrain.h" />
+    <ClInclude Include="..\public\Beelzebumon.h" />
     <ClInclude Include="..\public\Blackwargreymon.h" />
     <ClInclude Include="..\Public\BldA.h" />
     <ClInclude Include="..\Public\BldB.h" />
@@ -171,6 +172,7 @@
     <ClInclude Include="..\Public\BldJ.h" />
     <ClInclude Include="..\Public\BldK.h" />
     <ClInclude Include="..\public\Body_Angewomon.h" />
+    <ClInclude Include="..\public\Body_Beelzebumon.h" />
     <ClInclude Include="..\public\Body_Blackwargreymon.h" />
     <ClInclude Include="..\public\Body_Devilmon.h" />
     <ClInclude Include="..\public\Body_Ladydevimon.h" />
@@ -185,7 +187,6 @@
     <ClInclude Include="..\public\Camera_Manager.h" />
     <ClInclude Include="..\Public\Death.h" />
     <ClInclude Include="..\public\Devilmon.h" />
-    <ClInclude Include="..\public\DigimonInfo.h" />
     <ClInclude Include="..\public\Digimon_Manager.h" />
     <ClInclude Include="..\public\Digivice.h" />
     <ClInclude Include="..\Public\Digivice_Mask.h" />
@@ -239,6 +240,7 @@
     <ClCompile Include="..\private\Battle_Camera.cpp" />
     <ClCompile Include="..\private\Battle_Manager.cpp" />
     <ClCompile Include="..\private\Battle_Terrain.cpp" />
+    <ClCompile Include="..\private\Beelzebumon.cpp" />
     <ClCompile Include="..\private\Blackwargreymon.cpp" />
     <ClCompile Include="..\Private\BldA.cpp" />
     <ClCompile Include="..\Private\BldB.cpp" />
@@ -249,6 +251,7 @@
     <ClCompile Include="..\Private\BldJ.cpp" />
     <ClCompile Include="..\Private\BldK.cpp" />
     <ClCompile Include="..\private\Body_Angewomon.cpp" />
+    <ClCompile Include="..\private\Body_Beelzebumon.cpp" />
     <ClCompile Include="..\Private\Body_Blackwargreymon.cpp" />
     <ClCompile Include="..\private\Body_Devilmon.cpp" />
     <ClCompile Include="..\private\Body_Ladydevimon.cpp" />
@@ -262,7 +265,6 @@
     <ClCompile Include="..\private\Camera_Manager.cpp" />
     <ClCompile Include="..\Private\Death.cpp" />
     <ClCompile Include="..\private\Devilmon.cpp" />
-    <ClCompile Include="..\private\DigimonInfo.cpp" />
     <ClCompile Include="..\private\Digimon_Manager.cpp" />
     <ClCompile Include="..\private\Digivice.cpp" />
     <ClCompile Include="..\Private\Digivice_Mask.cpp" />

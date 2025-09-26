@@ -36,7 +36,16 @@ public:
 	virtual _int Get_Exp();
 	virtual _int Get_Lv();
 
-	virtual void Set_Digimon_Info(DIGIMON_INFO Digimon_Info);
+	virtual DIGIMON_INFO CurrentInfo();
+
+	virtual void Set_Digimon_Info(DIGIMON_INFO* Digimon_Info);
+
+	virtual void Set_Hp(_int Hp);
+	virtual void Set_Sp(_int Sp);
+	virtual void Set_Damage(_int Damage);
+	virtual void Set_AttackSpeed(_int AttackSpeed);
+	virtual void Set_Exp(_int Exp);
+	virtual void Set_Lv(_int Lv);
 
 	virtual void Skill1();
 	virtual void Skill2();
@@ -44,6 +53,12 @@ public:
 
 	virtual void Set_Battle(_bool Battle) { m_bBattle = Battle; }
 	virtual _bool Get_Battle() { return m_bBattle; }
+
+	virtual void Set_Monster(_bool Monster) { m_bMonster= Monster; }
+	virtual _bool Get_Monster() { return m_bMonster; }
+
+	virtual void Set_Life(_bool Life) { m_bLife = Life; }
+	virtual _bool Get_Lide() { return m_bLife; }
 
 	virtual void LookAt(_float iRadian);
 	virtual void Set_Position(_float fX, _float fZ);
@@ -57,8 +72,8 @@ protected:
 
 	wstring m_strDigimon_Name;
 	_int m_iDigimon_ID{};
-	DIGIMON_STAGE m_eState;
-	DIGIMON_ATTRIBUTE m_eAttribute;
+	DIGIMON_STAGE m_eState = DIGIMON_STAGE::END;
+	DIGIMON_ATTRIBUTE m_eAttribute = DIGIMON_ATTRIBUTE::END;
 	wstring m_strDigimon_Info;
 	_int m_iHp{};
 	_int m_iSp{};
@@ -68,7 +83,8 @@ protected:
 	_int m_iLv{};
 
 	_bool m_bBattle = { false };
-	_bool m_bLife = { false };
+	_bool m_bMonster = { false };
+	_bool m_bLife = { true };
 
 protected:
 	class CPartObject* Find_PartObject(const _wstring& strPartTag);

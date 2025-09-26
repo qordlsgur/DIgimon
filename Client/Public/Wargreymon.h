@@ -3,6 +3,12 @@
 #include "ContainerObject.h"
 #include "StateMachine.h"
 
+NS_BEGIN(Engine)
+class CNavigation;
+class CPartObject;
+class CCollider;
+NS_END
+
 NS_BEGIN(Client)
 
 class CWargreymon final : public CContainerObject
@@ -21,7 +27,9 @@ public:
 	virtual HRESULT Render() override;
 
 private:
-	class CPartObject* m_pPart_Body = { nullptr };
+	CPartObject* m_pPart_Body = { nullptr };
+	CCollider* m_pColliderCom = { nullptr };
+
 	class CDigimon_Manager* m_pDigimon_Manager = { nullptr };
 	class CStateMachine* m_pFsm = { nullptr };
 
