@@ -51,6 +51,9 @@ private:
 	_vector m_vMonsterDigimonPos[5] = {};
 	_vector m_vPlayerPos{};
 
+	_vector m_vPlayerDigimonAttackPos[5] = {};
+	_vector m_vMonsterDigimonAttackPos[5] = {};
+
 private:
 	HRESULT Ready_Components();
 	HRESULT Bind_ShaderResources();

@@ -163,19 +163,16 @@ _int COmegamon::Intersect(CCollider* pPlayer_Collider)
 	return -1;
 }
 
-void COmegamon::Skill1()
+void COmegamon::UseSkill(_int Skill)
 {
-	m_pFsm->Enter(DIGIMONSTATE::SKILL1, m_pPart_Body, false, false);
-}
+	if (Skill == 1)
+		m_pFsm->Enter(DIGIMONSTATE::SKILL1, m_pPart_Body, false, false);
+	else if (Skill == 2)
+		m_pFsm->Enter(DIGIMONSTATE::SKILL2, m_pPart_Body, false, false);
+	else if (Skill == 3)
+		m_pFsm->Enter(DIGIMONSTATE::SKILL3, m_pPart_Body, false, false);
 
-void COmegamon::Skill2()
-{
-	m_pFsm->Enter(DIGIMONSTATE::SKILL2, m_pPart_Body, false, false);
-}
-
-void COmegamon::Skill3()
-{
-	m_pFsm->Enter(DIGIMONSTATE::SKILL3, m_pPart_Body, false, false);
+	Skill = true;
 }
 
 HRESULT COmegamon::Ready_PartObjects()

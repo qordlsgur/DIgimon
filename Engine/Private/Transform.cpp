@@ -156,8 +156,6 @@ void CTransform::Turn(_fvector vAxis, _float fTimeDelta)
 	Set_State(STATE::LOOK, vLook);
 }
 
-
-
 void CTransform::Rotation(_fvector vAxis, _float fRadian)
 {
 	// 이 함수는 임의의 축으로 한번 회전 한다.

@@ -41,9 +41,7 @@ private:
 
 
 private:
-	virtual void Skill1() override;
-	virtual void Skill2() override;
-	virtual void Skill3() override;
+	virtual void UseSkill(_int Skill) override;
 
 	HRESULT Ready_PartObjects();
 

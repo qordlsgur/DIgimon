@@ -39,7 +39,6 @@ private:
 
 	vector<CContainerObject*> m_pEnemy_Digimon;
 
-
 public:
 	virtual void Free() override;
 };

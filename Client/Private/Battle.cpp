@@ -42,7 +42,7 @@ void CBattle::Update(_float fTimeDelta)
 
 	if (m_Battle)
 	{
-		m_pBattle_Manager->Update();
+		m_pBattle_Manager->Update(fTimeDelta);
 	}
 
 }

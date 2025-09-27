@@ -5,8 +5,8 @@
 
 NS_BEGIN(Engine)
 class CGameInstance;
-class CGameObject;
 class CContainerObject;
+class CGameObject;
 NS_END
 
 NS_BEGIN(Client)
@@ -21,9 +21,13 @@ private:
 public:
 	HRESULT Initialize();
 	void Priority_Update();
-	void Update();
+	void Update(_float fTimeDelta);
 	void Late_Update();
 public:
+	void Player_Attack();
+	void Enemy_Attack();
+	void Player_Set();
+
 	void Set_Player(CContainerObject* pPlayer);
 	void Set_Digivice(CGameObject* pDigivice);
 	void Set_Battle(CGameObject* pBattle);
@@ -38,9 +42,9 @@ public:
 	void Player_Digimon_Position();
 	void Current_Digimon(_int ID1, _int ID2, _int ID3);
 
-	void Digimon1_Skill();
-	void Digimon2_Skill();
-	void Digimon3_Skill();
+	void Digimon1_Skill(_int ID);
+	void Digimon2_Skill(_int ID);
+	void Digimon3_Skill(_int ID);
 
 	void EnemyDigimon_Info(_int EnemyDigimonID);
 
@@ -51,9 +55,12 @@ public:
 	void Set_Player_Pos(_vector Pos);
 	_vector Get_Player_Pos();
 
-	void Set_Battle_Pos(_vector* vEmemyDigimon, _vector* vPlayerDigimon, _vector Player);
+	void Set_Battle_Pos(_vector* vEmemyDigimon, _vector* vPlayerDigimon, _vector Player, _vector* vEnemyDigimonAttackPos, _vector* vPlayerDigimonAttackPos);
 
 	void Set_MyDigimon(CContainerObject* pPlayerDigimon);
+
+	void Battle_Tunr_Order();
+
 private:
 	_bool							m_bBattleOn = { false };
 	_int							m_iEnemyDigimonCount{};
@@ -72,16 +79,40 @@ private:
 
 	_vector							m_pPlayer_Pos{};
 
-	_vector							m_vMnemyDigimonPos[5] = {};
+	_vector							m_vEnemyDigimonPos[5] = {};
 	_vector							m_vPlayerDigimonPos[5] = {};
 	_vector							m_vPlayerBattlePos{};
+
+	_vector							m_vEnemyDigimonAttackPos[5] = {};
+	_vector							m_vPlayerDigimonAttackPos[5] = {};
 
 	_float							m_fEnemyDigimon_Look{};
 	_float							m_fPlayer_Look{};
 
 	CGameObject*					m_pBattle = { nullptr };
 
+	vector<CContainerObject*>		m_pDigimonSort;
+	deque<CContainerObject*>		m_pDigimon_Turn_Order;
 
+	_int							Digimon_1{};
+	_int							Digimon_2{};
+	_int							Digimon_3{};
+
+	_int							m_iEnemy_1{};
+	_int							m_iEnemy_2{};
+	_int							m_iEnemy_3{};
+
+	_float							m_fBattleTime{};
+
+	BATTLE_STATE					m_eBattle_State;
+
+	CContainerObject*				m_pCurrentDigimon = { nullptr };
+
+	_bool							m_bPlayer_Death = { false };
+	_bool							m_bEnemy_Death = { false };
+
+	_int							m_iSkill;
+	_bool							m_bSkill = { false };
 private:
 
 public:

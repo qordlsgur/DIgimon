@@ -394,7 +394,5 @@ void CDigimon_Manager::Free()
 	//for (auto& Pair : m_Digimon_Info)
 	//	Safe_Release(Pair.second);
 
-	Safe_Release(m_pPlayer);
-
 	m_vDigivice_Battle_Slot.clear();
 }

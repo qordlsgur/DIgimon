@@ -54,7 +54,6 @@ private:
 	class CInteraction_Manager* m_pInteraction_Manager = { nullptr };
 
 	_bool m_bMove = false;
-	_bool Skill = false;
 
 	PLAYER_STATE m_eCurrentState;
 	PLAYER_STATE m_ePreviousState;

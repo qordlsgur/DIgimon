@@ -174,7 +174,7 @@ DIGIMON_INFO* CDigivice::Set_Info(_int ID)
 	pInfo->Hp += m_pGameInstance->intRandom(500, 1000);
 	pInfo->Sp += m_pGameInstance->intRandom(250, 500);
 	pInfo->Damage += m_pGameInstance->intRandom(500, 1000);
-	pInfo->AttackSpeed += 20;
+	pInfo->AttackSpeed += m_pGameInstance->intRandom(1, 20);
 
 	if (pInfo->Stage == DIGIMON_STAGE::MEGA)
 		pInfo->Lv += 5;

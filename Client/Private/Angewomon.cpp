@@ -52,7 +52,7 @@ void CAngewomon::Priority_Update(_float fTimeDelta)
 {
 	if (m_bLife)
 	{
-	__super::Priority_Update(fTimeDelta);
+		__super::Priority_Update(fTimeDelta);
 	}
 }
 
@@ -79,55 +79,31 @@ void CAngewomon::Update(_float fTimeDelta)
 		{
 			if (!Skill)
 			{
-				if (m_pGameInstance->Key_Down(DIK_4))
+				if (m_bSkill1)
 				{
-					m_pFsm->Enter(DIGIMONSTATE::BATTLEBACK, m_pPart_Body, false, false);
-					Skill = true;
+					Skill1();
 				}
-
-				if (m_pGameInstance->Key_Down(DIK_5))
+				else if (m_bSkill2)
 				{
-					m_pFsm->Enter(DIGIMONSTATE::BATTLEDASH, m_pPart_Body, false, false);
-					Skill = true;
+					Skill2();
 				}
-
-				if (m_pGameInstance->Key_Down(DIK_6))
+				else if (m_bSkill3)
 				{
-					m_pFsm->Enter(DIGIMONSTATE::HIT, m_pPart_Body, false, false);
-					Skill = true;
-				}
-
-				if (m_pGameInstance->Key_Down(DIK_7))
-				{
-					m_pFsm->Enter(DIGIMONSTATE::DEATH, m_pPart_Body, false, false);
-					Skill = true;
-				}
-
-				if (m_pGameInstance->Key_Down(DIK_8))
-				{
-					m_pFsm->Enter(DIGIMONSTATE::FAIL, m_pPart_Body, false, false);
-					Skill = true;
-				}
-
-				if (m_pGameInstance->Key_Down(DIK_9))
-				{
-					m_pFsm->Enter(DIGIMONSTATE::LOOKAROUND, m_pPart_Body, false, false);
-					Skill = true;
+					Skill3();
 				}
 			}
 
 			if (m_pPart_Body->Get_AnimFinish())
 			{
 				Skill = false;
+				m_bTurnEnd = true;
 			}
 
-			if (!Skill)
+			if (m_bTurnEnd)
 			{
-				m_bMove = false;
-				//m_pFsm->Enter(DIGIMONSTATE::BATTLEDASH, m_pPart_Body);
-				//m_bMove = true;
-				if (!m_bMove)
-					m_pFsm->Enter(DIGIMONSTATE::STANDBATTLE, m_pPart_Body);
+				m_bTurnEnd = false;
+				m_pFsm->Enter(DIGIMONSTATE::STANDBATTLE, m_pPart_Body);
+
 			}
 		}
 		m_pFsm->Update(fTimeDelta);
@@ -158,19 +134,35 @@ HRESULT CAngewomon::Render()
 	return S_OK;
 }
 
+void CAngewomon::UseSkill(_int Skill)
+{
+	if (Skill == 1)
+	{
+		m_bSkillMove = true;
+		m_bSkill1 = true;
+	}
+	else if (Skill == 2)
+		m_bSkill2 = true;
+	else if (Skill == 3)
+		m_bSkill3 = true;
+}
 void CAngewomon::Skill1()
 {
-	m_pFsm->Enter(DIGIMONSTATE::SKILL1, m_pPart_Body, false, false);
+	if (!m_bSkillMove)
+		m_pFsm->Enter(DIGIMONSTATE::SKILL1, m_pPart_Body, false, false);
+	Skill = true;
 }
 
 void CAngewomon::Skill2()
 {
 	m_pFsm->Enter(DIGIMONSTATE::SKILL2, m_pPart_Body, false, false);
+	Skill = true;
 }
 
 void CAngewomon::Skill3()
 {
 	m_pFsm->Enter(DIGIMONSTATE::SKILL3, m_pPart_Body, false, false);
+	Skill = true;
 }
 
 HRESULT CAngewomon::Ready_PartObjects()

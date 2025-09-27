@@ -7,7 +7,7 @@ NS_BEGIN(Engine)
 class ENGINE_DLL CContainerObject abstract : public CGameObject
 {
 protected:
-	CContainerObject(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
+	CContainerObject(ID3D11Device * pDevice, ID3D11DeviceContext * pContext);
 	CContainerObject(const CContainerObject& Prototype);
 	virtual ~CContainerObject() = default;
 
@@ -47,23 +47,34 @@ public:
 	virtual void Set_Exp(_int Exp);
 	virtual void Set_Lv(_int Lv);
 
+	virtual void UseSkill(_int Skill);
 	virtual void Skill1();
 	virtual void Skill2();
 	virtual void Skill3();
 
+
 	virtual void Set_Battle(_bool Battle) { m_bBattle = Battle; }
 	virtual _bool Get_Battle() { return m_bBattle; }
 
-	virtual void Set_Monster(_bool Monster) { m_bMonster= Monster; }
+	virtual void Set_Monster(_bool Monster) { m_bMonster = Monster; }
 	virtual _bool Get_Monster() { return m_bMonster; }
 
 	virtual void Set_Life(_bool Life) { m_bLife = Life; }
-	virtual _bool Get_Lide() { return m_bLife; }
+	virtual _bool Get_Life() { return m_bLife; }
+
+	virtual _bool Get_Skill() { return Skill; }
+	virtual void Set_SkillMove(_bool Move) { m_bSkillMove = Move; }
+	virtual _bool Get_SkillMove() { return m_bSkillMove; }
+	virtual void Set_TurnEnd(_bool End) { m_bTurnEnd = End; }
+	virtual _bool Get_TurnEnd() { return m_bTurnEnd; }
 
 	virtual void LookAt(_float iRadian);
+	virtual void LookAt(_float fRadianX, _float fRadianY, _float fRadianZ);
 	virtual void Set_Position(_float fX, _float fZ);
 
 	virtual _int Intersect(class CCollider* pPlayer_Collider);
+
+	virtual void Attack_Move(_vector Pos, _float fTimeDelta);
 
 protected:
 	map<const _wstring, class CPartObject*>			m_PartObjects;
@@ -85,6 +96,16 @@ protected:
 	_bool m_bBattle = { false };
 	_bool m_bMonster = { false };
 	_bool m_bLife = { true };
+	_bool Skill = { false };
+	_bool m_bSkillMove = { false };
+
+	_bool m_bSkill1 = { false };
+	_bool m_bSkill2 = { false };
+	_bool m_bSkill3 = { false };
+
+	_bool m_bTurnEnd = { false };
+
+	queue<DIGIMONSTATE> m_eSkill_State;
 
 protected:
 	class CPartObject* Find_PartObject(const _wstring& strPartTag);

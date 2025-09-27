@@ -170,6 +170,10 @@ void CContainerObject::Set_Lv(_int Lv)
 	m_iLv += static_cast<int>(m_eState) * tens + ones;
 }
 
+void CContainerObject::UseSkill(_int Skill)
+{
+}
+
 void CContainerObject::Skill1()
 {
 }
@@ -182,9 +186,15 @@ void CContainerObject::Skill3()
 {
 }
 
+
 void CContainerObject::LookAt(_float iRadian)
 {
 	m_pTransformCom->Rotation(XMVectorSet(0.f, 1.f, 0.f, 0.f), XMConvertToRadians(iRadian));
+}
+
+void CContainerObject::LookAt(_float fRadianX, _float fRadianY, _float fRadianZ)
+{
+	m_pTransformCom->Rotation(fRadianX, fRadianY, fRadianZ);
 }
 
 void CContainerObject::Set_Position(_float fX, _float fZ)
@@ -195,6 +205,11 @@ void CContainerObject::Set_Position(_float fX, _float fZ)
 _int CContainerObject::Intersect(CCollider* pPlayer_Collider)
 {
 	return _int();
+}
+
+void CContainerObject::Attack_Move(_vector Pos, _float fTimeDelta)
+{
+	//m_pTransformCom->
 }
 
 CPartObject* CContainerObject::Find_PartObject(const _wstring& strPartTag)
