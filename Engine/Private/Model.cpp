@@ -229,7 +229,6 @@ _bool CModel::Play_Animation(_float fTimeDelta)
 			XMStoreFloat4x4(Get_BoneMatrixPtr("Root"), Root);
 			pBone->Update_CombinedTransformationMatrix(m_Bones, XMLoadFloat4x4(&m_PreTransformMatrix));
 		}
-
 	}
 
 	else

@@ -212,6 +212,26 @@ void CContainerObject::Attack_Move(_vector Pos, _float fTimeDelta)
 	//m_pTransformCom->
 }
 
+void CContainerObject::Target_Pos_Move(_fvector Target_Pos, _float fTimeDelta)
+{
+	m_pTransformCom->Target_Pos_Move(Target_Pos, fTimeDelta);
+}
+
+void CContainerObject::HasReachedTargetPosition(_vector Pos)
+{
+	_vector currentPos = m_pTransformCom->Get_State(STATE::POSITION);
+
+	// 두 벡터 간 거리 계산
+	_vector diff = Pos - currentPos;
+	float distance = XMVectorGetX(XMVector3Length(diff)); // 거리
+
+	float threshold = 0.2f;
+
+	// threshold 이내면 도착
+	if (distance <= threshold)
+		m_bSkillMove = false;
+}
+
 CPartObject* CContainerObject::Find_PartObject(const _wstring& strPartTag)
 {
 	auto    iter = m_PartObjects.find(strPartTag);

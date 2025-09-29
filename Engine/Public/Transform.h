@@ -89,6 +89,7 @@ public:
 	void Look(_vector Angle, _float fTimeDeata);
 	void LookAtPlayer(_vector fTarger, _float fTimeDelta);
 	void TurnY(_float fAngle, _float fTimeDelta);
+	void Target_Pos_Move(_fvector Target_Pos, _float fTimeDelta);
 
 private:
 	// 오브젝트의 이동 속도

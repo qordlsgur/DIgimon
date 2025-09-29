@@ -24,9 +24,12 @@ public:
 	void Update(_float fTimeDelta);
 	void Late_Update();
 public:
-	void Player_Attack();
-	void Enemy_Attack();
+	void Player_Attack(_float fTimeDelta);
+	void Player_Digimon_Attack_Pos(_int Target);
+
+	void Enemy_Attack(_float fTimeDelta);
 	void Player_Set();
+
 
 	void Set_Player(CContainerObject* pPlayer);
 	void Set_Digivice(CGameObject* pDigivice);
@@ -113,6 +116,9 @@ private:
 
 	_int							m_iSkill;
 	_bool							m_bSkill = { false };
+	_bool							m_bMove = { false };
+
+
 private:
 
 public:

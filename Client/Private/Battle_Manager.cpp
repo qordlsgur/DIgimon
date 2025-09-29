@@ -45,6 +45,8 @@ void CBattle_Manager::Priority_Update()
 
 void CBattle_Manager::Update(_float fTimeDelta)
 {
+	m_fBattleTime += fTimeDelta; // 시간 중첩
+
 	if (m_bPlayer_Death || m_bEnemy_Death)							// 둘 중 하나라도 true면 베틀 종료
 		m_bBattleOn = false;
 
@@ -53,21 +55,20 @@ void CBattle_Manager::Update(_float fTimeDelta)
 		switch (m_eBattle_State)
 		{
 		case BATTLE_STATE::START:
-
-			m_fBattleTime += fTimeDelta; // 시간 중첩
-
-			if (m_fBattleTime >= 3.f) // 3초가 지나면
+			if (m_fBattleTime >= 1.5f) // 3초가 지나면
 			{
 				m_pCurrentDigimon = m_pDigimon_Turn_Order.front();	// 제일 앞에 있는걸 저장하고
 				m_pDigimon_Turn_Order.pop_front();					// 제잎 앞에꺼를 지움
 
-				if (m_pCurrentDigimon->Get_Life())					// 살아 있으면 ING로 넘어감
-					m_eBattle_State = BATTLE_STATE::ING;
-				else
+				if (!m_pCurrentDigimon->Get_Life())					// 살아 있으면 ING로 넘어감
 				{
 					m_eBattle_State = BATTLE_STATE::START;			// 죽으면 다시 처음으로 돌아감
-					m_fBattleTime = 0.f;							// 그리고 시간 초기화
 					Player_Set();
+				}
+				else
+				{
+					m_eBattle_State = BATTLE_STATE::SKILL;
+					m_fBattleTime = 0.f;							// 그리고 시간 초기화
 				}
 			}
 
@@ -80,21 +81,28 @@ void CBattle_Manager::Update(_float fTimeDelta)
 			{
 				if (!m_pCurrentDigimon->Get_Monster())				// 플레이어 디지몬이면 플레이어 디지몬 공격 실행
 				{
-					Player_Attack();
+					Player_Attack(fTimeDelta);								// 스킬은 한번만 실행함
 				}
 				else												// 몬스터면 몬스터 실행
 				{
-					Enemy_Attack();
+					Enemy_Attack(fTimeDelta);
 				}
 			}
-			m_eBattle_State = BATTLE_STATE::ING;
+
+			if (!m_pCurrentDigimon->Get_SkillMove())
+				m_eBattle_State = BATTLE_STATE::ING;
 
 			break;
 
 		case BATTLE_STATE::ING:
-			if (m_pCurrentDigimon->Get_TurnEnd())					// 애니메이션이 끝나면 END로 넘김
-				m_eBattle_State = BATTLE_STATE::END;
+			if (!m_pCurrentDigimon->Get_Skill1() && m_pCurrentDigimon->Get_Skill2() && m_pCurrentDigimon->Get_Skill3())					// 애니메이션이 끝나면 END로 넘김
+			{
+				if (m_pCurrentDigimon->Get_TurnEnd())
+					m_eBattle_State = BATTLE_STATE::END;
+				//else
 
+			}
+			
 			break;
 
 		case BATTLE_STATE::END:
@@ -111,33 +119,8 @@ void CBattle_Manager::Late_Update()
 {
 }
 
-void CBattle_Manager::Player_Attack()
+void CBattle_Manager::Player_Attack(_float fTimeDelta)
 {
-}
-
-void CBattle_Manager::Enemy_Attack()
-{
-	if (m_iPlayerDigimonCount == 1)
-	{
-		m_pCurrentDigimon->LookAt(m_vPlayerDigimonPos[2].m128_f32[0], m_vPlayerDigimonPos[2].m128_f32[1], m_vPlayerDigimonPos[2].m128_f32[2]);
-	}
-	else if (m_iPlayerDigimonCount == 2)
-	{
-		if(Digimon_1 != -1)
-			m_pCurrentDigimon->LookAt(m_vPlayerDigimonPos[1].m128_f32[0], m_vPlayerDigimonPos[1].m128_f32[1], m_vPlayerDigimonPos[1].m128_f32[2]);
-		else
-			m_pCurrentDigimon->LookAt(m_vPlayerDigimonPos[3].m128_f32[0], m_vPlayerDigimonPos[3].m128_f32[1], m_vPlayerDigimonPos[3].m128_f32[2]);
-
-	}
-	else if (m_iPlayerDigimonCount == 3)
-	{
-		if (Digimon_1 != -1)
-			m_pCurrentDigimon->LookAt(m_vPlayerDigimonPos[0].m128_f32[0], m_vPlayerDigimonPos[0].m128_f32[1], m_vPlayerDigimonPos[0].m128_f32[2]);
-		else if(Digimon_2 != -1)
-			m_pCurrentDigimon->LookAt(m_vPlayerDigimonPos[2].m128_f32[0], m_vPlayerDigimonPos[2].m128_f32[1], m_vPlayerDigimonPos[2].m128_f32[2]);
-		else
-			m_pCurrentDigimon->LookAt(m_vPlayerDigimonPos[4].m128_f32[0], m_vPlayerDigimonPos[4].m128_f32[1], m_vPlayerDigimonPos[4].m128_f32[2]);
-	}
 	if (!m_bSkill)
 	{
 		m_iSkill = m_pGameInstance->intRandom(1, 3);
@@ -145,13 +128,92 @@ void CBattle_Manager::Enemy_Attack()
 		m_bSkill = true;
 	}
 
-	if (m_pCurrentDigimon->Get_SkillMove()) 
+	if (m_pCurrentDigimon->Get_SkillMove())
 	{
 		//m_pCurrentDigimon->Set_Position()
 	}
 
 
 	//m_pDigimon_Turn_Order[Digimon_1];
+}
+
+void CBattle_Manager::Player_Digimon_Attack_Pos(_int Target)
+{
+	if (m_iEnemyDigimonCount == 1)
+	{
+		m_pCurrentDigimon->LookAt(m_vEnemyDigimonPos[2].m128_f32[0], m_vEnemyDigimonPos[2].m128_f32[1], m_vEnemyDigimonPos[2].m128_f32[2]);
+	}
+	else if (m_iEnemyDigimonCount == 2)
+	{
+		if (Digimon_1 != -1)
+			m_pCurrentDigimon->LookAt(m_vEnemyDigimonPos[1].m128_f32[0], m_vEnemyDigimonPos[1].m128_f32[1], m_vEnemyDigimonPos[1].m128_f32[2]);
+		else
+			m_pCurrentDigimon->LookAt(m_vEnemyDigimonPos[3].m128_f32[0], m_vEnemyDigimonPos[3].m128_f32[1], m_vEnemyDigimonPos[3].m128_f32[2]);
+
+	}
+	else if (m_iEnemyDigimonCount == 3)
+	{
+		if (Digimon_1 != -1)
+			m_pCurrentDigimon->LookAt(m_vEnemyDigimonPos[0].m128_f32[0], m_vEnemyDigimonPos[0].m128_f32[1], m_vEnemyDigimonPos[0].m128_f32[2]);
+		else if (Digimon_2 != -1)
+			m_pCurrentDigimon->LookAt(m_vEnemyDigimonPos[2].m128_f32[0], m_vEnemyDigimonPos[2].m128_f32[1], m_vEnemyDigimonPos[2].m128_f32[2]);
+		else
+			m_pCurrentDigimon->LookAt(m_vEnemyDigimonPos[4].m128_f32[0], m_vEnemyDigimonPos[4].m128_f32[1], m_vEnemyDigimonPos[4].m128_f32[2]);
+	}
+}
+
+void CBattle_Manager::Enemy_Attack(_float fTimeDelta)
+{
+	_int Target_position{};
+	if (m_iPlayerDigimonCount == 1)
+	{
+		m_pCurrentDigimon->LookAt(m_vPlayerDigimonPos[2].m128_f32[1]);
+		Target_position = 2;
+	}
+	else if (m_iPlayerDigimonCount == 2)
+	{
+		if (Digimon_1 != -1)
+		{
+			m_pCurrentDigimon->LookAt(m_vPlayerDigimonPos[1].m128_f32[1]);
+			Target_position = 1;
+		}
+		else
+		{
+			m_pCurrentDigimon->LookAt(m_vPlayerDigimonPos[3].m128_f32[1]);
+			Target_position = 3;
+		}
+	}
+	else if (m_iPlayerDigimonCount == 3)
+	{
+		if (Digimon_1 != -1)
+		{
+			m_pCurrentDigimon->LookAt(m_vPlayerDigimonPos[0].m128_f32[1]);
+			Target_position = 0;
+		}
+		else if (Digimon_2 != -1)
+		{
+			m_pCurrentDigimon->LookAt(m_vPlayerDigimonPos[2].m128_f32[1]);
+			Target_position = 2;
+		}
+		else
+		{
+			m_pCurrentDigimon->LookAt(m_vPlayerDigimonPos[4].m128_f32[1]);
+			Target_position = 4;
+		}
+	}
+	if (!m_bSkill)
+	{
+		//m_iSkill = m_pGameInstance->intRandom(1, 3);
+		m_pCurrentDigimon->UseSkill(2);
+		m_bSkill = true;
+	}
+
+	if (m_pCurrentDigimon->Get_SkillMove())
+	{
+		m_bMove = true;
+		m_pCurrentDigimon->HasReachedTargetPosition(m_vEnemyDigimonAttackPos[2]);
+		m_pCurrentDigimon->Target_Pos_Move(m_vEnemyDigimonAttackPos[2], fTimeDelta);
+	}
 }
 
 void CBattle_Manager::Player_Set()
@@ -218,7 +280,7 @@ void CBattle_Manager::Battle_System()
 {
 	m_pPlayer->Set_Position(m_vPlayerBattlePos.m128_f32[0], m_vPlayerBattlePos.m128_f32[2]);
 	m_bPlayer_Death = false;
-	m_bEnemy_Death	= false;
+	m_bEnemy_Death = false;
 	m_eBattle_State = BATTLE_STATE::START;
 	Enemy_Position();
 	static_cast<CDigivice*>(m_pDigivice)->Update_Digimopn();

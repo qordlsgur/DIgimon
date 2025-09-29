@@ -62,7 +62,9 @@ public:
 	virtual void Set_Life(_bool Life) { m_bLife = Life; }
 	virtual _bool Get_Life() { return m_bLife; }
 
-	virtual _bool Get_Skill() { return Skill; }
+	virtual _bool Get_Skill1() { return m_bSkill1; }
+	virtual _bool Get_Skill2() { return m_bSkill2; }
+	virtual _bool Get_Skill3() { return m_bSkill3; }
 	virtual void Set_SkillMove(_bool Move) { m_bSkillMove = Move; }
 	virtual _bool Get_SkillMove() { return m_bSkillMove; }
 	virtual void Set_TurnEnd(_bool End) { m_bTurnEnd = End; }
@@ -75,6 +77,10 @@ public:
 	virtual _int Intersect(class CCollider* pPlayer_Collider);
 
 	virtual void Attack_Move(_vector Pos, _float fTimeDelta);
+
+	virtual void Target_Pos_Move(_fvector Target_Pos, _float fTimeDelta);
+
+	virtual void HasReachedTargetPosition(_vector Pos);
 
 protected:
 	map<const _wstring, class CPartObject*>			m_PartObjects;
@@ -103,7 +109,7 @@ protected:
 	_bool m_bSkill2 = { false };
 	_bool m_bSkill3 = { false };
 
-	_bool m_bTurnEnd = { false };
+	_bool m_bTurnEnd = { true };
 
 	queue<DIGIMONSTATE> m_eSkill_State;
 
