@@ -16,6 +16,7 @@
 
 IMPLEMENT_SINGLETON(CGameInstance)
 
+
 CGameInstance::CGameInstance()
 {
 }
@@ -119,7 +120,11 @@ _float CGameInstance::Random(_float fMin, _float fMax)
 
 _int CGameInstance::intRandom(_int iMin, _int iMax)
 {
-	return iMin + rand() % (iMax - iMin + 1);
+	static random_device rd;
+	static mt19937 gen(rd());
+	uniform_int_distribution<_int> dist(iMin, iMax);
+
+	return dist(gen);
 }
 
 #pragma region GRAPHIC_DEVICE

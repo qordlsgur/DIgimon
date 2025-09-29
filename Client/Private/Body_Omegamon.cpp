@@ -38,6 +38,7 @@ HRESULT CBody_Omegamon::Initialize(void* pArg)
     if (FAILED(Ready_Components()))
         return E_FAIL;
 
+    m_pModelCom->Set_AnimSpeed("BattleBack", 20.3f);
     m_pModelCom->Set_AnimSpeed("Skill_1", 30);
     m_pModelCom->Set_AnimSpeed("Skill_2", 35);
     m_pModelCom->Set_AnimSpeed("Skill_3", 30);

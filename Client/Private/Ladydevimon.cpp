@@ -24,7 +24,7 @@ HRESULT CLadydevimon::Initialize(void* pArg)
 {
 	CGameObject::GAMEOBJECT_DESC	Desc{};
 	Desc.fRotationPerSec = XMConvertToRadians(180.0f);
-	Desc.fSpeedPerSec = 50.f;
+	Desc.fSpeedPerSec = 60.f;
 
 	if (FAILED(__super::Initialize(&Desc)))
 		return E_FAIL;
@@ -86,18 +86,14 @@ void CLadydevimon::Update(_float fTimeDelta)
 				Skill3();
 			}
 
-			//if (m_pPart_Body->Get_AnimFinish())
-			//{
-			//	Skill = false;
-			//	m_bTurnEnd = true;
-			//	m_bSkill1 = false;
-			//	m_bSkill2 = false;
-			//	m_bSkill3 = false;
-			//	m_bSkillMove = false;
-			//}
-
-			if (!m_bSkill1 && !m_bSkill2 && !m_bSkill3)
+			if (m_bBackJump)
 			{
+				m_pFsm->Enter(DIGIMONSTATE::BATTLEBACK, m_pPart_Body);
+			}
+
+			if (!m_bSkill1 && !m_bSkill2 && !m_bSkill3 && !m_bBackJump)
+			{
+				m_bTurnEnd = true;
 				m_pFsm->Enter(DIGIMONSTATE::STANDBATTLE, m_pPart_Body);
 			}
 		}
@@ -137,58 +133,71 @@ _int CLadydevimon::Intersect(CCollider* pPlayer_Collider)
 	return -1;
 }
 
-void CLadydevimon::UseSkill(_int SkillNum)
+void CLadydevimon::UseSkill(_int Skill)
 {
-	Skill = true;
-
-	if (SkillNum == 1)
+	m_bSkill = true;
+	m_bTurnEnd = false;
+	if (Skill == 1)
 	{
 		if (!m_bSkillMove)
 			m_bSkillMove = true;
 		m_bSkill1 = true;
 	}
 
-	else if (SkillNum == 2)
+	else if (Skill == 2)
+	{
+		if (!m_bSkillMove)
+			m_bSkillMove = true;
 		m_bSkill2 = true;
+	}
 
-	else if (SkillNum == 3)
+	else if (Skill == 3)
 		m_bSkill3 = true;
 }
+
 void CLadydevimon::Skill1()
 {
 	if (m_bSkillMove)
 	{
 		m_pFsm->Enter(DIGIMONSTATE::BATTLEDASH, m_pPart_Body);
 	}
-	else
+	else if(!m_bSkillMove)
 	{
 		m_pFsm->Enter(DIGIMONSTATE::SKILL1, m_pPart_Body, false, false);
-		if(m_pPart_Body->Get_AnimFinish())
+		if(m_bSkill1 && m_pPart_Body->Get_AnimFinish())
 		{
-			Skill = false;
+			m_bSkill = false;
 			m_bSkill1 = false;
+			m_bBackJump = true;
 		}
 	}
 }
 
 void CLadydevimon::Skill2()
 {
-	m_pFsm->Enter(DIGIMONSTATE::SKILL2, m_pPart_Body, false, false);
-	Skill = true;
-	if (m_pPart_Body->Get_AnimFinish())
+	if (m_bSkillMove)
 	{
-		Skill = false;
-		m_bSkill2 = false;
+		m_pFsm->Enter(DIGIMONSTATE::BATTLEDASH, m_pPart_Body);
+	}
+	else if (!m_bSkillMove)
+	{
+		m_pFsm->Enter(DIGIMONSTATE::SKILL2, m_pPart_Body, false, false);
+		if (m_bSkill2 && m_pPart_Body->Get_AnimFinish())
+		{
+			m_bSkill = false;
+			m_bSkill2 = false;
+			m_bBackJump = true;
+		}
 	}
 }
 
 void CLadydevimon::Skill3()
 {
 	m_pFsm->Enter(DIGIMONSTATE::SKILL3, m_pPart_Body, false, false);
-	Skill = true;
-	if (m_pPart_Body->Get_AnimFinish())
+	m_bSkill = true;
+	if (m_bSkill3 && m_pPart_Body->Get_AnimFinish())
 	{
-		Skill = false;
+		m_bSkill = false;
 		m_bSkill3 = false;
 	}
 }

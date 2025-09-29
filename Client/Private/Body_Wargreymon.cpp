@@ -36,6 +36,7 @@ HRESULT CBody_Wargreymon::Initialize(void* pArg)
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 
+	m_pModelCom->Set_AnimSpeed("BattleBack", 20.f);
 	m_pModelCom->Set_AnimSpeed("Skill_1", 40);
 	m_pModelCom->Set_AnimSpeed("Skill_2", 50);
 	m_pModelCom->Set_AnimSpeed("Skill_3", 45);

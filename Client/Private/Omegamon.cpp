@@ -25,7 +25,7 @@ HRESULT COmegamon::Initialize(void* pArg)
 {
 	CGameObject::GAMEOBJECT_DESC	Desc{};
 	Desc.fRotationPerSec = XMConvertToRadians(180.0f);
-	Desc.fSpeedPerSec = 50.f;
+	Desc.fSpeedPerSec = 70.f;
 
 	if (FAILED(__super::Initialize(&Desc)))
 		return E_FAIL;
@@ -74,57 +74,28 @@ void COmegamon::Update(_float fTimeDelta)
 		}
 		else
 		{
-			if (!Skill)
+			if (m_bSkill1)
 			{
-				if (m_pGameInstance->Key_Down(DIK_4))
-				{
-					m_pFsm->Enter(DIGIMONSTATE::BATTLEBACK, m_pPart_Body, false, false);
-					Skill = true;
-				}
-
-				if (m_pGameInstance->Key_Down(DIK_5))
-				{
-					m_pFsm->Enter(DIGIMONSTATE::BATTLEDASH, m_pPart_Body, false, false);
-					Skill = true;
-				}
-
-				if (m_pGameInstance->Key_Down(DIK_6))
-				{
-					m_pFsm->Enter(DIGIMONSTATE::HIT, m_pPart_Body, false, false);
-					Skill = true;
-				}
-
-				if (m_pGameInstance->Key_Down(DIK_7))
-				{
-					m_pFsm->Enter(DIGIMONSTATE::DEATH, m_pPart_Body, false, false);
-					Skill = true;
-				}
-
-				if (m_pGameInstance->Key_Down(DIK_8))
-				{
-					m_pFsm->Enter(DIGIMONSTATE::FAIL, m_pPart_Body, false, false);
-					Skill = true;
-				}
-
-				if (m_pGameInstance->Key_Down(DIK_9))
-				{
-					m_pFsm->Enter(DIGIMONSTATE::LOOKAROUND, m_pPart_Body, false, false);
-					Skill = true;
-				}
+				Skill1();
+			}
+			else if (m_bSkill2)
+			{
+				Skill2();
+			}
+			else if (m_bSkill3)
+			{
+				Skill3();
 			}
 
-			if (m_pPart_Body->Get_AnimFinish())
+			if (m_bBackJump)
 			{
-				Skill = false;
+				m_pFsm->Enter(DIGIMONSTATE::BATTLEBACK, m_pPart_Body);
 			}
 
-			if (!Skill)
+			if (!m_bSkill1 && !m_bSkill2 && !m_bSkill3 && !m_bBackJump)
 			{
-				m_bMove = false;
-				//m_pFsm->Enter(DIGIMONSTATE::BATTLEDASH, m_pPart_Body);
-				//m_bMove = true;
-				if (!m_bMove)
-					m_pFsm->Enter(DIGIMONSTATE::STANDBATTLE, m_pPart_Body);
+				m_pFsm->Enter(DIGIMONSTATE::STANDBATTLE, m_pPart_Body);
+				m_bTurnEnd = true;
 			}
 		}
 		m_pFsm->Update(fTimeDelta);
@@ -165,15 +136,61 @@ _int COmegamon::Intersect(CCollider* pPlayer_Collider)
 
 void COmegamon::UseSkill(_int Skill)
 {
+	m_bSkill = true;
+	m_bTurnEnd = false;
 	if (Skill == 1)
-		m_pFsm->Enter(DIGIMONSTATE::SKILL1, m_pPart_Body, false, false);
-	else if (Skill == 2)
-		m_pFsm->Enter(DIGIMONSTATE::SKILL2, m_pPart_Body, false, false);
-	else if (Skill == 3)
-		m_pFsm->Enter(DIGIMONSTATE::SKILL3, m_pPart_Body, false, false);
+	{
+		if (!m_bSkillMove)
+			m_bSkillMove = true;
+		m_bSkill1 = true;
+	}
 
-	Skill = true;
+	else if (Skill == 2)
+		m_bSkill2 = true;
+
+	else if (Skill == 3)
+		m_bSkill3 = true;
 }
+
+void COmegamon::Skill1()
+{
+	if (m_bSkillMove)
+	{
+		m_pFsm->Enter(DIGIMONSTATE::BATTLEDASH, m_pPart_Body);
+	}
+	else if (!m_bSkillMove)
+	{
+		m_pFsm->Enter(DIGIMONSTATE::SKILL1, m_pPart_Body, false, false);
+		if (m_bSkill1 && m_pPart_Body->Get_AnimFinish())
+		{
+			m_bSkill = false;
+			m_bSkill1 = false;
+			m_bBackJump = true;
+		}
+	}
+
+}
+
+void COmegamon::Skill2()
+{
+	m_pFsm->Enter(DIGIMONSTATE::SKILL2, m_pPart_Body, false, false);
+	if (m_bSkill2 && m_pPart_Body->Get_AnimFinish())
+	{
+		m_bSkill = false;
+		m_bSkill2 = false;
+	}
+}
+
+void COmegamon::Skill3()
+{
+	m_pFsm->Enter(DIGIMONSTATE::SKILL3, m_pPart_Body, false, false);
+	if (m_bSkill3 && m_pPart_Body->Get_AnimFinish())
+	{
+		m_bSkill = false;
+		m_bSkill3 = false;
+	}
+}
+
 
 HRESULT COmegamon::Ready_PartObjects()
 {

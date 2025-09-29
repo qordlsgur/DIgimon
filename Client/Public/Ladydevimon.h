@@ -44,7 +44,6 @@ private:
 	class CStateMachine* m_pFsm = { nullptr };
 
 	_bool m_bMove = false;
-	_bool Skill = false;
 
 private:
 	HRESULT Ready_PartObjects();

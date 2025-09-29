@@ -161,7 +161,7 @@ void CPlayer::Update(_float fTimeDelta)
 	m_pFsm->Update(fTimeDelta);
 	m_pColliderCom->Update(XMLoadFloat4x4(m_pTransformCom->Get_WorldMatrixPtr()));
 
-	if (m_bOnInteract)
+	if (m_bOnInteract && !m_pBattle_Manager->Get_Battle())
 	{
 		if (m_pGameInstance->Key_Down(DIK_F))
 		{
@@ -172,11 +172,7 @@ void CPlayer::Update(_float fTimeDelta)
 		}
 	}
 
-	if (m_pGameInstance->Key_Down(DIK_M))
-	{
-		m_pTransformCom->Set_State(STATE::POSITION, m_pBattle_Manager->Get_Player_Pos());
-		m_pBattle_Manager->Set_Battle(false);
-	}
+
 
 	__super::Update(fTimeDelta);
 }

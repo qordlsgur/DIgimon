@@ -30,7 +30,7 @@ public:
 	void Enemy_Attack(_float fTimeDelta);
 	void Player_Set();
 
-
+	void ReturnToPosition(_float fTimeDelta);
 	void Set_Player(CContainerObject* pPlayer);
 	void Set_Digivice(CGameObject* pDigivice);
 	void Set_Battle(CGameObject* pBattle);
@@ -92,6 +92,8 @@ private:
 	_float							m_fEnemyDigimon_Look{};
 	_float							m_fPlayer_Look{};
 
+	_vector							m_pReturnPosition{};
+
 	CGameObject*					m_pBattle = { nullptr };
 
 	vector<CContainerObject*>		m_pDigimonSort;
@@ -117,6 +119,11 @@ private:
 	_int							m_iSkill;
 	_bool							m_bSkill = { false };
 	_bool							m_bMove = { false };
+
+	_float							m_fBackJumpTime{};
+	_float							m_fDashTime{};
+
+	_int							m_iLook_Target_position{};
 
 
 private:

@@ -187,19 +187,29 @@ void CContainerObject::Skill3()
 }
 
 
+_vector CContainerObject::Get_Position()
+{
+	return m_pTransformCom->Get_State(STATE::POSITION);
+}
+
 void CContainerObject::LookAt(_float iRadian)
 {
 	m_pTransformCom->Rotation(XMVectorSet(0.f, 1.f, 0.f, 0.f), XMConvertToRadians(iRadian));
 }
 
-void CContainerObject::LookAt(_float fRadianX, _float fRadianY, _float fRadianZ)
+void CContainerObject::LookAt(_vector Pos)
 {
-	m_pTransformCom->Rotation(fRadianX, fRadianY, fRadianZ);
+	m_pTransformCom->LookAt(Pos);
 }
 
 void CContainerObject::Set_Position(_float fX, _float fZ)
 {
 	m_pTransformCom->Set_State(STATE::POSITION, XMVectorSet(fX, 0.f, fZ, 1.f));
+}
+
+void CContainerObject::Set_y(_float fY)
+{
+	m_pTransformCom->Set_Y(fY);
 }
 
 _int CContainerObject::Intersect(CCollider* pPlayer_Collider)
@@ -217,7 +227,7 @@ void CContainerObject::Target_Pos_Move(_fvector Target_Pos, _float fTimeDelta)
 	m_pTransformCom->Target_Pos_Move(Target_Pos, fTimeDelta);
 }
 
-void CContainerObject::HasReachedTargetPosition(_vector Pos)
+_bool CContainerObject::HasReachedTargetPosition(_vector Pos)
 {
 	_vector currentPos = m_pTransformCom->Get_State(STATE::POSITION);
 
@@ -229,7 +239,9 @@ void CContainerObject::HasReachedTargetPosition(_vector Pos)
 
 	// threshold 이내면 도착
 	if (distance <= threshold)
-		m_bSkillMove = false;
+		return false;
+
+	return true;
 }
 
 CPartObject* CContainerObject::Find_PartObject(const _wstring& strPartTag)

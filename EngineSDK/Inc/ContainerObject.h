@@ -67,12 +67,19 @@ public:
 	virtual _bool Get_Skill3() { return m_bSkill3; }
 	virtual void Set_SkillMove(_bool Move) { m_bSkillMove = Move; }
 	virtual _bool Get_SkillMove() { return m_bSkillMove; }
+
+	virtual void Set_BackJump(_bool BackJump) { m_bBackJump = BackJump; }
+	virtual _bool Get_BackJump() { return m_bBackJump; }
+
 	virtual void Set_TurnEnd(_bool End) { m_bTurnEnd = End; }
 	virtual _bool Get_TurnEnd() { return m_bTurnEnd; }
 
+	virtual _vector Get_Position();
+
 	virtual void LookAt(_float iRadian);
-	virtual void LookAt(_float fRadianX, _float fRadianY, _float fRadianZ);
+	virtual void LookAt(_vector Pos);
 	virtual void Set_Position(_float fX, _float fZ);
+	virtual void Set_y(_float fY);
 
 	virtual _int Intersect(class CCollider* pPlayer_Collider);
 
@@ -80,7 +87,7 @@ public:
 
 	virtual void Target_Pos_Move(_fvector Target_Pos, _float fTimeDelta);
 
-	virtual void HasReachedTargetPosition(_vector Pos);
+	virtual _bool HasReachedTargetPosition(_vector Pos);
 
 protected:
 	map<const _wstring, class CPartObject*>			m_PartObjects;
@@ -102,13 +109,13 @@ protected:
 	_bool m_bBattle = { false };
 	_bool m_bMonster = { false };
 	_bool m_bLife = { true };
-	_bool Skill = { false };
+	_bool m_bSkill = { false };
 	_bool m_bSkillMove = { false };
+	_bool m_bBackJump = { false };
 
 	_bool m_bSkill1 = { false };
 	_bool m_bSkill2 = { false };
 	_bool m_bSkill3 = { false };
-
 	_bool m_bTurnEnd = { true };
 
 	queue<DIGIMONSTATE> m_eSkill_State;

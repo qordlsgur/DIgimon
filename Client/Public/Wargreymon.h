@@ -25,6 +25,15 @@ public:
 	virtual void Update(_float fTimeDelta) override;
 	virtual void Late_Update(_float fTimeDelta) override;
 	virtual HRESULT Render() override;
+public:
+	virtual void UseSkill(_int Skill) override;
+	virtual void Skill1() override;
+	virtual void Skill2() override;
+	virtual void Skill3() override;
+
+public:
+	virtual _int Intersect(class CCollider* pPlayer_Collider) override;
+
 
 private:
 	CPartObject* m_pPart_Body = { nullptr };
@@ -34,11 +43,8 @@ private:
 	class CStateMachine* m_pFsm = { nullptr };
 
 	_bool m_bMove = false;
-	_bool Skill = false;
-
 
 private:
-	virtual void UseSkill(_int Skill) override;
 
 	HRESULT Ready_PartObjects();
 

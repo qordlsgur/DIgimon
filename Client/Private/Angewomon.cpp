@@ -77,33 +77,28 @@ void CAngewomon::Update(_float fTimeDelta)
 		}
 		else
 		{
-			if (!Skill)
+			if (m_bSkill1)
 			{
-				if (m_bSkill1)
-				{
-					Skill1();
-				}
-				else if (m_bSkill2)
-				{
-					Skill2();
-				}
-				else if (m_bSkill3)
-				{
-					Skill3();
-				}
+				Skill1();
+			}
+			else if (m_bSkill2)
+			{
+				Skill2();
+			}
+			else if (m_bSkill3)
+			{
+				Skill3();
 			}
 
-			if (m_pPart_Body->Get_AnimFinish())
+			if (m_bBackJump)
 			{
-				Skill = false;
+				m_pFsm->Enter(DIGIMONSTATE::BATTLEBACK, m_pPart_Body);
+			}
+
+			if (!m_bSkill1 && !m_bSkill2 && !m_bSkill3 && !m_bBackJump)
+			{
 				m_bTurnEnd = true;
-			}
-
-			if (m_bTurnEnd)
-			{
-				m_bTurnEnd = false;
 				m_pFsm->Enter(DIGIMONSTATE::STANDBATTLE, m_pPart_Body);
-
 			}
 		}
 		m_pFsm->Update(fTimeDelta);
@@ -134,8 +129,19 @@ HRESULT CAngewomon::Render()
 	return S_OK;
 }
 
+_int CAngewomon::Intersect(CCollider* pPlayer_Collider)
+{
+	if (m_pColliderCom->Intersect(pPlayer_Collider))
+		return Get_ID();
+
+	return -1;
+}
+
+
 void CAngewomon::UseSkill(_int Skill)
 {
+	m_bSkill = true;
+	m_bTurnEnd = false;
 	if (Skill == 1)
 	{
 		m_bSkillMove = true;
@@ -143,26 +149,38 @@ void CAngewomon::UseSkill(_int Skill)
 	}
 	else if (Skill == 2)
 		m_bSkill2 = true;
+
 	else if (Skill == 3)
 		m_bSkill3 = true;
 }
 void CAngewomon::Skill1()
 {
-	if (!m_bSkillMove)
+	if (m_bSkillMove)
+	{
+		m_pFsm->Enter(DIGIMONSTATE::BATTLEDASH, m_pPart_Body);
+	}
+	else if (!m_bSkillMove)
+	{
 		m_pFsm->Enter(DIGIMONSTATE::SKILL1, m_pPart_Body, false, false);
-	Skill = true;
+		if (m_bSkill1 && m_pPart_Body->Get_AnimFinish())
+		{
+			m_bSkill = false;
+			m_bSkill1 = false;
+			m_bBackJump = true;
+		}
+	}
 }
 
 void CAngewomon::Skill2()
 {
 	m_pFsm->Enter(DIGIMONSTATE::SKILL2, m_pPart_Body, false, false);
-	Skill = true;
+	m_bSkill = true;
 }
 
 void CAngewomon::Skill3()
 {
 	m_pFsm->Enter(DIGIMONSTATE::SKILL3, m_pPart_Body, false, false);
-	Skill = true;
+	m_bSkill = true;
 }
 
 HRESULT CAngewomon::Ready_PartObjects()

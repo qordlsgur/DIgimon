@@ -11,7 +11,6 @@
 #include <d3dcompiler.h>
 #include "DirectXTK/DDSTextureLoader.h"
 #include "DirectXTK/WICTextureLoader.h"
-#include "FX11/d3dx11effect.h"
 
 #include "DirectXTK/VertexTypes.h"
 #include "DirectXTK/PrimitiveBatch.h"
@@ -20,6 +19,8 @@
 #include "DirectXTK/SpriteBatch.h"
 #include "DirectXTK/SpriteFont.h"
 
+
+#include "FX11/d3dx11effect.h"
 using namespace DirectX;
 
 #include <vector>
@@ -35,6 +36,7 @@ using namespace DirectX;
 #include <ctime>
 #include <iostream>
 #include <fstream>
+#include <random>
 
 using namespace std;
 

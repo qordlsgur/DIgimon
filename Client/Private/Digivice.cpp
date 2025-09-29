@@ -49,6 +49,8 @@ HRESULT CDigivice::Initialize(void* pArg)
 	m_Digimon_ID.resize(8, -1);
 
 	Acquire_Digimon(0);
+	Acquire_Digimon(9);
+	Acquire_Digimon(7);
 
 
 	return S_OK;
@@ -174,6 +176,7 @@ DIGIMON_INFO* CDigivice::Set_Info(_int ID)
 	pInfo->Sp += m_pGameInstance->intRandom(250, 500);
 	pInfo->Damage += m_pGameInstance->intRandom(500, 1000);
 	//pInfo->AttackSpeed += m_pGameInstance->intRandom(1, 20);
+	pInfo->AttackSpeed += 40;
 
 	if (pInfo->Stage == DIGIMON_STAGE::MEGA)
 		pInfo->Lv += 5;

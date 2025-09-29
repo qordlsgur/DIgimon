@@ -32,6 +32,9 @@ public:
 	virtual void Skill2() override;
 	virtual void Skill3() override;
 
+public:
+	virtual _int Intersect(class CCollider* pPlayer_Collider) override;
+
 private:
 	CCollider* m_pColliderCom = { nullptr };
 	CPartObject* m_pPart_Body = { nullptr };
@@ -41,8 +44,6 @@ private:
 	class CStateMachine* m_pFsm = { nullptr };
 
 	_bool m_bMove = false;
-	_bool Skill = false;
-
 
 private:
 
