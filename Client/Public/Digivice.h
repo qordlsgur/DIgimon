@@ -40,11 +40,12 @@ public:
 
 private:
 	CVIBuffer_Rect* m_pVIBufferCom = { nullptr };
-	CTexture* m_pTextureCom = { nullptr };
+	CTexture* m_pTextureCom = { nullptr };	
 	CShader* m_pShaderCom = { nullptr };
 
 	class CDigivice_Slot* m_pDigivice_Slot = { nullptr };
 	class CDigivice_Mask* m_pDigivice_Mask = { nullptr };
+	class CDigivice_Info* m_pDigivice_Info = { nullptr };
 
 	_uint	m_iDigivice_Battle_Slot_Number;
 
@@ -53,9 +54,19 @@ private:
 	vector<DIGIMON_INFO*> m_pDigimon_Info;
 	vector<_int> m_Digimon_ID;
 
+	wstring	m_strDigimon_Stage[5] = {};
+	wstring	m_strDigimon_Attribute[3] = {};
+
+	_tchar			m_szDigimonHp[MAX_PATH] = {};
+	_tchar			m_szDigimonSp[MAX_PATH] = {};
+	_tchar			m_szDigimonDamage[MAX_PATH] = {};
+	_tchar			m_szDigimonAttackSpeed[MAX_PATH] = {};
+
 
 	class CDigimon_Manager* m_pDigimon_Manager = {nullptr};
 	class CBattle_Manager* m_pBattle_Manager = {nullptr};
+
+	class CDigivice_Slot* m_pSelectSlot = { nullptr };
 
 private:
 	HRESULT Ready_Components();

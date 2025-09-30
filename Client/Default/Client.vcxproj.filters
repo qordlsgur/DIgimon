@@ -250,6 +250,9 @@
     <Filter Include="02.GameObjects\Digimon\09.Beelzebumon\Body_Beelzebumon">
       <UniqueIdentifier>{85f7853a-b664-4642-be62-282e57ac6ae3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="03.UI\Digivice\Digivice_Slot\Info">
+      <UniqueIdentifier>{6ffecf77-e9a4-4c4c-a1f6-42593ac92098}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -482,6 +485,9 @@
     </ClInclude>
     <ClInclude Include="..\public\Body_Beelzebumon.h">
       <Filter>02.GameObjects\Digimon\09.Beelzebumon\Body_Beelzebumon</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\Digivice_Info.h">
+      <Filter>03.UI\Digivice\Digivice_Slot\Info</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -716,6 +722,9 @@
     </ClCompile>
     <ClCompile Include="..\private\Body_Beelzebumon.cpp">
       <Filter>02.GameObjects\Digimon\09.Beelzebumon\Body_Beelzebumon</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\Digivice_Info.cpp">
+      <Filter>03.UI\Digivice\Digivice_Slot\Info</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

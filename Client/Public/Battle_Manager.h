@@ -14,18 +14,28 @@ class CBattle_Manager final : public CBase
 {
 public:
 	DECLARE_SINGLETON(CBattle_Manager);
+
+public:
+	typedef struct DigimonOrder
+	{
+		_bool	m_bDigimonOrder = { false };
+		_bool	m_bDigimonSkill = { false };
+		_int	m_iDigimonSkill{};
+		_int	m_iTarget{};
+	}ORDER;
+
 private:
 	CBattle_Manager();
 	virtual ~CBattle_Manager() = default;
 
 public:
 	HRESULT Initialize();
-	void Priority_Update();
+	void Priority_Update(_float fTimeDelta);
 	void Update(_float fTimeDelta);
-	void Late_Update();
+	void Late_Update(_float fTimeDelta);
 public:
 	void Player_Attack(_float fTimeDelta);
-	void Player_Digimon_Attack_Pos(_int Target);
+	_vector Player_Digimon_Attack_Pos(_int Target);
 
 	void Enemy_Attack(_float fTimeDelta);
 	void Player_Set();
@@ -45,9 +55,15 @@ public:
 	void Player_Digimon_Position();
 	void Current_Digimon(_int ID1, _int ID2, _int ID3);
 
-	void Digimon1_Skill(_int ID);
-	void Digimon2_Skill(_int ID);
-	void Digimon3_Skill(_int ID);
+	void Digimon1_Skill();
+	void Digimon2_Skill();
+	void Digimon3_Skill();
+
+	void DigimonTargetOrder();
+
+	void Digimon1_Attack(_float fTimeDelta);
+	void Digimon2_Attack(_float fTimeDelta);
+	void Digimon3_Attack(_float fTimeDelta);
 
 	void EnemyDigimon_Info(_int EnemyDigimonID);
 
@@ -73,14 +89,17 @@ private:
 	class CDigimon_Manager*			m_pDigimon_Manager = { nullptr };
 
 	vector<CContainerObject*>		m_pMyDigimon;
-	vector<CContainerObject*>		m_pEnemyDigimon = { nullptr };
+	vector<CContainerObject*>		m_pEnemyDigimon;
 
-	CContainerObject*				m_pPlayer = { nullptr };
+	CContainerObject*				m_pPlayer = { nullptr }; 
 	CGameObject*					m_pDigivice = { nullptr };
 
 	CGameObject*					m_pBattle_Terrain = { nullptr };
 
 	_vector							m_pPlayer_Pos{};
+
+	_vector							m_vPlayerDigimonAttackLookAtEnemy{};
+	_vector							m_vEnemyAttackLookAtPlayerDigimon{};
 
 	_vector							m_vEnemyDigimonPos[5] = {};
 	_vector							m_vPlayerDigimonPos[5] = {};
@@ -99,13 +118,9 @@ private:
 	vector<CContainerObject*>		m_pDigimonSort;
 	deque<CContainerObject*>		m_pDigimon_Turn_Order;
 
-	_int							Digimon_1{};
-	_int							Digimon_2{};
-	_int							Digimon_3{};
+	_int							m_pPlayerDigimon[3] = {-1};
 
-	_int							m_iEnemy_1{};
-	_int							m_iEnemy_2{};
-	_int							m_iEnemy_3{};
+	_int							m_iEnemyDigimon[3] = {-1};
 
 	_float							m_fBattleTime{};
 
@@ -116,7 +131,6 @@ private:
 	_bool							m_bPlayer_Death = { false };
 	_bool							m_bEnemy_Death = { false };
 
-	_int							m_iSkill;
 	_bool							m_bSkill = { false };
 	_bool							m_bMove = { false };
 
@@ -125,6 +139,9 @@ private:
 
 	_int							m_iLook_Target_position{};
 
+	ORDER							m_DigimonOrder1;
+	ORDER							m_DigimonOrder2;
+	ORDER							m_DigimonOrder3;
 
 private:
 

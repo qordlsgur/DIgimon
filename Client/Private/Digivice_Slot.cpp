@@ -26,6 +26,8 @@ HRESULT CDigivice_Slot::Initialize(void* pArg)
 	Desc.fSizeX = 241.f;
 	Desc.fSizeY = 50.f;
 
+	m_fOffSetName = 34.f;
+
 	m_pRect = { long(Desc.fX - Desc.fSizeX * 0.5f), long(Desc.fY - Desc.fSizeY * 0.5f), long(Desc.fX + Desc.fSizeX * 0.5f), long(Desc.fY + Desc.fSizeY * 0.5f) };
 
 
@@ -50,7 +52,7 @@ void CDigivice_Slot::Update(_float fTimeDelta)
 {
 	_itow_s(m_Info.Lv, m_szDigimonLv, MAX_PATH, 10);
 	wcscpy_s(m_szLv, MAX_PATH, L"LV");
-	wcscat_s(m_szLv, MAX_PATH, m_szDigimonLv);
+	wcscat_s(m_szLv, MAX_PATH, m_szDigimonLv);     
 
 }
 
@@ -91,8 +93,9 @@ HRESULT CDigivice_Slot::Render()
 
 	if (m_bHasDigimon)
 	{
+		_float fontSizeX = (m_pGameInstance->FontSizeX(TEXT("12"), m_Info.DigimonName.c_str()) - m_fOffSetName) * 0.5f;
 		m_pGameInstance->Render_Text(TEXT("10"), m_szLv, _float2(660.f + m_fPos.x, 340.f + (-m_fPos.y)), XMVectorSet(1.f, 1.f, 1.f, 1.f));
-		m_pGameInstance->Render_Text(TEXT("10"), m_Info.DigimonName.c_str(), _float2(640.f + m_fPos.x, 370.f + (-m_fPos.y)), XMVectorSet(1.f, 1.f, 1.f, 1.f));
+		m_pGameInstance->Render_Text(TEXT("12"), m_Info.DigimonName.c_str(), _float2((660.f - fontSizeX) + m_fPos.x, 365.f + (-m_fPos.y)), XMVectorSet(1.f, 1.f, 1.f, 1.f));
 	}
 
 	return S_OK;
@@ -107,11 +110,6 @@ void CDigivice_Slot::Set_Move(_float fX, _float fY)
 {
 	m_fX = fX;
 	m_fY = fY;
-}
-
-void CDigivice_Slot::Set_Digimon_ID(_int ID)
-{
-	m_iDigimon_ID = ID;
 }
 
 void CDigivice_Slot::Set_Info(DIGIMON_INFO* pInfo)

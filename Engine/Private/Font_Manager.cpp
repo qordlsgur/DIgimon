@@ -23,13 +23,22 @@ HRESULT CFont_Manager::Add_Font(const _wstring& strFontTag, const _tchar* pFontF
     return S_OK;
 }
 
-HRESULT CFont_Manager::Render(const _wstring& strFontTag, const _tchar* pText, const _float2& vPosition, _fvector vColor)
+HRESULT CFont_Manager::Render(const _wstring& strFontTag, const _tchar* pText, const _float2& vPosition, _fvector vColor, _float vScale)
 {
     CFont* pFont = Find_Font(strFontTag);
     if (nullptr == pFont)
         return E_FAIL;
 
-    return pFont->Render(pText, vPosition, vColor);
+    return pFont->Render(pText, vPosition, vColor, vScale);
+}
+
+_float CFont_Manager::FontSizeX(const _wstring& strFontTag, const _tchar* pText)
+{
+    CFont* pFont = Find_Font(strFontTag);
+    if (nullptr == pFont)
+        return E_FAIL;
+
+    return pFont->FontSizeX(pText);
 }
 
 CFont* CFont_Manager::Find_Font(const _wstring& strFontTag)

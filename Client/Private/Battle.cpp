@@ -32,7 +32,7 @@ void CBattle::Priority_Update(_float fTimeDelta)
 {
 	if (m_Battle)
 	{
-		m_pBattle_Manager->Priority_Update();
+		m_pBattle_Manager->Priority_Update(fTimeDelta);
 	}
 }
 
@@ -51,7 +51,7 @@ void CBattle::Late_Update(_float fTimeDelta)
 {
 	if (m_Battle)
 	{
-		m_pBattle_Manager->Late_Update();
+		m_pBattle_Manager->Late_Update(fTimeDelta);
 	}
 }
 

@@ -16,15 +16,20 @@ HRESULT CFont::Initialize(const _tchar* pFontFilePath)
 	return S_OK;
 }
 
-HRESULT CFont::Render(const _tchar* pText, const _float2& vPosition, _fvector vColor)
+HRESULT CFont::Render(const _tchar* pText, const _float2& vPosition, _fvector vColor, _float vScale)
 {
 	m_pBatch->Begin();
 
-	m_pFont->DrawString(m_pBatch, pText, vPosition, vColor);
+	m_pFont->DrawString(m_pBatch, pText, vPosition, vColor, 0.f, _float2(0.f,0.f), vScale);
 
 	m_pBatch->End();
 
 	return S_OK;
+}
+
+_float CFont::FontSizeX(const _tchar* pText)
+{
+	return XMVectorGetX(m_pFont->MeasureString(pText));
 }
 
 CFont* CFont::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext, const _tchar* pFontFilePath)

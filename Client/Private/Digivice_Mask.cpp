@@ -83,7 +83,6 @@ void CDigivice_Mask::Set_Move(_float fX, _float fY)
 	m_fY = fY;
 
 	m_pRect = { long(m_fX - m_fSizeX * 0.5f), long(m_fY - m_fSizeY * 0.5f), long(m_fX + m_fSizeX * 0.5f), long(m_fY + m_fSizeY * 0.5f) };
-
 }
 
 HRESULT CDigivice_Mask::Ready_Components()

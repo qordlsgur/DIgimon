@@ -2,6 +2,7 @@
 matrix g_WorldMatrix, g_ViewMatrix, g_ProjMatrix;
 
 Texture2D g_Texture;
+Texture2D g_Texture1;
 
 sampler DefaultSampler = sampler_state
 {
@@ -74,6 +75,21 @@ PS_OUT PS_MAIN(PS_IN In)
     return Out;
 }
 
+// 픽셀 셰이더 함수: 리턴 값은 픽셀의 최종 색
+PS_OUT PS_TwoTextureMAIN(PS_IN In)
+{
+    PS_OUT Out;
+        
+    float4 SampleColor = g_Texture1.Sample(DefaultSampler, In.vTexcoord);
+    
+    if(SampleColor.r <= 0.1f)
+        discard;
+    
+    Out.vColor = SampleColor;
+    
+    return Out;
+}
+
 technique11 DefaultTechnique
 {
 		// pass도 여러개 정의 가능하다.
@@ -84,4 +100,13 @@ technique11 DefaultTechnique
         VertexShader = compile vs_5_0 VS_MAIN();
         PixelShader = compile ps_5_0 PS_MAIN();
     }
+
+    pass TexturePass
+    {
+        SetDepthStencilState(DSS_None, 0);
+        SetBlendState(BS_AlphaBlend, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
+        VertexShader = compile vs_5_0 VS_MAIN();
+        PixelShader = compile ps_5_0 PS_TwoTextureMAIN();
+    }
+
 }

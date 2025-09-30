@@ -6,6 +6,7 @@
 #include "Digivice.h"
 #include "Digivice_Slot.h"
 #include "Digivice_Mask.h"
+#include "Digivice_Info.h"
 #include "PartyUHD.h"
 #include "UHD_Slot.h"
 #include "Interaction.h"
@@ -184,6 +185,31 @@ HRESULT CLoader::Loading_For_GamePlay()
 	/* For.Prototype_Component_Texture_Digivice_Target*/
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Digivice_Target"),
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/UI/Digivice_Target.png"), 1))))
+		return E_FAIL;
+
+	/* For.Prototype_Component_Texture_Digivice_Info*/
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Digivice_Info"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/UI/Digivice_Info.png"), 1))))
+		return E_FAIL;
+
+	/* For.Prototype_Component_Texture_Digivice_Status_BG*/
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Digivice_Status_BG"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/Digivice/Digivice_Status_Gauge_BG.png"), 1))))
+		return E_FAIL;
+
+	/* For.Prototype_Component_Texture_Digivice_Status_HP*/
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Digivice_Status_HP"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/Digivice/Digivice_Status_Gauge_HP.png"), 1))))
+		return E_FAIL;
+
+	/* For.Prototype_Component_Texture_Digivice_Status_SP*/
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Digivice_Status_SP"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/Digivice/Digivice_Status_Gauge_SP.png"), 1))))
+		return E_FAIL;
+
+	/* For.Prototype_Component_Texture_Digivice_Status_EXP*/
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Digivice_Status_EXP"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/Digivice/Digivice_Status_Gauge_EXP.png"), 1))))
 		return E_FAIL;
 
 	//Party_HUD---------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -542,6 +568,11 @@ HRESULT CLoader::Loading_For_GamePlay()
 	//* For.Prototype_GameObject_UHDSlot */
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_UHDSlot"),
 		CUHD_Slot::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	/* For.Prototype_GameObject_Digivice_Info */
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Digivice_Info"),
+		CDigivice_Info::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
 	//* For.Prototype_GameObject_Exit_Button */

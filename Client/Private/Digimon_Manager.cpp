@@ -64,7 +64,7 @@ void CDigimon_Manager::Blackwargreymon()
 {
 	Digimon_Info Info;
 
-	Info.DigimonName = TEXT("블렉워그레이몬");
+	Info.DigimonName = TEXT("블랙워그레이몬");
 	Info.DigimonId = 1;
 	Info.Stage = DIGIMON_STAGE::MEGA;
 	Info.Attribute = DIGIMON_ATTRIBUTE::VIRUS;

@@ -189,6 +189,7 @@
     <ClInclude Include="..\public\Devilmon.h" />
     <ClInclude Include="..\public\Digimon_Manager.h" />
     <ClInclude Include="..\public\Digivice.h" />
+    <ClInclude Include="..\public\Digivice_Info.h" />
     <ClInclude Include="..\Public\Digivice_Mask.h" />
     <ClInclude Include="..\public\Digivice_Slot.h" />
     <ClInclude Include="..\public\Digivice_Target.h" />
@@ -267,6 +268,7 @@
     <ClCompile Include="..\private\Devilmon.cpp" />
     <ClCompile Include="..\private\Digimon_Manager.cpp" />
     <ClCompile Include="..\private\Digivice.cpp" />
+    <ClCompile Include="..\private\Digivice_Info.cpp" />
     <ClCompile Include="..\Private\Digivice_Mask.cpp" />
     <ClCompile Include="..\private\Digivice_Slot.cpp" />
     <ClCompile Include="..\Private\Digivice_Target.cpp" />

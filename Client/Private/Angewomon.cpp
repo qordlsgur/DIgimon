@@ -153,6 +153,7 @@ void CAngewomon::UseSkill(_int Skill)
 	else if (Skill == 3)
 		m_bSkill3 = true;
 }
+
 void CAngewomon::Skill1()
 {
 	if (m_bSkillMove)
@@ -174,13 +175,21 @@ void CAngewomon::Skill1()
 void CAngewomon::Skill2()
 {
 	m_pFsm->Enter(DIGIMONSTATE::SKILL2, m_pPart_Body, false, false);
-	m_bSkill = true;
+	if (m_bSkill2 && m_pPart_Body->Get_AnimFinish())
+	{
+		m_bSkill = false;
+		m_bSkill2 = false;
+	}
 }
 
 void CAngewomon::Skill3()
 {
 	m_pFsm->Enter(DIGIMONSTATE::SKILL3, m_pPart_Body, false, false);
-	m_bSkill = true;
+	if (m_bSkill3 && m_pPart_Body->Get_AnimFinish())
+	{
+		m_bSkill = false;
+		m_bSkill3 = false;
+	}
 }
 
 HRESULT CAngewomon::Ready_PartObjects()

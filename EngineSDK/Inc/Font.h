@@ -12,7 +12,8 @@ private:
 
 public:
 	HRESULT Initialize(const _tchar* pFontFilePath);
-	HRESULT Render(const _tchar* pText, const _float2& vPosition, _fvector vColor);
+	HRESULT Render(const _tchar* pText, const _float2& vPosition, _fvector vColor, _float vScale);
+	_float FontSizeX(const _tchar* pText);
 
 private:
 	ID3D11Device* m_pDevice = { nullptr };

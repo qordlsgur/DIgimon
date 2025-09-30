@@ -33,17 +33,18 @@ public:
 	void Set_HasDigimon(_bool Digimon) { m_bHasDigimon = Digimon;}
 	_bool Get_HasDigimon() { return m_bHasDigimon; }
 
-	void Set_Digimon_ID(_int ID);
 
 	void Set_Info(DIGIMON_INFO* pInfo);
 
 	virtual void OnClick() override;
 
+	DIGIMON_INFO Get_DigimonInfo() { return m_Info; }
+
 private:
 	CVIBuffer_Rect* m_pVIBufferCom = { nullptr };
 	CTexture*		m_pSlotTextureCom = { nullptr };
-	CShader*		m_pShaderCom = { nullptr };
 	CTexture*		m_pMaskTextureCom = { nullptr };
+	CShader*		m_pShaderCom = { nullptr };
 
 	class CDigimon_Manager* m_pManager = { nullptr };
 
@@ -55,6 +56,8 @@ private:
 
 	_tchar			m_szDigimonLv[MAX_PATH] = {};
 	_tchar			m_szLv[MAX_PATH] = {};
+
+	_float			m_fOffSetName{};
 
 private:
 	HRESULT Ready_Components();
