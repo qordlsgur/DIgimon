@@ -169,6 +169,7 @@ void CPlayer::Update(_float fTimeDelta)
 			m_pBattle_Manager->EnemyDigimon_Info(m_iEnemy);
 			m_pBattle_Manager->Battle_System();
 			m_pBattle_Manager->Set_Battle(true);
+			m_pCamera_Manager->Set_Battle(true);
 		}
 	}
 

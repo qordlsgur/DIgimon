@@ -533,67 +533,73 @@ void CBattle_Manager::Current_Digimon(_int ID1, _int ID2, _int ID3)
 
 void CBattle_Manager::Digimon1_Skill()
 {
-	m_DigimonOrder1.m_bDigimonOrder = true;
 	if (m_pGameInstance->Key_Down(DIK_Q))
 	{
 		m_DigimonOrder1.m_iDigimonSkill = 1;
 		m_DigimonOrder1.m_bDigimonSkill = true;
+		m_DigimonOrder1.m_bDigimonOrder = true;
 	}
 
 	if (m_pGameInstance->Key_Down(DIK_W))
 	{
 		m_DigimonOrder1.m_iDigimonSkill = 2;
 		m_DigimonOrder1.m_bDigimonSkill = true;
+		m_DigimonOrder1.m_bDigimonOrder = true;
 	}
 
 	if (m_pGameInstance->Key_Down(DIK_E))
 	{
 		m_DigimonOrder1.m_iDigimonSkill = 3;
 		m_DigimonOrder1.m_bDigimonSkill= true;
+		m_DigimonOrder1.m_bDigimonOrder = true;
 	}
 }
 
 void CBattle_Manager::Digimon2_Skill()
 {
-	m_DigimonOrder2.m_bDigimonOrder = true;
 	if (m_pGameInstance->Key_Down(DIK_A))
 	{
 		m_DigimonOrder2.m_iDigimonSkill = 1;
 		m_DigimonOrder2.m_bDigimonSkill = true;
+		m_DigimonOrder2.m_bDigimonOrder = true;
 	}
 	
 	if (m_pGameInstance->Key_Down(DIK_S))
 	{
 		m_DigimonOrder2.m_iDigimonSkill = 2;
 		m_DigimonOrder2.m_bDigimonSkill = true;
+		m_DigimonOrder2.m_bDigimonOrder = true;
 	}
 
 	if (m_pGameInstance->Key_Down(DIK_D))
 	{
 		m_DigimonOrder2.m_iDigimonSkill = 3;
 		m_DigimonOrder2.m_bDigimonSkill = true;
+		m_DigimonOrder2.m_bDigimonOrder = true;
 	}
 }
 
 void CBattle_Manager::Digimon3_Skill()
 {
-	m_DigimonOrder3.m_bDigimonOrder = true;
 	if (m_pGameInstance->Key_Down(DIK_Z))
 	{
 		m_DigimonOrder3.m_iDigimonSkill = 1;
 		m_DigimonOrder3.m_bDigimonSkill = true;
+		m_DigimonOrder3.m_bDigimonOrder = true;
 	}
 
 	if (m_pGameInstance->Key_Down(DIK_X))
 	{
 		m_DigimonOrder3.m_iDigimonSkill = 2;
 		m_DigimonOrder3.m_bDigimonSkill = true;
+		m_DigimonOrder3.m_bDigimonOrder = true;
 	}
 
 	if (m_pGameInstance->Key_Down(DIK_C))
 	{
 		m_DigimonOrder3.m_iDigimonSkill = 3;
 		m_DigimonOrder3.m_bDigimonSkill = true;
+		m_DigimonOrder3.m_bDigimonOrder = true;
 	}
 }
 
@@ -604,15 +610,17 @@ void CBattle_Manager::DigimonTargetOrder()
 		if (m_DigimonOrder1.m_bDigimonOrder)
 		{
 			m_DigimonOrder1.m_iTarget = 1;
-
+			m_DigimonOrder1.m_bDigimonOrder = false;
 		}
 		if (m_DigimonOrder2.m_bDigimonOrder)
 		{
 			m_DigimonOrder2.m_iTarget = 1;
+			m_DigimonOrder2.m_bDigimonOrder = false;
 		}
 		if (m_DigimonOrder3.m_bDigimonOrder)
 		{
 			m_DigimonOrder3.m_iTarget = 1;
+			m_DigimonOrder3.m_bDigimonOrder = false;
 		}
 	}
 
@@ -621,14 +629,17 @@ void CBattle_Manager::DigimonTargetOrder()
 		if (m_DigimonOrder1.m_bDigimonOrder)
 		{
 			m_DigimonOrder1.m_iTarget = 2;
+			m_DigimonOrder1.m_bDigimonOrder = false;
 		}
 		if (m_DigimonOrder2.m_bDigimonOrder)
 		{
 			m_DigimonOrder2.m_iTarget = 2;
+			m_DigimonOrder2.m_bDigimonOrder = false;
 		}
 		if (m_DigimonOrder3.m_bDigimonOrder)
 		{
 			m_DigimonOrder3.m_iTarget = 2;
+			m_DigimonOrder3.m_bDigimonOrder = false;
 		}
 	}
 
@@ -637,19 +648,19 @@ void CBattle_Manager::DigimonTargetOrder()
 		if (m_DigimonOrder1.m_bDigimonOrder)
 		{
 			m_DigimonOrder1.m_iTarget = 3;
+			m_DigimonOrder1.m_bDigimonOrder = false;
 		}
 		if (m_DigimonOrder2.m_bDigimonOrder)
 		{
 			m_DigimonOrder2.m_iTarget = 3;
+			m_DigimonOrder2.m_bDigimonOrder = false;
 		}
 		if (m_DigimonOrder3.m_bDigimonOrder)
 		{
 			m_DigimonOrder3.m_iTarget = 3;
+			m_DigimonOrder3.m_bDigimonOrder = false;
 		}
 	}
-	m_DigimonOrder1.m_bDigimonOrder = false;
-	m_DigimonOrder2.m_bDigimonOrder = false;
-	m_DigimonOrder2.m_bDigimonOrder = false;
 }
 
 void CBattle_Manager::Digimon1_Attack(_float fTimeDelta)
@@ -712,7 +723,7 @@ void CBattle_Manager::Digimon3_Attack(_float fTimeDelta)
 void CBattle_Manager::EnemyDigimon_Info(_int EnemyDigimonID)
 {
 	m_pEnemyDigimon.clear();
-	m_iEnemyDigimonCount = /*m_pGameInstance->intRandom(1, 3);*/3;
+	m_iEnemyDigimonCount =/* m_pGameInstance->intRandom(1, 3)*/3;
 	for (_int i = 0; i < m_iEnemyDigimonCount; ++i)
 	{
 		m_pEnemyDigimon.push_back(Digimon_Create(EnemyDigimonID));

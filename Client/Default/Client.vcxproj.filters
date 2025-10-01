@@ -55,9 +55,6 @@
     <Filter Include="02.GameObjects\Digimon">
       <UniqueIdentifier>{170dc205-fbc9-4611-a4d6-9d3d0a2c199c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02.GameObjects\Camera\Manager">
-      <UniqueIdentifier>{62bcb2a0-fadb-4d9c-97ec-b1b9a431fcce}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02.GameObjects\Player">
       <UniqueIdentifier>{921734f8-f2bf-4f2f-bc7a-94280a2671cb}</UniqueIdentifier>
     </Filter>
@@ -253,6 +250,9 @@
     <Filter Include="03.UI\Digivice\Digivice_Slot\Info">
       <UniqueIdentifier>{6ffecf77-e9a4-4c4c-a1f6-42593ac92098}</UniqueIdentifier>
     </Filter>
+    <Filter Include="05.Manager\Camera_Manager">
+      <UniqueIdentifier>{62bcb2a0-fadb-4d9c-97ec-b1b9a431fcce}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -310,7 +310,7 @@
       <Filter>03.UI\Digivice\Digivice_Slot\Mask</Filter>
     </ClInclude>
     <ClInclude Include="..\public\Camera_Manager.h">
-      <Filter>02.GameObjects\Camera\Manager</Filter>
+      <Filter>05.Manager\Camera_Manager</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\BldA.h">
       <Filter>02.GameObjects\Bilding\BldA</Filter>
@@ -547,7 +547,7 @@
       <Filter>03.UI\Digivice\Digivice_Slot\Mask</Filter>
     </ClCompile>
     <ClCompile Include="..\private\Camera_Manager.cpp">
-      <Filter>02.GameObjects\Camera\Manager</Filter>
+      <Filter>05.Manager\Camera_Manager</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\BldA.cpp">
       <Filter>02.GameObjects\Bilding\BldA</Filter>

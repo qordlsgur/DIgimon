@@ -39,7 +39,7 @@ HRESULT CBody_Blackwargreymon::Initialize(void* pArg)
 
 	m_pModelCom->Set_AnimSpeed("BattleBack", 20.f);
 	m_pModelCom->Set_AnimSpeed("Skill_1", 30);
-	m_pModelCom->Set_AnimSpeed("Skill_2", 35);
+	m_pModelCom->Set_AnimSpeed("Skill_2", 30);
 	m_pModelCom->Set_AnimSpeed("Skill_3", 35);
 
 	return S_OK;

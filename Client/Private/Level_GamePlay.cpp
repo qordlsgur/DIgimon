@@ -2,6 +2,7 @@
 #include "GameInstance.h"
 
 #include "Camera_Free.h"
+#include "Battle_Camera.h"
 #include "Camera_Manager.h"
 #include "Digimon_Manager.h"
 #include "Battle_Manager.h"
@@ -24,6 +25,9 @@ HRESULT CLevel_GamePlay::Initialize()
 	m_pDigimon_Manager->Initialize();
 	m_pBattle_Manager->Initialize();
 	m_pIntertaction_Manager->Initialize();
+
+
+
 
 	if (FAILED(Ready_Lights()))
 		return E_FAIL;
@@ -134,6 +138,20 @@ HRESULT CLevel_GamePlay::Ready_Layer_Camera(const _wstring& strLayerTag)
 
 	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(ENUM_CLASS(LEVEL::STATIC), TEXT("Prototype_GameObject_Camera_Free"),
 		ENUM_CLASS(LEVEL::GAMEPLAY), strLayerTag, &CameraDesc)))
+		return E_FAIL;
+
+	CBattle_Camera::CAMERA_BATTLE_DESC		Battle_CameraDesc{};
+	Battle_CameraDesc.fFovy = XMConvertToRadians(60.0f);
+	Battle_CameraDesc.fNear = 0.1f;
+	Battle_CameraDesc.fFar = 500.f;
+	Battle_CameraDesc.vEye = _float3(100.f, 100.f, 100.f);
+	Battle_CameraDesc.vAt = _float3(100.f, 0.f, -1.f);
+	Battle_CameraDesc.fSpeedPerSec = 5.f;
+	Battle_CameraDesc.fRotationPerSec = XMConvertToRadians(90.0f);
+	Battle_CameraDesc.fMouseSensor = 0.1f;
+
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(ENUM_CLASS(LEVEL::STATIC), TEXT("Prototype_GameObject_Camera_Battle"),
+		ENUM_CLASS(LEVEL::GAMEPLAY), strLayerTag, &Battle_CameraDesc)))
 		return E_FAIL;
 
 	return S_OK;

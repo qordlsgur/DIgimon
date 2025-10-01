@@ -12,10 +12,10 @@ NS_BEGIN(Client)
 class CBattle_Camera final : public CCamera
 {
 public:
-	typedef struct tagCamera_Free : public CCamera::CAMERA_DESC
+	typedef struct tagCamera_Battle : public CCamera::CAMERA_DESC
 	{
 		_float		fMouseSensor;
-	}CAMERA_FREE_DESC;
+	}CAMERA_BATTLE_DESC;
 private:
 	CBattle_Camera(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	CBattle_Camera(const CBattle_Camera& Prototype);

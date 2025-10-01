@@ -20,18 +20,25 @@ HRESULT CBattle_Camera::Initialize_Prototype()
 HRESULT CBattle_Camera::Initialize(void* pArg)
 {
 
-	CAMERA_FREE_DESC* pDesc = static_cast<CAMERA_FREE_DESC*>(pArg);
+	CAMERA_BATTLE_DESC* pDesc = static_cast<CAMERA_BATTLE_DESC*>(pArg);
 	m_fMouseSensor = pDesc->fMouseSensor;
 
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;
 
+	m_pCamera_Manager = CCamera_Manager::GetInstance();
+	m_pCamera_Manager->Add_Camera(this);
 
 	return S_OK;
 }
 
 void CBattle_Camera::Priority_Update(_float fTimeDelta)
 {
+	//if (m_bBattle)
+	//{
+	//	ShowCursor(true);
+	//__super::Bind_Matrices();
+	//}
 }
 
 void CBattle_Camera::Update(_float fTimeDelta)

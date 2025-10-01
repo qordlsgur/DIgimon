@@ -252,7 +252,7 @@ HRESULT CLoader::Loading_For_GamePlay()
 
 	//디지몬UI이미지-------------------------------------------------------------------------------------------------------------------------------------------
 
-#pragma region Flarelizamon
+#pragma region UI
 
 		/* For.Prototype_Component_Texture_Digimon_HUD */
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Digimon_HUD"),
@@ -268,6 +268,56 @@ HRESULT CLoader::Loading_For_GamePlay()
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Digimon_Digidex"),
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/Digimon_UI/C/C%d.png"), 10))))
 		return E_FAIL;
+
+	/* For.Prototype_Component_Texture_Angewomon_Skill */
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Angewomon_Skill"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Models/Angewomon/Angewomon_%d.png"), 3))))
+		return E_FAIL;
+	
+	/* For.Prototype_Component_Texture_Beelzebumon_Skill */
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Beelzebumon_Skill"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Models/Beelzebumon/Beelzebumon_%d.png"), 3))))
+		return E_FAIL;
+	
+	/* For.Prototype_Component_Texture_Blackwargreymon_Skill */
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Blackwargreymon_Skill"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Models/Blackwargreymon/Blackwargreymon_%d.png"), 3))))
+		return E_FAIL;
+	
+	/* For.Prototype_Component_Texture_Devilmon_Skill */
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Devilmon_Skill"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Models/Devilmon/Devilmon_%d.png"), 3))))
+		return E_FAIL;
+	
+	/* For.Prototype_Component_Texture_Ladydevimon_Skill */
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Ladydevimon_Skill"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Models/Ladydevimon/Ladydevimon_%d.png"), 3))))
+		return E_FAIL;
+	
+	/* For.Prototype_Component_Texture_Leomon_Skill */
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Leomon_Skill"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Models/Leomon/Leomon_%d.png"), 3))))
+		return E_FAIL;
+	
+	/* For.Prototype_Component_Texture_Metalgarumon_Skill */
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Metalgarumon_Skill"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Models/Metalgarumon/Metalgarumon_%d.png"), 3))))
+		return E_FAIL;
+	
+	/* For.Prototype_Component_Texture_Metalgreymon_Skill */
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Metalgreymon_Skill"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Models/Metalgreymon/Metalgreymon_%d.png"), 3))))
+		return E_FAIL;
+	
+	/* For.Prototype_Component_Texture_Omegamon_Skill */
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Omegamon_Skill"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Models/Omegamon/Omegamon_Tri_%d.png"), 3))))
+		return E_FAIL;	
+
+	/* For.Prototype_Component_Texture_Wargreymon_Skill */
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Wargreymon_Skill"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Models/Wargreymon/Wargreymon_%d.png"), 3))))
+		return E_FAIL;	
 
 #pragma endregion
 

@@ -28,11 +28,16 @@ public:
 	virtual void Late_Update(_float fTimeDelta) override;
 	virtual HRESULT Render() override;
 
+public:
+	void Set_Battle(_bool Battle) { m_bBattle = Battle; }
+
 protected:
 	_float							m_fFovy = {};
 	_float							m_fAspect = {};
 	_float							m_fNear = {};
 	_float							m_fFar = {};
+
+	_bool							m_bBattle = { false };
 
 protected:
 	HRESULT Bind_Matrices();

@@ -1,10 +1,9 @@
 #include "MainApp.h"
-
 #include "GameInstance.h"
-
 #include "Level_Loading.h"
-
 #include "Camera_Free.h"
+#include "Battle_Camera.h"
+
 Client::CMainApp::CMainApp()
 	: m_pGameInstance{ CGameInstance::GetInstance() }
 {
@@ -134,6 +133,10 @@ HRESULT CMainApp::Ready_Prototypes()
 		CCamera_Free::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
+	/* For.Prototype_GameObject_Camera_Battle */
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::STATIC), TEXT("Prototype_GameObject_Camera_Battle"),
+		CBattle_Camera::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
 
 	return S_OK;
 }

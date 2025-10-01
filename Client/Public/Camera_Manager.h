@@ -6,6 +6,7 @@
 NS_BEGIN(Engine)
 class CGameInstance;
 class CGameObject;
+class CCamera;
 NS_END;
 
 NS_BEGIN(Client)
@@ -21,7 +22,7 @@ public:
 public:
 	HRESULT Initialize();
 
-	void Add_Camera(CGameObject* pCamera);
+	void Add_Camera(CCamera* pCamera);
 	void Add_Player(CGameObject* pPlayer);
 	void PlayerPos(_vector& Pos);
 	_bool HasPlayer();
@@ -29,8 +30,16 @@ public:
 	_bool Get_LcokCamera() { return m_bLockCamera; }
 	void Camera_Angle(_float Angle) { m_fCamera_Angle = Angle; }
 	_float Get_Angle() { return m_fCamera_Angle; }
+
+public:
+	void Set_Battle(_bool Battle);
+
 private:
-	vector<CGameObject*> m_Cameras;
+
+
+	_bool m_bBattle = { false };
+
+	vector<CCamera*> m_Cameras;
 	CGameObject* m_pPlayer = { nullptr };
 	_bool m_bLockCamera = { false };
 	_float m_fCamera_Angle{};

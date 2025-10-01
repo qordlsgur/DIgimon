@@ -57,83 +57,86 @@ HRESULT CCamera_Free::Initialize(void* pArg)
 
 void CCamera_Free::Priority_Update(_float fTimeDelta)
 {
-	_long		MouseMove = {};
+	//if (!m_bBattle)
+	//{
+		_long		MouseMove = {};
 
-	if (m_pCamera_Manager->HasPlayer() == true)
-	{
-		m_pCamera_Manager->PlayerPos(m_fPlayerPos);
-	}
-
-	if (m_pGameInstance->Mouse_WheelUp())
-	{
-		m_fCameraDistanceOffset = XMVectorLerp(m_fCameraDistanceOffset, m_fMinCameraDistance, m_fLerp);
-	}
-
-	if (m_pGameInstance->Mouse_WheelDown())
-	{
-		m_fCameraDistanceOffset = XMVectorLerp(m_fCameraDistanceOffset, m_fMaxCameraDistance, m_fLerp);
-	}
-
-
-
-	if (m_bRightClick)
-	{
-		if (MouseMove = m_pGameInstance->Mouse_Drag(MOUSEMOVESTATE::X))
+		if (m_pCamera_Manager->HasPlayer() == true)
 		{
-			m_fY += fTimeDelta * MouseMove * m_fMouseSensor;
+			m_pCamera_Manager->PlayerPos(m_fPlayerPos);
 		}
 
-		if (MouseMove = m_pGameInstance->Mouse_Drag(MOUSEMOVESTATE::Y))
+		if (m_pGameInstance->Mouse_WheelUp())
 		{
-			//45
-			m_fX += fTimeDelta * MouseMove * m_fMouseSensor;
-			if (m_fX < XMConvertToRadians(-110.f))
-				m_fX = XMConvertToRadians(-110.f);
-			else if (m_fX > XMConvertToRadians(40.f))
-				m_fX = XMConvertToRadians(40.f);
-
-			//if (m_fX < XMConvertToRadians(0.f))
-			//{
-			//	if (!m_bSaveCamera)
-			//	{
-			//		m_fSaveCamera = XMVectorGetZ(m_fCameraDistanceOffset);
-			//		m_bSaveCamera = true;
-			//	}
-			//	m_fCameraDistanceOffset = XMVectorLerp(m_fCameraDistanceOffset, m_fBottomCamera, fTimeDelta);
-			//}
-			//else
-			//{
-			//	if (m_bSaveCamera)
-			//	{
-			//		m_fCameraDistanceOffset.m128_f32[2] = m_fSaveCamera;
-			//		m_bSaveCamera = false;
-			//	}
-			//	m_fCameraDistanceOffset = XMVectorLerp(m_fCameraDistanceOffset, m_fBottomCamera, fTimeDelta);
-
-			//}
+			m_fCameraDistanceOffset = XMVectorLerp(m_fCameraDistanceOffset, m_fMinCameraDistance, m_fLerp);
 		}
-	}
+
+		if (m_pGameInstance->Mouse_WheelDown())
+		{
+			m_fCameraDistanceOffset = XMVectorLerp(m_fCameraDistanceOffset, m_fMaxCameraDistance, m_fLerp);
+		}
 
 
-	if (m_pGameInstance->Mouse_Pressing(MOUSEKEYSTATE::RBUTTON))
-		Elapsed_Time(fTimeDelta);
 
-	if (m_pGameInstance->Mouse_Up(MOUSEKEYSTATE::RBUTTON))
-	{
-		m_fTime = 0.f;
 		if (m_bRightClick)
 		{
-			ClientToScreen(g_hWnd, &m_pMousePos);
-			SetCursorPos(m_pMousePos.x, m_pMousePos.y);
-			ShowCursor(true);
-			m_bRightClick = false;
+			if (MouseMove = m_pGameInstance->Mouse_Drag(MOUSEMOVESTATE::X))
+			{
+				m_fY += fTimeDelta * MouseMove * m_fMouseSensor;
+			}
+
+			if (MouseMove = m_pGameInstance->Mouse_Drag(MOUSEMOVESTATE::Y))
+			{
+				//45
+				m_fX += fTimeDelta * MouseMove * m_fMouseSensor;
+				if (m_fX < XMConvertToRadians(-110.f))
+					m_fX = XMConvertToRadians(-110.f);
+				else if (m_fX > XMConvertToRadians(40.f))
+					m_fX = XMConvertToRadians(40.f);
+
+				//if (m_fX < XMConvertToRadians(0.f))
+				//{
+				//	if (!m_bSaveCamera)
+				//	{
+				//		m_fSaveCamera = XMVectorGetZ(m_fCameraDistanceOffset);
+				//		m_bSaveCamera = true;
+				//	}
+				//	m_fCameraDistanceOffset = XMVectorLerp(m_fCameraDistanceOffset, m_fBottomCamera, fTimeDelta);
+				//}
+				//else
+				//{
+				//	if (m_bSaveCamera)
+				//	{
+				//		m_fCameraDistanceOffset.m128_f32[2] = m_fSaveCamera;
+				//		m_bSaveCamera = false;
+				//	}
+				//	m_fCameraDistanceOffset = XMVectorLerp(m_fCameraDistanceOffset, m_fBottomCamera, fTimeDelta);
+
+				//}
+			}
 		}
-		m_pCamera_Manager->Set_LockCamera(m_bRightClick);
-	}
 
-	LookPlayer(fTimeDelta);
 
-	__super::Bind_Matrices();
+		if (m_pGameInstance->Mouse_Pressing(MOUSEKEYSTATE::RBUTTON))
+			Elapsed_Time(fTimeDelta);
+
+		if (m_pGameInstance->Mouse_Up(MOUSEKEYSTATE::RBUTTON))
+		{
+			m_fTime = 0.f;
+			if (m_bRightClick)
+			{
+				ClientToScreen(g_hWnd, &m_pMousePos);
+				SetCursorPos(m_pMousePos.x, m_pMousePos.y);
+				ShowCursor(true);
+				m_bRightClick = false;
+			}
+			m_pCamera_Manager->Set_LockCamera(m_bRightClick);
+		}
+
+		LookPlayer(fTimeDelta);
+
+		__super::Bind_Matrices();
+	//}
 }
 
 void CCamera_Free::Update(_float fTimeDelta)
