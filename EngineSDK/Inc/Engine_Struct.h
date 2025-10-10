@@ -246,6 +246,11 @@ namespace Engine
 		wstring DigimonName;
 		int DigimonId{};
 		wstring DigimonInfo;
+		wstring DigimonSkill1Info;
+		wstring DigimonSkill2Info;
+		wstring DigimonSkill3Info;
+		wstring DigimonSkillImage;
+		int SkillCount{};
 		DIGIMON_STAGE Stage;
 		DIGIMON_ATTRIBUTE Attribute;
 		int Hp{};

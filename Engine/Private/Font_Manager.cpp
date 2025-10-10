@@ -32,6 +32,15 @@ HRESULT CFont_Manager::Render(const _wstring& strFontTag, const _tchar* pText, c
     return pFont->Render(pText, vPosition, vColor, vScale);
 }
 
+HRESULT CFont_Manager::Render_Rotate(const _wstring& strFontTag, const _tchar* pText, const _float2& vPosition, _fvector vColor, _float Rotation, _float vScale)
+{
+    CFont* pFont = Find_Font(strFontTag);
+    if (nullptr == pFont)
+        return E_FAIL;
+
+    return pFont->Render_Rotate(pText, vPosition, vColor, Rotation, vScale);
+}
+
 _float CFont_Manager::FontSizeX(const _wstring& strFontTag, const _tchar* pText)
 {
     CFont* pFont = Find_Font(strFontTag);

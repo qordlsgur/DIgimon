@@ -7,6 +7,8 @@
 #include "Digivice_Slot.h"
 #include "Digivice_Mask.h"
 #include "Digivice_Info.h"
+#include "Digivice_Skill.h"
+#include "Digivice_Target.h"
 #include "PartyUHD.h"
 #include "UHD_Slot.h"
 #include "Interaction.h"
@@ -211,6 +213,16 @@ HRESULT CLoader::Loading_For_GamePlay()
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Digivice_Status_EXP"),
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/Digivice/Digivice_Status_Gauge_EXP.png"), 1))))
 		return E_FAIL;
+
+	/* For.Prototype_Component_Texture_Digivice_Skill*/
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Digivice_Skill"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/UI/Digivice_Skill.png"), 1))))
+		return E_FAIL;
+
+	///* For.Prototype_Component_Texture_Battle_Skill*/
+	//if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Battle_Skill"),
+	//	CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/UI/Battle_Skill.png"), 1))))
+	//	return E_FAIL;
 
 	//Party_HUD---------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -534,6 +546,11 @@ HRESULT CLoader::Loading_For_GamePlay()
 	/* For.Prototype_Component_Shader_Digivice_Mask */
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Shader_Digivice_Mask"),
 		CShader::Create(m_pDevice, m_pContext, TEXT("../Bin/ShaderFiles/Shader_Digivice_Mask.hlsl"), VTXPOSTEX::Elements, VTXPOSTEX::iNumElements))))
+		return E_FAIL;	
+	
+	/* For.Prototype_Component_Shader_Digivice_Target*/
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Shader_Digivice_Target"),
+		CShader::Create(m_pDevice, m_pContext, TEXT("../Bin/ShaderFiles/Shader_Digivice_Target.hlsl"), VTXPOSTEX::Elements, VTXPOSTEX::iNumElements))))
 		return E_FAIL;
 
 	/* For.Prototype_Component_Shader_VtxMesh */
@@ -625,6 +642,16 @@ HRESULT CLoader::Loading_For_GamePlay()
 		CDigivice_Info::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
+	/* For.Prototype_GameObject_Digivice_Skill */
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Digivice_Skill"),
+		CDigivice_Skill::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+		
+	/* For.Prototype_GameObject_Digivice_Target */
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Digivice_Target"),
+		CDigivice_Target::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
 	//* For.Prototype_GameObject_Exit_Button */
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Exit_Button"),
 		CExit_Button::Create(m_pDevice, m_pContext))))
@@ -696,7 +723,6 @@ HRESULT CLoader::Loading_For_GamePlay()
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Body_Leomon"),
 		CBody_Leomon::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
-
 
 	/* For.Prototype_GameObject_Metalgarumon*/
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Metalgarumon"),

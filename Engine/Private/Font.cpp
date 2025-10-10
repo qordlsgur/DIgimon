@@ -27,6 +27,19 @@ HRESULT CFont::Render(const _tchar* pText, const _float2& vPosition, _fvector vC
 	return S_OK;
 }
 
+HRESULT CFont::Render_Rotate(const _tchar* pText, const _float2& vPosition, _fvector vColor, _float Rotation, _float vScale)
+{
+	_float2 origin = _float2(XMVectorGetX(m_pFont->MeasureString(pText)) * 0.5f, XMVectorGetY(m_pFont->MeasureString(pText)) * 0.5f);
+
+	m_pBatch->Begin();
+
+	m_pFont->DrawString(m_pBatch, pText, vPosition, vColor, XMConvertToRadians(Rotation), origin, vScale);
+
+	m_pBatch->End();
+
+	return S_OK;
+}
+
 _float CFont::FontSizeX(const _tchar* pText)
 {
 	return XMVectorGetX(m_pFont->MeasureString(pText));

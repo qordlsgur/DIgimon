@@ -1,4 +1,4 @@
-#include "Digimon_Manager.h"
+ #include "Digimon_Manager.h"
 #include "PartyUHD.h"
 #include "Digivice.h"
 #include "ContainerObject.h"
@@ -50,6 +50,11 @@ void CDigimon_Manager::Angewomon()
 	Info.Stage = DIGIMON_STAGE::ULTIMATE;
 	Info.Attribute = DIGIMON_ATTRIBUTE::VACCINE;
 	Info.DigimonInfo = TEXT("아름다운 여성의 모습을 한 대천사형 디지몬");
+	Info.DigimonSkill1Info = TEXT(" ");
+	Info.DigimonSkill2Info = TEXT(" ");
+	Info.DigimonSkill3Info = TEXT(" ");
+	Info.DigimonSkillImage = TEXT("Prototype_Component_Texture_Angewomon_Skill");
+	Info.SkillCount = 3;
 	Info.Hp = 5000;
 	Info.Sp = 100;
 	Info.Damage = 500;
@@ -69,6 +74,11 @@ void CDigimon_Manager::Blackwargreymon()
 	Info.Stage = DIGIMON_STAGE::MEGA;
 	Info.Attribute = DIGIMON_ATTRIBUTE::VIRUS;
 	Info.DigimonInfo = TEXT("칠흑의 용 전사 라고 불리는 두려운 존재인 바이러스종 워그레이몬");
+	Info.DigimonSkill1Info = TEXT(" ");
+	Info.DigimonSkill2Info = TEXT(" ");
+	Info.DigimonSkill3Info = TEXT(" ");
+	Info.DigimonSkillImage = TEXT("Prototype_Component_Texture_Blackwargreymon_Skill");
+	Info.SkillCount = 3;
 	Info.Hp = 7000;
 	Info.Sp = 130;
 	Info.Damage = 1000;
@@ -88,6 +98,11 @@ void CDigimon_Manager::Devilmon()
 	Info.Stage = DIGIMON_STAGE::CHAMPION;
 	Info.Attribute = DIGIMON_ATTRIBUTE::VIRUS;
 	Info.DigimonInfo = TEXT("칠흑의 옷으로 몸을 감싸고 있는 타천사형 디지몬");
+	Info.DigimonSkill1Info = TEXT(" ");
+	Info.DigimonSkill2Info = TEXT(" ");
+	Info.DigimonSkill3Info = TEXT(" ");
+	Info.DigimonSkillImage = TEXT("Prototype_Component_Texture_Devilmon_Skill");
+	Info.SkillCount = 3;
 	Info.Hp = 2500;
 	Info.Sp = 100;
 	Info.Damage = 300;
@@ -107,6 +122,11 @@ void CDigimon_Manager::LedyDevimon()
 	Info.Stage = DIGIMON_STAGE::ULTIMATE;
 	Info.Attribute = DIGIMON_ATTRIBUTE::VIRUS;
 	Info.DigimonInfo = TEXT("고귀한 존재인 여성형 타천사 디지몬");
+	Info.DigimonSkill1Info = TEXT(" ");
+	Info.DigimonSkill2Info = TEXT(" ");
+	Info.DigimonSkill3Info = TEXT(" ");
+	Info.DigimonSkillImage = TEXT("Prototype_Component_Texture_Ladydevimon_Skill");
+	Info.SkillCount = 3;
 	Info.Hp = 5000;
 	Info.Sp = 100;
 	Info.Damage = 500;
@@ -126,6 +146,11 @@ void CDigimon_Manager::Leomon()
 	Info.Stage = DIGIMON_STAGE::CHAMPION;
 	Info.Attribute = DIGIMON_ATTRIBUTE::VACCINE;
 	Info.DigimonInfo = TEXT("백수의 왕, 고상한 용사라 불리는 수인형 디지몬");
+	Info.DigimonSkill1Info = TEXT(" ");
+	Info.DigimonSkill2Info = TEXT(" ");
+	Info.DigimonSkill3Info = TEXT(" ");
+	Info.DigimonSkillImage = TEXT("Prototype_Component_Texture_Leomon_Skill");
+	Info.SkillCount = 3;
 	Info.Hp = 2500;
 	Info.Sp = 100;
 	Info.Damage = 300;
@@ -145,6 +170,11 @@ void CDigimon_Manager::Metalgarumon()
 	Info.Stage = DIGIMON_STAGE::MEGA;
 	Info.Attribute = DIGIMON_ATTRIBUTE::DATA;
 	Info.DigimonInfo = TEXT("전신의 대부분을 메탈화 한 것으로 파워업한 가루몬의 최종형태");
+	Info.DigimonSkill1Info = TEXT(" ");
+	Info.DigimonSkill2Info = TEXT(" ");
+	Info.DigimonSkill3Info = TEXT(" ");
+	Info.DigimonSkillImage = TEXT("Prototype_Component_Texture_Metalgarumon_Skill");
+	Info.SkillCount = 3;
 	Info.Hp = 7000;
 	Info.Sp = 130;
 	Info.Damage = 1000;
@@ -164,6 +194,11 @@ void CDigimon_Manager::Metalgeymon()
 	Info.Stage = DIGIMON_STAGE::ULTIMATE;
 	Info.Attribute = DIGIMON_ATTRIBUTE::VACCINE;
 	Info.DigimonInfo = TEXT("몸의 절반 이상을 기계화한 사이보그형 디지몬");
+	Info.DigimonSkill1Info = TEXT(" ");
+	Info.DigimonSkill2Info = TEXT(" ");
+	Info.DigimonSkill3Info = TEXT(" ");
+	Info.DigimonSkillImage = TEXT("Prototype_Component_Texture_Metalgreymon_Skill");
+	Info.SkillCount = 3;
 	Info.Hp = 5000;
 	Info.Sp = 100;
 	Info.Damage = 500;
@@ -183,6 +218,11 @@ void CDigimon_Manager::Omegamoon()
 	Info.Stage = DIGIMON_STAGE::MEGA;
 	Info.Attribute = DIGIMON_ATTRIBUTE::VACCINE;
 	Info.DigimonInfo = TEXT("선을 바라는 사람들의 강한 의지에 의해서 융햡해 탄생한 성기사형 디지몬");
+	Info.DigimonSkill1Info = TEXT(" ");
+	Info.DigimonSkill2Info = TEXT(" ");
+	Info.DigimonSkill3Info = TEXT(" ");
+	Info.DigimonSkillImage = TEXT("Prototype_Component_Texture_Omegamon_Skill");
+	Info.SkillCount = 3;
 	Info.Hp = 10000;
 	Info.Sp = 150;
 	Info.Damage = 1300;
@@ -202,6 +242,11 @@ void CDigimon_Manager::Wargreymon()
 	Info.Stage = DIGIMON_STAGE::MEGA;
 	Info.Attribute = DIGIMON_ATTRIBUTE::VACCINE;
 	Info.DigimonInfo = TEXT("초금속 크롬디지조이드의 값옷을 입고 있는 최강의 용전사");
+	Info.DigimonSkill1Info = TEXT(" ");
+	Info.DigimonSkill2Info = TEXT(" ");
+	Info.DigimonSkill3Info = TEXT(" ");
+	Info.DigimonSkillImage = TEXT("Prototype_Component_Texture_Wargreymon_Skill");
+	Info.SkillCount = 3;
 	Info.Hp = 7000;
 	Info.Sp = 130;
 	Info.Damage = 1000;
@@ -221,6 +266,11 @@ void CDigimon_Manager::Beelzebumon()
 	Info.Stage = DIGIMON_STAGE::MEGA;
 	Info.Attribute = DIGIMON_ATTRIBUTE::VIRUS;
 	Info.DigimonInfo = TEXT("많은 악마형 디지몬을 통괄하는 능력을 가지면서도 고고하게 존재하는 마왕형 디지몬");
+	Info.DigimonSkill1Info = TEXT(" ");
+	Info.DigimonSkill2Info = TEXT(" ");
+	Info.DigimonSkill3Info = TEXT(" ");
+	Info.DigimonSkillImage = TEXT("Prototype_Component_Texture_Beelzebumon_Skill");
+	Info.SkillCount = 3;
 	Info.Hp = 7000;
 	Info.Sp = 130;
 	Info.Damage = 1000;
@@ -390,9 +440,6 @@ const _wstring* CDigimon_Manager::Find_Prototype(_int Digimon_ID)
 void CDigimon_Manager::Free()
 {
 	__super::Free();
-
-	//for (auto& Pair : m_Digimon_Info)
-	//	Safe_Release(Pair.second);
 
 	m_vDigivice_Battle_Slot.clear();
 }

@@ -35,6 +35,7 @@ private:
 	vector<class CUHD_Slot*>				m_vSlots;
 
 	_uint									m_iSlotCount{};
+	_tchar									m_szLv[MAX_PATH] = {};
 
 private:
 

@@ -145,15 +145,6 @@
     <Filter Include="02.GameObjects\Player\Body">
       <UniqueIdentifier>{bb4217e3-1b46-4301-bb83-87ca6e1dc55e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03.UI\Digivice\Digivice_Slot">
-      <UniqueIdentifier>{ee28cb80-802e-4cac-ac37-b3bf6c3c6a2b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="03.UI\Digivice\Digivice_Slot\Mask">
-      <UniqueIdentifier>{249eef68-99dd-4582-9e82-a8622007df1e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="03.UI\Digivice\Digivice_Slot\Target">
-      <UniqueIdentifier>{c72bf2aa-5aae-4b68-9f24-18b625e47a13}</UniqueIdentifier>
-    </Filter>
     <Filter Include="03.UI\PartyHUD\UHD_Slot">
       <UniqueIdentifier>{4d151d9b-850c-4082-a650-99d0f3832411}</UniqueIdentifier>
     </Filter>
@@ -247,11 +238,23 @@
     <Filter Include="02.GameObjects\Digimon\09.Beelzebumon\Body_Beelzebumon">
       <UniqueIdentifier>{85f7853a-b664-4642-be62-282e57ac6ae3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03.UI\Digivice\Digivice_Slot\Info">
-      <UniqueIdentifier>{6ffecf77-e9a4-4c4c-a1f6-42593ac92098}</UniqueIdentifier>
-    </Filter>
     <Filter Include="05.Manager\Camera_Manager">
       <UniqueIdentifier>{62bcb2a0-fadb-4d9c-97ec-b1b9a431fcce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03.UI\Digivice\Info">
+      <UniqueIdentifier>{6ffecf77-e9a4-4c4c-a1f6-42593ac92098}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03.UI\Digivice\Mask">
+      <UniqueIdentifier>{249eef68-99dd-4582-9e82-a8622007df1e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03.UI\Digivice\Skill">
+      <UniqueIdentifier>{d22afe9e-1fbb-41bc-a415-3aa0f716cf14}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03.UI\Digivice\Target">
+      <UniqueIdentifier>{c72bf2aa-5aae-4b68-9f24-18b625e47a13}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03.UI\Digivice\Slot">
+      <UniqueIdentifier>{ee28cb80-802e-4cac-ac37-b3bf6c3c6a2b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -301,13 +304,13 @@
       <Filter>03.UI\PartyHUD</Filter>
     </ClInclude>
     <ClInclude Include="..\public\Digivice_Slot.h">
-      <Filter>03.UI\Digivice\Digivice_Slot</Filter>
+      <Filter>03.UI\Digivice\Slot</Filter>
     </ClInclude>
     <ClInclude Include="..\public\UHD_Slot.h">
       <Filter>03.UI\PartyHUD\UHD_Slot</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\Digivice_Mask.h">
-      <Filter>03.UI\Digivice\Digivice_Slot\Mask</Filter>
+      <Filter>03.UI\Digivice\Mask</Filter>
     </ClInclude>
     <ClInclude Include="..\public\Camera_Manager.h">
       <Filter>05.Manager\Camera_Manager</Filter>
@@ -451,7 +454,7 @@
       <Filter>02.GameObjects\Digimon\01.Blackwargreymon</Filter>
     </ClInclude>
     <ClInclude Include="..\public\Digivice_Target.h">
-      <Filter>03.UI\Digivice\Digivice_Slot\Target</Filter>
+      <Filter>03.UI\Digivice\Target</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\Exit_Button.h">
       <Filter>03.UI\Button</Filter>
@@ -487,7 +490,10 @@
       <Filter>02.GameObjects\Digimon\09.Beelzebumon\Body_Beelzebumon</Filter>
     </ClInclude>
     <ClInclude Include="..\public\Digivice_Info.h">
-      <Filter>03.UI\Digivice\Digivice_Slot\Info</Filter>
+      <Filter>03.UI\Digivice\Info</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\Digivice_Skill.h">
+      <Filter>03.UI\Digivice\Skill</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -538,13 +544,13 @@
       <Filter>03.UI\PartyHUD</Filter>
     </ClCompile>
     <ClCompile Include="..\private\Digivice_Slot.cpp">
-      <Filter>03.UI\Digivice\Digivice_Slot</Filter>
+      <Filter>03.UI\Digivice\Slot</Filter>
     </ClCompile>
     <ClCompile Include="..\private\UHD_Slot.cpp">
       <Filter>03.UI\PartyHUD\UHD_Slot</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\Digivice_Mask.cpp">
-      <Filter>03.UI\Digivice\Digivice_Slot\Mask</Filter>
+      <Filter>03.UI\Digivice\Mask</Filter>
     </ClCompile>
     <ClCompile Include="..\private\Camera_Manager.cpp">
       <Filter>05.Manager\Camera_Manager</Filter>
@@ -688,7 +694,7 @@
       <Filter>02.GameObjects\Digimon\01.Blackwargreymon\Body_Blackwargreymon</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\Digivice_Target.cpp">
-      <Filter>03.UI\Digivice\Digivice_Slot\Target</Filter>
+      <Filter>03.UI\Digivice\Target</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\Exit_Button.cpp">
       <Filter>03.UI\Button</Filter>
@@ -724,7 +730,10 @@
       <Filter>02.GameObjects\Digimon\09.Beelzebumon\Body_Beelzebumon</Filter>
     </ClCompile>
     <ClCompile Include="..\private\Digivice_Info.cpp">
-      <Filter>03.UI\Digivice\Digivice_Slot\Info</Filter>
+      <Filter>03.UI\Digivice\Info</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\Digivice_Skill.cpp">
+      <Filter>03.UI\Digivice\Skill</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -756,6 +765,9 @@
       <Filter>97.ShaderFiles</Filter>
     </FxCompile>
     <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxCube.hlsl">
+      <Filter>97.ShaderFiles</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Bin\ShaderFiles\Shader_Digivice_Target.hlsl">
       <Filter>97.ShaderFiles</Filter>
     </FxCompile>
   </ItemGroup>

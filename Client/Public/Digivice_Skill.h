@@ -11,12 +11,12 @@ NS_END
 
 NS_BEGIN(Client)
 
-class CDigivice_Target final : public CUIObject
+class CDigivice_Skill final : public CUIObject
 {
 private:
-	CDigivice_Target(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
-	CDigivice_Target(const CDigivice_Target& Prototype);
-	virtual ~CDigivice_Target() = default;
+	CDigivice_Skill(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
+	CDigivice_Skill(const CDigivice_Skill& Prototype);
+	virtual ~CDigivice_Skill() = default;
 
 public:
 	virtual HRESULT Initialize_Prototype() override;
@@ -37,11 +37,14 @@ public:
 
 	virtual void OnClick() override;
 
-	void Set_Digimon_Target();
+	//DIGIMON_INFO Get_DigimonInfo() { return m_Info; }
+
+	HRESULT Set_Digimon_SkillSet(_int ID, _int Digimon_Skill);
 
 private:
 	CVIBuffer_Rect* m_pVIBufferCom = { nullptr };
-	CTexture* m_pTargetTextureCom = { nullptr };
+	CTexture* m_pSlotTextureCom = { nullptr };
+	CTexture* m_pDigimonSKillTextureCom = { nullptr };
 	CShader* m_pShaderCom = { nullptr };
 
 	class CDigimon_Manager* m_pManager = { nullptr };
@@ -50,6 +53,9 @@ private:
 
 	_bool			m_bHasDigimon = false;
 
+	_int			m_iDigimon_Skill{};
+
+	_wstring		m_strDigimon_SkillName;
 
 private:
 	HRESULT Ready_Components();
@@ -58,7 +64,7 @@ private:
 	_float4 m_fParent_WorldPos{};
 
 public:
-	static CDigivice_Target* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
+	static CDigivice_Skill* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	virtual CGameObject* Clone(void* pArg) override;
 	virtual void Free() override;
 };

@@ -191,6 +191,7 @@
     <ClInclude Include="..\public\Digivice.h" />
     <ClInclude Include="..\public\Digivice_Info.h" />
     <ClInclude Include="..\Public\Digivice_Mask.h" />
+    <ClInclude Include="..\public\Digivice_Skill.h" />
     <ClInclude Include="..\public\Digivice_Slot.h" />
     <ClInclude Include="..\public\Digivice_Target.h" />
     <ClInclude Include="..\Public\Exit_Button.h" />
@@ -270,6 +271,7 @@
     <ClCompile Include="..\private\Digivice.cpp" />
     <ClCompile Include="..\private\Digivice_Info.cpp" />
     <ClCompile Include="..\Private\Digivice_Mask.cpp" />
+    <ClCompile Include="..\private\Digivice_Skill.cpp" />
     <ClCompile Include="..\private\Digivice_Slot.cpp" />
     <ClCompile Include="..\Private\Digivice_Target.cpp" />
     <ClCompile Include="..\Private\Exit_Button.cpp" />
@@ -318,6 +320,7 @@
   <ItemGroup>
     <FxCompile Include="..\Bin\ShaderFiles\Shader_Digivice.hlsl" />
     <FxCompile Include="..\Bin\ShaderFiles\Shader_Digivice_Mask.hlsl" />
+    <FxCompile Include="..\Bin\ShaderFiles\Shader_Digivice_Target.hlsl" />
     <FxCompile Include="..\Bin\ShaderFiles\Shader_Hover.hlsl" />
     <FxCompile Include="..\Bin\ShaderFiles\Shader_Inventory.hlsl" />
     <FxCompile Include="..\Bin\ShaderFiles\Shader_UHD.hlsl" />

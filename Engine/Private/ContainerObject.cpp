@@ -23,6 +23,15 @@ HRESULT CContainerObject::Initialize(void* pArg)
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;
 
+	m_bBattle = false;
+	m_bMonster = false;
+	m_bSkill = false;
+	m_bSkillMove = false;
+	m_bBackJump = false;
+	m_bSkill1 = false;
+	m_bSkill2 = false;
+	m_bSkill3 = false;
+	m_bTurnEnd = false;
 	m_bLife = true;
 
 	return S_OK;

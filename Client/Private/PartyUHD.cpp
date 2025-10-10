@@ -40,7 +40,6 @@ void CPartyUHD::Priority_Update(_float fTimeDelta)
 
 void CPartyUHD::Update(_float fTimeDelta)
 {
-
 }
 
 void CPartyUHD::Late_Update(_float fTimeDelta)
@@ -55,6 +54,9 @@ HRESULT CPartyUHD::Render()
 		if (m_vSlots[i]->Get_Digimon())
 		{
 			m_vSlots[i]->Render();
+			//_itow_s(m_vSlots[i].get, m_szLv, MAX_PATH, 10);
+			//90 200 310
+			m_pGameInstance->Render_Rotation_Text(TEXT("13"), TEXT("as sa"), _float2(30, 90.f + 110.f*i), XMVectorSet(1.f, 1.f, 1.f, 1.f), 45.f);
 		}
 	}
     return S_OK;
@@ -81,7 +83,7 @@ HRESULT CPartyUHD::Create_Slot(const _wstring& strLayerTag)
 		_float row = static_cast<_float>(i % 3);
 
 		_float StartX = 70.f;
-		_float StartY = 60.f + row * (90 + 10);
+		_float StartY = 60.f + row * (90 + 20);
 
 		m_vSlots[i]->Set_Move(StartX, StartY);
 	}

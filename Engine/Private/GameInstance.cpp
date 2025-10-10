@@ -345,6 +345,11 @@ HRESULT CGameInstance::Render_Text(const _wstring& strFontTag, const _tchar* pTe
 	return m_pFont_Manager->Render(strFontTag, pText, vPosition, vColor, vScale);
 }
 
+HRESULT CGameInstance::Render_Rotation_Text(const _wstring& strFontTag, const _tchar* pText, const _float2& vPosition, _fvector vColor, _float Rotation, _float vScale)
+{
+	return m_pFont_Manager->Render_Rotate(strFontTag, pText, vPosition, vColor, Rotation, vScale);
+}
+
 _float CGameInstance::FontSizeX(const _wstring& strFontTag, const _tchar* pText)
 {
 	return m_pFont_Manager->FontSizeX(strFontTag, pText);

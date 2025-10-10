@@ -173,8 +173,6 @@ void CPlayer::Update(_float fTimeDelta)
 		}
 	}
 
-
-
 	__super::Update(fTimeDelta);
 }
 

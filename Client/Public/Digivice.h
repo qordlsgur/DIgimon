@@ -46,11 +46,15 @@ private:
 	class CDigivice_Slot* m_pDigivice_Slot = { nullptr };
 	class CDigivice_Mask* m_pDigivice_Mask = { nullptr };
 	class CDigivice_Info* m_pDigivice_Info = { nullptr };
+	class CDigivice_Skill* m_pDigivice_Skill = { nullptr };
+	class CDigivice_Target* m_pDigivice_Target = { nullptr };
 
 	_uint	m_iDigivice_Battle_Slot_Number;
+	_uint	m_iDigivice_Battle_Skill_Number;
 
 	vector<class CDigivice_Slot*> m_pBattle_Slot;
 	vector<class CDigivice_Mask*> m_pBattle_Mask;
+	vector<class CDigivice_Skill*> m_pBattle_skill;
 	vector<DIGIMON_INFO*> m_pDigimon_Info;
 	vector<_int> m_Digimon_ID;
 
@@ -73,6 +77,8 @@ private:
 	HRESULT Bind_ShaderResources();
 
 	HRESULT Create_Slot(const _wstring& strLayerTag);
+	HRESULT Create_Skill(const _wstring& strLayerTag);
+	HRESULT Create_Target(const _wstring& strLayerTag);
 
 public:
 	static CDigivice* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);

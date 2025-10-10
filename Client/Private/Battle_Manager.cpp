@@ -36,6 +36,7 @@ HRESULT CBattle_Manager::Initialize()
 
 	m_pGameInstance = CGameInstance::GetInstance();
 	m_pDigimon_Manager = CDigimon_Manager::GetInstance();
+	m_bBattleOn = false;
 	return S_OK;
 }
 

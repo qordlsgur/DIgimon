@@ -5,6 +5,8 @@
 #include "Battle_Manager.h"
 #include "Digivice_Mask.h"
 #include "Digivice_Info.h"
+#include "Digivice_Skill.h"
+#include "Digivice_Target.h"
 
 CDigivice::CDigivice(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CUIObject{ pDevice, pContext }
@@ -31,6 +33,7 @@ HRESULT CDigivice::Initialize(void* pArg)
 	Desc.fSizeY = 600.f;
 
 	m_iDigivice_Battle_Slot_Number = 8;
+	m_iDigivice_Battle_Skill_Number = 3;
 
 	m_pDigimon_Manager = CDigimon_Manager::GetInstance();
 	m_pDigimon_Manager->Digivice(this);
@@ -45,6 +48,12 @@ HRESULT CDigivice::Initialize(void* pArg)
 		return E_FAIL;
 
 	if (FAILED(Create_Slot(L"Layout_Digivice_Slot")))
+		return E_FAIL;
+
+	if (FAILED(Create_Skill(L"Layer_Digivice_Skill")))
+		return E_FAIL;
+
+	if (FAILED(Create_Target(L"Layer_Digivice_Target")))
 		return E_FAIL;
 
 	m_Digimon_ID.resize(8, -1);
@@ -72,6 +81,10 @@ void CDigivice::Update(_float fTimeDelta)
 	if (m_pGameInstance->Key_Down(DIK_V))
 	{
 		m_pSelectSlot = m_pBattle_Slot[0];
+		for (int j = 0; j < m_pSelectSlot->Get_DigimonInfo().SkillCount; ++j)
+		{
+			m_pBattle_skill[j]->Set_Digimon_SkillSet(m_pSelectSlot->Get_DigimonInfo().DigimonId, j);
+		}
 		Set_Active();
 	}
 
@@ -143,7 +156,7 @@ HRESULT CDigivice::Render()
 		_float InfoAttackSpeed = (m_pGameInstance->FontSizeX(TEXT("14"), m_szDigimonAttackSpeed) - 12.f) * 0.5f;
 
 		m_pGameInstance->Render_Text(TEXT("18"), TEXT("디지바이스"), _float2(600.f, 70.f), XMVectorSet(0.f, 0.f, 1.f, 1.f));
-		m_pGameInstance->Render_Text(TEXT("18"), m_pSelectSlot->Get_DigimonInfo().DigimonName.c_str(), _float2(580.f, 120.f), XMVectorSet(1.f, 1.f, 1.f, 1.f), 0.9f);
+		m_pGameInstance->Render_Text(TEXT("18"), m_pSelectSlot->Get_DigimonInfo().DigimonName.c_str(), _float2(600.f, 120.f), XMVectorSet(1.f, 1.f, 1.f, 1.f), 0.9f);
 		m_pGameInstance->Render_Text(TEXT("14"), TEXT("세대"), _float2(880.f - State, 170.f), XMVectorSet(1.f, 1.f, 1.f, 1.f));
 		m_pGameInstance->Render_Text(TEXT("14"), TEXT("타입"), _float2(880.f - Attribute, 200.f), XMVectorSet(1.f, 1.f, 1.f, 1.f));
 		m_pGameInstance->Render_Text(TEXT("14"), TEXT("최대 HP"), _float2(880.f- MaxHp, 230.f), XMVectorSet(1.f, 1.f, 1.f, 1.f));
@@ -157,6 +170,17 @@ HRESULT CDigivice::Render()
 		m_pGameInstance->Render_Text(TEXT("14"), m_szDigimonSp, _float2(1050.f - InfoMaxSp, 260.f), XMVectorSet(1.f, 1.f, 1.f, 1.f));
 		m_pGameInstance->Render_Text(TEXT("14"), m_szDigimonDamage, _float2(1050.f - InfoDamage, 290.f), XMVectorSet(1.f, 1.f, 1.f, 1.f));
 		m_pGameInstance->Render_Text(TEXT("14"), m_szDigimonAttackSpeed, _float2(1050.f - InfoAttackSpeed, 320.f), XMVectorSet(1.f, 1.f, 1.f, 1.f));
+	
+
+
+		m_pDigivice_Target->Render();
+
+		for (_uint i = 0; i < m_iDigivice_Battle_Skill_Number; ++i)
+		{
+			m_pBattle_skill[i]->Render();
+		}
+	
+	
 	}
 	return S_OK;
 }
@@ -173,6 +197,11 @@ void CDigivice::Acquire_Digimon(_int ID)
 			m_pBattle_Slot[i]->Set_HasDigimon(true);
 			m_pDigimon_Manager->Set_Digivice_Slot(i, true, ID);
 			m_Digimon_ID[i] = ID;
+			for (int j = 0; j < m_pBattle_Slot[i]->Get_DigimonInfo().SkillCount; ++j)
+			{
+				m_pBattle_skill[j]->Set_Digimon_SkillSet(ID, j);
+			}
+			m_pDigivice_Skill->Set_HasDigimon(true);
 			Set_Info(ID);
 			return;
 		}
@@ -209,6 +238,10 @@ void CDigivice::OnClick()
 				if (m_pBattle_Slot[i]->Get_HasDigimon())
 				{
 					m_pSelectSlot = m_pBattle_Slot[i];
+					for (int j = 0; j < m_pSelectSlot->Get_DigimonInfo().SkillCount; ++j)
+					{
+						m_pBattle_skill[j]->Set_Digimon_SkillSet(m_pSelectSlot->Get_DigimonInfo().DigimonId, j);
+					}
 					return;
 				}
 
@@ -345,8 +378,44 @@ HRESULT CDigivice::Create_Slot(const _wstring& strLayerTag)
 
 		m_pBattle_Mask[i]->Set_Move(maskstartX, startY);
 	}
-
+	
 	m_pDigivice_Info->Set_Move(285, 30);
+
+	return S_OK;
+}
+
+HRESULT CDigivice::Create_Skill(const _wstring& strLayerTag)
+{
+	for (_uint i = 0; i < m_iDigivice_Battle_Skill_Number; ++i)
+	{
+		m_pDigivice_Skill = static_cast<CDigivice_Skill*>(m_pGameInstance->Add_GameObject_ToLayer_ToCreate(
+			ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Digivice_Skill"), ENUM_CLASS(LEVEL::GAMEPLAY), strLayerTag));
+	
+		m_pBattle_skill.push_back(m_pDigivice_Skill);
+	}
+
+	for (_uint i = 0; i < m_iDigivice_Battle_Skill_Number; ++i)
+	{
+		
+		_float row = static_cast<_float>(i);
+
+		_float startX = -50.f;
+		_float startY = 130.f + row * 60;
+
+
+		m_pBattle_skill[i]->Set_Move(startX, startY);
+
+	}
+
+	return S_OK;
+}
+
+HRESULT CDigivice::Create_Target(const _wstring& strLayerTag)
+{
+	m_pDigivice_Target = static_cast<CDigivice_Target*>(m_pGameInstance->Add_GameObject_ToLayer_ToCreate(
+		ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Digivice_Target"), ENUM_CLASS(LEVEL::GAMEPLAY), strLayerTag));
+
+	m_pDigivice_Target->Set_Move(45.f, -50.f);
 
 	return S_OK;
 }

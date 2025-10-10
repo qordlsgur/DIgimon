@@ -51,9 +51,8 @@ void CDigivice_Slot::Priority_Update(_float fTimeDelta)
 void CDigivice_Slot::Update(_float fTimeDelta)
 {
 	_itow_s(m_Info.Lv, m_szDigimonLv, MAX_PATH, 10);
-	wcscpy_s(m_szLv, MAX_PATH, L"LV");
+	wcscpy_s(m_szLv, MAX_PATH, L"LV ");
 	wcscat_s(m_szLv, MAX_PATH, m_szDigimonLv);     
-
 }
 
 void CDigivice_Slot::Late_Update(_float fTimeDelta)

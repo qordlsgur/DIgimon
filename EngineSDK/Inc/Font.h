@@ -13,6 +13,7 @@ private:
 public:
 	HRESULT Initialize(const _tchar* pFontFilePath);
 	HRESULT Render(const _tchar* pText, const _float2& vPosition, _fvector vColor, _float vScale);
+	HRESULT Render_Rotate(const _tchar* pText, const _float2& vPosition, _fvector vColor, _float Rotation, _float vScale);
 	_float FontSizeX(const _tchar* pText);
 
 private:
