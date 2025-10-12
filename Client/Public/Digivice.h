@@ -32,7 +32,8 @@ public:
 	void Acquire_Digimon(_int ID);
 	void Release_Digimon(_int ID);
 
-	void OnClick();
+	virtual void OnClick() override;
+	virtual void OnHover() override;
 
 	void Update_Digimopn();
 
@@ -54,7 +55,7 @@ private:
 
 	vector<class CDigivice_Slot*> m_pBattle_Slot;
 	vector<class CDigivice_Mask*> m_pBattle_Mask;
-	vector<class CDigivice_Skill*> m_pBattle_skill;
+	vector<class CDigivice_Skill*> m_pBattle_Skill;
 	vector<DIGIMON_INFO*> m_pDigimon_Info;
 	vector<_int> m_Digimon_ID;
 
@@ -66,6 +67,7 @@ private:
 	_tchar			m_szDigimonDamage[MAX_PATH] = {};
 	_tchar			m_szDigimonAttackSpeed[MAX_PATH] = {};
 
+	DIGIMON_INFO* Info;
 
 	class CDigimon_Manager* m_pDigimon_Manager = {nullptr};
 	class CBattle_Manager* m_pBattle_Manager = {nullptr};

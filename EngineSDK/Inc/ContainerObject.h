@@ -94,17 +94,21 @@ protected:
 
 	DIGIMON_INFO Info;
 
-	wstring m_strDigimon_Name;
-	_int m_iDigimon_ID{};
-	DIGIMON_STAGE m_eState = DIGIMON_STAGE::END;
-	DIGIMON_ATTRIBUTE m_eAttribute = DIGIMON_ATTRIBUTE::END;
-	wstring m_strDigimon_Info;
-	_int m_iHp{};
-	_int m_iSp{};
-	_int m_iDamage{};
-	_int m_iAttackSpeed{};
-	_int m_iExp{};
-	_int m_iLv{};
+	//wstring m_strDigimon_Name;
+	//_int m_iDigimon_ID{};
+	//wstring m_strDigimon_Info;
+	//SKILL_INFO m_strDigimonSkill1Info;
+	//SKILL_INFO m_strDigimonSkill2Info;
+	//SKILL_INFO m_strDigimonSkill3Info;
+	//wstring m_strDigimonSkillImage;
+	//DIGIMON_STAGE m_eState = DIGIMON_STAGE::END;
+	//DIGIMON_ATTRIBUTE m_eAttribute = DIGIMON_ATTRIBUTE::END;
+	//_int m_iHp{};
+	//_int m_iSp{};
+	//_int m_iDamage{};
+	//_int m_iAttackSpeed{};
+	//_int m_iExp{};
+	//_int m_iLv{};
 
 	_bool m_bBattle = { false };
 	_bool m_bMonster = { false };

@@ -38,7 +38,7 @@ public:
 
 	virtual void OnClick() override;
 
-	DIGIMON_INFO Get_DigimonInfo() { return m_Info; }
+	DIGIMON_INFO& Get_DigimonInfo() { return m_Info; }
 
 private:
 	CVIBuffer_Rect* m_pVIBufferCom = { nullptr };

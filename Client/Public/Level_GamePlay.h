@@ -36,6 +36,7 @@ private:
 	class CCamera_Manager* m_pCamera_Manager = { nullptr };
 	class CBattle_Manager* m_pBattle_Manager= { nullptr };
 	class CInteraction_Manager* m_pIntertaction_Manager = { nullptr };
+	class CBattle_UI_Manager* m_pBattle_UI_Manager = { nullptr };
 
 
 public:

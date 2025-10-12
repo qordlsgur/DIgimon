@@ -36,6 +36,10 @@ public:
 	void Set_Info(DIGIMON_INFO* pInfo);
 
 	virtual void OnClick() override;
+	virtual void OnHover() override;
+
+	void Set_Digimon_Skill_Info_Pos(_float fX, _float fY);
+	void Set_Hover();
 
 	//DIGIMON_INFO Get_DigimonInfo() { return m_Info; }
 
@@ -48,8 +52,11 @@ private:
 	CShader* m_pShaderCom = { nullptr };
 
 	class CDigimon_Manager* m_pManager = { nullptr };
+	class CDigivice_Skill_Info* m_pSkill_Info = { nullptr };
 
-	DIGIMON_INFO	m_Info;
+	DIGIMON_INFO*	m_Info;
+
+	_int			m_iDigimon_ID{};
 
 	_bool			m_bHasDigimon = false;
 
@@ -60,6 +67,8 @@ private:
 private:
 	HRESULT Ready_Components();
 	HRESULT Bind_ShaderResources();
+
+	HRESULT Create_Info();
 
 	_float4 m_fParent_WorldPos{};
 

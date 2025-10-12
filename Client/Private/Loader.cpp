@@ -8,6 +8,7 @@
 #include "Digivice_Mask.h"
 #include "Digivice_Info.h"
 #include "Digivice_Skill.h"
+#include "Digivice_Skill_Info.h"
 #include "Digivice_Target.h"
 #include "PartyUHD.h"
 #include "UHD_Slot.h"
@@ -60,7 +61,6 @@
 #pragma endregion
 
 //#include "Effect.h"
-#include "Terrain.h"
 #include "Battle_Terrain.h"
 #include "Monster.h"
 #include "Sky.h"
@@ -219,10 +219,15 @@ HRESULT CLoader::Loading_For_GamePlay()
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/UI/Digivice_Skill.png"), 1))))
 		return E_FAIL;
 
-	///* For.Prototype_Component_Texture_Battle_Skill*/
-	//if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Battle_Skill"),
-	//	CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/UI/Battle_Skill.png"), 1))))
-	//	return E_FAIL;
+	/* For.Prototype_Component_Texture_Skill_Info*/
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Skill_Info"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/UI/Skill_Info.png"), 1))))
+		return E_FAIL;
+
+	/* For.Prototype_Component_Texture_Battle_Skill*/
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Battle_Skill"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/UI/Battle_Skill.png"), 1))))
+		return E_FAIL;
 
 	//Party_HUD---------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -647,6 +652,11 @@ HRESULT CLoader::Loading_For_GamePlay()
 		CDigivice_Skill::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 		
+	/* For.Prototype_GameObject_Digivice_Skill_Info */
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Digivice_Skill_Info"),
+		CDigivice_Skill_Info::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
 	/* For.Prototype_GameObject_Digivice_Target */
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Digivice_Target"),
 		CDigivice_Target::Create(m_pDevice, m_pContext))))

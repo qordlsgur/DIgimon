@@ -33,6 +33,12 @@ public:
 
 	virtual RECT* Get_Pos() { return &m_pRect; }
 
+	virtual void Set_Hover(_bool Hover) { m_bHover = Hover; }
+	virtual _bool Get_Hover() { return m_bHover; }
+
+	virtual void OnClick();
+	virtual void OnHover();
+
 protected:
 
 
@@ -54,6 +60,7 @@ protected:
 	_float4x4				m_ProjMatrix{};
 
 	_bool					m_bActive = { false };
+	_bool					m_bHover = { false };
 
 	_float					m_fX{}, m_fY{}, m_fSizeX{}, m_fSizeY{};
 	_float					m_fWinSizeX{}, m_fWinSizeY{};

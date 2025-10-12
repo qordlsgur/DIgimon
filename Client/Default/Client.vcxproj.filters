@@ -256,6 +256,12 @@
     <Filter Include="03.UI\Digivice\Slot">
       <UniqueIdentifier>{ee28cb80-802e-4cac-ac37-b3bf6c3c6a2b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="05.Manager\Battle_UI_Manager">
+      <UniqueIdentifier>{97f5190a-f2cc-47ae-8383-e00d81cc27da}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03.UI\Digivice\SkillInfo">
+      <UniqueIdentifier>{dab16379-b4f6-4e12-b630-0daf06780524}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -494,6 +500,12 @@
     </ClInclude>
     <ClInclude Include="..\public\Digivice_Skill.h">
       <Filter>03.UI\Digivice\Skill</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\Battle_UI_Manager.h">
+      <Filter>05.Manager\Battle_UI_Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\Digivice_Skill_Info.h">
+      <Filter>03.UI\Digivice\SkillInfo</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -734,6 +746,12 @@
     </ClCompile>
     <ClCompile Include="..\private\Digivice_Skill.cpp">
       <Filter>03.UI\Digivice\Skill</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\Battle_UI_Manager.cpp">
+      <Filter>05.Manager\Battle_UI_Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\Digivice_Skill_Info.cpp">
+      <Filter>03.UI\Digivice\SkillInfo</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

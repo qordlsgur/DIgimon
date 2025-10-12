@@ -7,6 +7,7 @@
 #include "Digimon_Manager.h"
 #include "Battle_Manager.h"
 #include "Interaction_Manager.h"
+#include "Battle_UI_Manager.h"
 #include "Spawner.h"
 
 CLevel_GamePlay::CLevel_GamePlay(ID3D11Device* pDevice, ID3D11DeviceContext* pContext, LEVEL eLevelID)
@@ -15,6 +16,7 @@ CLevel_GamePlay::CLevel_GamePlay(ID3D11Device* pDevice, ID3D11DeviceContext* pCo
 	, m_pDigimon_Manager{ CDigimon_Manager::GetInstance() }
 	, m_pBattle_Manager{ CBattle_Manager::GetInstance() }
 	, m_pIntertaction_Manager{ CInteraction_Manager::GetInstance() }
+	, m_pBattle_UI_Manager{ CBattle_UI_Manager::GetInstance() }
 {
 
 }
@@ -25,9 +27,7 @@ HRESULT CLevel_GamePlay::Initialize()
 	m_pDigimon_Manager->Initialize();
 	m_pBattle_Manager->Initialize();
 	m_pIntertaction_Manager->Initialize();
-
-
-
+	m_pBattle_UI_Manager->Initialize();
 
 	if (FAILED(Ready_Lights()))
 		return E_FAIL;
@@ -278,8 +278,9 @@ void CLevel_GamePlay::Free()
 {
 	__super::Free();
 
-	Safe_Release(m_pCamera_Manager);
-	Safe_Release(m_pDigimon_Manager);
+	Safe_Release(m_pBattle_UI_Manager);
 	Safe_Release(m_pBattle_Manager);
 	Safe_Release(m_pIntertaction_Manager);
+	Safe_Release(m_pDigimon_Manager);
+	Safe_Release(m_pCamera_Manager);
 }

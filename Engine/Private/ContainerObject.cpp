@@ -73,42 +73,42 @@ CComponent* CContainerObject::Get_Component(const _wstring& strPartTag, const _w
 
 const wstring& CContainerObject::Get_Digimon_Name()
 {
-	return m_strDigimon_Name;
+	return Info.DigimonName;
 }
 
 _int CContainerObject::Get_ID()
 {
-	return m_iDigimon_ID;
+	return Info.DigimonId;
 }
 
 _int CContainerObject::Get_Hp()
 {
-	return m_iHp;
+	return Info.Hp;
 }
 
 _int CContainerObject::Get_Sp()
 {
-	return m_iSp;
+	return Info.Sp;
 }
 
 _int CContainerObject::Get_Damage()
 {
-	return m_iDamage;
+	return Info.Damage;
 }
 
 _int CContainerObject::Get_AttackSpeed()
 {
-	return m_iAttackSpeed;
+	return Info.AttackSpeed;
 }
 
 _int CContainerObject::Get_Exp()
 {
-	return m_iExp;
+	return Info.Exp;
 }
 
 _int CContainerObject::Get_Lv()
 {
-	return m_iLv;
+	return Info.Lv;
 }
 
 DIGIMON_INFO CContainerObject::CurrentInfo()
@@ -118,57 +118,47 @@ DIGIMON_INFO CContainerObject::CurrentInfo()
 
 DIGIMON_STAGE CContainerObject::Get_Stage()
 {
-	return m_eState;
+	return Info.Stage;
 }
 
 DIGIMON_ATTRIBUTE CContainerObject::Get_Attribute()
 {
-	return m_eAttribute;
+	return Info.Attribute;
 }
 
 const wstring& CContainerObject::Get_Digimon_Info()
 {
-	return m_strDigimon_Info;
+	return Info.DigimonInfo;
 }
 
 void CContainerObject::Set_Digimon_Info(DIGIMON_INFO* Digimon_Info)
 {
-	m_strDigimon_Name = Digimon_Info->DigimonName;
-	m_iDigimon_ID = Digimon_Info->DigimonId;
-	m_eState = Digimon_Info->Stage;
-	m_eAttribute = Digimon_Info->Attribute;
-	m_strDigimon_Info = Digimon_Info->DigimonInfo;
-	m_iHp = Digimon_Info->Hp;
-	m_iSp = Digimon_Info->Sp;
-	m_iDamage = Digimon_Info->Damage;
-	m_iAttackSpeed = Digimon_Info->AttackSpeed;
-	m_iExp = Digimon_Info->Exp;
-	m_iLv = Digimon_Info->Lv;
+	Info = *Digimon_Info;
 }
 
 void CContainerObject::Set_Hp(_int Hp)
 {
-	m_iHp += Hp;
+	Info.Hp += Hp;
 }
 
 void CContainerObject::Set_Sp(_int Sp)
 {
-	m_iSp += Sp;
+	Info.Sp += Sp;
 }
 
 void CContainerObject::Set_Damage(_int Damage)
 {
-	m_iDamage += Damage;
+	Info.Damage += Damage;
 }
 
 void CContainerObject::Set_AttackSpeed(_int AttackSpeed)
 {
-	m_iAttackSpeed += static_cast<int>(m_eState) * AttackSpeed;
+	Info.AttackSpeed += static_cast<int>(Info.Stage) * AttackSpeed;
 }
 
 void CContainerObject::Set_Exp(_int Exp)
 {
-	m_iExp = (1000 * static_cast<int>(m_eState)) + Exp;
+	Info.Exp = (1000 * static_cast<int>(Info.Stage)) + Exp;
 }
 
 void CContainerObject::Set_Lv(_int Lv)
@@ -176,7 +166,7 @@ void CContainerObject::Set_Lv(_int Lv)
 	int tens = Lv / 10;
 	int ones = Lv % 10;
 
-	m_iLv += static_cast<int>(m_eState) * tens + ones;
+	Info.Lv += static_cast<int>(Info.Stage) * tens + ones;
 }
 
 void CContainerObject::UseSkill(_int Skill)

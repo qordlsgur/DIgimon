@@ -53,7 +53,7 @@ public:
 
 	void Enemy_Position();
 	void Player_Digimon_Position();
-	void Current_Digimon(_int ID1, _int ID2, _int ID3);
+	void Current_Digimon(DIGIMON_INFO* Digimon_Info_1, DIGIMON_INFO* Digimon_Info_2, DIGIMON_INFO* Digimon_Info_3);
 
 	void Digimon1_Skill();
 	void Digimon2_Skill();
@@ -87,6 +87,7 @@ private:
 	CGameInstance*					m_pGameInstance = { nullptr };
 
 	class CDigimon_Manager*			m_pDigimon_Manager = { nullptr };
+	class CBattle_UI_Manager*		m_pBattle_UI_Manager = { nullptr };
 
 	vector<CContainerObject*>		m_pMyDigimon;
 	vector<CContainerObject*>		m_pEnemyDigimon;

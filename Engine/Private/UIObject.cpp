@@ -92,6 +92,17 @@ HRESULT CUIObject::Render()
 	return S_OK;
 }
 
+void CUIObject::OnClick()
+{
+
+}
+
+void CUIObject::OnHover()
+{
+
+}
+
+
 void CUIObject::Set_Active()
 {
 	m_bActive = !m_bActive;

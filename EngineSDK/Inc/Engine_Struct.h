@@ -241,14 +241,26 @@ namespace Engine
 		vector<ANIMATION> mAnimation;
 	}ANIM_DATA;
 
+	typedef struct Skill_Info
+	{
+		wstring SkillName;
+		int Sp{};
+		int HitCount{};
+		float Damage{};
+		wstring DamageInfo;
+		SKILL_TARGET Target;
+		SKILL_RANGE Range;
+		wstring SkillInfo;
+	}SKILL_INFO;
+
 	typedef struct Digimon_Info
 	{
 		wstring DigimonName;
 		int DigimonId{};
 		wstring DigimonInfo;
-		wstring DigimonSkill1Info;
-		wstring DigimonSkill2Info;
-		wstring DigimonSkill3Info;
+		SKILL_INFO DigimonSkill1Info;
+		SKILL_INFO DigimonSkill2Info;
+		SKILL_INFO DigimonSkill3Info;
 		wstring DigimonSkillImage;
 		int SkillCount{};
 		DIGIMON_STAGE Stage;

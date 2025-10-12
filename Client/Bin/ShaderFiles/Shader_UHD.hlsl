@@ -82,17 +82,17 @@ PS_OUT PS_MAIN(PS_IN In)
         color = tex2;
 
     // 3번 마나: 최소 0.47
-    float fSp = 0.47; // UV 기준
+    float fSp = 1.f; // UV 기준
     if (In.vTexcoord.y <= fSp && tex3.a > 0)
         color = tex3;
 
     // 4번 체력: 최소 0.13
-    float fHp = 0.13; // UV 기준
+    float fHp = 1.f; // UV 기준
     if (In.vTexcoord.y <= fHp && tex4.a > 0)
         color = tex4;
 
     // 5번 진화치: 최소 0.21
-    float fEvp = 0.6; // UV 기준
+    float fEvp = 1.f; // UV 기준
     if (In.vTexcoord.y <= fEvp && tex5.a > 0)
         color = tex5;
 

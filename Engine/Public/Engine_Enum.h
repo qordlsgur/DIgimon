@@ -23,5 +23,7 @@ namespace Engine
 	enum class DIGIMON_STAGE {INTAINING, ROOKIE, CHAMPION, ULTIMATE, MEGA, END};
 	enum class DIGIMON_ATTRIBUTE {DATA, VIRUS, VACCINE, END};
 	enum class BATTLE_STATE { START, SKILL, ING, END };
+	enum class SKILL_TARGET { SELF, ALLY, ENEMY, END};
+	enum class SKILL_RANGE { SINGLE, ALL, END};
 }
 #endif // Engine_Enum_h__

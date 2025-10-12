@@ -5,6 +5,7 @@
 #include "GameObject.h"
 #include "ContainerObject.h"
 #include "Digimon_Manager.h"
+#include "Battle_UI_Manager.h"
 #include "Battle_Terrain.h"
 
 #include "Player.h"
@@ -23,8 +24,6 @@
 
 IMPLEMENT_SINGLETON(CBattle_Manager);
 
-
-
 CBattle_Manager::CBattle_Manager()
 {
 }
@@ -36,6 +35,8 @@ HRESULT CBattle_Manager::Initialize()
 
 	m_pGameInstance = CGameInstance::GetInstance();
 	m_pDigimon_Manager = CDigimon_Manager::GetInstance();
+	m_pBattle_UI_Manager = CBattle_UI_Manager::GetInstance();
+
 	m_bBattleOn = false;
 	return S_OK;
 }
@@ -515,20 +516,23 @@ void CBattle_Manager::Player_Digimon_Position()
 	}
 }
 
-void CBattle_Manager::Current_Digimon(_int ID1, _int ID2, _int ID3)
+void CBattle_Manager::Current_Digimon(DIGIMON_INFO* Digimon_Info_1, DIGIMON_INFO* Digimon_Info_2, DIGIMON_INFO* Digimon_Info_3)
 {
+
 	m_iPlayerDigimonCount = 1;
 	m_pMyDigimon.push_back(static_cast<CPlayer*>(m_pPlayer)->First_Digimon());
-	if (ID2 != -1)
+	//m_pBattle_UI_Manager->Set_MyDigimon(m_pMyDigimon)
+
+	if (Digimon_Info_2->DigimonId != -1)
 	{
 		m_iPlayerDigimonCount++;
-		m_pMyDigimon.push_back(Digimon_Create(ID2));
+		m_pMyDigimon.push_back(Digimon_Create(Digimon_Info_2->DigimonId));
 	}
 
-	if (ID3 != -1)
+	if (Digimon_Info_3->DigimonId != -1)
 	{
 		m_iPlayerDigimonCount++;
-		m_pMyDigimon.push_back(Digimon_Create(ID3));
+		m_pMyDigimon.push_back(Digimon_Create(Digimon_Info_3->DigimonId));
 	}
 }
 
@@ -551,7 +555,7 @@ void CBattle_Manager::Digimon1_Skill()
 	if (m_pGameInstance->Key_Down(DIK_E))
 	{
 		m_DigimonOrder1.m_iDigimonSkill = 3;
-		m_DigimonOrder1.m_bDigimonSkill= true;
+		m_DigimonOrder1.m_bDigimonSkill = true;
 		m_DigimonOrder1.m_bDigimonOrder = true;
 	}
 }
@@ -564,7 +568,7 @@ void CBattle_Manager::Digimon2_Skill()
 		m_DigimonOrder2.m_bDigimonSkill = true;
 		m_DigimonOrder2.m_bDigimonOrder = true;
 	}
-	
+
 	if (m_pGameInstance->Key_Down(DIK_S))
 	{
 		m_DigimonOrder2.m_iDigimonSkill = 2;

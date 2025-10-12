@@ -1,6 +1,7 @@
 #include "Digivice_Skill.h"
 #include "Digimon_Manager.h"
 #include "GameInstance.h"
+#include "Digivice_Skill_Info.h"
 
 CDigivice_Skill::CDigivice_Skill(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CUIObject{ pDevice, pContext }
@@ -35,7 +36,6 @@ HRESULT CDigivice_Skill::Initialize(void* pArg)
 		return E_FAIL;
 
 	m_pManager = CDigimon_Manager::GetInstance();
-
 
 	return S_OK;
 }
@@ -82,11 +82,6 @@ HRESULT CDigivice_Skill::Render()
 	if (FAILED(m_pVIBufferCom->Render()))
 		return E_FAIL;
 
-	if (m_bHasDigimon)
-	{
-
-	}
-
 	return S_OK;
 }
 
@@ -103,17 +98,34 @@ void CDigivice_Skill::Set_Move(_float fX, _float fY)
 
 void CDigivice_Skill::Set_Info(DIGIMON_INFO* pInfo)
 {
-	m_Info = *pInfo;
+	m_Info = pInfo;
 }
 
 void CDigivice_Skill::OnClick()
 {
 }
 
+void CDigivice_Skill::OnHover()
+{
+}
+
+void CDigivice_Skill::Set_Digimon_Skill_Info_Pos(_float fX, _float fY)
+{
+	m_pSkill_Info->Set_Hover(true);
+	m_pSkill_Info->Set_Move(fX, fY);
+}
+
+void CDigivice_Skill::Set_Hover()
+{
+	m_pSkill_Info->Set_Hover(false);
+}
+
 HRESULT CDigivice_Skill::Set_Digimon_SkillSet(_int ID, _int Digimon_Skill)
 {
 	//Safe_Release(m_pDigimonSKillTextureCom);
 	//m_pDigimonSKillTextureCom = nullptr;
+
+	m_iDigimon_ID = ID;
 
 	if (m_pDigimonSKillTextureCom != nullptr)
 	{
@@ -129,7 +141,10 @@ HRESULT CDigivice_Skill::Set_Digimon_SkillSet(_int ID, _int Digimon_Skill)
 		TEXT("Com_Digimon_Skill"), reinterpret_cast<CComponent**>(&m_pDigimonSKillTextureCom))))
 	return E_FAIL;
 
+
 	m_iDigimon_Skill = Digimon_Skill;
+
+	Create_Info();
 
 	return S_OK;
 }
@@ -166,6 +181,17 @@ HRESULT CDigivice_Skill::Bind_ShaderResources()
 		return E_FAIL;
 	if (FAILED(m_pDigimonSKillTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture2", m_iDigimon_Skill)))
 		return E_FAIL;
+
+	return S_OK;
+}
+
+HRESULT CDigivice_Skill::Create_Info()
+{
+	if (FAILED(m_pSkill_Info = static_cast<CDigivice_Skill_Info*>(m_pGameInstance->Add_GameObject_ToLayer_ToCreate(
+		ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Digivice_Skill_Info"), ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Layer_Skill_Info")))))
+		return E_FAIL;
+
+	m_pSkill_Info->Set_Digimon_Skill_Info(m_iDigimon_ID, m_iDigimon_Skill);
 
 	return S_OK;
 }

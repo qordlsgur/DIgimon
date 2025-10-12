@@ -45,6 +45,7 @@ public:
 	void Release_Digimon(_int ID);
 
 	void Set_Digivice_Slot(_int SlotID, _bool Has, _int Digimon_ID);
+	void Set_Current_Digimon_Info(DIGIMON_INFO* Info);
 
 	//void Copy_Digimon();
 
@@ -67,6 +68,9 @@ private:
 	class CDigivice* m_pDigivice = { nullptr };
 
 	vector<_bool> m_vDigivice_Battle_Slot;
+
+	vector<DIGIMON_INFO*> m_CurrentDigimon;
+
 	_uint m_iDigivice_Number{};
 	wstring	 Not_found;
 

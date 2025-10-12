@@ -45,7 +45,7 @@ _float CFont_Manager::FontSizeX(const _wstring& strFontTag, const _tchar* pText)
 {
     CFont* pFont = Find_Font(strFontTag);
     if (nullptr == pFont)
-        return E_FAIL;
+        return 0.f;
 
     return pFont->FontSizeX(pText);
 }
