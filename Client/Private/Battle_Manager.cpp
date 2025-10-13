@@ -448,9 +448,9 @@ void CBattle_Manager::Battle_System()
 	m_bPlayer_Death = false;
 	m_bEnemy_Death = false;
 	m_eBattle_State = BATTLE_STATE::START;
-	Enemy_Position();
 	static_cast<CDigivice*>(m_pDigivice)->Update_Digimopn();
 	Player_Digimon_Position();
+	Enemy_Position();
 	Battle_Tunr_Order();
 }
 
@@ -521,18 +521,20 @@ void CBattle_Manager::Current_Digimon(DIGIMON_INFO* Digimon_Info_1, DIGIMON_INFO
 
 	m_iPlayerDigimonCount = 1;
 	m_pMyDigimon.push_back(static_cast<CPlayer*>(m_pPlayer)->First_Digimon());
-	//m_pBattle_UI_Manager->Set_MyDigimon(m_pMyDigimon)
+	m_pBattle_UI_Manager->Set_MyDigimon(&m_pMyDigimon[0]->CurrentInfo());
 
 	if (Digimon_Info_2->DigimonId != -1)
 	{
 		m_iPlayerDigimonCount++;
 		m_pMyDigimon.push_back(Digimon_Create(Digimon_Info_2->DigimonId));
+		m_pBattle_UI_Manager->Set_MyDigimon(&m_pMyDigimon[1]->CurrentInfo());
 	}
 
 	if (Digimon_Info_3->DigimonId != -1)
 	{
 		m_iPlayerDigimonCount++;
 		m_pMyDigimon.push_back(Digimon_Create(Digimon_Info_3->DigimonId));
+		m_pBattle_UI_Manager->Set_MyDigimon(&m_pMyDigimon[2]->CurrentInfo());
 	}
 }
 
@@ -733,12 +735,14 @@ void CBattle_Manager::EnemyDigimon_Info(_int EnemyDigimonID)
 	{
 		m_pEnemyDigimon.push_back(Digimon_Create(EnemyDigimonID));
 
-		m_pEnemyDigimon[i]->Set_Hp(m_pGameInstance->intRandom(500, 3000));
-		m_pEnemyDigimon[i]->Set_Sp(m_pGameInstance->intRandom(30, 100));
+		m_pEnemyDigimon[i]->Set_Hp(1500);
+		m_pEnemyDigimon[i]->Set_Sp(5000);
 		m_pEnemyDigimon[i]->Set_Damage(m_pGameInstance->intRandom(250, 500));
-		m_pEnemyDigimon[i]->Set_AttackSpeed(m_pGameInstance->intRandom(1, 10));
+		m_pEnemyDigimon[i]->Set_AttackSpeed(5);
 		m_pEnemyDigimon[i]->Set_Exp(m_pGameInstance->intRandom(900, 1000));
 		m_pEnemyDigimon[i]->Set_Lv(m_pGameInstance->intRandom(1, 92));
+
+		m_pBattle_UI_Manager->Set_Enemy_Digimon(&m_pEnemyDigimon[i]->CurrentInfo());
 	}
 }
 
@@ -841,7 +845,7 @@ void CBattle_Manager::Battle_Tunr_Order()
 		m_pDigimonSort.push_back(iter);
 	}
 
-	sort(m_pDigimonSort.begin(), m_pDigimonSort.end(),
+	stable_sort(m_pDigimonSort.begin(), m_pDigimonSort.end(),
 		[](CContainerObject* Src, CContainerObject* Dst)
 		{return Src->Get_AttackSpeed() > Dst->Get_AttackSpeed(); });
 
@@ -854,4 +858,6 @@ void CBattle_Manager::Free()
 
 	m_pMyDigimon.clear();
 	m_pEnemyDigimon.clear();
+
+	Safe_Release(m_pGameInstance);
 }

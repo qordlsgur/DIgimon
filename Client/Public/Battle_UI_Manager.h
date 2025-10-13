@@ -24,13 +24,26 @@ public:
 	HRESULT Initialize();
 
 public:
+	HRESULT Create_TimeLine();
+
+	void Set_Battle_Turn_Order(deque<CContainerObject*>Digimon_Turn_Order);
+
 	void Set_MyDigimon(DIGIMON_INFO* MyDigimon);
 	void Set_Enemy_Digimon(DIGIMON_INFO* EnemyDigimon);
+		
+	void Set_Timeline_Turn_Order();
 
 private:
+	CGameInstance* m_pGameInstance = { nullptr };
 
-	vector<DIGIMON_INFO*> m_MyDigimon_Info;
-	vector<DIGIMON_INFO*> m_EnemyDigimon_Info;
+	deque<CContainerObject*>		m_pDigimon_Turn_Order;
+
+	vector<DIGIMON_INFO*>		m_MyDigimon_Info;
+	vector<DIGIMON_INFO*>		m_EnemyDigimon_Info;
+
+	deque<class CBattle_Timeline*>	m_pTimeLines;
+	vector<class CBattle_Timeline*> m_pTimeLine_array;
+	class CBattle_Timeline* m_pTimeLine = { nullptr };
 
 public:
 	virtual void Free() override;

@@ -2,12 +2,12 @@
 <Project>
   <ProjectOutputs>
     <ProjectOutput>
-      <FullPath>C:\Users\hyen6\Desktop\DIgimon\Engine\Bin\Engine.dll</FullPath>
+      <FullPath>C:\Users\hyen6\Desktop\Framework\Digimon\Engine\Bin\Engine.dll</FullPath>
     </ProjectOutput>
   </ProjectOutputs>
   <ContentFiles>
     <ContentFile>
-      <FullPath>C:\Users\hyen6\Desktop\DIgimon\Engine\Bin\Shader_Cell.cso</FullPath>
+      <FullPath>C:\Users\hyen6\Desktop\Framework\Digimon\Engine\Bin\Shader_Cell.cso</FullPath>
     </ContentFile>
   </ContentFiles>
   <SatelliteDlls />

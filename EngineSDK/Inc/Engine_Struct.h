@@ -246,11 +246,12 @@ namespace Engine
 		wstring SkillName;
 		int Sp{};
 		int HitCount{};
-		float Damage{};
+		int Damage{};
 		wstring DamageInfo;
 		SKILL_TARGET Target;
 		SKILL_RANGE Range;
 		wstring SkillInfo;
+
 	}SKILL_INFO;
 
 	typedef struct Digimon_Info

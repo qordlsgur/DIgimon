@@ -161,6 +161,7 @@
     <ClInclude Include="..\public\Battle_Camera.h" />
     <ClInclude Include="..\public\Battle_Manager.h" />
     <ClInclude Include="..\public\Battle_Terrain.h" />
+    <ClInclude Include="..\public\Battle_Timeline.h" />
     <ClInclude Include="..\public\Battle_UI_Manager.h" />
     <ClInclude Include="..\public\Beelzebumon.h" />
     <ClInclude Include="..\public\Blackwargreymon.h" />
@@ -244,6 +245,7 @@
     <ClCompile Include="..\private\Battle_Camera.cpp" />
     <ClCompile Include="..\private\Battle_Manager.cpp" />
     <ClCompile Include="..\private\Battle_Terrain.cpp" />
+    <ClCompile Include="..\private\Battle_Timeline.cpp" />
     <ClCompile Include="..\private\Battle_UI_Manager.cpp" />
     <ClCompile Include="..\private\Beelzebumon.cpp" />
     <ClCompile Include="..\private\Blackwargreymon.cpp" />
@@ -322,6 +324,7 @@
     <Image Include="small.ico" />
   </ItemGroup>
   <ItemGroup>
+    <FxCompile Include="..\Bin\ShaderFiles\Shader_Battle_Timeline.hlsl" />
     <FxCompile Include="..\Bin\ShaderFiles\Shader_Digivice.hlsl" />
     <FxCompile Include="..\Bin\ShaderFiles\Shader_Digivice_Mask.hlsl" />
     <FxCompile Include="..\Bin\ShaderFiles\Shader_Digivice_Target.hlsl" />

@@ -1,6 +1,6 @@
 #include "Digivice_Skill.h"
-#include "Digimon_Manager.h"
 #include "GameInstance.h"
+#include "Digimon_Manager.h"
 #include "Digivice_Skill_Info.h"
 
 CDigivice_Skill::CDigivice_Skill(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
@@ -125,6 +125,7 @@ HRESULT CDigivice_Skill::Set_Digimon_SkillSet(_int ID, _int Digimon_Skill)
 	//Safe_Release(m_pDigimonSKillTextureCom);
 	//m_pDigimonSKillTextureCom = nullptr;
 
+
 	m_iDigimon_ID = ID;
 
 	if (m_pDigimonSKillTextureCom != nullptr)
@@ -137,9 +138,9 @@ HRESULT CDigivice_Skill::Set_Digimon_SkillSet(_int ID, _int Digimon_Skill)
 	}
 
 	/* Com_Digimon_Skill*/
-	if(FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::GAMEPLAY), m_pManager->Search_Digimon(ID)->DigimonSkillImage,
+	if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::GAMEPLAY), m_pManager->Search_Digimon(m_iDigimon_ID)->DigimonSkillImage,
 		TEXT("Com_Digimon_Skill"), reinterpret_cast<CComponent**>(&m_pDigimonSKillTextureCom))))
-	return E_FAIL;
+		return E_FAIL;
 
 
 	m_iDigimon_Skill = Digimon_Skill;
@@ -187,8 +188,10 @@ HRESULT CDigivice_Skill::Bind_ShaderResources()
 
 HRESULT CDigivice_Skill::Create_Info()
 {
-	if (FAILED(m_pSkill_Info = static_cast<CDigivice_Skill_Info*>(m_pGameInstance->Add_GameObject_ToLayer_ToCreate(
-		ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Digivice_Skill_Info"), ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Layer_Skill_Info")))))
+	m_pSkill_Info = static_cast<CDigivice_Skill_Info*>(m_pGameInstance->Add_GameObject_ToLayer_ToCreate(
+		ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Digivice_Skill_Info"), ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Layer_Skill_Info")));
+
+	if (m_pSkill_Info == nullptr)
 		return E_FAIL;
 
 	m_pSkill_Info->Set_Digimon_Skill_Info(m_iDigimon_ID, m_iDigimon_Skill);

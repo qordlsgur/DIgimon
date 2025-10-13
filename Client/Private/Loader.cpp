@@ -16,6 +16,10 @@
 #include "Battle.h"
 #pragma endregion
 
+#pragma region Battle
+#include "Battle_Timeline.h"
+#pragma endregion
+
 #pragma region Button
 #include "Exit_Button.h"
 #pragma endregion
@@ -261,7 +265,7 @@ HRESULT CLoader::Loading_For_GamePlay()
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/UI/Exit_Button.png"), 1))))
 		return E_FAIL;
 
-	//배틀Ui------------------------------------------------------------------------------------------------------------------------------------------------------
+	//배틀UI------------------------------------------------------------------------------------------------------------------------------------------------------
 
 	/* For.Prototype_Component_Texture_Battle_Skill*/
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Battle_Skill"),
@@ -293,29 +297,20 @@ HRESULT CLoader::Loading_For_GamePlay()
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/Battle/Battle_Rotation_Gauge_HP.png"), 1))))
 		return E_FAIL;
 
-	/* For.Prototype_Component_Texture_Timeline_blue_bg*/
-	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Timeline_blue_bg"),
-		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/Battle/Timeline_blue_bg.png"), 1))))
-		return E_FAIL;
-
-	/* For.Prototype_Component_Texture_Timeline_blue_Line*/
-	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Timeline_blue_Line"),
-		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/Battle/Timeline_blue_Line.png"), 1))))
-		return E_FAIL;
-
+	//베틀 UI
 	/* For.Prototype_Component_Texture_Timeline_Portrait_mask*/
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Timeline_Portrait_mask"),
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/Battle/Timeline_Portrait_mask.png"), 1))))
 		return E_FAIL;
 
-	/* For.Prototype_Component_Texture_Timeline_red_bg*/
-	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Timeline_red_bg"),
-		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/Battle/Timeline_red_bg.png"), 1))))
+	/* For.Prototype_Component_Texture_Timeline_blue_bg*/
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Timeline_bg"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/Battle/Timeline_bg%d.png"), 2))))
 		return E_FAIL;
 
-	/* For.Prototype_Component_Texture_Timeline_red_Line*/
-	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Timeline_red_Line"),
-		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/Battle/Timeline_red_Line.png"), 1))))
+	/* For.Prototype_Component_Texture_Timeline_blue_Line*/
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Timeline_Line"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/Battle/Timeline_Line%d.png"), 2))))
 		return E_FAIL;
 
 	/* For.Prototype_Component_Texture_Battle_Turn*/
@@ -721,6 +716,13 @@ HRESULT CLoader::Loading_For_GamePlay()
 	//* For.Prototype_GameObject_Exit_Button */
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Exit_Button"),
 		CExit_Button::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	//배틀UI----------------------------------------------------------------------------------------------------------------------------
+
+	/* For.Prototype_GameObject_Battle_Timeline */
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Battle_Timeline"),
+		CBattle_Timeline::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
 	//디지몬------------------------------------------------------------------------------------------------------------------------------

@@ -201,8 +201,8 @@ void CDigivice::Acquire_Digimon(_int ID)
 			m_Digimon_ID[i] = ID;
 			for (int j = 0; j < m_pBattle_Slot[i]->Get_DigimonInfo().SkillCount; ++j)
 			{
-				m_pBattle_Skill[j]->Set_Digimon_SkillSet(ID, j);
 				m_pBattle_Skill[j]->Set_Info(Info);
+				m_pBattle_Skill[j]->Set_Digimon_SkillSet(ID, j);
 			}
 			return;
 		}

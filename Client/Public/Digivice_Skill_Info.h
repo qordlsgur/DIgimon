@@ -39,7 +39,6 @@ private:
 	CShader* m_pShaderCom = { nullptr };
 
 	class CDigimon_Manager* m_pManager = { nullptr };
-	class CDigimon_Skill_Info* m_pSkill_Info = { nullptr };
 
 	SKILL_INFO	m_Info;
 

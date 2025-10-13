@@ -111,7 +111,7 @@ _int CContainerObject::Get_Lv()
 	return Info.Lv;
 }
 
-DIGIMON_INFO CContainerObject::CurrentInfo()
+DIGIMON_INFO& CContainerObject::CurrentInfo()
 {
 	return Info;
 }

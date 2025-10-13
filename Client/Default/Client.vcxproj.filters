@@ -262,6 +262,9 @@
     <Filter Include="03.UI\Digivice\SkillInfo">
       <UniqueIdentifier>{dab16379-b4f6-4e12-b630-0daf06780524}</UniqueIdentifier>
     </Filter>
+    <Filter Include="03.UI\Battle_Timeline">
+      <UniqueIdentifier>{014e237b-0c1c-4a9d-83a5-e42727419ec0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -506,6 +509,9 @@
     </ClInclude>
     <ClInclude Include="..\public\Digivice_Skill_Info.h">
       <Filter>03.UI\Digivice\SkillInfo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\Battle_Timeline.h">
+      <Filter>03.UI\Battle_Timeline</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -753,6 +759,9 @@
     <ClCompile Include="..\private\Digivice_Skill_Info.cpp">
       <Filter>03.UI\Digivice\SkillInfo</Filter>
     </ClCompile>
+    <ClCompile Include="..\private\Battle_Timeline.cpp">
+      <Filter>03.UI\Battle_Timeline</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxPosTex.hlsl">
@@ -786,6 +795,9 @@
       <Filter>97.ShaderFiles</Filter>
     </FxCompile>
     <FxCompile Include="..\Bin\ShaderFiles\Shader_Digivice_Target.hlsl">
+      <Filter>97.ShaderFiles</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Bin\ShaderFiles\Shader_Battle_Timeline.hlsl">
       <Filter>97.ShaderFiles</Filter>
     </FxCompile>
   </ItemGroup>
