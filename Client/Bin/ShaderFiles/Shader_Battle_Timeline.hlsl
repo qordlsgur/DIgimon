@@ -1,11 +1,11 @@
 #include "Engine_Shader_Defines.hlsli"
-#include "Engine_Shader_Defines.hlsli"
-#include "Engine_Shader_Defines.hlsli"
+
 matrix g_WorldMatrix, g_ViewMatrix, g_ProjMatrix;
 
 Texture2D g_Texture1;
 Texture2D g_Texture2;
 Texture2D g_Texture3;
+Texture2D g_Texture4;
 
 
 sampler DefaultSampler = sampler_state
@@ -62,6 +62,8 @@ PS_OUT PS_MAIN(PS_IN In)
 {
     PS_OUT Out;
 
+    float4 color = float4(0, 0, 0, 0);
+    
     // 1번 텍스처 샘플링
     float4 color1 = g_Texture1.Sample(DefaultSampler, In.vTexcoord);
     
@@ -69,12 +71,17 @@ PS_OUT PS_MAIN(PS_IN In)
     
     float4 color3 = g_Texture3.Sample(DefaultSampler, In.vTexcoord);
     
-    float4 color = float4(0, 0, 0, 0);
+    float4 color4 = g_Texture4.Sample(DefaultSampler, In.vTexcoord);
     
-    color2.rgb = color1.rgb;
+    color = color1;
     
-    if (color2.a > 0)
-        color3 = color2;
+    color.rgb = color1.rgb;
+    
+    if (color3.a > 0)
+        color = color3;
+    
+    if (color4.a > 0)
+        color = color4;
             
     Out.vColor = color;
     

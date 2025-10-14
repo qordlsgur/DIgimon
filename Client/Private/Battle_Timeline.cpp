@@ -20,10 +20,10 @@ HRESULT CBattle_Timeline::Initialize(void* pArg)
 {
     CUIObject::UIOBJECT_DESC	Desc{};
 
-    Desc.fX = 100.f;
-    Desc.fY = 100.f;
-    Desc.fSizeX = 50.f;
-    Desc.fSizeY = 50.f;
+    Desc.fX = 300.f;
+    Desc.fY = 300.f;
+    Desc.fSizeX = 300.f;
+    Desc.fSizeY = 300.f;
 
     m_pRect = { long(Desc.fX - Desc.fSizeX * 0.5f), long(Desc.fY - Desc.fSizeY * 0.5f), long(Desc.fX + Desc.fSizeX * 0.5f), long(Desc.fY + Desc.fSizeY * 0.5f) };
 
@@ -73,13 +73,13 @@ HRESULT CBattle_Timeline::Ready_Components()
         TEXT("Com_VIBuffer"), reinterpret_cast<CComponent**>(&m_pVIBufferCom))))
         return E_FAIL;
 
-    /* Com_BlueBG*/
-    if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Timeline_bg"),
-        TEXT("Com_BlueBG"), reinterpret_cast<CComponent**>(&m_pTimelineBGTextureCom))))
-        return E_FAIL;
     /* Com_Battle_TimeLine*/
     if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Timeline_Portrait_mask"),
         TEXT("Com_Battle_TimeLine"), reinterpret_cast<CComponent**>(&m_pTimeLine_TextureCom))))
+        return E_FAIL;
+    /* Com_BlueBG*/
+    if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Timeline_bg"),
+        TEXT("Com_BlueBG"), reinterpret_cast<CComponent**>(&m_pTimelineBGTextureCom))))
         return E_FAIL;
     /* Com_BlueLine*/
     if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Timeline_Line"),
@@ -91,7 +91,7 @@ HRESULT CBattle_Timeline::Ready_Components()
         return E_FAIL;
 
     /* Com_Shader */
-    if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Shader_Digivice_Mask"),
+    if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Shader_Battle_Timeline"),
         TEXT("Com_Shader"), reinterpret_cast<CComponent**>(&m_pShaderCom))))
         return E_FAIL;
 
@@ -106,13 +106,13 @@ HRESULT CBattle_Timeline::Bind_ShaderResources()
         return E_FAIL;
     if (FAILED(m_pShaderCom->Bind_Matrix("g_ProjMatrix", &m_ProjMatrix)))
         return E_FAIL;
-    if (FAILED(m_pTimelineBGTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture1", m_iEnemy)))
+    if (FAILED(m_pTimeLine_TextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture1", 0)))
         return E_FAIL;
-    if (FAILED(m_pTimeLine_TextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture2", 0)))
+    if (FAILED(m_pTimelineBGTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture2", 0)))
         return E_FAIL;
-    if (FAILED(m_pBattleTimeLineLineTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture3", m_iEnemy)))
+    if (FAILED(m_pBattleTimeLineLineTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture3", 0)))
         return E_FAIL;
-    if (FAILED(m_pDigimonTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture4", m_iDigimon_Image)))
+    if (FAILED(m_pDigimonTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture4", 0)))
         return E_FAIL;
 
     return S_OK;
