@@ -40,6 +40,9 @@ public:
 	DIGIMON_INFO* Set_Info(_int ID);
 
 private:
+	void Set_State(DIGIMON_INFO ID);
+
+private:
 	CVIBuffer_Rect* m_pVIBufferCom = { nullptr };
 	CTexture* m_pTextureCom = { nullptr };	
 	CShader* m_pShaderCom = { nullptr };
@@ -49,6 +52,10 @@ private:
 	class CDigivice_Info* m_pDigivice_Info = { nullptr };
 	class CDigivice_Skill* m_pDigivice_Skill = { nullptr };
 	class CDigivice_Target* m_pDigivice_Target = { nullptr };
+
+	class CDigivice_Hp*		m_pDigivice_Hp = { nullptr };
+	class CDigivice_Sp*		m_pDigivice_Sp = { nullptr };
+	class CDigivice_Exp*	m_pDigivice_Exp = { nullptr };
 
 	_uint	m_iDigivice_Battle_Slot_Number;
 	_uint	m_iDigivice_Battle_Skill_Number;
@@ -63,6 +70,7 @@ private:
 	wstring	m_strDigimon_Attribute[3] = {};
 
 	_tchar			m_szDigimonHp[MAX_PATH] = {};
+	_tchar			m_szDigimonMaxHp[MAX_PATH] = {};
 	_tchar			m_szDigimonSp[MAX_PATH] = {};
 	_tchar			m_szDigimonDamage[MAX_PATH] = {};
 	_tchar			m_szDigimonAttackSpeed[MAX_PATH] = {};
@@ -81,6 +89,7 @@ private:
 	HRESULT Create_Slot(const _wstring& strLayerTag);
 	HRESULT Create_Skill(const _wstring& strLayerTag);
 	HRESULT Create_Target(const _wstring& strLayerTag);
+	HRESULT Craete_State(const _wstring& strLayerTag);
 
 public:
 	static CDigivice* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);

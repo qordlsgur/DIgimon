@@ -28,7 +28,20 @@ public:
 
 public:
 	void Set_Digimon(_bool Enemy, _int DigimonId) { m_iEnemy = Enemy; m_iDigimon_Image = DigimonId; }
+	void Set_Move(_float2 OffSet);
 
+	void Set_MoveUp(_float2 OffSet);
+	void Set_MoveSlowUp(_float2 OffSet);
+	void Set_SizeUp();
+	void Set_SizeDown();
+
+	void Set_Lerp(_bool Lerp) { m_bisLerp = Lerp; }
+	_bool Get_Lerp() { return m_bisLerp; }
+	void Set_SlowLerp(_bool Lerp) { m_bisSlowLerp = Lerp; }
+	
+
+	void Set_OffSet(_float2 OffSet) { m_fOffSet = OffSet; }
+	void Set_SlowOffSet(_float2 OffSet) { m_fSlowOffSet = OffSet; }
 private:
 	CVIBuffer_Rect* m_pVIBufferCom = { nullptr };
 	CTexture* m_pTimeLine_TextureCom = { nullptr };
@@ -41,6 +54,12 @@ private:
 	_int m_iDigimon_Image{};
 	_bool m_iEnemy = { false };
 
+	_float2 m_fOffSet{};
+	_float2 m_fSlowOffSet{};
+	_bool m_bisLerp = { false };
+	_bool m_bisSlowLerp = { false };
+
+	_float m_fTime{};
 private:
 	HRESULT Ready_Components();
 	HRESULT Bind_ShaderResources();

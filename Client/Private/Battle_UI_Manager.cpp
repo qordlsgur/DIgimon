@@ -2,6 +2,7 @@
 #include "GameInstance.h"
 #include "ContainerObject.h"
 #include "Battle_Timeline.h"
+#include "Battle_Turn.h"
 
 IMPLEMENT_SINGLETON(CBattle_UI_Manager)
 
@@ -13,18 +14,48 @@ HRESULT CBattle_UI_Manager::Initialize()
 {
 	m_pGameInstance = CGameInstance::GetInstance();
 
-	Create_TimeLine();
 	return S_OK;
 }
 
 HRESULT CBattle_UI_Manager::Create_TimeLine()
 {
-	m_pTimeLine = static_cast<CBattle_Timeline*>(m_pGameInstance->Add_GameObject_ToLayer_ToCreate(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Battle_Timeline")
-		,ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Layer_Battle_TimeLine")));
-	if (m_pTimeLine == nullptr)
+	m_pTurn = static_cast<CBattle_Turn*>(m_pGameInstance->Add_GameObject_ToLayer_ToCreate(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Battle_Turn"),
+		ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Layer_Battle_Turn")));
+	if (m_pTurn == nullptr)
 		return E_FAIL;
 
-	m_pTimeLine_array.push_back(m_pTimeLine);
+	for (_int i = 0; i < 6; ++i)
+	{
+		m_pTimeLine = static_cast<CBattle_Timeline*>(m_pGameInstance->Add_GameObject_ToLayer_ToCreate(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Battle_Timeline")
+			, ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Layer_Battle_TimeLine")));
+		if (m_pTimeLine == nullptr)
+			return E_FAIL;
+
+		m_pTimeLine_array.push_back(m_pTimeLine);
+	}
+
+	m_fTurn_Panel[0] = _float2(1208.f, 200.f);
+	m_fTurn_Panel[1] = _float2(1220.f, 268.f);
+	m_fTurn_Panel[2] = _float2(1220.f, 328.f);
+	m_fTurn_Panel[3] = _float2(1220.f, 388.f);
+	m_fTurn_Panel[4] = _float2(1220.f, 448.f);
+	m_fTurn_Panel[5] = _float2(1220.f, 508.f);
+
+	m_pTimeLine_array[1]->Set_Move(m_fTurn_Panel[1]);
+	m_pTimeLine_array[1]->Set_SizeDown();
+
+	m_pTimeLine_array[2]->Set_Move(m_fTurn_Panel[2]);
+	m_pTimeLine_array[2]->Set_SizeDown();
+
+	m_pTimeLine_array[3]->Set_Move(m_fTurn_Panel[3]);
+	m_pTimeLine_array[3]->Set_SizeDown();
+
+	m_pTimeLine_array[4]->Set_Move(m_fTurn_Panel[4]);
+	m_pTimeLine_array[4]->Set_SizeDown();
+
+	m_pTimeLine_array[5]->Set_Move(m_fTurn_Panel[5]);
+	m_pTimeLine_array[5]->Set_SizeDown();
+
 
 	return S_OK;
 }
@@ -58,6 +89,37 @@ void CBattle_UI_Manager::Set_Timeline_Turn_Order()
 	{
 		m_pTimeLines.push_back(Timeline);
 	}
+
+	m_pTurn->Set_Active(true);
+
+	for (auto& Timeline : m_pTimeLines)
+		Timeline->Set_Active(true);
+}
+
+void CBattle_UI_Manager::Turn_Start()
+{
+	m_pCurrent_TimeLine = m_pTimeLines.front();
+	m_pTimeLines.pop_front();
+	//m_pTimeLines.back()->Set_Active(true);
+}
+
+void CBattle_UI_Manager::Turn_End()
+{
+	m_pCurrent_TimeLine->Set_SizeDown();
+	m_pCurrent_TimeLine->Set_Move(m_fTurn_Panel[m_pTimeLines.size()]);
+	m_pCurrent_TimeLine->Set_Active(false);
+
+	m_pTimeLines.push_back(m_pCurrent_TimeLine);
+
+	m_pTimeLines[0]->Set_OffSet(m_fTurn_Panel[0]);
+	m_pTimeLines[0]->Set_Lerp(true);
+
+	for (size_t i = 1; i < m_pTimeLines.size(); ++i)
+	{
+		m_pTimeLines[i]->Set_SlowOffSet(m_fTurn_Panel[i]);
+		m_pTimeLines[i]->Set_SlowLerp(true);
+	}
+
 }
 
 void CBattle_UI_Manager::Free()

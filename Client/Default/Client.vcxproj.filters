@@ -265,6 +265,21 @@
     <Filter Include="03.UI\Battle_Timeline">
       <UniqueIdentifier>{014e237b-0c1c-4a9d-83a5-e42727419ec0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="03.UI\Battle_Turn">
+      <UniqueIdentifier>{df14d5cc-8059-4d2a-912f-52958ef2b161}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03.UI\Battle_Enemy_Hp">
+      <UniqueIdentifier>{d61863c9-6546-48ce-8704-ba8d20eab144}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03.UI\Digivice\Hp">
+      <UniqueIdentifier>{27fe5f3c-0568-449b-a5bd-69318780451a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03.UI\Digivice\Sp">
+      <UniqueIdentifier>{4aa97e99-457d-43c4-bd3c-6b2ae125babd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03.UI\Digivice\Exp">
+      <UniqueIdentifier>{1491e57a-5444-46aa-ba27-23988cccaa37}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -512,6 +527,21 @@
     </ClInclude>
     <ClInclude Include="..\public\Battle_Timeline.h">
       <Filter>03.UI\Battle_Timeline</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\Battle_Turn.h">
+      <Filter>03.UI\Battle_Turn</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\Battle_Enemy_Hp.h">
+      <Filter>03.UI\Battle_Enemy_Hp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\Digivice_Sp.h">
+      <Filter>03.UI\Digivice\Sp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\Digivice_Exp.h">
+      <Filter>03.UI\Digivice\Exp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\Digivice_Hp.h">
+      <Filter>03.UI\Digivice\Hp</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -762,6 +792,21 @@
     <ClCompile Include="..\private\Battle_Timeline.cpp">
       <Filter>03.UI\Battle_Timeline</Filter>
     </ClCompile>
+    <ClCompile Include="..\private\Battle_Turn.cpp">
+      <Filter>03.UI\Battle_Turn</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\Battle_Enemy_Hp.cpp">
+      <Filter>03.UI\Battle_Enemy_Hp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\Digivice_Sp.cpp">
+      <Filter>03.UI\Digivice\Sp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\Digivice_Exp.cpp">
+      <Filter>03.UI\Digivice\Exp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\Digivice_Hp.cpp">
+      <Filter>03.UI\Digivice\Hp</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxPosTex.hlsl">
@@ -798,6 +843,9 @@
       <Filter>97.ShaderFiles</Filter>
     </FxCompile>
     <FxCompile Include="..\Bin\ShaderFiles\Shader_Battle_Timeline.hlsl">
+      <Filter>97.ShaderFiles</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Bin\ShaderFiles\Shader_Digivice_State.hlsl">
       <Filter>97.ShaderFiles</Filter>
     </FxCompile>
   </ItemGroup>

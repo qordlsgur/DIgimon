@@ -20,15 +20,35 @@ public:
 	HRESULT Add_RenderGroup(RENDER eRenderGroup, class CGameObject* pRenderObject);
 	void Render();
 
+#ifdef _DEBUG
+	HRESULT Add_DebugComponent(class CComponent* pDebugCom);
+#endif
+
 private:
 	ID3D11Device* m_pDevice = { nullptr };
 	ID3D11DeviceContext* m_pContext = { nullptr };
+	class CGameInstance* m_pGameInstance = { nullptr };
 	list<class CGameObject*>			m_RenderObjects[ENUM_CLASS(RENDER::END)];
+
+#ifdef _DEBUG
+private:
+	list<class CComponent*>				m_DebugComponents;
+#endif
+
+private:
+	class CShader* m_pShader = { nullptr };
+	class CVIBuffer_Rect* m_pVIBuffer = { nullptr };
+
+private:
+	_float4x4							m_WorldMatrix{}, m_ViewMatrix{}, m_ProjMatrix{};
 
 
 private:
 	void Render_Priority();
 	void Render_NonBlend();
+	void Render_LightAcc();
+	void Render_Combined();
+	void Render_NonLight();
 	void Render_Blend();
 	void Render_UI();
 	void Render_BlendUI();

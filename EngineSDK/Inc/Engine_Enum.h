@@ -9,7 +9,7 @@ namespace Engine
 	enum class LIGHT { DIRECTIONAL, POINT, SPOT, END };
 	enum class D3DTS { VIEW, PROJ, END };
 	enum class MODEL { ANIM, NONANIM };
-	enum class RENDER { PRIORITY, NONBLEND, BLEND, UI, BLENDUI, END};
+	enum class RENDER { PRIORITY, NONBLEND, NONLIGHT, BLEND, UI, BLENDUI, END};
 	enum class TEXTURE { PLANE, CUBE, END };
 	enum class RAY { LOCAL, WORLD, END };
 	enum class CHANNELID { EFFECT, BGM, END };

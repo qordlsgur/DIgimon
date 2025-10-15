@@ -23,6 +23,16 @@ _matrix CPipeLine::Get_Transform_Matrix(D3DTS eState)
 	return XMLoadFloat4x4(&m_TransformStateMatrices[ENUM_CLASS(eState)]);
 }
 
+const _float4x4* CPipeLine::Get_Transform_Float4x4_Inverse(D3DTS eState)
+{
+	return &m_TransformStateMatrixInverse[ENUM_CLASS(eState)];
+}
+
+_matrix CPipeLine::Get_Transform_Matrix_Inverse(D3DTS eState)
+{
+	return XMLoadFloat4x4(&m_TransformStateMatrixInverse[ENUM_CLASS(eState)]);
+}
+
 const _float4* CPipeLine::Get_CamPosition()
 {
 	// 카메라의 위치를 넘겨준다.

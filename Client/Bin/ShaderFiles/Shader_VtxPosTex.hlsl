@@ -15,12 +15,6 @@ matrix g_WorldMatrix, g_ViewMatrix, g_ProjMatrix;
 
 texture2D g_Texture;
 
-sampler DefaultSampler = sampler_state
-{
-    Filter = MIN_MAG_MIP_LINEAR;
-    AddressU = mirror;
-    AddressV = mirror;
-};
 
 
 /* ¡§¡° Ω¶¿Ã¥ı : */

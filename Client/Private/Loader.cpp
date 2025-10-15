@@ -10,6 +10,9 @@
 #include "Digivice_Skill.h"
 #include "Digivice_Skill_Info.h"
 #include "Digivice_Target.h"
+#include "Digivice_Hp.h"
+#include "Digivice_Sp.h"
+#include "Digivice_Exp.h"
 #include "PartyUHD.h"
 #include "UHD_Slot.h"
 #include "Interaction.h"
@@ -18,6 +21,8 @@
 
 #pragma region Battle
 #include "Battle_Timeline.h"
+#include "Battle_Turn.h"
+#include "Battle_Enemy_Hp.h"
 #pragma endregion
 
 #pragma region Button
@@ -298,6 +303,7 @@ HRESULT CLoader::Loading_For_GamePlay()
 		return E_FAIL;
 
 	//베틀 UI
+
 	/* For.Prototype_Component_Texture_Timeline_Portrait_mask*/
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Timeline_Portrait_mask"),
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/Battle/Timeline_Portrait_mask.png"), 1))))
@@ -614,6 +620,11 @@ HRESULT CLoader::Loading_For_GamePlay()
 		CShader::Create(m_pDevice, m_pContext, TEXT("../Bin/ShaderFiles/Shader_Digivice_Target.hlsl"), VTXPOSTEX::Elements, VTXPOSTEX::iNumElements))))
 		return E_FAIL;
 
+	/* For.Prototype_Component_Shader_Digivice_State*/
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Shader_Digivice_State"),
+		CShader::Create(m_pDevice, m_pContext, TEXT("../Bin/ShaderFiles/Shader_Digivice_State.hlsl"), VTXPOSTEX::Elements, VTXPOSTEX::iNumElements))))
+		return E_FAIL;
+
 	/* For.Prototype_Component_Shader_VtxMesh */
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Shader_VtxMesh"),
 		CShader::Create(m_pDevice, m_pContext, TEXT("../Bin/ShaderFiles/Shader_VtxMesh.hlsl"), VTXMESH::Elements, VTXMESH::iNumElements))))
@@ -708,6 +719,7 @@ HRESULT CLoader::Loading_For_GamePlay()
 		CDigivice_Skill::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
+
 	/* For.Prototype_GameObject_Digivice_Skill_Info */
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Digivice_Skill_Info"),
 		CDigivice_Skill_Info::Create(m_pDevice, m_pContext))))
@@ -716,6 +728,21 @@ HRESULT CLoader::Loading_For_GamePlay()
 	/* For.Prototype_GameObject_Digivice_Target */
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Digivice_Target"),
 		CDigivice_Target::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+		/* For.Prototype_GameObject_Digivice_Hp*/
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Digivice_Hp"),
+		CDigivice_Hp::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+		/* For.Prototype_GameObject_Digivice_Sp*/
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Digivice_Sp"),
+		CDigivice_Sp::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+		/* For.Prototype_GameObject_Digivice_Exp*/
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Digivice_Exp"),
+		CDigivice_Exp::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
 	//* For.Prototype_GameObject_Exit_Button */
@@ -728,6 +755,16 @@ HRESULT CLoader::Loading_For_GamePlay()
 	/* For.Prototype_GameObject_Battle_Timeline */
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Battle_Timeline"),
 		CBattle_Timeline::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	/* For.Prototype_GameObject_Battle_Turn*/
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Battle_Turn"),
+		CBattle_Turn::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	/* For.Prototype_GameObject_Battle_Enemy_Hp*/
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Battle_Enemy_Hp"),
+		CBattle_Enemy_Hp::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
 	//디지몬------------------------------------------------------------------------------------------------------------------------------

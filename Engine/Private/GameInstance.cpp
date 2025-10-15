@@ -4,6 +4,7 @@
 #include "Object_Manager.h"
 #include "Graphic_Device.h"
 
+#include "Target_Manager.h"
 #include "Level_Manager.h"
 #include "Timer_Manager.h"
 #include "Mouse_Manager.h"
@@ -51,6 +52,10 @@ HRESULT CGameInstance::Initialize_Engine(const ENGINE_DESC& EngineDesc, ID3D11De
 	if (nullptr == m_pLevel_Manager)
 		return E_FAIL;
 
+	m_pTarget_Manager = CTarget_Manager::Create(*ppDevice, *ppContext);
+	if (nullptr == m_pTarget_Manager)
+		return E_FAIL;
+
 	m_pRenderer = CRenderer::Create(*ppDevice, *ppContext);
 	if (nullptr == m_pRenderer)
 		return E_FAIL;
@@ -70,6 +75,8 @@ HRESULT CGameInstance::Initialize_Engine(const ENGINE_DESC& EngineDesc, ID3D11De
 	m_pFont_Manager = CFont_Manager::Create(*ppDevice, *ppContext);
 	if (nullptr == m_pFont_Manager)
 		return E_FAIL;
+
+
 
 	return S_OK;
 }
@@ -293,6 +300,16 @@ _matrix CGameInstance::Get_Transform_Matrix(D3DTS eState)
 	return m_pPipeLine->Get_Transform_Matrix(eState);
 }
 
+const _float4x4* CGameInstance::Get_Transform_Float4x4_Inverse(D3DTS eState)
+{
+	return m_pPipeLine->Get_Transform_Float4x4_Inverse(eState);
+}
+
+_matrix CGameInstance::Get_Transform_Matrix_Inverse(D3DTS eState)
+{
+	return m_pPipeLine->Get_Transform_Matrix_Inverse(eState);
+}
+
 const _float4* CGameInstance::Get_CamPosition()
 {
 	return m_pPipeLine->Get_CamPosition();
@@ -330,7 +347,10 @@ HRESULT CGameInstance::Add_Light(const LIGHT_DESC& LightDesc)
 {
 	return m_pLight_Manager->Add_Light(LightDesc);
 }
-
+HRESULT CGameInstance::Render_Lights(CShader* pShader, CVIBuffer* pVIBuffer)
+{
+	return m_pLight_Manager->Render_Lights(pShader, pVIBuffer);
+}
 #pragma endregion
 
 #pragma region FONT_MANAGER
@@ -357,11 +377,55 @@ _float CGameInstance::FontSizeX(const _wstring& strFontTag, const _tchar* pText)
 
 #pragma endregion
 
+#pragma region TARGET_MANAGER
+
+HRESULT CGameInstance::Add_RenderTarget(const _wstring& strTargetTag, _uint iSizeX, _uint iSizeY, DXGI_FORMAT ePixelFormat, const _float4& vClearColor)
+{
+	return m_pTarget_Manager->Add_RenderTarget(strTargetTag, iSizeX, iSizeY, ePixelFormat, vClearColor);
+}
+
+HRESULT CGameInstance::Add_MRT(const _wstring& strMRTTag, const _wstring& strTargetTag)
+{
+	return m_pTarget_Manager->Add_MRT(strMRTTag, strTargetTag);
+}
+
+HRESULT CGameInstance::Begin_MRT(const _wstring& strMRTTag)
+{
+	return m_pTarget_Manager->Begin_MRT(strMRTTag);
+}
+
+HRESULT CGameInstance::End_MRT()
+{
+	return m_pTarget_Manager->End_MRT();
+}
+
+HRESULT CGameInstance::Bind_RenderTarget(const _wstring& strTargetTag, CShader* pShader, const _char* pConstantName)
+{
+	return m_pTarget_Manager->Bind_RenderTarget(strTargetTag, pShader, pConstantName);
+}
+
+#ifdef _DEBUG
+
+HRESULT CGameInstance::Ready_RT_Debug(const _wstring& strTargetTag, _float fX, _float fY, _float fSizeX, _float fSizeY)
+{
+	return m_pTarget_Manager->Ready_Debug(strTargetTag, fX, fY, fSizeX, fSizeY);
+}
+
+
+HRESULT CGameInstance::Render_RT_Debug(const _wstring& strMRTTag, CShader* pShader, CVIBuffer_Rect* pVIBuffer)
+{
+	return m_pTarget_Manager->Render_Debug(strMRTTag, pShader, pVIBuffer);
+}
+
+#endif
+
+#pragma endregion
 
 void CGameInstance::Release_Engine()
 {
 	DestroyInstance();
 
+	Safe_Release(m_pTarget_Manager);
 	Safe_Release(m_pFont_Manager);
 	Safe_Release(m_pLight_Manager);
 	Safe_Release(m_pPipeLine);

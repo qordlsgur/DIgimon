@@ -8,12 +8,6 @@ Texture2D g_Texture3;
 Texture2D g_Texture4;
 
 
-sampler DefaultSampler = sampler_state
-{
-    Filter = MIN_MAG_MIP_LINEAR;
-    
-};
-
 // : 이 친구는 시메틱 이라고 한다. 선언하는 함수를 보면 시메틱 네임 이라는게 있다.
 struct VS_IN // 구조체랑 똑같음 
 {
@@ -75,13 +69,16 @@ PS_OUT PS_MAIN(PS_IN In)
     
     color = color1;
     
-    color.rgb = color1.rgb;
+    color.rgb = color2.rgb;
     
-    if (color3.a > 0)
-        color = color3;
+   // 3번 텍스처 합성
+    color.rgb = lerp(color.rgb, color3.rgb, color3.a);
     
     if (color4.a > 0)
         color = color4;
+    
+    if (color.a < 0.5)
+        discard;
             
     Out.vColor = color;
     

@@ -7,6 +7,9 @@
 #include "Digivice_Info.h"
 #include "Digivice_Skill.h"
 #include "Digivice_Target.h"
+#include "Digivice_Hp.h"
+#include "Digivice_Sp.h"
+#include "Digivice_Exp.h"
 
 CDigivice::CDigivice(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CUIObject{ pDevice, pContext }
@@ -56,6 +59,9 @@ HRESULT CDigivice::Initialize(void* pArg)
 	if (FAILED(Create_Target(L"Layer_Digivice_Target")))
 		return E_FAIL;
 
+	if (FAILED(Craete_State(L"Layer_Digivice_State")))
+		return E_FAIL;
+
 	m_Digimon_ID.resize(8, -1);
 
 	Acquire_Digimon(1);
@@ -85,7 +91,8 @@ void CDigivice::Update(_float fTimeDelta)
 		{
 			m_pBattle_Skill[j]->Set_Digimon_SkillSet(m_pSelectSlot->Get_DigimonInfo().DigimonId, j);
 		}
-		Set_Active();
+		Set_State(m_pSelectSlot->Get_DigimonInfo());
+		Set_Active(!m_bActive);
 	}
 
 	m_pTransformCom->Set_Scale(m_fSizeX, m_fSizeY, 1.f);
@@ -173,15 +180,23 @@ HRESULT CDigivice::Render()
 		m_pGameInstance->Render_Text(TEXT("14"), m_szDigimonSp, _float2(1050.f - InfoMaxSp, 260.f), XMVectorSet(1.f, 1.f, 1.f, 1.f));
 		m_pGameInstance->Render_Text(TEXT("14"), m_szDigimonDamage, _float2(1050.f - InfoDamage, 290.f), XMVectorSet(1.f, 1.f, 1.f, 1.f));
 		m_pGameInstance->Render_Text(TEXT("14"), m_szDigimonAttackSpeed, _float2(1050.f - InfoAttackSpeed, 320.f), XMVectorSet(1.f, 1.f, 1.f, 1.f));
+		
+		m_pGameInstance->Render_Text(TEXT("14"), TEXT("HP"), _float2(860.f,  380.f), XMVectorSet(1.f, 1.f, 1.f, 1.f));
+		//m_pGameInstance->Render_Text(TEXT("14"), m_szDigimonHp, _float2(900.f, 400.f), XMVectorSet(1.f, 1.f, 1.f, 1.f));
+		m_pGameInstance->Render_Text(TEXT("14"), TEXT("SP"), _float2(860.f,  450.f), XMVectorSet(1.f, 1.f, 1.f, 1.f));
+		m_pGameInstance->Render_Text(TEXT("14"), TEXT("EXP"), _float2(860.f , 520.f), XMVectorSet(1.f, 1.f, 1.f, 1.f));
 
 
 		m_pDigivice_Target->Render();
+
+		m_pDigivice_Hp->Render();
+		m_pDigivice_Sp->Render();
+		m_pDigivice_Exp->Render();
 
 		for (_uint i = 0; i < m_iDigivice_Battle_Skill_Number; ++i)
 		{
 			m_pBattle_Skill[i]->Render();
 		}
-
 
 	}
 	return S_OK;
@@ -300,6 +315,13 @@ DIGIMON_INFO* CDigivice::Set_Info(_int ID)
 	return Info;
 }
 
+void CDigivice::Set_State(DIGIMON_INFO ID)
+{
+	m_pDigivice_Hp->Set_MaxHp(ID.Hp);
+	m_pDigivice_Sp->Set_MaxSp(ID.Sp);
+	m_pDigivice_Exp->Set_MaxExp(ID.Exp);
+}
+
 HRESULT CDigivice::Ready_Components()
 {
 	/* Com_VIBuffer */
@@ -341,9 +363,13 @@ HRESULT CDigivice::Create_Slot(const _wstring& strLayerTag)
 	{
 		m_pDigivice_Slot = static_cast<CDigivice_Slot*>(m_pGameInstance->Add_GameObject_ToLayer_ToCreate(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Digivice_Slot"),
 			ENUM_CLASS(LEVEL::GAMEPLAY), strLayerTag));
+		if (m_pDigivice_Slot == nullptr)
+			return E_FAIL;
 
 		m_pDigivice_Mask = static_cast<CDigivice_Mask*>(m_pGameInstance->Add_GameObject_ToLayer_ToCreate(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Digivice_Mask"),
 			ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Layer_Mask")));
+		if (m_pDigivice_Mask == nullptr)
+			return E_FAIL;
 
 		m_pBattle_Slot.push_back(m_pDigivice_Slot);
 		m_pBattle_Mask.push_back(m_pDigivice_Mask);
@@ -413,6 +439,8 @@ HRESULT CDigivice::Create_Skill(const _wstring& strLayerTag)
 	{
 		m_pDigivice_Skill = static_cast<CDigivice_Skill*>(m_pGameInstance->Add_GameObject_ToLayer_ToCreate(
 			ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Digivice_Skill"), ENUM_CLASS(LEVEL::GAMEPLAY), strLayerTag));
+		if (m_pDigivice_Skill == nullptr)
+			return E_FAIL;
 
 		m_pBattle_Skill.push_back(m_pDigivice_Skill);
 	}
@@ -437,8 +465,36 @@ HRESULT CDigivice::Create_Target(const _wstring& strLayerTag)
 {
 	m_pDigivice_Target = static_cast<CDigivice_Target*>(m_pGameInstance->Add_GameObject_ToLayer_ToCreate(
 		ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Digivice_Target"), ENUM_CLASS(LEVEL::GAMEPLAY), strLayerTag));
+	if (m_pDigivice_Target == nullptr)
+		return E_FAIL;
 
 	m_pDigivice_Target->Set_Move(45.f, -50.f);
+
+	return S_OK;
+}
+
+HRESULT CDigivice::Craete_State(const _wstring& strLayerTag)
+{
+	m_pDigivice_Hp = static_cast<CDigivice_Hp*>(m_pGameInstance->Add_GameObject_ToLayer_ToCreate(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Digivice_Hp"),
+		ENUM_CLASS(LEVEL::GAMEPLAY), strLayerTag));
+	if (m_pDigivice_Hp == nullptr)
+		return E_FAIL;
+
+	m_pDigivice_Hp->Set_Move(985.f, 430.f);
+
+	m_pDigivice_Sp = static_cast<CDigivice_Sp*>(m_pGameInstance->Add_GameObject_ToLayer_ToCreate(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Digivice_Sp"),
+		ENUM_CLASS(LEVEL::GAMEPLAY), strLayerTag));
+	if (m_pDigivice_Sp == nullptr)
+		return E_FAIL;
+
+	m_pDigivice_Sp->Set_Move(985.f, 500.f);
+
+	m_pDigivice_Exp = static_cast<CDigivice_Exp*>(m_pGameInstance->Add_GameObject_ToLayer_ToCreate(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Digivice_Exp"),
+		ENUM_CLASS(LEVEL::GAMEPLAY), strLayerTag));
+	if (m_pDigivice_Exp == nullptr)
+		return E_FAIL;
+
+	m_pDigivice_Exp->Set_Move(985.f, 570.f);
 
 	return S_OK;
 }

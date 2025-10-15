@@ -38,11 +38,8 @@ public:
 
 	virtual void OnClick();
 	virtual void OnHover();
-
-protected:
-
-
-	virtual void Set_Active();
+	virtual void Set_Active(_bool Active) { m_bActive = Active; }
+	virtual _bool Get_Active() { return m_bActive; }
 
 protected:
 	// 기본적인 UI들은 이제 회면 가장 앞에 위치해 있다.

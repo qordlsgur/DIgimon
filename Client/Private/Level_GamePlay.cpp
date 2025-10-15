@@ -10,6 +10,8 @@
 #include "Battle_UI_Manager.h"
 #include "Spawner.h"
 
+#include "Battle_Timeline.h"
+
 CLevel_GamePlay::CLevel_GamePlay(ID3D11Device* pDevice, ID3D11DeviceContext* pContext, LEVEL eLevelID)
 	: CLevel{ pDevice, pContext, ENUM_CLASS(eLevelID) }
 	, m_pCamera_Manager{ CCamera_Manager::GetInstance() }
@@ -78,10 +80,6 @@ HRESULT CLevel_GamePlay::Ready_Layer_Digivice(const _wstring& strLayerTag)
 		ENUM_CLASS(LEVEL::GAMEPLAY), strLayerTag)))
 		return E_FAIL;
 
-	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Battle_Timeline"),
-		ENUM_CLASS(LEVEL::GAMEPLAY), strLayerTag)))
-		return E_FAIL;
-
 	return S_OK;
 }
 
@@ -99,13 +97,24 @@ HRESULT CLevel_GamePlay::Ready_Lights()
 	LIGHT_DESC			LightDesc{};
 
 	LightDesc.eType = LIGHT::DIRECTIONAL;
-	LightDesc.vDiffuse = _float4(1.f, 1.f, 1.f, 1.f);
-	LightDesc.vAmbient = _float4(0.4f, 0.4f, 0.4f, 1.f);
-	LightDesc.vSpecular = _float4(1.f, 1.f, 1.f, 1.f);
+	LightDesc.vDiffuse = _float4(1.f,1.f,1.f, 1.f);
+	LightDesc.vAmbient = _float4(0.2f, 0.2f, 0.2f, 1.f);
+	LightDesc.vSpecular = _float4(0.5f, 0.5f, 0.5f, 1.f);
 	LightDesc.vDirection = _float4(1.f, -1.f, 1.f, 0.f);
 
 	if (FAILED(m_pGameInstance->Add_Light(LightDesc)))
 		return E_FAIL;
+
+	//LIGHT_DESC			LLightDesc{};
+
+	//LightDesc.eType = LIGHT::DIRECTIONAL;
+	//LightDesc.vDiffuse = _float4(0.8f, 0.8f, 0.8f, 1.f);
+	//LightDesc.vAmbient = _float4(0.2f, 0.2f, 0.2f, 1.f);
+	//LightDesc.vSpecular = _float4(0.5f, 0.5f, 0.5f, 1.f);
+	//LightDesc.vDirection = _float4(1.f, -1.f, 1.f, 0.f);
+
+	//if (FAILED(m_pGameInstance->Add_Light(LightDesc)))
+	//	return E_FAIL;
 
 	return S_OK;
 }

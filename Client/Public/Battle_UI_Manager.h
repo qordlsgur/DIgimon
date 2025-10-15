@@ -33,6 +33,9 @@ public:
 		
 	void Set_Timeline_Turn_Order();
 
+	void Turn_Start();
+	void Turn_End();
+
 private:
 	CGameInstance* m_pGameInstance = { nullptr };
 
@@ -44,6 +47,11 @@ private:
 	deque<class CBattle_Timeline*>	m_pTimeLines;
 	vector<class CBattle_Timeline*> m_pTimeLine_array;
 	class CBattle_Timeline* m_pTimeLine = { nullptr };
+	class CBattle_Turn* m_pTurn = { nullptr };
+	
+	class CBattle_Timeline* m_pCurrent_TimeLine = { nullptr };
+
+	_float2 m_fTurn_Panel[6];
 
 public:
 	virtual void Free() override;

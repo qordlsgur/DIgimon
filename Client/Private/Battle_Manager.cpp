@@ -61,13 +61,13 @@ void CBattle_Manager::Update(_float fTimeDelta)
 		switch (m_eBattle_State)
 		{
 		case BATTLE_STATE::START:
-			if (m_fBattleTime >= 1.f) // 3초가 지나면
+			if (m_fBattleTime >= 1.f) // 1초가 지나면
 			{
 				m_pCurrentDigimon = m_pDigimon_Turn_Order.front();	// 제일 앞에 있는걸 저장하고
 				m_pReturnPosition = m_pCurrentDigimon->Get_Position();
 				m_fBackJumpTime = 0.f;
 				m_pDigimon_Turn_Order.pop_front();					// 제잎 앞에꺼를 지움
-
+				m_pBattle_UI_Manager->Turn_Start();
 				if (!m_pCurrentDigimon->Get_Life())					// 살아 있으면 ING로 넘어감
 				{
 					m_eBattle_State = BATTLE_STATE::START;			// 죽으면 다시 처음으로 돌아감
@@ -123,6 +123,7 @@ void CBattle_Manager::Update(_float fTimeDelta)
 			m_pDigimon_Turn_Order.push_back(m_pCurrentDigimon);		// 제대로 끝이 나면 현재 공격했던 디지몬을 맨 뒤로 옮김
 			m_fBattleTime = 0.f;									// 정확한 시간을 위해 0으로 초기화
 			m_fDashTime = 0.f;
+			m_pBattle_UI_Manager->Turn_End();
 			m_eBattle_State = BATTLE_STATE::START;					// 처음으로 옮김
 			m_bSkill = false;
 			break;
@@ -405,6 +406,8 @@ void CBattle_Manager::Player_Set()
 		}
 	}
 
+	m_pBattle_UI_Manager->Set_Battle_Turn_Order(m_pDigimon_Turn_Order);
+
 	if (m_pPlayerDigimon[0] == -1 && m_pPlayerDigimon[1] == -1 && m_pPlayerDigimon[2] == -1)
 		m_bPlayer_Death = true;
 	if (m_iEnemyDigimon[0] == -1 && m_iEnemyDigimon[1] == -1 && m_iEnemyDigimon[2] == -1)
@@ -444,6 +447,7 @@ void CBattle_Manager::Set_Battle_Terrain(CGameObject* pBattle_Terrain)
 
 void CBattle_Manager::Battle_System()
 {
+	m_pBattle_UI_Manager->Create_TimeLine();
 	m_pPlayer->Set_Position(m_vPlayerBattlePos.m128_f32[0], m_vPlayerBattlePos.m128_f32[2]);
 	m_bPlayer_Death = false;
 	m_bEnemy_Death = false;
@@ -452,6 +456,7 @@ void CBattle_Manager::Battle_System()
 	Player_Digimon_Position();
 	Enemy_Position();
 	Battle_Tunr_Order();
+	m_pBattle_UI_Manager->Set_Timeline_Turn_Order();
 }
 
 void CBattle_Manager::Enemy_Position()

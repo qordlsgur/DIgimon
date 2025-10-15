@@ -21,6 +21,7 @@ public:
 	HRESULT Bind_RawValue(const _char* pConstantName, const void* pData, _uint iLength);
 	HRESULT Bind_Matrix(const _char* pConstanName, const _float4x4* pMatrix);
 	HRESULT Bind_Matrices(const _char* pConstantName, const _float4x4* pMatrix, _uint iNumMatrices);
+	HRESULT Bind_State(const _char* pConstantName, _float value);
 
 	// g_Texture에 값을 집어 넣기 위해서 만든 함수
 	HRESULT Bind_SRV(const _char* pConstanName, ID3D11ShaderResourceView* pSRV);
