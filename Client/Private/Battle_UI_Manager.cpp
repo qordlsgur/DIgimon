@@ -3,6 +3,7 @@
 #include "ContainerObject.h"
 #include "Battle_Timeline.h"
 #include "Battle_Turn.h"
+#include "Battle_Skill.h"
 
 IMPLEMENT_SINGLETON(CBattle_UI_Manager)
 
@@ -56,7 +57,6 @@ HRESULT CBattle_UI_Manager::Create_TimeLine()
 	m_pTimeLine_array[5]->Set_Move(m_fTurn_Panel[5]);
 	m_pTimeLine_array[5]->Set_SizeDown();
 
-
 	return S_OK;
 }
 
@@ -67,6 +67,7 @@ void CBattle_UI_Manager::Set_Battle_Turn_Order(deque<CContainerObject*> Digimon_
 
 void CBattle_UI_Manager::Set_MyDigimon(DIGIMON_INFO* MyDigimon)
 {
+	m_iDigimon++;
 	m_MyDigimon_Info.push_back(MyDigimon);
 }
 
@@ -120,6 +121,54 @@ void CBattle_UI_Manager::Turn_End()
 		m_pTimeLines[i]->Set_SlowLerp(true);
 	}
 
+}
+
+HRESULT CBattle_UI_Manager::Create_Skill()
+{
+	for (size_t i = 0; i < m_MyDigimon_Info.size(); ++i)
+	{
+		for (_int i = 0; i < 3; ++i)
+		{
+			m_pDigimon_Skill = static_cast<CBattle_Skill*>(m_pGameInstance->Add_GameObject_ToLayer_ToCreate(
+				ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Battle_Skill"), ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Layer_Battle_Digimon_Skill")));
+			if (m_pDigimon_Skill == nullptr)
+				return E_FAIL;
+
+			m_pDigimon_Skills.push_back(m_pDigimon_Skill);
+		}
+	}
+	return S_OK;
+}
+
+void CBattle_UI_Manager::Set_Skill()
+{
+	m_pDigimon_Skills[0]->Set_Move(300,650);
+	m_pDigimon_Skills[0]->Set_Digimon_SkillSet(m_MyDigimon_Info[0]->DigimonId, 0);
+	m_pDigimon_Skills[1]->Set_Move(365,650);
+	m_pDigimon_Skills[1]->Set_Digimon_SkillSet(m_MyDigimon_Info[0]->DigimonId, 1);
+	m_pDigimon_Skills[2]->Set_Move(430,650);
+	m_pDigimon_Skills[2]->Set_Digimon_SkillSet(m_MyDigimon_Info[0]->DigimonId, 2);
+
+	if (m_MyDigimon_Info.size() > 1)
+	{
+		m_pDigimon_Skills[3]->Set_Move(665, 650);
+		m_pDigimon_Skills[3]->Set_Digimon_SkillSet(m_MyDigimon_Info[1]->DigimonId, 0);
+		m_pDigimon_Skills[4]->Set_Move(730, 650);
+		m_pDigimon_Skills[4]->Set_Digimon_SkillSet(m_MyDigimon_Info[1]->DigimonId, 1);
+		m_pDigimon_Skills[5]->Set_Move(795, 650);
+		m_pDigimon_Skills[5]->Set_Digimon_SkillSet(m_MyDigimon_Info[1]->DigimonId, 2);
+
+	}
+
+	if (m_MyDigimon_Info.size() > 2)
+	{
+		m_pDigimon_Skills[6]->Set_Move(1030, 650);
+		m_pDigimon_Skills[6]->Set_Digimon_SkillSet(m_MyDigimon_Info[2]->DigimonId, 0);
+		m_pDigimon_Skills[7]->Set_Move(1095, 650);
+		m_pDigimon_Skills[7]->Set_Digimon_SkillSet(m_MyDigimon_Info[2]->DigimonId, 1);
+		m_pDigimon_Skills[8]->Set_Move(1160, 650);
+		m_pDigimon_Skills[8]->Set_Digimon_SkillSet(m_MyDigimon_Info[2]->DigimonId, 2);
+	}
 }
 
 void CBattle_UI_Manager::Free()

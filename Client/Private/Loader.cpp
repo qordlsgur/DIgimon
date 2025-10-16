@@ -23,6 +23,8 @@
 #include "Battle_Timeline.h"
 #include "Battle_Turn.h"
 #include "Battle_Enemy_Hp.h"
+#include "Battle_Skill.h"
+#include "KeyBord.h"
 #pragma endregion
 
 #pragma region Button
@@ -302,7 +304,7 @@ HRESULT CLoader::Loading_For_GamePlay()
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/Battle/Battle_Rotation_Gauge_HP.png"), 1))))
 		return E_FAIL;
 
-	//베틀 UI
+	//베틀 UI----------------------------------------------------------------------------------------------------------------------------------------------
 
 	/* For.Prototype_Component_Texture_Timeline_Portrait_mask*/
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Timeline_Portrait_mask"),
@@ -322,6 +324,23 @@ HRESULT CLoader::Loading_For_GamePlay()
 	/* For.Prototype_Component_Texture_Battle_Turn*/
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Battle_Turn"),
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/Battle/Turn.png"), 1))))
+		return E_FAIL;
+
+	//키보드 자판----------------------------------------------------------------------------------------------------------------------------------------------
+
+	/* For.Prototype_Component_Texture_Select_Key*/
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Select_Key"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/KeyBord/Select_Key.png"), 1))))
+		return E_FAIL;
+
+	/* For.Prototype_Component_Texture_Skill_KeyBord*/
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Skill_KeyBord"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/KeyBord/Skill%d.png"), 9))))
+		return E_FAIL;
+
+	/* For.Prototype_Component_Texture_KeyBord_Number*/
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_KeyBord_Number"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/KeyBord/Key%d.png"), 10))))
 		return E_FAIL;
 
 	//디지몬UI이미지-------------------------------------------------------------------------------------------------------------------------------------------
@@ -623,6 +642,11 @@ HRESULT CLoader::Loading_For_GamePlay()
 	/* For.Prototype_Component_Shader_Digivice_State*/
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Shader_Digivice_State"),
 		CShader::Create(m_pDevice, m_pContext, TEXT("../Bin/ShaderFiles/Shader_Digivice_State.hlsl"), VTXPOSTEX::Elements, VTXPOSTEX::iNumElements))))
+		return E_FAIL;	
+	
+	/* For.Prototype_Component_Shader_Skill_Image*/
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Shader_Skill_Image"),
+		CShader::Create(m_pDevice, m_pContext, TEXT("../Bin/ShaderFiles/Shader_Skill_Image.hlsl"), VTXPOSTEX::Elements, VTXPOSTEX::iNumElements))))
 		return E_FAIL;
 
 	/* For.Prototype_Component_Shader_VtxMesh */
@@ -765,6 +789,16 @@ HRESULT CLoader::Loading_For_GamePlay()
 	/* For.Prototype_GameObject_Battle_Enemy_Hp*/
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Battle_Enemy_Hp"),
 		CBattle_Enemy_Hp::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	/* For.Prototype_GameObject_Battle_Skill*/
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Battle_Skill"),
+		CBattle_Skill::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	/* For.Prototype_GameObject_Battle_Skill_KayBord*/
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Battle_Skill_KayBord"),
+		CKeyBord::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
 	//디지몬------------------------------------------------------------------------------------------------------------------------------

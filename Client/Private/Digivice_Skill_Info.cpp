@@ -47,6 +47,7 @@ HRESULT CDigivice_Skill_Info::Initialize(void* pArg)
 
 void CDigivice_Skill_Info::Priority_Update(_float fTimeDelta)
 {
+	m_bHover = false;
 }
 
 void CDigivice_Skill_Info::Update(_float fTimeDelta)
@@ -72,7 +73,7 @@ void CDigivice_Skill_Info::Late_Update(_float fTimeDelta)
 		long(-Pos.y + m_fSizeY * 0.5f)
 	};
 
-	m_pGameInstance->Add_RenderGroup(RENDER::UI, this);
+	m_pGameInstance->Add_RenderGroup(RENDER::BATTLEUI, this);
 
 }
 
@@ -127,8 +128,16 @@ void CDigivice_Skill_Info::Set_Parent_WorldPos(_vector fParent_World)
 
 void CDigivice_Skill_Info::Set_Move(_float fX, _float fY)
 {
-	m_fX = fX + m_fSizeX * 0.5f;
-	m_fY = fY - m_fSizeY * 0.5f;
+	if (fX >= 350)
+	{
+		m_fX = fX - m_fSizeX * 0.5f;
+		m_fY = fY - m_fSizeY * 0.5f;
+	}
+	else
+	{
+		m_fX = fX + m_fSizeX * 0.5f;
+		m_fY = fY - m_fSizeY * 0.5f;
+	}
 }
 
 void CDigivice_Skill_Info::Set_Digimon_Skill_Info(_int ID, _int Count)

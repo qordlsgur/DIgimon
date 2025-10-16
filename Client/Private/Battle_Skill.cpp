@@ -1,24 +1,24 @@
-#include "Digivice_Skill.h"
+#include "Battle_Skill.h"
 #include "GameInstance.h"
 #include "Digimon_Manager.h"
 #include "Digivice_Skill_Info.h"
 
-CDigivice_Skill::CDigivice_Skill(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
+CBattle_Skill::CBattle_Skill(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CUIObject{ pDevice, pContext }
 {
 }
 
-CDigivice_Skill::CDigivice_Skill(const CDigivice_Skill& Prototype)
+CBattle_Skill::CBattle_Skill(const CBattle_Skill& Prototype)
 	: CUIObject{ Prototype }
 {
 }
 
-HRESULT CDigivice_Skill::Initialize_Prototype()
+HRESULT CBattle_Skill::Initialize_Prototype()
 {
 	return S_OK;
 }
 
-HRESULT CDigivice_Skill::Initialize(void* pArg)
+HRESULT CBattle_Skill::Initialize(void* pArg)
 {
 	CUIObject::UIOBJECT_DESC	Desc{};
 
@@ -40,17 +40,13 @@ HRESULT CDigivice_Skill::Initialize(void* pArg)
 	return S_OK;
 }
 
-void CDigivice_Skill::Priority_Update(_float fTimeDelta)
+void CBattle_Skill::Priority_Update(_float fTimeDelta)
 {
 }
 
-void CDigivice_Skill::Update(_float fTimeDelta)
+void CBattle_Skill::Update(_float fTimeDelta)
 {
-}
-
-void CDigivice_Skill::Late_Update(_float fTimeDelta)
-{
-	_vector vWorldPos = XMVectorSet(m_fX + m_fParent_WorldPos.x, -(m_fY)+m_fParent_WorldPos.y, 0.f, 1.f);
+	_vector vWorldPos = XMVectorSet(m_fX - m_fWinSizeX * 0.5f, -m_fY + m_fWinSizeY * 0.5f, 0.f, 1.f);
 
 	m_pTransformCom->Set_Scale(m_fSizeX, m_fSizeY, 1.f);
 	m_pTransformCom->Set_State(STATE::POSITION, vWorldPos);
@@ -64,10 +60,15 @@ void CDigivice_Skill::Late_Update(_float fTimeDelta)
 		long(Pos.x + m_fSizeX * 0.5f),
 		long(-Pos.y + m_fSizeY * 0.5f)
 	};
-
+	OnHover();
 }
 
-HRESULT CDigivice_Skill::Render()
+void CBattle_Skill::Late_Update(_float fTimeDelta)
+{
+	m_pGameInstance->Add_RenderGroup(RENDER::BATTLEUI, this);
+}
+
+HRESULT CBattle_Skill::Render()
 {
 	if (FAILED(Bind_ShaderResources()))
 		return E_FAIL;
@@ -84,42 +85,50 @@ HRESULT CDigivice_Skill::Render()
 	return S_OK;
 }
 
-void CDigivice_Skill::Set_Parent_WorldPos(_vector fParent_World)
-{
-	XMStoreFloat4(&m_fParent_WorldPos, fParent_World);
-}
-
-void CDigivice_Skill::Set_Move(_float fX, _float fY)
+void CBattle_Skill::Set_Move(_float fX, _float fY)
 {
 	m_fX = fX;
 	m_fY = fY;
 }
 
-void CDigivice_Skill::Set_Info(DIGIMON_INFO* pInfo)
+void CBattle_Skill::Set_Info(DIGIMON_INFO* pInfo)
 {
 	m_Info = pInfo;
 }
 
-void CDigivice_Skill::OnClick()
+void CBattle_Skill::OnClick()
 {
 }
 
-void CDigivice_Skill::OnHover()
+void CBattle_Skill::OnHover()
 {
+	POINT pPt = m_pGameInstance->Get_Mouse();
+
+	pPt.x -= static_cast<_long>(m_fWinSizeX * 0.5);
+	pPt.y -= static_cast<_long>(m_fWinSizeY * 0.5);
+
+	if (PtInRect(&m_pRect, pPt))
+	{
+		Set_Digimon_Skill_Info_Pos(static_cast<_float>(pPt.x), static_cast<_float>(pPt.y));
+	}
+	else
+	{
+		Set_Hover();
+	}
 }
 
-void CDigivice_Skill::Set_Digimon_Skill_Info_Pos(_float fX, _float fY)
+void CBattle_Skill::Set_Digimon_Skill_Info_Pos(_float fX, _float fY)
 {
 	m_pSkill_Info->Set_Hover(true);
 	m_pSkill_Info->Set_Move(fX, fY);
 }
 
-void CDigivice_Skill::Set_Hover()
+void CBattle_Skill::Set_Hover()
 {
 	m_pSkill_Info->Set_Hover(false);
 }
 
-HRESULT CDigivice_Skill::Set_Digimon_SkillSet(_int ID, _int Digimon_Skill)
+HRESULT CBattle_Skill::Set_Digimon_SkillSet(_int ID, _int Digimon_Skill)
 {
 	m_iDigimon_ID = ID;
 
@@ -135,7 +144,7 @@ HRESULT CDigivice_Skill::Set_Digimon_SkillSet(_int ID, _int Digimon_Skill)
 	return S_OK;
 }
 
-HRESULT CDigivice_Skill::Ready_Components()
+HRESULT CBattle_Skill::Ready_Components()
 {
 	/* Com_VIBuffer */
 	if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::STATIC), TEXT("Prototype_Component_VIBuffer_Rect"),
@@ -143,7 +152,7 @@ HRESULT CDigivice_Skill::Ready_Components()
 		return E_FAIL;
 
 	/* Com_Digivice_Skill*/
-	if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Digivice_Skill"),
+	if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Battle_Skill"),
 		TEXT("Com_Digivice_Skill"), reinterpret_cast<CComponent**>(&m_pSlotTextureCom))))
 		return E_FAIL;
 
@@ -155,7 +164,7 @@ HRESULT CDigivice_Skill::Ready_Components()
 	return S_OK;
 }
 
-HRESULT CDigivice_Skill::Bind_ShaderResources()
+HRESULT CBattle_Skill::Bind_ShaderResources()
 {
 	if (FAILED(m_pTransformCom->Bind_ShaderResource(m_pShaderCom, "g_WorldMatrix")))
 		return E_FAIL;
@@ -171,7 +180,7 @@ HRESULT CDigivice_Skill::Bind_ShaderResources()
 	return S_OK;
 }
 
-HRESULT CDigivice_Skill::Create_Info()
+HRESULT CBattle_Skill::Create_Info()
 {
 	m_pSkill_Info = static_cast<CDigivice_Skill_Info*>(m_pGameInstance->Add_GameObject_ToLayer_ToCreate(
 		ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Digivice_Skill_Info"), ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Layer_Skill_Info")));
@@ -183,10 +192,9 @@ HRESULT CDigivice_Skill::Create_Info()
 
 	return S_OK;
 }
-
-CDigivice_Skill* CDigivice_Skill::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
+CBattle_Skill* CBattle_Skill::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 {
-	CDigivice_Skill* pInstance = new CDigivice_Skill(pDevice, pContext);
+	CBattle_Skill* pInstance = new CBattle_Skill(pDevice, pContext);
 
 	if (FAILED(pInstance->Initialize_Prototype()))
 	{
@@ -198,20 +206,20 @@ CDigivice_Skill* CDigivice_Skill::Create(ID3D11Device* pDevice, ID3D11DeviceCont
 }
 
 
-CGameObject* CDigivice_Skill::Clone(void* pArg)
+CGameObject* CBattle_Skill::Clone(void* pArg)
 {
-	CDigivice_Skill* pInstance = new CDigivice_Skill(*this);
+	CBattle_Skill* pInstance = new CBattle_Skill(*this);
 
 	if (FAILED(pInstance->Initialize(pArg)))
 	{
-		MSG_BOX("Failed to Created :CDigivice_Skill");
+		MSG_BOX("Failed to Created :CBattle_Skill");
 		Safe_Release(pInstance);
 	}
 
 	return pInstance;
 }
 
-void CDigivice_Skill::Free()
+void CBattle_Skill::Free()
 {
 	__super::Free();
 

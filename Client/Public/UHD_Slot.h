@@ -32,7 +32,8 @@ public:
 	void	Set_Digimon(_bool HasDigimon) { m_bDigimon = HasDigimon; }
 	virtual void OnClick() override;
 
-	void Set_Digimon_ID(_int ID);
+	void Set_Digimon_Info(DIGIMON_INFO* Info);
+	DIGIMON_INFO& Get_Info() { return m_Info; }
 
 private:
 	CVIBuffer_Rect* m_pVIBufferCom = { nullptr };
@@ -46,7 +47,7 @@ private:
 			   
 	class CDigimon_Manager* m_pManager = { nullptr };
 
-	_int		m_iDigimon_ID{};
+	DIGIMON_INFO m_Info;
 			    
 	_bool		m_bDigimon = false;
 

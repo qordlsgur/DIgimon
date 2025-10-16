@@ -161,6 +161,7 @@
     <ClInclude Include="..\public\Battle_Camera.h" />
     <ClInclude Include="..\public\Battle_Enemy_Hp.h" />
     <ClInclude Include="..\public\Battle_Manager.h" />
+    <ClInclude Include="..\public\Battle_Skill.h" />
     <ClInclude Include="..\public\Battle_Terrain.h" />
     <ClInclude Include="..\public\Battle_Timeline.h" />
     <ClInclude Include="..\public\Battle_Turn.h" />
@@ -208,6 +209,7 @@
     <ClInclude Include="..\public\Interaction.h" />
     <ClInclude Include="..\public\Interaction_Manager.h" />
     <ClInclude Include="..\Public\Jump.h" />
+    <ClInclude Include="..\public\KeyBord.h" />
     <ClInclude Include="..\public\Ladydevimon.h" />
     <ClInclude Include="..\public\Leomon.h" />
     <ClInclude Include="..\Public\Level_GamePlay.h" />
@@ -250,6 +252,7 @@
     <ClCompile Include="..\private\Battle_Camera.cpp" />
     <ClCompile Include="..\private\Battle_Enemy_Hp.cpp" />
     <ClCompile Include="..\private\Battle_Manager.cpp" />
+    <ClCompile Include="..\private\Battle_Skill.cpp" />
     <ClCompile Include="..\private\Battle_Terrain.cpp" />
     <ClCompile Include="..\private\Battle_Timeline.cpp" />
     <ClCompile Include="..\private\Battle_Turn.cpp" />
@@ -296,6 +299,7 @@
     <ClCompile Include="..\private\Interaction.cpp" />
     <ClCompile Include="..\private\Interaction_Manager.cpp" />
     <ClCompile Include="..\Private\Jump.cpp" />
+    <ClCompile Include="..\private\KeyBord.cpp" />
     <ClCompile Include="..\private\Ladydevimon.cpp" />
     <ClCompile Include="..\private\Leomon.cpp" />
     <ClCompile Include="..\Private\Level_GamePlay.cpp" />
@@ -341,6 +345,7 @@
     <FxCompile Include="..\Bin\ShaderFiles\Shader_Digivice_Target.hlsl" />
     <FxCompile Include="..\Bin\ShaderFiles\Shader_Hover.hlsl" />
     <FxCompile Include="..\Bin\ShaderFiles\Shader_Inventory.hlsl" />
+    <FxCompile Include="..\Bin\ShaderFiles\Shader_Skill_Image.hlsl" />
     <FxCompile Include="..\Bin\ShaderFiles\Shader_UHD.hlsl" />
     <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxAnimMesh.hlsl" />
     <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxCube.hlsl" />

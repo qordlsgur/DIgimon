@@ -24,6 +24,7 @@ HRESULT CDigimon_Manager::Initialize()
 	Model_Name();
 	Digimon_Prototypr();
 	Digimon_Info_Add();
+	//Digimon_Skill_Image_Create();
 	return S_OK;
 }
 
@@ -553,18 +554,18 @@ void CDigimon_Manager::Release_Digimon(_int ID)
 	m_pDigivice->Release_Digimon(ID);
 }
 
-void CDigimon_Manager::Set_Digivice_Slot(_int SlotID, _bool Has, _int Digimon_ID)
+void CDigimon_Manager::Set_Digivice_Slot(_int SlotID, _bool Has, DIGIMON_INFO* Info)
 {
 	m_vDigivice_Battle_Slot[SlotID] = Has;
 	if (SlotID <= 0)
 	{
-		m_pFirst_Digimon = static_cast<CContainerObject*>(m_pGameInstance->Add_GameObject_ToLayer_ToCreate(ENUM_CLASS(LEVEL::GAMEPLAY), Get_Prototype_ID(Digimon_ID), ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Layer_Digimon")));
+		m_pFirst_Digimon = static_cast<CContainerObject*>(m_pGameInstance->Add_GameObject_ToLayer_ToCreate(ENUM_CLASS(LEVEL::GAMEPLAY), Get_Prototype_ID(Info->DigimonId), ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Layer_Digimon")));
 		static_cast<CPlayer*>(m_pPlayer)->First_Digimon(m_pFirst_Digimon);
 	}
 
 	if (SlotID <= 2)
 	{
-		m_pPartyUHD->Set_Digimon_ID(SlotID, Has, Digimon_ID);
+		m_pPartyUHD->Set_Digimon_ID(SlotID, Has, Info);
 	}
 }
 

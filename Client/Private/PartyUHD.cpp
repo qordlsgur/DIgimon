@@ -4,6 +4,7 @@
 
 #include "GameInstance.h"
 #include "Digimon_Manager.h"
+#include "Battle_Manager.h"
 
 CPartyUHD::CPartyUHD(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
     : CUIObject{pDevice, pContext}
@@ -28,6 +29,8 @@ HRESULT CPartyUHD::Initialize(void* pArg)
 	m_pDigimon_Manager = CDigimon_Manager::GetInstance();
 	m_pDigimon_Manager->PartyUHD(this);
 
+	m_pBattle_Manager = CBattle_Manager::GetInstance();
+
 	if (FAILED(Create_Slot(TEXT("Layer_UHDSlot"))))
 		return E_FAIL;
 
@@ -40,8 +43,14 @@ void CPartyUHD::Priority_Update(_float fTimeDelta)
 
 void CPartyUHD::Update(_float fTimeDelta)
 {
-}
+	m_bBattle = m_pBattle_Manager->Get_Battle();
 
+	if (!m_bBattle)
+		Set_NonBattle_Slot();
+	else
+		Set_Battle_Slot();
+}
+	
 void CPartyUHD::Late_Update(_float fTimeDelta)
 {
 	m_pGameInstance->Add_RenderGroup(RENDER::UI, this);
@@ -49,23 +58,71 @@ void CPartyUHD::Late_Update(_float fTimeDelta)
 
 HRESULT CPartyUHD::Render()
 {
-	for (_uint i = 0; i < m_iSlotCount; ++i)
+	if (!m_bBattle)
 	{
-		if (m_vSlots[i]->Get_Digimon())
+		for (_uint i = 0; i < m_iSlotCount; ++i)
 		{
-			m_vSlots[i]->Render();
-			//_itow_s(m_vSlots[i].get, m_szLv, MAX_PATH, 10);
-			//90 200 310
-			m_pGameInstance->Render_Rotation_Text(TEXT("13"), TEXT("as sa"), _float2(30, 90.f + 110.f*i), XMVectorSet(1.f, 1.f, 1.f, 1.f), 45.f);
+			if (m_vSlots[i]->Get_Digimon())
+			{
+				m_vSlots[i]->Render();
+				_itow_s(m_vSlots[i]->Get_Info().Lv, m_szDigimonLv, MAX_PATH, 10);
+				wcscpy_s(m_szLv, MAX_PATH, L"LV ");
+				wcscat_s(m_szLv, MAX_PATH, m_szDigimonLv);
+				m_pGameInstance->Render_Rotation_Text(TEXT("13"), m_szLv, _float2(30, 90.f + 110.f * i), XMVectorSet(1.f, 1.f, 1.f, 1.f), 45.f);
+			}
 		}
 	}
+	else
+	{
+		for (_uint i = 0; i < m_iSlotCount; ++i)
+		{
+			if (m_vSlots[i]->Get_Digimon())
+			{
+				_float col = static_cast<_float>(i % 3);
+				m_vSlots[i]->Render();
+				_itow_s(m_vSlots[i]->Get_Info().Lv, m_szDigimonLv, MAX_PATH, 10);
+				wcscpy_s(m_szLv, MAX_PATH, L"LV ");
+				wcscat_s(m_szLv, MAX_PATH, m_szDigimonLv);
+				_float Name = (m_pGameInstance->FontSizeX(TEXT("13"), m_vSlots[i]->Get_Info().DigimonName.c_str()) - 34.f) * 0.5f;
+				m_pGameInstance->Render_Text(TEXT("13"), m_szLv, _float2(180 + col * (102 + 260), 575), XMVectorSet(1.f, 1.f, 1.f, 1.f));
+				m_pGameInstance->Render_Text(TEXT("13"), m_vSlots[i]->Get_Info().DigimonName.c_str(), _float2((180 - Name) + col * (102 + 260), 690), XMVectorSet(1.f, 1.f, 1.f, 1.f));
+			}
+		}
+	}
+
     return S_OK;
 }
 
-void CPartyUHD::Set_Digimon_ID(_uint Slot, _bool HasDigimon,_uint ID)
+void CPartyUHD::Set_Digimon_ID(_uint Slot, _bool HasDigimon, DIGIMON_INFO* Info)
 {
-	m_vSlots[Slot]->Set_Digimon_ID(ID);
+	m_vSlots[Slot]->Set_Digimon_Info(Info);
 	m_vSlots[Slot]->Set_Digimon(HasDigimon);
+}
+
+void CPartyUHD::Set_NonBattle_Slot()
+{
+	for (_uint i = 0; i < m_iSlotCount; ++i)
+	{
+		_float row = static_cast<_float>(i % 3);
+
+		_float StartX = 70.f;
+		_float StartY = 60.f + row * (90 + 20);
+
+		m_vSlots[i]->Set_Move(StartX, StartY);
+	}
+}
+
+void CPartyUHD::Set_Battle_Slot()
+{
+	for (_uint i = 0; i < m_iSlotCount; ++i)
+	{
+		_float col = static_cast<_float>(i % 3);
+
+		_float StartX = 200.f + col * (102 + 260);
+		_float StartY = 650.f;
+
+		m_vSlots[i]->Set_Move(StartX, StartY);
+	}
 }
 
 HRESULT CPartyUHD::Create_Slot(const _wstring& strLayerTag)
@@ -76,16 +133,6 @@ HRESULT CPartyUHD::Create_Slot(const _wstring& strLayerTag)
 			ENUM_CLASS(LEVEL::GAMEPLAY), strLayerTag));
 
 		m_vSlots.push_back(m_pUHD_Slot);
-	}
-
-	for (_uint i = 0; i < m_iSlotCount; ++i)
-	{
-		_float row = static_cast<_float>(i % 3);
-
-		_float StartX = 70.f;
-		_float StartY = 60.f + row * (90 + 20);
-
-		m_vSlots[i]->Set_Move(StartX, StartY);
 	}
 
     return S_OK;

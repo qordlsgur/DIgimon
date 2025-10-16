@@ -457,6 +457,8 @@ void CBattle_Manager::Battle_System()
 	Enemy_Position();
 	Battle_Tunr_Order();
 	m_pBattle_UI_Manager->Set_Timeline_Turn_Order();
+	m_pBattle_UI_Manager->Create_Skill();
+	m_pBattle_UI_Manager->Set_Skill();
 }
 
 void CBattle_Manager::Enemy_Position()
@@ -523,7 +525,6 @@ void CBattle_Manager::Player_Digimon_Position()
 
 void CBattle_Manager::Current_Digimon(DIGIMON_INFO* Digimon_Info_1, DIGIMON_INFO* Digimon_Info_2, DIGIMON_INFO* Digimon_Info_3)
 {
-
 	m_iPlayerDigimonCount = 1;
 	m_pMyDigimon.push_back(static_cast<CPlayer*>(m_pPlayer)->First_Digimon());
 	m_pBattle_UI_Manager->Set_MyDigimon(&m_pMyDigimon[0]->CurrentInfo());

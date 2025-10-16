@@ -36,6 +36,9 @@ public:
 	void Turn_Start();
 	void Turn_End();
 
+	HRESULT Create_Skill();
+	void Set_Skill();
+
 private:
 	CGameInstance* m_pGameInstance = { nullptr };
 
@@ -48,10 +51,13 @@ private:
 	vector<class CBattle_Timeline*> m_pTimeLine_array;
 	class CBattle_Timeline* m_pTimeLine = { nullptr };
 	class CBattle_Turn* m_pTurn = { nullptr };
-	
 	class CBattle_Timeline* m_pCurrent_TimeLine = { nullptr };
+	class CBattle_Skill* m_pDigimon_Skill = { nullptr };
+
+	vector<CBattle_Skill*> m_pDigimon_Skills;
 
 	_float2 m_fTurn_Panel[6];
+	_int m_iDigimon{};
 
 public:
 	virtual void Free() override;

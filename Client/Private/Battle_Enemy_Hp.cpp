@@ -46,7 +46,7 @@ void CBattle_Enemy_Hp::Update(_float fTimeDelta)
 
 void CBattle_Enemy_Hp::Late_Update(_float fTimeDelta)
 {
-	m_pGameInstance->Add_RenderGroup(RENDER::UI, this);
+	m_pGameInstance->Add_RenderGroup(RENDER::BATTLEUI, this);
 }
 
 HRESULT CBattle_Enemy_Hp::Render()

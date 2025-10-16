@@ -81,7 +81,7 @@ void CBattle_Timeline::Update(_float fTimeDelta)
 
 void CBattle_Timeline::Late_Update(_float fTimeDelta)
 {
-	m_pGameInstance->Add_RenderGroup(RENDER::UI, this);
+	m_pGameInstance->Add_RenderGroup(RENDER::BATTLEUI, this);
 }
 
 HRESULT CBattle_Timeline::Render()

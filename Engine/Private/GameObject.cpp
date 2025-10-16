@@ -94,31 +94,30 @@ void CGameObject::OnClick()
 {
 }
 
-
 // 이 함수는 Component를 추가 할 때 원본을 찾아서 원본이 있으면 추가를 하고
 // 원본이 없으면 종료시킨다.
 HRESULT CGameObject::Add_Component(_uint iPrototypeLevelIndex, const _wstring& strPrototypeTag, const _wstring& strComponentTag, CComponent** ppOut, void* pArg)
 {
-	// 지금 오브젝트가 이 컴포넌트를 가지고 있나 없나 확인을 해서 만약 가지고 있으면 
-	// 종료 시킨다.
-	if (nullptr != Find_Component(strComponentTag))
-		return E_FAIL;
+	auto it = m_Components.find(strComponentTag);
+	if (it != m_Components.end())
+	{
+		Safe_Release(it->second);  // 참조 카운트 감소 및 삭제
+		m_Components.erase(it);
+	}
 
-	// 그리고 컴포넌트가 없으면 추가를 한다.
-	// 만약 원본을 몾찾으면 종료함
+	// 새로운 컴포넌트 생성
 	CComponent* pComponent = dynamic_cast<CComponent*>(
 		m_pGameInstance->Clone_Prototype(PROTOTYPE::COMPONENT,
-			iPrototypeLevelIndex, strPrototypeTag, pArg));
+			iPrototypeLevelIndex,
+			strPrototypeTag,
+			pArg));
 	if (nullptr == pComponent)
 		return E_FAIL;
 
-	// 생성이 완료가 되면 이제 Map에 추가를 하고 레퍼런스 카운트를 1 증가 시킨다. 
+	// Map에 추가하고 레퍼런스 카운트 증가
 	m_Components.emplace(strComponentTag, pComponent);
-
 	*ppOut = pComponent;
-
 	Safe_AddRef(pComponent);
-
 	return S_OK;
 }
 

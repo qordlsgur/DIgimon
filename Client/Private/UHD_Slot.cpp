@@ -83,9 +83,9 @@ void CUHD_Slot::OnClick()
 {
 }
 
-void CUHD_Slot::Set_Digimon_ID(_int ID)
+void CUHD_Slot::Set_Digimon_Info(DIGIMON_INFO* Info)
 {
-	m_iDigimon_ID = ID;
+	m_Info = *Info;
 }
 
 HRESULT CUHD_Slot::Ready_Components()
@@ -153,7 +153,7 @@ HRESULT CUHD_Slot::Bind_ShaderResources()
 		return E_FAIL;
 	if (FAILED(m_pEVPTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture5", 0)))
 		return E_FAIL;
-	if (FAILED(m_pDigimonTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture6", m_iDigimon_ID)))
+	if (FAILED(m_pDigimonTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture6", m_Info.DigimonId)))
 		return E_FAIL;
 
 	return S_OK;

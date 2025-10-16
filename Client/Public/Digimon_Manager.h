@@ -7,6 +7,7 @@ NS_BEGIN(Engine)
 class CGameObject;
 class CContainerObject;
 class CGameInstance;
+class CTexture;
 NS_END
 
 NS_BEGIN(Client)
@@ -44,7 +45,7 @@ public:
 	void Acquire_Digimon(_int ID);
 	void Release_Digimon(_int ID);
 
-	void Set_Digivice_Slot(_int SlotID, _bool Has, _int Digimon_ID);
+	void Set_Digivice_Slot(_int SlotID, _bool Has, DIGIMON_INFO* Info);
 	void Set_Current_Digimon_Info(DIGIMON_INFO* Info);
 
 	//void Copy_Digimon();
@@ -67,6 +68,12 @@ private:
 	class CPartyUHD* m_pPartyUHD = { nullptr };
 	class CDigivice* m_pDigivice = { nullptr };
 
+	CTexture* m_pDigimon_Skill1TextureCom = { nullptr };
+	CTexture* m_pDigimon_Skill2TextureCom = { nullptr };
+	CTexture* m_pDigimon_Skill3TextureCom = { nullptr };
+
+	vector<CTexture*> m_pTextures;
+
 	vector<_bool> m_vDigivice_Battle_Slot;
 
 	vector<DIGIMON_INFO*> m_CurrentDigimon;
@@ -83,13 +90,14 @@ private:
 	map<_int, DIGIMON_INFO> m_Digimon_Info;
 	map<_int, const _wstring> m_Digimon_Model;
 	map<_int, const _wstring> m_Digimon_Prototype;
+	map<_int, vector<CTexture*>> m_pDigimon_Skill;
+
 private:
 	void Model_Name();
 	void Digimon_Prototypr();
 	DIGIMON_INFO* Find_Digimon(_int Digimon_ID);
 	const _wstring* Find_Model(_int Digimon_ID);
 	const _wstring* Find_Prototype(_int Digimon_ID);
-
 public:
 	virtual void Free() override;
 };

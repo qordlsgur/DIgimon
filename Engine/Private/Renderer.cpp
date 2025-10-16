@@ -230,7 +230,7 @@ void CRenderer::Render_UI()
 
 void CRenderer::Render_BlendUI()
 {
-	for (auto& pRenderObject : m_RenderObjects[ENUM_CLASS(RENDER::BLENDUI)])
+	for (auto& pRenderObject : m_RenderObjects[ENUM_CLASS(RENDER::BATTLEUI)])
 	{
 		if (nullptr != pRenderObject)
 			pRenderObject->Render();
@@ -238,7 +238,7 @@ void CRenderer::Render_BlendUI()
 		Safe_Release(pRenderObject);
 	}
 
-	m_RenderObjects[ENUM_CLASS(RENDER::BLENDUI)].clear();
+	m_RenderObjects[ENUM_CLASS(RENDER::BATTLEUI)].clear();
 }
 
 CRenderer* CRenderer::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)

@@ -212,11 +212,10 @@ void CDigivice::Acquire_Digimon(_int ID)
 			m_pBattle_Mask[i]->Set_HasDigimon(true);
 			m_pBattle_Slot[i]->Set_Info(Set_Info(ID));
 			m_pBattle_Slot[i]->Set_HasDigimon(true);
-			m_pDigimon_Manager->Set_Digivice_Slot(i, true, ID);
+			m_pDigimon_Manager->Set_Digivice_Slot(i, true, Info);
 			m_Digimon_ID[i] = ID;
 			for (int j = 0; j < m_pBattle_Slot[i]->Get_DigimonInfo().SkillCount; ++j)
 			{
-				m_pBattle_Skill[j]->Set_Info(Info);
 				m_pBattle_Skill[j]->Set_Digimon_SkillSet(ID, j);
 			}
 			return;
@@ -231,7 +230,7 @@ void CDigivice::Release_Digimon(_int ID)
 		m_pBattle_Mask[ID]->Set_Digimon_ID(-1);
 		m_pBattle_Mask[ID]->Set_HasDigimon(false);
 		m_pBattle_Slot[ID]->Set_HasDigimon(false);
-		m_pDigimon_Manager->Set_Digivice_Slot(ID, false, -1);
+		m_pDigimon_Manager->Set_Digivice_Slot(ID, false, nullptr);
 
 	}
 	else
@@ -317,9 +316,9 @@ DIGIMON_INFO* CDigivice::Set_Info(_int ID)
 
 void CDigivice::Set_State(DIGIMON_INFO ID)
 {
-	m_pDigivice_Hp->Set_MaxHp(ID.Hp);
-	m_pDigivice_Sp->Set_MaxSp(ID.Sp);
-	m_pDigivice_Exp->Set_MaxExp(ID.Exp);
+	m_pDigivice_Hp->Set_MaxHp(static_cast<_float>(ID.Hp));
+	m_pDigivice_Sp->Set_MaxSp(static_cast<_float>(ID.Sp));
+	m_pDigivice_Exp->Set_MaxExp(static_cast<_float>(ID.Exp));
 }
 
 HRESULT CDigivice::Ready_Components()
@@ -534,6 +533,7 @@ void CDigivice::Free()
 	m_pBattle_Mask.clear();
 	m_pBattle_Skill.clear();
 
+	Safe_Release(m_pDigivice_Skill);
 	Safe_Release(m_pVIBufferCom);
 	Safe_Release(m_pTextureCom);
 	Safe_Release(m_pShaderCom);

@@ -21,9 +21,9 @@ HRESULT CBattle_Turn::Initialize(void* pArg)
 	CUIObject::UIOBJECT_DESC	Desc{};
 
 	Desc.fX = 1180;
-	Desc.fY = 400.f;
-	Desc.fSizeX = 200.f;
-	Desc.fSizeY = 570.f;
+	Desc.fY = 140.f;
+	Desc.fSizeX = 204.f;
+	Desc.fSizeY = 46.f;
 
 	m_pRect = { long(Desc.fX - Desc.fSizeX * 0.5f), long(Desc.fY - Desc.fSizeY * 0.5f), long(Desc.fX + Desc.fSizeX * 0.5f), long(Desc.fY + Desc.fSizeY * 0.5f) };
 
@@ -60,7 +60,7 @@ void CBattle_Turn::Update(_float fTimeDelta)
 
 void CBattle_Turn::Late_Update(_float fTimeDelta)
 {
-	m_pGameInstance->Add_RenderGroup(RENDER::UI, this);
+	m_pGameInstance->Add_RenderGroup(RENDER::BATTLEUI, this);
 }
 
 HRESULT CBattle_Turn::Render()

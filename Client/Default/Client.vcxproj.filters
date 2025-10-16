@@ -280,6 +280,12 @@
     <Filter Include="03.UI\Digivice\Exp">
       <UniqueIdentifier>{1491e57a-5444-46aa-ba27-23988cccaa37}</UniqueIdentifier>
     </Filter>
+    <Filter Include="03.UI\Battle_Skill">
+      <UniqueIdentifier>{c10fa6c0-ddcf-4a78-b24b-3eb6392e62a0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03.UI\Key">
+      <UniqueIdentifier>{a7fec371-495c-4d85-9862-dc4dcfc452ee}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -542,6 +548,12 @@
     </ClInclude>
     <ClInclude Include="..\public\Digivice_Hp.h">
       <Filter>03.UI\Digivice\Hp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\Battle_Skill.h">
+      <Filter>03.UI\Battle_Skill</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\KeyBord.h">
+      <Filter>03.UI\Key</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -807,6 +819,12 @@
     <ClCompile Include="..\private\Digivice_Hp.cpp">
       <Filter>03.UI\Digivice\Hp</Filter>
     </ClCompile>
+    <ClCompile Include="..\private\Battle_Skill.cpp">
+      <Filter>03.UI\Battle_Skill</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\KeyBord.cpp">
+      <Filter>03.UI\Key</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxPosTex.hlsl">
@@ -846,6 +864,9 @@
       <Filter>97.ShaderFiles</Filter>
     </FxCompile>
     <FxCompile Include="..\Bin\ShaderFiles\Shader_Digivice_State.hlsl">
+      <Filter>97.ShaderFiles</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Bin\ShaderFiles\Shader_Skill_Image.hlsl">
       <Filter>97.ShaderFiles</Filter>
     </FxCompile>
   </ItemGroup>

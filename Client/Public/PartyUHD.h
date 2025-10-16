@@ -26,15 +26,22 @@ public:
 	virtual HRESULT Render() override;
 
 public:
-	void Set_Digimon_ID(_uint Slot, _bool HasDigimon, _uint ID);
+	void Set_Digimon_ID(_uint Slot, _bool HasDigimon, DIGIMON_INFO* Info);
+
+	void Set_NonBattle_Slot();
+	void Set_Battle_Slot();
 
 private:
 	class CDigimon_Manager*					m_pDigimon_Manager = { nullptr };
+	class CBattle_Manager*					m_pBattle_Manager = { nullptr };
 	class CUHD_Slot*						m_pUHD_Slot		   = { nullptr };
 
 	vector<class CUHD_Slot*>				m_vSlots;
 
+	_bool									m_bBattle =	{ false };
+
 	_uint									m_iSlotCount{};
+	_tchar									m_szDigimonLv[MAX_PATH] = {};
 	_tchar									m_szLv[MAX_PATH] = {};
 
 private:

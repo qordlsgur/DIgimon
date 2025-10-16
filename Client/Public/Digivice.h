@@ -79,7 +79,6 @@ private:
 
 	class CDigimon_Manager* m_pDigimon_Manager = {nullptr};
 	class CBattle_Manager* m_pBattle_Manager = {nullptr};
-
 	class CDigivice_Slot* m_pSelectSlot = { nullptr };
 
 private:
