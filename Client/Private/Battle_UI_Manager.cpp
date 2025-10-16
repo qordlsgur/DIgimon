@@ -205,14 +205,39 @@ void CBattle_UI_Manager::Set_Skill()
 
 void CBattle_UI_Manager::Digimon_UseSkill1(_int SkillNum)
 {
+	m_iDigimon_Skill[0] = SkillNum;
+	m_pDigimon_Skills[SkillNum]->Set_Hover(true);
+}
+
+void CBattle_UI_Manager::Digimon_UseTarget1(_int Enemy)
+{
+	m_pKeyBords[Enemy]->Set_Hover(true);
 }
 
 void CBattle_UI_Manager::Digimon_UseSkill2(_int SkillNum)
 {
+	_int Num = SkillNum + 3;
+	m_iDigimon_Skill[1] = Num;
+	m_pDigimon_Skills[Num]->Set_Hover(true);
+}
+
+void CBattle_UI_Manager::Digimon_UseTarget2(_int Enemy)
+{
+	_int Num = Enemy + 3;
+	m_pKeyBords[Num]->Set_Hover(true);
 }
 
 void CBattle_UI_Manager::Digimon_UseSkill3(_int SkillNum)
 {
+	_int Num = SkillNum + 6;
+	m_iDigimon_Skill[0] = SkillNum;
+	m_pDigimon_Skills[Num]->Set_Hover(true);
+}
+
+void CBattle_UI_Manager::Digimon_UseSTarget3(_int Enemy)
+{
+	_int Num = Enemy + 6;
+	m_pKeyBords[Num]->Set_Hover(true);
 }
 
 void CBattle_UI_Manager::Free()

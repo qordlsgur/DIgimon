@@ -40,8 +40,11 @@ public:
 	void Set_Skill();
 
 	void Digimon_UseSkill1(_int SkillNum);
+	void Digimon_UseTarget1(_int Enemy);
 	void Digimon_UseSkill2(_int SkillNum);
+	void Digimon_UseTarget2(_int Enemy);
 	void Digimon_UseSkill3(_int SkillNum);
+	void Digimon_UseSTarget3( _int Enemy);
 
 private:
 	CGameInstance* m_pGameInstance = { nullptr };
@@ -64,6 +67,7 @@ private:
 
 	_float2 m_fTurn_Panel[6];
 	_int m_iDigimon{};
+	_int m_iDigimon_Skill[3] = {};
 
 public:
 	virtual void Free() override;
