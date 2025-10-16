@@ -45,7 +45,11 @@ HRESULT CMaterial::Initialize(const _char* pModelFilePath, MATERIAL_DATA& Data)
 HRESULT CMaterial::Bind_SRV(CShader* pShader, const _char* pConstantName, _uint iTextureIndex)
 {
 	return pShader->Bind_SRV(pConstantName, m_SRVs[1][iTextureIndex]);
+}
 
+HRESULT CMaterial::Bind_SRVN(CShader* pShader, const _char* pConstantName, _uint iTextureIndex)
+{
+	return pShader->Bind_SRV(pConstantName, m_SRVs[6][iTextureIndex]);
 }
 
 CMaterial* CMaterial::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext, const _char* pModelFilePath, MATERIAL_DATA& Data)

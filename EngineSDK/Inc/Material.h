@@ -13,6 +13,7 @@ private:
 public:
 	HRESULT Initialize(const _char* pModelFilePath, MATERIAL_DATA& Data);
 	HRESULT Bind_SRV(class CShader* pShader, const _char* pConstantName,  _uint iTextureIndex);
+	HRESULT Bind_SRVN(class CShader* pShader, const _char* pConstantName,  _uint iTextureIndex);
 private:
 	ID3D11Device* m_pDevice = { nullptr };
 	ID3D11DeviceContext* m_pContext = { nullptr };

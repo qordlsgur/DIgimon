@@ -194,8 +194,12 @@ HRESULT CModel::Bind_Material(_uint iMeshIndex, CShader* pShader, const _char* p
 	if (iMaterialIndex >= m_iNumMaterials)
 		return E_FAIL;
 
-	return m_Materials[iMaterialIndex]->Bind_SRV(pShader, pConstantName, iTextureIndex);
+	if (strcmp(pConstantName, "g_DiffuseTexture") == 0)
+	{
+		return m_Materials[iMaterialIndex]->Bind_SRV(pShader, pConstantName, iTextureIndex);
+	}
 
+	return m_Materials[iMaterialIndex]->Bind_SRVN(pShader, pConstantName, iTextureIndex);
 }
 
 _bool CModel::Play_Animation(_float fTimeDelta)
