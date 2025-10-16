@@ -57,16 +57,10 @@ void CDigivice_Hp::Update(_float fTimeDelta)
 		long(m_fY + m_fSizeY * 0.5f)
 	};
 
-	if (m_iMaxHp != 0)
-	{
-		if (m_pGameInstance->Key_Down(DIK_I))
-			m_iCurrentHp = 5000.f;
-
-		if (m_pGameInstance->Key_Down(DIK_O))
-			m_iCurrentHp += 500.f;
-	}
-
 	m_fHpRatio = m_iCurrentHp / m_iMaxHp;
+
+	if (m_fHpRatio < 0.f)
+		m_fHpRatio = 0.f;
 
 }
 

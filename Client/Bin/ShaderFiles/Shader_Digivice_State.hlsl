@@ -64,9 +64,11 @@ PS_OUT PS_MAIN(PS_IN In)
     if (Current != 0)
     {
         float2 uv = In.vTexcoord;
-        uv.x = uv.x * Current;
         float4 color2 = g_Texture2.Sample(DefaultSampler, uv);
-        // 2번 텍스처로 덮어쓰기
+
+        if (uv.x >= Current)
+            color2.a = 0;
+
         color = lerp(color, color2, color2.a);
     }
    
