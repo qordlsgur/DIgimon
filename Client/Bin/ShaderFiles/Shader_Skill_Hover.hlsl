@@ -3,9 +3,9 @@ matrix g_WorldMatrix, g_ViewMatrix, g_ProjMatrix;
 
 Texture2D g_Texture1;
 Texture2D g_Texture2;
-Texture2D g_Texture3;
 
-int Hover;
+int HasDigimon;
+
 
 // : 이 친구는 시메틱 이라고 한다. 선언하는 함수를 보면 시메틱 네임 이라는게 있다.
 struct VS_IN // 구조체랑 똑같음 
@@ -54,33 +54,33 @@ struct PS_OUT
 PS_OUT PS_MAIN(PS_IN In)
 {
     PS_OUT Out;
-
-
+    
+    float4 color = float4(0, 0, 0, 0);
+    
+    float3 Magenta = float3(1, 0, 1);
+    
     float4 tex1 = g_Texture1.Sample(DefaultSampler, In.vTexcoord);
     float4 tex2 = g_Texture2.Sample(DefaultSampler, In.vTexcoord);
-        
-    float4 color = float4(0, 0, 0, 0);
-    float mask = tex1.a;
-        
-    if (tex1.a > 0)
-        color = tex1;
-
-    if (tex2.a > 0 && mask > 0)
-        color = tex2;
-        
-     
-    if (Hover != 0)
-    {
-        float4 tex3 = g_Texture3.Sample(DefaultSampler, In.vTexcoord);
-        
-        color.rgb = lerp(color.rgb, tex3.rgb, tex3.a);
-    }
     
-    Out.vColor = color;
     
-    if (Out.vColor.a < 0.4f)
+    color = tex1;
+    
+    if (all(color.rgb == Magenta))
         discard;
     
+    if (HasDigimon == 0)
+    {
+        Out.vColor = color;
+        return Out;
+    }
+    else
+    {
+        //if (tex2.a > 0)
+        color.rgb = lerp(color.rgb, tex2.rgb, tex2.a);
+    
+        Out.vColor = color;
+    }
+           
     return Out;
 }
 

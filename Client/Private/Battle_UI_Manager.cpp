@@ -4,6 +4,7 @@
 #include "Battle_Timeline.h"
 #include "Battle_Turn.h"
 #include "Battle_Skill.h"
+#include "KeyBord.h"
 
 IMPLEMENT_SINGLETON(CBattle_UI_Manager)
 
@@ -134,7 +135,14 @@ HRESULT CBattle_UI_Manager::Create_Skill()
 			if (m_pDigimon_Skill == nullptr)
 				return E_FAIL;
 
+			m_pKeyBord = static_cast<CKeyBord*>(m_pGameInstance->Add_GameObject_ToLayer_ToCreate(
+				ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Battle_Skill_KayBord"), ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Layer_Battle_KeyBord")));
+			if (m_pKeyBord == nullptr)
+				return E_FAIL;
+
+
 			m_pDigimon_Skills.push_back(m_pDigimon_Skill);
+			m_pKeyBords.push_back(m_pKeyBord);
 		}
 	}
 	return S_OK;
@@ -144,19 +152,35 @@ void CBattle_UI_Manager::Set_Skill()
 {
 	m_pDigimon_Skills[0]->Set_Move(300,650);
 	m_pDigimon_Skills[0]->Set_Digimon_SkillSet(m_MyDigimon_Info[0]->DigimonId, 0);
+	m_pDigimon_Skills[0]->Set_Hover(true);
+	m_pKeyBords[0]->Set_Move(300,700);
+	m_pKeyBords[0]->Set_KeyBord(0);
+	m_pKeyBords[0]->Set_Hover(true);
 	m_pDigimon_Skills[1]->Set_Move(365,650);
 	m_pDigimon_Skills[1]->Set_Digimon_SkillSet(m_MyDigimon_Info[0]->DigimonId, 1);
+	m_pKeyBords[1]->Set_Move(365,700);
+	m_pKeyBords[1]->Set_KeyBord(1);
 	m_pDigimon_Skills[2]->Set_Move(430,650);
 	m_pDigimon_Skills[2]->Set_Digimon_SkillSet(m_MyDigimon_Info[0]->DigimonId, 2);
+	m_pKeyBords[2]->Set_Move(430,700);
+	m_pKeyBords[2]->Set_KeyBord(2);
 
 	if (m_MyDigimon_Info.size() > 1)
 	{
 		m_pDigimon_Skills[3]->Set_Move(665, 650);
 		m_pDigimon_Skills[3]->Set_Digimon_SkillSet(m_MyDigimon_Info[1]->DigimonId, 0);
+		m_pDigimon_Skills[3]->Set_Hover(true);
+		m_pKeyBords[3]->Set_Move(665, 700);
+		m_pKeyBords[3]->Set_KeyBord(3);
+		m_pKeyBords[3]->Set_Hover(true);
 		m_pDigimon_Skills[4]->Set_Move(730, 650);
 		m_pDigimon_Skills[4]->Set_Digimon_SkillSet(m_MyDigimon_Info[1]->DigimonId, 1);
+		m_pKeyBords[4]->Set_Move(730,700);
+		m_pKeyBords[4]->Set_KeyBord(4);
 		m_pDigimon_Skills[5]->Set_Move(795, 650);
 		m_pDigimon_Skills[5]->Set_Digimon_SkillSet(m_MyDigimon_Info[1]->DigimonId, 2);
+		m_pKeyBords[5]->Set_Move(795,700);
+		m_pKeyBords[5]->Set_KeyBord(5);
 
 	}
 
@@ -164,11 +188,31 @@ void CBattle_UI_Manager::Set_Skill()
 	{
 		m_pDigimon_Skills[6]->Set_Move(1030, 650);
 		m_pDigimon_Skills[6]->Set_Digimon_SkillSet(m_MyDigimon_Info[2]->DigimonId, 0);
+		m_pDigimon_Skills[6]->Set_Hover(true);
+		m_pKeyBords[6]->Set_Move(1030,700);
+		m_pKeyBords[6]->Set_KeyBord(6);
+		m_pKeyBords[6]->Set_Hover(true);
 		m_pDigimon_Skills[7]->Set_Move(1095, 650);
 		m_pDigimon_Skills[7]->Set_Digimon_SkillSet(m_MyDigimon_Info[2]->DigimonId, 1);
+		m_pKeyBords[7]->Set_Move(1095,700);
+		m_pKeyBords[7]->Set_KeyBord(7);
 		m_pDigimon_Skills[8]->Set_Move(1160, 650);
 		m_pDigimon_Skills[8]->Set_Digimon_SkillSet(m_MyDigimon_Info[2]->DigimonId, 2);
+		m_pKeyBords[8]->Set_Move(1160,700);
+		m_pKeyBords[8]->Set_KeyBord(8);
 	}
+}
+
+void CBattle_UI_Manager::Digimon_UseSkill1(_int SkillNum)
+{
+}
+
+void CBattle_UI_Manager::Digimon_UseSkill2(_int SkillNum)
+{
+}
+
+void CBattle_UI_Manager::Digimon_UseSkill3(_int SkillNum)
+{
 }
 
 void CBattle_UI_Manager::Free()

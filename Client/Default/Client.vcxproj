@@ -345,6 +345,7 @@
     <FxCompile Include="..\Bin\ShaderFiles\Shader_Digivice_Target.hlsl" />
     <FxCompile Include="..\Bin\ShaderFiles\Shader_Hover.hlsl" />
     <FxCompile Include="..\Bin\ShaderFiles\Shader_Inventory.hlsl" />
+    <FxCompile Include="..\Bin\ShaderFiles\Shader_Skill_Hover.hlsl" />
     <FxCompile Include="..\Bin\ShaderFiles\Shader_Skill_Image.hlsl" />
     <FxCompile Include="..\Bin\ShaderFiles\Shader_UHD.hlsl" />
     <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxAnimMesh.hlsl" />

@@ -20,10 +20,10 @@ HRESULT CKeyBord::Initialize(void* pArg)
 {
 	CUIObject::UIOBJECT_DESC	Desc{};
 
-	Desc.fX = 100.f;
-	Desc.fY = 100.f;
-	Desc.fSizeX = 50.f;
-	Desc.fSizeY = 50.f;
+	Desc.fX = 500.f;
+	Desc.fY = 500.f;
+	Desc.fSizeX = 32.f;
+	Desc.fSizeY = 32.f;
 
 	m_pRect = { long(Desc.fX - Desc.fSizeX * 0.5f), long(Desc.fY - Desc.fSizeY * 0.5f), long(Desc.fX + Desc.fSizeX * 0.5f), long(Desc.fY + Desc.fSizeY * 0.5f) };
 
@@ -104,13 +104,13 @@ HRESULT CKeyBord::Ready_Components()
 		TEXT("Com_Texture"), reinterpret_cast<CComponent**>(&m_pTextureCom))))
 		return E_FAIL;
 
-	/* Com_Select*/
+	/* Com_KeyBord_Select*/
 	if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Select_Key"),
-		TEXT("Com_Select"), reinterpret_cast<CComponent**>(&m_pSelectTextureCom))))
+		TEXT("Com_KeyBord_Select"), reinterpret_cast<CComponent**>(&m_pSelectTextureCom))))
 		return E_FAIL;
 
 	/* Com_Shader */
-	if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Shader_Inventory"),
+	if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Shader_Skill_Hover"),
 		TEXT("Com_Shader"), reinterpret_cast<CComponent**>(&m_pShaderCom))))
 		return E_FAIL;
 
@@ -126,9 +126,11 @@ HRESULT CKeyBord::Bind_ShaderResources()
 		return E_FAIL;
 	if (FAILED(m_pShaderCom->Bind_Matrix("g_ProjMatrix", &m_ProjMatrix)))
 		return E_FAIL;
-	if (FAILED(m_pSelectTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture1", 0)))
+	if (FAILED(m_pShaderCom->Bind_Int("HasDigimon", m_bHover)))
 		return E_FAIL;
-	if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture2", 0)))
+	if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture1", m_iKey)))
+		return E_FAIL;
+	if (FAILED(m_pSelectTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture2", 0)))
 		return E_FAIL;
 
 	return S_OK;

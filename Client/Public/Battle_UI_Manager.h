@@ -39,6 +39,10 @@ public:
 	HRESULT Create_Skill();
 	void Set_Skill();
 
+	void Digimon_UseSkill1(_int SkillNum);
+	void Digimon_UseSkill2(_int SkillNum);
+	void Digimon_UseSkill3(_int SkillNum);
+
 private:
 	CGameInstance* m_pGameInstance = { nullptr };
 
@@ -53,8 +57,10 @@ private:
 	class CBattle_Turn* m_pTurn = { nullptr };
 	class CBattle_Timeline* m_pCurrent_TimeLine = { nullptr };
 	class CBattle_Skill* m_pDigimon_Skill = { nullptr };
+	class CKeyBord* m_pKeyBord = { nullptr };
 
 	vector<CBattle_Skill*> m_pDigimon_Skills;
+	vector<CKeyBord*> m_pKeyBords;
 
 	_float2 m_fTurn_Panel[6];
 	_int m_iDigimon{};

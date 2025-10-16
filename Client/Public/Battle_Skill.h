@@ -38,7 +38,6 @@ public:
 	virtual void OnHover() override;
 
 	void Set_Digimon_Skill_Info_Pos(_float fX, _float fY);
-	void Set_Hover();
 
 	HRESULT Set_Digimon_SkillSet(_int ID, _int Digimon_Skill);
 
@@ -46,6 +45,7 @@ private:
 	CVIBuffer_Rect* m_pVIBufferCom = { nullptr };
 	CTexture* m_pSlotTextureCom = { nullptr };
 	CTexture* m_pDigimonSKillTextureCom = { nullptr };
+	CTexture* m_pHoverTextureCom = { nullptr };
 	CShader* m_pShaderCom = { nullptr };
 
 	class CDigimon_Manager* m_pManager = { nullptr };

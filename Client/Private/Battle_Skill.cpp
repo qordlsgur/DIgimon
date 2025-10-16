@@ -61,6 +61,7 @@ void CBattle_Skill::Update(_float fTimeDelta)
 		long(-Pos.y + m_fSizeY * 0.5f)
 	};
 	OnHover();
+
 }
 
 void CBattle_Skill::Late_Update(_float fTimeDelta)
@@ -113,7 +114,7 @@ void CBattle_Skill::OnHover()
 	}
 	else
 	{
-		Set_Hover();
+		m_pSkill_Info->Set_Hover(false);
 	}
 }
 
@@ -121,11 +122,6 @@ void CBattle_Skill::Set_Digimon_Skill_Info_Pos(_float fX, _float fY)
 {
 	m_pSkill_Info->Set_Hover(true);
 	m_pSkill_Info->Set_Move(fX, fY);
-}
-
-void CBattle_Skill::Set_Hover()
-{
-	m_pSkill_Info->Set_Hover(false);
 }
 
 HRESULT CBattle_Skill::Set_Digimon_SkillSet(_int ID, _int Digimon_Skill)
@@ -141,6 +137,7 @@ HRESULT CBattle_Skill::Set_Digimon_SkillSet(_int ID, _int Digimon_Skill)
 
 	Create_Info();
 
+
 	return S_OK;
 }
 
@@ -151,9 +148,14 @@ HRESULT CBattle_Skill::Ready_Components()
 		TEXT("Com_VIBuffer"), reinterpret_cast<CComponent**>(&m_pVIBufferCom))))
 		return E_FAIL;
 
-	/* Com_Digivice_Skill*/
+	/* Com_Battle_Skill*/
 	if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Battle_Skill"),
-		TEXT("Com_Digivice_Skill"), reinterpret_cast<CComponent**>(&m_pSlotTextureCom))))
+		TEXT("Com_Battle_Skill"), reinterpret_cast<CComponent**>(&m_pSlotTextureCom))))
+		return E_FAIL;
+
+	/* Com_Skill_Hover*/
+	if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Battle_Skill_Select"),
+		TEXT("Com_Skill_Hover"), reinterpret_cast<CComponent**>(&m_pHoverTextureCom))))
 		return E_FAIL;
 
 	/* Com_Shader */
@@ -172,9 +174,13 @@ HRESULT CBattle_Skill::Bind_ShaderResources()
 		return E_FAIL;
 	if (FAILED(m_pShaderCom->Bind_Matrix("g_ProjMatrix", &m_ProjMatrix)))
 		return E_FAIL;
+	if (FAILED(m_pShaderCom->Bind_Int("Hover", m_bHover)))
+		return E_FAIL;
 	if (FAILED(m_pSlotTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture1", 0)))
 		return E_FAIL;
 	if (FAILED(m_pDigimonSKillTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture2", m_iDigimon_Skill)))
+		return E_FAIL;
+	if (FAILED(m_pHoverTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture3", 0)))
 		return E_FAIL;
 
 	return S_OK;

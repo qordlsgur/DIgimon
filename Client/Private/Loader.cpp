@@ -279,6 +279,11 @@ HRESULT CLoader::Loading_For_GamePlay()
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/Battle/Battle_Skill.png"), 1))))
 		return E_FAIL;
 
+	/* For.Prototype_Component_Texture_Battle_Skill_Select*/
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Battle_Skill_Select"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/Battle/Select_Skill.png"), 1))))
+		return E_FAIL;
+
 	/* For.Prototype_Component_Texture_Battle_Digimon_Field_HP*/
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Battle_Digimon_Field_HP"),
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/Battle/Battle_Digimon_Field_HP.png"), 1))))
@@ -647,6 +652,11 @@ HRESULT CLoader::Loading_For_GamePlay()
 	/* For.Prototype_Component_Shader_Skill_Image*/
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Shader_Skill_Image"),
 		CShader::Create(m_pDevice, m_pContext, TEXT("../Bin/ShaderFiles/Shader_Skill_Image.hlsl"), VTXPOSTEX::Elements, VTXPOSTEX::iNumElements))))
+		return E_FAIL;
+
+	/* For.Prototype_Component_Shader_Skill_Hover*/
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Shader_Skill_Hover"),
+		CShader::Create(m_pDevice, m_pContext, TEXT("../Bin/ShaderFiles/Shader_Skill_Hover.hlsl"), VTXPOSTEX::Elements, VTXPOSTEX::iNumElements))))
 		return E_FAIL;
 
 	/* For.Prototype_Component_Shader_VtxMesh */
