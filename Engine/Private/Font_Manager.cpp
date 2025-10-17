@@ -41,7 +41,7 @@ HRESULT CFont_Manager::Render_Rotate(const _wstring& strFontTag, const _tchar* p
     return pFont->Render_Rotate(pText, vPosition, vColor, Rotation, vScale);
 }
 
-HRESULT CFont_Manager::Perspective_Render(_matrix View, _matrix Proj, const _wstring& strFontTag, const _tchar* pText, const _float2& vPosition, _fvector vColor, _float vScale)
+HRESULT CFont_Manager::Perspective_Render(_matrix View, _matrix Proj, const _wstring& strFontTag, const _tchar* pText, const _fvector& vPosition, _fvector vColor, _float vScale)
 {
     CFont* pFont = Find_Font(strFontTag);
     if (nullptr == pFont)

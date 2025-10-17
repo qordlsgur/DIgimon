@@ -370,7 +370,7 @@ HRESULT CGameInstance::Render_Rotation_Text(const _wstring& strFontTag, const _t
 	return m_pFont_Manager->Render_Rotate(strFontTag, pText, vPosition, vColor, Rotation, vScale);
 }
 
-HRESULT CGameInstance::Perspective_Render_Text(_matrix View, _matrix Proj, const _wstring& strFontTag, const _tchar* pText, const _float2& vPosition, _fvector vColor, _float vScale)
+HRESULT CGameInstance::Perspective_Render_Text(_matrix View, _matrix Proj, const _wstring& strFontTag, const _tchar* pText, const _fvector& vPosition, _fvector vColor, _float vScale)
 {
 	return m_pFont_Manager->Perspective_Render(View, Proj, strFontTag, pText, vPosition, vColor, vScale);
 }

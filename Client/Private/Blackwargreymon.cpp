@@ -99,8 +99,20 @@ void CBlackwargreymon::Update(_float fTimeDelta)
 		}
 
 		if (m_pGameInstance->Key_Down(DIK_1))
+		{
 			m_bisHit = !m_bisHit;
+			m_fRandom = m_pGameInstance->Random(-3.f, 3.f);
+		}
 
+		if (m_bisHit)
+		{
+			DamageUp(fTimeDelta);
+		}
+		else
+		{
+			m_fTime = 0.f;
+			m_fFontUp = 13.5f;
+		}
 
 		m_pFsm->Update(fTimeDelta);
 		m_pColliderCom->Update(XMLoadFloat4x4(m_pTransformCom->Get_WorldMatrixPtr()));
@@ -116,7 +128,7 @@ void CBlackwargreymon::Late_Update(_float fTimeDelta)
 	{
 		__super::Late_Update(fTimeDelta);
 
-		m_pGameInstance->Add_RenderGroup(RENDER::NONBLEND, this);
+		m_pGameInstance->Add_RenderGroup(RENDER::UI, this);
 	}
 }
 
@@ -126,7 +138,14 @@ HRESULT CBlackwargreymon::Render()
 	{
 		if (m_bisHit)
 		{
-			m_pGameInstance->Perspective_Render_Text(m_pGameInstance->Get_Transform_Matrix(D3DTS::VIEW), m_pGameInstance->Get_Transform_Matrix(D3DTS::PROJ), TEXT("18"), TEXT("11"), _float2(m_pTransformCom->Get_State(STATE::POSITION).m128_f32[0], m_pTransformCom->Get_State(STATE::POSITION).m128_f32[1]));
+			m_pGameInstance->Perspective_Render_Text(
+				m_pGameInstance->Get_Transform_Matrix(D3DTS::VIEW),
+				m_pGameInstance->Get_Transform_Matrix(D3DTS::PROJ),
+				TEXT("42"), TEXT("111"),
+				XMVectorSet(m_pTransformCom->Get_State(STATE::POSITION).m128_f32[0] + m_fRandom,
+					m_pTransformCom->Get_State(STATE::POSITION).m128_f32[1] + m_fFontUp,
+					m_pTransformCom->Get_State(STATE::POSITION).m128_f32[2] + 5.f,
+					m_pTransformCom->Get_State(STATE::POSITION).m128_f32[3]));
 		}
 
 #ifdef _DEBUG
@@ -147,6 +166,15 @@ _int CBlackwargreymon::Intersect(CCollider* pPlayer_Collider)
 void CBlackwargreymon::Set_Damage(_int Damage)
 {
 	m_iDamage = Damage;
+}
+
+void CBlackwargreymon::DamageUp(_float fTimeDelta)
+{
+	//m_fTime += fTimeDelta;
+	m_fFontUp += 0.8f;
+
+	if (m_fFontUp >= 27.f)
+		m_bisHit = false;
 }
 
 void CBlackwargreymon::UseSkill(_int Skill)

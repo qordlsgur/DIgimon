@@ -14,7 +14,7 @@ public:
 	HRESULT Initialize(const _tchar* pFontFilePath);
 	HRESULT Render(const _tchar* pText, const _float2& vPosition, _fvector vColor, _float vScale);
 	HRESULT Render_Rotate(const _tchar* pText, const _float2& vPosition, _fvector vColor, _float Rotation, _float vScale);
-	HRESULT Perspective_Render(_matrix View, _matrix Proj, const _tchar* pText, const _float2& vPosition, _fvector vColor, _float vScale);
+	HRESULT Perspective_Render(_matrix View, _matrix Proj, const _tchar* pText, const _fvector& vPosition, _fvector vColor, _float vScale);
 	_float FontSizeX(const _tchar* pText);
 
 private:

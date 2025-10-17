@@ -281,4 +281,6 @@ void CBattle_UI_Manager::Digimon_UseTarget3(_int Enemy)
 void CBattle_UI_Manager::Free()
 {
 	__super::Free();
+
+	Safe_Release(m_pGameInstance);
 }

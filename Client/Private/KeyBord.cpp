@@ -168,5 +168,6 @@ void CKeyBord::Free()
 
 	Safe_Release(m_pVIBufferCom);
 	Safe_Release(m_pTextureCom);
+	Safe_Release(m_pSelectTextureCom);
 	Safe_Release(m_pShaderCom);
 }

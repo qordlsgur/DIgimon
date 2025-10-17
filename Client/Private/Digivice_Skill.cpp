@@ -215,8 +215,8 @@ void CDigivice_Skill::Free()
 {
 	__super::Free();
 
-	Safe_Release(m_pDigimonSKillTextureCom);
 	Safe_Release(m_pVIBufferCom);
+	Safe_Release(m_pDigimonSKillTextureCom);
 	Safe_Release(m_pSlotTextureCom);
 	Safe_Release(m_pShaderCom);
 }

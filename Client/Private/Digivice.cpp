@@ -165,7 +165,6 @@ HRESULT CDigivice::Render()
 		_float InfoDamage = (m_pGameInstance->FontSizeX(TEXT("14"), m_szDigimonDamage) - 12.f) * 0.5f;
 		_float InfoAttackSpeed = (m_pGameInstance->FontSizeX(TEXT("14"), m_szDigimonAttackSpeed) - 12.f) * 0.5f;
 
-		//m_pGameInstance->Render_Text(TEXT("Dmage"), TEXT("1111"), _float2(1280, 70.f), XMVectorSet(0.f, 0.f, 1.f, 1.f));
 		m_pGameInstance->Render_Text(TEXT("18"), TEXT("디지바이스"), _float2(600.f, 70.f), XMVectorSet(0.f, 0.f, 1.f, 1.f));
 		m_pGameInstance->Render_Text(TEXT("17"), m_pSelectSlot->Get_DigimonInfo().DigimonName.c_str(), _float2(600.f, 120.f), XMVectorSet(1.f, 1.f, 1.f, 1.f));
 		m_pGameInstance->Render_Text(TEXT("14"), TEXT("세대"), _float2(880.f - State, 170.f), XMVectorSet(1.f, 1.f, 1.f, 1.f));
@@ -215,6 +214,10 @@ void CDigivice::Acquire_Digimon(_int ID)
 			m_pBattle_Slot[i]->Set_HasDigimon(true);
 			m_pDigimon_Manager->Set_Digivice_Slot(i, true, Info);
 			m_Digimon_ID[i] = ID;
+			for (int j = 0; j < m_pBattle_Slot[i]->Get_DigimonInfo().SkillCount; ++j)
+			{
+				m_pBattle_Skill[j]->Set_Digimon_SkillSet(ID, j);
+			}
 			return;
 		}
 	}

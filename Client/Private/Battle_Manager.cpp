@@ -700,7 +700,8 @@ void CBattle_Manager::Digimon1_Attack(_float fTimeDelta)
 	m_pCurrentDigimon->UseSkill(m_DigimonOrder1.m_iDigimonSkill);
 	m_bSkill = true;
 	m_DigimonOrder1.m_bDigimonSkill = false;
-
+	m_pBattle_UI_Manager->Digimon_UseSkill1(1);
+	m_pBattle_UI_Manager->Digimon_UseTarget1(1);
 	if (m_pCurrentDigimon->Get_SkillMove())
 		m_fDashTime += fTimeDelta;
 
@@ -719,7 +720,8 @@ void CBattle_Manager::Digimon2_Attack(_float fTimeDelta)
 	m_pCurrentDigimon->UseSkill(m_DigimonOrder2.m_iDigimonSkill);
 	m_bSkill = true;
 	m_DigimonOrder2.m_bDigimonSkill = false;
-
+	m_pBattle_UI_Manager->Digimon_UseSkill2(1);
+	m_pBattle_UI_Manager->Digimon_UseTarget2(1);
 	if (m_pCurrentDigimon->Get_SkillMove())
 		m_fDashTime += fTimeDelta;
 
@@ -738,7 +740,8 @@ void CBattle_Manager::Digimon3_Attack(_float fTimeDelta)
 	m_pCurrentDigimon->UseSkill(m_DigimonOrder3.m_iDigimonSkill);
 	m_bSkill = true;
 	m_DigimonOrder3.m_bDigimonSkill = false;
-
+	m_pBattle_UI_Manager->Digimon_UseSkill3(1);
+	m_pBattle_UI_Manager->Digimon_UseTarget3(1);
 	if (m_pCurrentDigimon->Get_SkillMove())
 		m_fDashTime += fTimeDelta;
 
@@ -748,6 +751,8 @@ void CBattle_Manager::Digimon3_Attack(_float fTimeDelta)
 		m_pCurrentDigimon->Target_Pos_Move(m_vPlayerDigimonAttackLookAtEnemy, fTimeDelta);
 		if (!m_pCurrentDigimon->HasReachedTargetPosition(m_vPlayerDigimonAttackLookAtEnemy))
 			m_pCurrentDigimon->Set_SkillMove(false);
+
+
 	}
 }
 

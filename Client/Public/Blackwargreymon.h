@@ -36,6 +36,7 @@ public:
 	virtual _int Intersect(class CCollider* pPlayer_Collider) override;
 
 	void Set_Damage(_int Damage);
+	void DamageUp(_float fTimeDelta);
 
 private:
 	CCollider* m_pColliderCom = { nullptr };
@@ -47,7 +48,9 @@ private:
 	_bool m_bMove = false;
 	_int m_iDamage{};
 	_bool m_bisHit = { false };
-
+	_float m_fTime{};
+	_float m_fFontUp{};
+	_float m_fRandom{};
 private:
 	HRESULT Ready_PartObjects();
 

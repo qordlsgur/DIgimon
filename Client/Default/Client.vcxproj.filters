@@ -286,9 +286,6 @@
     <Filter Include="03.UI\Key">
       <UniqueIdentifier>{a7fec371-495c-4d85-9862-dc4dcfc452ee}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02.GameObjects\Digimon_All_Skill">
-      <UniqueIdentifier>{fa9caf6c-7e83-4381-96f1-13462e3a211d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="03.UI\DamageFont">
       <UniqueIdentifier>{feb9f465-d934-42f2-a1b8-f23e1a51b861}</UniqueIdentifier>
     </Filter>
