@@ -551,6 +551,7 @@ void CBattle_Manager::Digimon1_Skill()
 		m_DigimonOrder1.m_iDigimonSkill = 1;
 		m_DigimonOrder1.m_bDigimonSkill = true;
 		m_DigimonOrder1.m_bDigimonOrder = true;
+		m_pBattle_UI_Manager->Digimon_UseSkill1(0);
 	}
 
 	if (m_pGameInstance->Key_Down(DIK_W))
@@ -558,6 +559,7 @@ void CBattle_Manager::Digimon1_Skill()
 		m_DigimonOrder1.m_iDigimonSkill = 2;
 		m_DigimonOrder1.m_bDigimonSkill = true;
 		m_DigimonOrder1.m_bDigimonOrder = true;
+		m_pBattle_UI_Manager->Digimon_UseSkill1(1);
 	}
 
 	if (m_pGameInstance->Key_Down(DIK_E))
@@ -565,6 +567,7 @@ void CBattle_Manager::Digimon1_Skill()
 		m_DigimonOrder1.m_iDigimonSkill = 3;
 		m_DigimonOrder1.m_bDigimonSkill = true;
 		m_DigimonOrder1.m_bDigimonOrder = true;
+		m_pBattle_UI_Manager->Digimon_UseSkill1(2);
 	}
 }
 
@@ -575,6 +578,7 @@ void CBattle_Manager::Digimon2_Skill()
 		m_DigimonOrder2.m_iDigimonSkill = 1;
 		m_DigimonOrder2.m_bDigimonSkill = true;
 		m_DigimonOrder2.m_bDigimonOrder = true;
+		m_pBattle_UI_Manager->Digimon_UseSkill2(0);
 	}
 
 	if (m_pGameInstance->Key_Down(DIK_S))
@@ -582,6 +586,7 @@ void CBattle_Manager::Digimon2_Skill()
 		m_DigimonOrder2.m_iDigimonSkill = 2;
 		m_DigimonOrder2.m_bDigimonSkill = true;
 		m_DigimonOrder2.m_bDigimonOrder = true;
+		m_pBattle_UI_Manager->Digimon_UseSkill2(1);
 	}
 
 	if (m_pGameInstance->Key_Down(DIK_D))
@@ -589,6 +594,7 @@ void CBattle_Manager::Digimon2_Skill()
 		m_DigimonOrder2.m_iDigimonSkill = 3;
 		m_DigimonOrder2.m_bDigimonSkill = true;
 		m_DigimonOrder2.m_bDigimonOrder = true;
+		m_pBattle_UI_Manager->Digimon_UseSkill2(2);
 	}
 }
 
@@ -599,6 +605,7 @@ void CBattle_Manager::Digimon3_Skill()
 		m_DigimonOrder3.m_iDigimonSkill = 1;
 		m_DigimonOrder3.m_bDigimonSkill = true;
 		m_DigimonOrder3.m_bDigimonOrder = true;
+		m_pBattle_UI_Manager->Digimon_UseSkill3(0);
 	}
 
 	if (m_pGameInstance->Key_Down(DIK_X))
@@ -606,6 +613,7 @@ void CBattle_Manager::Digimon3_Skill()
 		m_DigimonOrder3.m_iDigimonSkill = 2;
 		m_DigimonOrder3.m_bDigimonSkill = true;
 		m_DigimonOrder3.m_bDigimonOrder = true;
+		m_pBattle_UI_Manager->Digimon_UseSkill3(1);
 	}
 
 	if (m_pGameInstance->Key_Down(DIK_C))
@@ -613,6 +621,7 @@ void CBattle_Manager::Digimon3_Skill()
 		m_DigimonOrder3.m_iDigimonSkill = 3;
 		m_DigimonOrder3.m_bDigimonSkill = true;
 		m_DigimonOrder3.m_bDigimonOrder = true;
+		m_pBattle_UI_Manager->Digimon_UseSkill3(2);
 	}
 }
 
@@ -624,16 +633,19 @@ void CBattle_Manager::DigimonTargetOrder()
 		{
 			m_DigimonOrder1.m_iTarget = 1;
 			m_DigimonOrder1.m_bDigimonOrder = false;
+			m_pBattle_UI_Manager->Digimon_UseTarget1(m_DigimonOrder1.m_iDigimonSkill);
 		}
 		if (m_DigimonOrder2.m_bDigimonOrder)
 		{
 			m_DigimonOrder2.m_iTarget = 1;
 			m_DigimonOrder2.m_bDigimonOrder = false;
+			m_pBattle_UI_Manager->Digimon_UseTarget2(m_DigimonOrder2.m_iDigimonSkill);
 		}
 		if (m_DigimonOrder3.m_bDigimonOrder)
 		{
 			m_DigimonOrder3.m_iTarget = 1;
 			m_DigimonOrder3.m_bDigimonOrder = false;
+			m_pBattle_UI_Manager->Digimon_UseTarget3(m_DigimonOrder3.m_iDigimonSkill);
 		}
 	}
 
@@ -643,16 +655,19 @@ void CBattle_Manager::DigimonTargetOrder()
 		{
 			m_DigimonOrder1.m_iTarget = 2;
 			m_DigimonOrder1.m_bDigimonOrder = false;
+			m_pBattle_UI_Manager->Digimon_UseTarget1(m_DigimonOrder1.m_iDigimonSkill);
 		}
 		if (m_DigimonOrder2.m_bDigimonOrder)
 		{
 			m_DigimonOrder2.m_iTarget = 2;
 			m_DigimonOrder2.m_bDigimonOrder = false;
+			m_pBattle_UI_Manager->Digimon_UseTarget2(m_DigimonOrder2.m_iDigimonSkill);
 		}
 		if (m_DigimonOrder3.m_bDigimonOrder)
 		{
 			m_DigimonOrder3.m_iTarget = 2;
 			m_DigimonOrder3.m_bDigimonOrder = false;
+			m_pBattle_UI_Manager->Digimon_UseTarget3(m_DigimonOrder3.m_iDigimonSkill);
 		}
 	}
 
@@ -662,16 +677,19 @@ void CBattle_Manager::DigimonTargetOrder()
 		{
 			m_DigimonOrder1.m_iTarget = 3;
 			m_DigimonOrder1.m_bDigimonOrder = false;
+			m_pBattle_UI_Manager->Digimon_UseTarget1(m_DigimonOrder1.m_iDigimonSkill);
 		}
 		if (m_DigimonOrder2.m_bDigimonOrder)
 		{
 			m_DigimonOrder2.m_iTarget = 3;
 			m_DigimonOrder2.m_bDigimonOrder = false;
+			m_pBattle_UI_Manager->Digimon_UseTarget2(m_DigimonOrder2.m_iDigimonSkill);
 		}
 		if (m_DigimonOrder3.m_bDigimonOrder)
 		{
 			m_DigimonOrder3.m_iTarget = 3;
 			m_DigimonOrder3.m_bDigimonOrder = false;
+			m_pBattle_UI_Manager->Digimon_UseTarget3(m_DigimonOrder3.m_iDigimonSkill);
 		}
 	}
 }

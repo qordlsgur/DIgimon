@@ -30,7 +30,7 @@ public:
 
 	void Set_MyDigimon(DIGIMON_INFO* MyDigimon);
 	void Set_Enemy_Digimon(DIGIMON_INFO* EnemyDigimon);
-		
+
 	void Set_Timeline_Turn_Order();
 
 	void Turn_Start();
@@ -44,7 +44,7 @@ public:
 	void Digimon_UseSkill2(_int SkillNum);
 	void Digimon_UseTarget2(_int Enemy);
 	void Digimon_UseSkill3(_int SkillNum);
-	void Digimon_UseSTarget3( _int Enemy);
+	void Digimon_UseTarget3(_int Enemy);
 
 private:
 	CGameInstance* m_pGameInstance = { nullptr };

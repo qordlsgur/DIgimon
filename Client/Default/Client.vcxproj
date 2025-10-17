@@ -190,6 +190,7 @@
     <ClInclude Include="..\public\Camera_Free.h" />
     <ClInclude Include="..\Public\Client_Defines.h" />
     <ClInclude Include="..\public\Camera_Manager.h" />
+    <ClInclude Include="..\public\Damagefont.h" />
     <ClInclude Include="..\Public\Death.h" />
     <ClInclude Include="..\public\Devilmon.h" />
     <ClInclude Include="..\public\Digimon_Manager.h" />
@@ -280,6 +281,7 @@
     <ClCompile Include="..\private\Body_Wargreymon.cpp" />
     <ClCompile Include="..\private\Camera_Free.cpp" />
     <ClCompile Include="..\private\Camera_Manager.cpp" />
+    <ClCompile Include="..\private\Damagefont.cpp" />
     <ClCompile Include="..\Private\Death.cpp" />
     <ClCompile Include="..\private\Devilmon.cpp" />
     <ClCompile Include="..\private\Digimon_Manager.cpp" />

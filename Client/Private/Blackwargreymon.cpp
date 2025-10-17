@@ -97,6 +97,11 @@ void CBlackwargreymon::Update(_float fTimeDelta)
 				m_pFsm->Enter(DIGIMONSTATE::STANDBATTLE, m_pPart_Body);
 			}
 		}
+
+		if (m_pGameInstance->Key_Down(DIK_1))
+			m_bisHit = !m_bisHit;
+
+
 		m_pFsm->Update(fTimeDelta);
 		m_pColliderCom->Update(XMLoadFloat4x4(m_pTransformCom->Get_WorldMatrixPtr()));
 
@@ -119,6 +124,11 @@ HRESULT CBlackwargreymon::Render()
 {
 	if (m_bLife)
 	{
+		if (m_bisHit)
+		{
+			m_pGameInstance->Perspective_Render_Text(m_pGameInstance->Get_Transform_Matrix(D3DTS::VIEW), m_pGameInstance->Get_Transform_Matrix(D3DTS::PROJ), TEXT("18"), TEXT("11"), _float2(m_pTransformCom->Get_State(STATE::POSITION).m128_f32[0], m_pTransformCom->Get_State(STATE::POSITION).m128_f32[1]));
+		}
+
 #ifdef _DEBUG
 		m_pColliderCom->Render();
 #endif
@@ -132,6 +142,11 @@ _int CBlackwargreymon::Intersect(CCollider* pPlayer_Collider)
 		return Get_ID();
 
 	return -1;
+}
+
+void CBlackwargreymon::Set_Damage(_int Damage)
+{
+	m_iDamage = Damage;
 }
 
 void CBlackwargreymon::UseSkill(_int Skill)

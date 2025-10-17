@@ -52,7 +52,6 @@ public:
 	virtual void Skill2();
 	virtual void Skill3();
 
-
 	virtual void Set_Battle(_bool Battle) { m_bBattle = Battle; }
 	virtual _bool Get_Battle() { return m_bBattle; }
 

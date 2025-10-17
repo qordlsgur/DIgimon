@@ -150,19 +150,19 @@ HRESULT CBattle_UI_Manager::Create_Skill()
 
 void CBattle_UI_Manager::Set_Skill()
 {
-	m_pDigimon_Skills[0]->Set_Move(300,650);
+	m_pDigimon_Skills[0]->Set_Move(300, 650);
 	m_pDigimon_Skills[0]->Set_Digimon_SkillSet(m_MyDigimon_Info[0]->DigimonId, 0);
 	m_pDigimon_Skills[0]->Set_Hover(true);
-	m_pKeyBords[0]->Set_Move(300,700);
+	m_pKeyBords[0]->Set_Move(300, 700);
 	m_pKeyBords[0]->Set_KeyBord(0);
 	m_pKeyBords[0]->Set_Hover(true);
-	m_pDigimon_Skills[1]->Set_Move(365,650);
+	m_pDigimon_Skills[1]->Set_Move(365, 650);
 	m_pDigimon_Skills[1]->Set_Digimon_SkillSet(m_MyDigimon_Info[0]->DigimonId, 1);
-	m_pKeyBords[1]->Set_Move(365,700);
+	m_pKeyBords[1]->Set_Move(365, 700);
 	m_pKeyBords[1]->Set_KeyBord(1);
-	m_pDigimon_Skills[2]->Set_Move(430,650);
+	m_pDigimon_Skills[2]->Set_Move(430, 650);
 	m_pDigimon_Skills[2]->Set_Digimon_SkillSet(m_MyDigimon_Info[0]->DigimonId, 2);
-	m_pKeyBords[2]->Set_Move(430,700);
+	m_pKeyBords[2]->Set_Move(430, 700);
 	m_pKeyBords[2]->Set_KeyBord(2);
 
 	if (m_MyDigimon_Info.size() > 1)
@@ -175,11 +175,11 @@ void CBattle_UI_Manager::Set_Skill()
 		m_pKeyBords[3]->Set_Hover(true);
 		m_pDigimon_Skills[4]->Set_Move(730, 650);
 		m_pDigimon_Skills[4]->Set_Digimon_SkillSet(m_MyDigimon_Info[1]->DigimonId, 1);
-		m_pKeyBords[4]->Set_Move(730,700);
+		m_pKeyBords[4]->Set_Move(730, 700);
 		m_pKeyBords[4]->Set_KeyBord(4);
 		m_pDigimon_Skills[5]->Set_Move(795, 650);
 		m_pDigimon_Skills[5]->Set_Digimon_SkillSet(m_MyDigimon_Info[1]->DigimonId, 2);
-		m_pKeyBords[5]->Set_Move(795,700);
+		m_pKeyBords[5]->Set_Move(795, 700);
 		m_pKeyBords[5]->Set_KeyBord(5);
 
 	}
@@ -189,16 +189,16 @@ void CBattle_UI_Manager::Set_Skill()
 		m_pDigimon_Skills[6]->Set_Move(1030, 650);
 		m_pDigimon_Skills[6]->Set_Digimon_SkillSet(m_MyDigimon_Info[2]->DigimonId, 0);
 		m_pDigimon_Skills[6]->Set_Hover(true);
-		m_pKeyBords[6]->Set_Move(1030,700);
+		m_pKeyBords[6]->Set_Move(1030, 700);
 		m_pKeyBords[6]->Set_KeyBord(6);
 		m_pKeyBords[6]->Set_Hover(true);
 		m_pDigimon_Skills[7]->Set_Move(1095, 650);
 		m_pDigimon_Skills[7]->Set_Digimon_SkillSet(m_MyDigimon_Info[2]->DigimonId, 1);
-		m_pKeyBords[7]->Set_Move(1095,700);
+		m_pKeyBords[7]->Set_Move(1095, 700);
 		m_pKeyBords[7]->Set_KeyBord(7);
 		m_pDigimon_Skills[8]->Set_Move(1160, 650);
 		m_pDigimon_Skills[8]->Set_Digimon_SkillSet(m_MyDigimon_Info[2]->DigimonId, 2);
-		m_pKeyBords[8]->Set_Move(1160,700);
+		m_pKeyBords[8]->Set_Move(1160, 700);
 		m_pKeyBords[8]->Set_KeyBord(8);
 	}
 }
@@ -206,38 +206,76 @@ void CBattle_UI_Manager::Set_Skill()
 void CBattle_UI_Manager::Digimon_UseSkill1(_int SkillNum)
 {
 	m_iDigimon_Skill[0] = SkillNum;
-	m_pDigimon_Skills[SkillNum]->Set_Hover(true);
+	for (_int i = 0; i < 3; ++i)
+	{
+		if (SkillNum == i)
+			m_pDigimon_Skills[i]->Set_Hover(true);
+		else
+			m_pDigimon_Skills[i]->Set_Hover(false);
+	}
 }
 
 void CBattle_UI_Manager::Digimon_UseTarget1(_int Enemy)
 {
-	m_pKeyBords[Enemy]->Set_Hover(true);
+	_int Num = Enemy - 1;
+
+	for (_int i = 0; i < 3; ++i)
+	{
+		if (Num == i)
+			m_pKeyBords[i]->Set_Hover(true);
+		else
+			m_pKeyBords[i]->Set_Hover(false);
+	}
 }
 
 void CBattle_UI_Manager::Digimon_UseSkill2(_int SkillNum)
 {
 	_int Num = SkillNum + 3;
 	m_iDigimon_Skill[1] = Num;
-	m_pDigimon_Skills[Num]->Set_Hover(true);
+	for (_int i = 3; i < 6; ++i)
+	{
+		if (Num == i)
+			m_pDigimon_Skills[i]->Set_Hover(true);
+		else
+			m_pDigimon_Skills[i]->Set_Hover(false);
+	}
 }
 
 void CBattle_UI_Manager::Digimon_UseTarget2(_int Enemy)
 {
-	_int Num = Enemy + 3;
-	m_pKeyBords[Num]->Set_Hover(true);
+	_int Num = Enemy + 3 - 1;
+	for (_int i = 3; i < 6; ++i)
+	{
+		if (Num == i)
+			m_pKeyBords[i]->Set_Hover(true);
+		else
+			m_pKeyBords[i]->Set_Hover(false);
+	}
 }
 
 void CBattle_UI_Manager::Digimon_UseSkill3(_int SkillNum)
 {
 	_int Num = SkillNum + 6;
-	m_iDigimon_Skill[0] = SkillNum;
-	m_pDigimon_Skills[Num]->Set_Hover(true);
+	m_iDigimon_Skill[2] = SkillNum;
+	for (_int i = 6; i < 9; ++i)
+	{
+		if (Num == i)
+			m_pDigimon_Skills[i]->Set_Hover(true);
+		else
+			m_pDigimon_Skills[i]->Set_Hover(false);
+	}
 }
 
-void CBattle_UI_Manager::Digimon_UseSTarget3(_int Enemy)
+void CBattle_UI_Manager::Digimon_UseTarget3(_int Enemy)
 {
-	_int Num = Enemy + 6;
-	m_pKeyBords[Num]->Set_Hover(true);
+	_int Num = Enemy + 6 - 1;
+	for (_int i = 6; i < 9; ++i)
+	{
+		if (Num == i)
+			m_pKeyBords[i]->Set_Hover(true);
+		else
+			m_pKeyBords[i]->Set_Hover(false);
+	}
 }
 
 void CBattle_UI_Manager::Free()

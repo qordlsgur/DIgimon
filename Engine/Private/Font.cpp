@@ -40,6 +40,17 @@ HRESULT CFont::Render_Rotate(const _tchar* pText, const _float2& vPosition, _fve
 	return S_OK;
 }
 
+HRESULT CFont::Perspective_Render(_matrix View, _matrix Proj, const _tchar* pText, const _float2& vPosition, _fvector vColor, _float vScale)
+{
+	m_pBatch->Begin(SpriteSortMode_Deferred, nullptr, nullptr, nullptr, nullptr, nullptr, View * Proj);
+
+	m_pFont->DrawString(m_pBatch, pText, vPosition, vColor, 0.f, _float2(0.f, 0.f), vScale);
+
+	m_pBatch->End();
+
+	return S_OK;
+}
+
 _float CFont::FontSizeX(const _tchar* pText)
 {
 	return XMVectorGetX(m_pFont->MeasureString(pText));

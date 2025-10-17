@@ -64,13 +64,10 @@ public:
 	const _wstring& Get_Model_ID(_int ID);
 	const _wstring& Get_Prototype_ID(_int ID);
 
+
 private:
 	class CPartyUHD* m_pPartyUHD = { nullptr };
 	class CDigivice* m_pDigivice = { nullptr };
-
-	CTexture* m_pDigimon_Skill1TextureCom = { nullptr };
-	CTexture* m_pDigimon_Skill2TextureCom = { nullptr };
-	CTexture* m_pDigimon_Skill3TextureCom = { nullptr };
 
 	vector<CTexture*> m_pTextures;
 
