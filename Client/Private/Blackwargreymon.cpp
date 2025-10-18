@@ -73,17 +73,27 @@ void CBlackwargreymon::Update(_float fTimeDelta)
 		}
 		else
 		{
+			if (Info.Hp <= 0)
+			{
+				Info.Hp = 0;
+				m_bLife = false;
+			}
+
 			if (m_bSkill1)
 			{
 				Skill1();
+				m_iDamage = Info.DigimonSkill1Info.Damage;
 			}
 			else if (m_bSkill2)
 			{
 				Skill2();
+				m_iDamage = Info.DigimonSkill2Info.Damage;
+
 			}
 			else if (m_bSkill3)
 			{
 				Skill3();
+				m_iDamage = Info.DigimonSkill3Info.Damage;
 			}
 
 			if (m_bBackJump)
@@ -104,15 +114,18 @@ void CBlackwargreymon::Update(_float fTimeDelta)
 			m_fRandom = m_pGameInstance->Random(-3.f, 3.f);
 		}
 
-		if (m_bisHit)
-		{
-			DamageUp(fTimeDelta);
-		}
+		//if (m_bisHit)
+		//{
+		//	DamageUp(fTimeDelta);
+		//}
 		else
 		{
 			m_fTime = 0.f;
 			m_fFontUp = 13.5f;
 		}
+
+
+
 
 		m_pFsm->Update(fTimeDelta);
 		m_pColliderCom->Update(XMLoadFloat4x4(m_pTransformCom->Get_WorldMatrixPtr()));
@@ -163,19 +176,14 @@ _int CBlackwargreymon::Intersect(CCollider* pPlayer_Collider)
 	return -1;
 }
 
-void CBlackwargreymon::Set_Damage(_int Damage)
-{
-	m_iDamage = Damage;
-}
-
-void CBlackwargreymon::DamageUp(_float fTimeDelta)
-{
-	//m_fTime += fTimeDelta;
-	m_fFontUp += 0.8f;
-
-	if (m_fFontUp >= 27.f)
-		m_bisHit = false;
-}
+//void CBlackwargreymon::DamageUp(_float fTimeDelta)
+//{
+//	//m_fTime += fTimeDelta;
+//	m_fFontUp += 0.8f;
+//
+//	if (m_fFontUp >= 27.f)
+//		m_bisHit = false;
+//}
 
 void CBlackwargreymon::UseSkill(_int Skill)
 {
@@ -211,6 +219,7 @@ void CBlackwargreymon::Skill1()
 			m_bBackJump = true;
 		}
 	}
+
 }
 
 void CBlackwargreymon::Skill2()

@@ -1,10 +1,9 @@
 #include "Engine_Shader_Defines.hlsli"
+
 matrix g_WorldMatrix, g_ViewMatrix, g_ProjMatrix;
 
-float Current;
-
 Texture2D g_Texture1;
-Texture2D g_Texture2;
+
 
 // : 이 친구는 시메틱 이라고 한다. 선언하는 함수를 보면 시메틱 네임 이라는게 있다.
 struct VS_IN // 구조체랑 똑같음 
@@ -54,27 +53,14 @@ PS_OUT PS_MAIN(PS_IN In)
 {
     PS_OUT Out;
 
-    float4 color = float4(0.f, 0.f, 0.f, 0.f);
-    
-       // 1번 텍스처: 배경, 그대로 출력
+    // 1번 텍스처 샘플링
     float4 color1 = g_Texture1.Sample(DefaultSampler, In.vTexcoord);
     
-    color = color1;
+    if (color1.a != 0)
+        color1.a = 0.7f;
     
-    if (Current != 0)
-    {
-        float2 uv = In.vTexcoord;
-        float4 color2 = g_Texture2.Sample(DefaultSampler, uv);
-
-        if (uv.x >= Current)
-            color2.a = 0;
-
-        color = lerp(color, color2, color2.a);
-    }
-   
+    Out.vColor = color1;
     
-    Out.vColor = color;
-
     return Out;
 }
 

@@ -242,6 +242,17 @@ _bool CContainerObject::HasReachedTargetPosition(_vector Pos)
 	return true;
 }
 
+_int CContainerObject::Skill_Damage()
+{
+	return _int();
+}
+
+void CContainerObject::Set_HitDamage(_int Damage)
+{
+	m_iHitDamage = Damage;
+	Info.Hp -= m_iHitDamage;
+}
+
 CPartObject* CContainerObject::Find_PartObject(const _wstring& strPartTag)
 {
 	auto    iter = m_PartObjects.find(strPartTag);

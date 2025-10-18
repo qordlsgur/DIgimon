@@ -5,6 +5,7 @@
 #include "Battle_Turn.h"
 #include "Battle_Skill.h"
 #include "KeyBord.h"
+#include "Battle_Enemy_Hp_BG.h"
 
 IMPLEMENT_SINGLETON(CBattle_UI_Manager)
 
@@ -19,14 +20,15 @@ HRESULT CBattle_UI_Manager::Initialize()
 	return S_OK;
 }
 
-HRESULT CBattle_UI_Manager::Create_TimeLine()
+HRESULT CBattle_UI_Manager::Create_TimeLine(_int MyDigimonCount, _int EnemyDigimonCount)
 {
+	m_iDigimonCount = MyDigimonCount + EnemyDigimonCount;
 	m_pTurn = static_cast<CBattle_Turn*>(m_pGameInstance->Add_GameObject_ToLayer_ToCreate(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Battle_Turn"),
 		ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Layer_Battle_Turn")));
 	if (m_pTurn == nullptr)
 		return E_FAIL;
 
-	for (_int i = 0; i < 6; ++i)
+	for (_int i = 0; i < m_iDigimonCount; ++i)
 	{
 		m_pTimeLine = static_cast<CBattle_Timeline*>(m_pGameInstance->Add_GameObject_ToLayer_ToCreate(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Battle_Timeline")
 			, ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Layer_Battle_TimeLine")));
@@ -43,20 +45,11 @@ HRESULT CBattle_UI_Manager::Create_TimeLine()
 	m_fTurn_Panel[4] = _float2(1220.f, 448.f);
 	m_fTurn_Panel[5] = _float2(1220.f, 508.f);
 
-	m_pTimeLine_array[1]->Set_Move(m_fTurn_Panel[1]);
-	m_pTimeLine_array[1]->Set_SizeDown();
-
-	m_pTimeLine_array[2]->Set_Move(m_fTurn_Panel[2]);
-	m_pTimeLine_array[2]->Set_SizeDown();
-
-	m_pTimeLine_array[3]->Set_Move(m_fTurn_Panel[3]);
-	m_pTimeLine_array[3]->Set_SizeDown();
-
-	m_pTimeLine_array[4]->Set_Move(m_fTurn_Panel[4]);
-	m_pTimeLine_array[4]->Set_SizeDown();
-
-	m_pTimeLine_array[5]->Set_Move(m_fTurn_Panel[5]);
-	m_pTimeLine_array[5]->Set_SizeDown();
+	for (_int i = 1; i < m_iDigimonCount; ++i)
+	{
+		m_pTimeLine_array[i]->Set_Move(m_fTurn_Panel[i]);
+		m_pTimeLine_array[i]->Set_SizeDown();
+	}
 
 	return S_OK;
 }
@@ -205,10 +198,11 @@ void CBattle_UI_Manager::Set_Skill()
 
 void CBattle_UI_Manager::Digimon_UseSkill1(_int SkillNum)
 {
+	_int Num = SkillNum - 1;
 	m_iDigimon_Skill[0] = SkillNum;
 	for (_int i = 0; i < 3; ++i)
 	{
-		if (SkillNum == i)
+		if (Num == i)
 			m_pDigimon_Skills[i]->Set_Hover(true);
 		else
 			m_pDigimon_Skills[i]->Set_Hover(false);
@@ -230,7 +224,7 @@ void CBattle_UI_Manager::Digimon_UseTarget1(_int Enemy)
 
 void CBattle_UI_Manager::Digimon_UseSkill2(_int SkillNum)
 {
-	_int Num = SkillNum + 3;
+	_int Num = SkillNum + 2;
 	m_iDigimon_Skill[1] = Num;
 	for (_int i = 3; i < 6; ++i)
 	{
@@ -243,7 +237,7 @@ void CBattle_UI_Manager::Digimon_UseSkill2(_int SkillNum)
 
 void CBattle_UI_Manager::Digimon_UseTarget2(_int Enemy)
 {
-	_int Num = Enemy + 3 - 1;
+	_int Num = Enemy + 2;
 	for (_int i = 3; i < 6; ++i)
 	{
 		if (Num == i)
@@ -255,7 +249,7 @@ void CBattle_UI_Manager::Digimon_UseTarget2(_int Enemy)
 
 void CBattle_UI_Manager::Digimon_UseSkill3(_int SkillNum)
 {
-	_int Num = SkillNum + 6;
+	_int Num = SkillNum + 5;
 	m_iDigimon_Skill[2] = SkillNum;
 	for (_int i = 6; i < 9; ++i)
 	{
@@ -268,7 +262,7 @@ void CBattle_UI_Manager::Digimon_UseSkill3(_int SkillNum)
 
 void CBattle_UI_Manager::Digimon_UseTarget3(_int Enemy)
 {
-	_int Num = Enemy + 6 - 1;
+	_int Num = Enemy + 5;
 	for (_int i = 6; i < 9; ++i)
 	{
 		if (Num == i)
@@ -276,6 +270,49 @@ void CBattle_UI_Manager::Digimon_UseTarget3(_int Enemy)
 		else
 			m_pKeyBords[i]->Set_Hover(false);
 	}
+}
+
+HRESULT CBattle_UI_Manager::CreateHp(_int EnemyCount)
+{
+	for (int i = 0; i < EnemyCount; ++i)
+	{
+		m_pEnemy_Hp = static_cast<CBattle_Enemy_Hp_BG*>(m_pGameInstance->Add_GameObject_ToLayer_ToCreate(
+			ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Battle_Enemy_HpBG"), ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Layer_Battle_Enemy_Hp")));
+		if (m_pEnemy_Hp == nullptr)
+			return E_FAIL;
+
+		m_pEnemyHps.push_back(m_pEnemy_Hp);
+	}
+
+	m_iEnemy_HpPos[0] = _float2(450.f, 50.f);
+	m_iEnemy_HpPos[1] = _float2(560.f, 50.f);
+	m_iEnemy_HpPos[2] = _float2(670.f, 50.f);
+	m_iEnemy_HpPos[3] = _float2(780.f, 50.f);
+	m_iEnemy_HpPos[4] = _float2(890.f, 50.f);
+
+	if (EnemyCount == 1)
+	{
+		m_pEnemyHps[0]->Set_Move(m_iEnemy_HpPos[2].x, m_iEnemy_HpPos[2].y);
+		m_pEnemyHps[0]->Set_Name(m_EnemyDigimon_Info[0]->DigimonName);
+	}
+	else if (EnemyCount == 2)
+	{
+		m_pEnemyHps[0]->Set_Move(m_iEnemy_HpPos[1].x, m_iEnemy_HpPos[1].y);
+		m_pEnemyHps[0]->Set_Name(m_EnemyDigimon_Info[0]->DigimonName);
+		m_pEnemyHps[1]->Set_Move(m_iEnemy_HpPos[3].x, m_iEnemy_HpPos[3].y);
+		m_pEnemyHps[1]->Set_Name(m_EnemyDigimon_Info[1]->DigimonName);
+	}
+	else if (EnemyCount == 3)
+	{
+		m_pEnemyHps[0]->Set_Move(m_iEnemy_HpPos[0].x, m_iEnemy_HpPos[0].y);
+		m_pEnemyHps[0]->Set_Name(m_EnemyDigimon_Info[0]->DigimonName);
+		m_pEnemyHps[1]->Set_Move(m_iEnemy_HpPos[2].x, m_iEnemy_HpPos[2].y);
+		m_pEnemyHps[1]->Set_Name(m_EnemyDigimon_Info[1]->DigimonName);
+		m_pEnemyHps[2]->Set_Move(m_iEnemy_HpPos[4].x, m_iEnemy_HpPos[4].y);
+		m_pEnemyHps[2]->Set_Name(m_EnemyDigimon_Info[2]->DigimonName);
+	}
+
+	return S_OK;
 }
 
 void CBattle_UI_Manager::Free()

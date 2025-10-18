@@ -30,7 +30,7 @@ public:
 
 public:
 	void Intersect_Enemy(_int pEnemy);
-	void First_Digimon(CContainerObject* First) { m_pFirst_Digimon = First; }
+	void First_Digimon(CContainerObject* First);
 	CContainerObject* First_Digimon() { return m_pFirst_Digimon; }
 
 private:

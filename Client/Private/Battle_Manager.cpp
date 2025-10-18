@@ -68,16 +68,8 @@ void CBattle_Manager::Update(_float fTimeDelta)
 				m_fBackJumpTime = 0.f;
 				m_pDigimon_Turn_Order.pop_front();					// 제잎 앞에꺼를 지움
 				m_pBattle_UI_Manager->Turn_Start();
-				if (!m_pCurrentDigimon->Get_Life())					// 살아 있으면 ING로 넘어감
-				{
-					m_eBattle_State = BATTLE_STATE::START;			// 죽으면 다시 처음으로 돌아감
-					Player_Set();
-				}
-				else
-				{
-					m_eBattle_State = BATTLE_STATE::SKILL;
-					m_fBattleTime = 0.f;							// 그리고 시간 초기화
-				}
+				m_eBattle_State = BATTLE_STATE::SKILL;
+				m_fBattleTime = 0.f;							// 그리고 시간 초기화
 			}
 
 			break;
@@ -119,6 +111,9 @@ void CBattle_Manager::Update(_float fTimeDelta)
 
 			else
 				m_pCurrentDigimon->LookAt(m_fEnemyDigimon_Look);
+
+			if (!m_pHitCurrentDigimon->Get_Life())					// 살아 있으면 ING로 넘어감
+				Player_Set();
 
 			m_pDigimon_Turn_Order.push_back(m_pCurrentDigimon);		// 제대로 끝이 나면 현재 공격했던 디지몬을 맨 뒤로 옮김
 			m_fBattleTime = 0.f;									// 정확한 시간을 위해 0으로 초기화
@@ -166,6 +161,7 @@ void CBattle_Manager::Player_Attack(_float fTimeDelta)
 		}
 
 		m_pCurrentDigimon->LookAt(Player_Digimon_Attack_Pos(1));
+		m_pHitCurrentDigimon = m_pEnemyDigimon[0];
 		m_pCurrentDigimon->UseSkill(1);
 		m_bSkill = true;
 	}
@@ -323,16 +319,19 @@ void CBattle_Manager::Enemy_Attack(_float fTimeDelta)
 	if (m_iPlayerDigimonCount == 1)
 	{
 		m_iLook_Target_position = 2;
+		m_iEnemyAttackSelect = 1;
 	}
 	else if (m_iPlayerDigimonCount == 2)
 	{
 		if (m_pPlayerDigimon[0] != -1)
 		{
 			m_iLook_Target_position = 1;
+			m_iEnemyAttackSelect = 1;
 		}
 		else
 		{
 			m_iLook_Target_position = 3;
+			m_iEnemyAttackSelect = 2;
 		}
 	}
 	else if (m_iPlayerDigimonCount == 3)
@@ -340,22 +339,26 @@ void CBattle_Manager::Enemy_Attack(_float fTimeDelta)
 		if (m_pPlayerDigimon[0] != -1)
 		{
 			m_iLook_Target_position = 0;
+			m_iEnemyAttackSelect = 1;
 		}
 		else if (m_pPlayerDigimon[1] != -1)
 		{
 			m_iLook_Target_position = 2;
+			m_iEnemyAttackSelect = 2;
 		}
 		else
 		{
 			m_iLook_Target_position = 4;
+			m_iEnemyAttackSelect = 3;
 		}
 	}
 
 
 	if (!m_bSkill)
 	{
-		m_pCurrentDigimon->UseSkill(m_pGameInstance->intRandom(1, 3));
+		m_pCurrentDigimon->UseSkill(Enemy_Skill());
 		m_pCurrentDigimon->LookAt(m_vPlayerDigimonPos[m_iLook_Target_position]);
+		m_pHitCurrentDigimon = m_pMyDigimon[m_iEnemyAttackSelect];
 		m_bSkill = true;
 	}
 
@@ -370,6 +373,33 @@ void CBattle_Manager::Enemy_Attack(_float fTimeDelta)
 				m_pCurrentDigimon->Set_SkillMove(false);
 		}
 	}
+}
+
+_int CBattle_Manager::Enemy_Skill()
+{
+	_int Skill = m_pGameInstance->intRandom(1, 3);
+
+	if (Skill == 1)
+	{
+		return 1;
+
+	}
+	else if (Skill == 2)
+	{
+		if (m_pCurrentDigimon->Get_Sp() < m_pCurrentDigimon->CurrentInfo().DigimonSkill2Info.Sp)
+			return 1;
+		else
+			return 2;
+	}
+	else
+	{
+		if (m_pCurrentDigimon->Get_Sp() < m_pCurrentDigimon->CurrentInfo().DigimonSkill3Info.Sp)
+			return 1;
+		else
+			return 3;
+	}
+
+
 }
 
 void CBattle_Manager::Player_Set()
@@ -447,16 +477,17 @@ void CBattle_Manager::Set_Battle_Terrain(CGameObject* pBattle_Terrain)
 
 void CBattle_Manager::Battle_System()
 {
-	m_pBattle_UI_Manager->Create_TimeLine();
+	static_cast<CDigivice*>(m_pDigivice)->Update_Digimopn();
+	m_pBattle_UI_Manager->Create_TimeLine(m_iPlayerDigimonCount, m_iEnemyDigimonCount);
 	m_pPlayer->Set_Position(m_vPlayerBattlePos.m128_f32[0], m_vPlayerBattlePos.m128_f32[2]);
 	m_bPlayer_Death = false;
 	m_bEnemy_Death = false;
 	m_eBattle_State = BATTLE_STATE::START;
-	static_cast<CDigivice*>(m_pDigivice)->Update_Digimopn();
 	Player_Digimon_Position();
 	Enemy_Position();
 	Battle_Tunr_Order();
 	m_pBattle_UI_Manager->Set_Timeline_Turn_Order();
+	m_pBattle_UI_Manager->CreateHp(m_iEnemyDigimonCount);
 	m_pBattle_UI_Manager->Create_Skill();
 	m_pBattle_UI_Manager->Set_Skill();
 }
@@ -551,7 +582,7 @@ void CBattle_Manager::Digimon1_Skill()
 		m_DigimonOrder1.m_iDigimonSkill = 1;
 		m_DigimonOrder1.m_bDigimonSkill = true;
 		m_DigimonOrder1.m_bDigimonOrder = true;
-		m_pBattle_UI_Manager->Digimon_UseSkill1(0);
+		m_pBattle_UI_Manager->Digimon_UseSkill1(m_DigimonOrder1.m_iDigimonSkill);
 	}
 
 	if (m_pGameInstance->Key_Down(DIK_W))
@@ -559,7 +590,7 @@ void CBattle_Manager::Digimon1_Skill()
 		m_DigimonOrder1.m_iDigimonSkill = 2;
 		m_DigimonOrder1.m_bDigimonSkill = true;
 		m_DigimonOrder1.m_bDigimonOrder = true;
-		m_pBattle_UI_Manager->Digimon_UseSkill1(1);
+		m_pBattle_UI_Manager->Digimon_UseSkill1(m_DigimonOrder1.m_iDigimonSkill);
 	}
 
 	if (m_pGameInstance->Key_Down(DIK_E))
@@ -567,7 +598,7 @@ void CBattle_Manager::Digimon1_Skill()
 		m_DigimonOrder1.m_iDigimonSkill = 3;
 		m_DigimonOrder1.m_bDigimonSkill = true;
 		m_DigimonOrder1.m_bDigimonOrder = true;
-		m_pBattle_UI_Manager->Digimon_UseSkill1(2);
+		m_pBattle_UI_Manager->Digimon_UseSkill1(m_DigimonOrder1.m_iDigimonSkill);
 	}
 }
 
@@ -578,7 +609,7 @@ void CBattle_Manager::Digimon2_Skill()
 		m_DigimonOrder2.m_iDigimonSkill = 1;
 		m_DigimonOrder2.m_bDigimonSkill = true;
 		m_DigimonOrder2.m_bDigimonOrder = true;
-		m_pBattle_UI_Manager->Digimon_UseSkill2(0);
+		m_pBattle_UI_Manager->Digimon_UseSkill2(m_DigimonOrder2.m_iDigimonSkill);
 	}
 
 	if (m_pGameInstance->Key_Down(DIK_S))
@@ -586,7 +617,7 @@ void CBattle_Manager::Digimon2_Skill()
 		m_DigimonOrder2.m_iDigimonSkill = 2;
 		m_DigimonOrder2.m_bDigimonSkill = true;
 		m_DigimonOrder2.m_bDigimonOrder = true;
-		m_pBattle_UI_Manager->Digimon_UseSkill2(1);
+		m_pBattle_UI_Manager->Digimon_UseSkill2(m_DigimonOrder2.m_iDigimonSkill);
 	}
 
 	if (m_pGameInstance->Key_Down(DIK_D))
@@ -594,7 +625,7 @@ void CBattle_Manager::Digimon2_Skill()
 		m_DigimonOrder2.m_iDigimonSkill = 3;
 		m_DigimonOrder2.m_bDigimonSkill = true;
 		m_DigimonOrder2.m_bDigimonOrder = true;
-		m_pBattle_UI_Manager->Digimon_UseSkill2(2);
+		m_pBattle_UI_Manager->Digimon_UseSkill2(m_DigimonOrder2.m_iDigimonSkill);
 	}
 }
 
@@ -605,7 +636,7 @@ void CBattle_Manager::Digimon3_Skill()
 		m_DigimonOrder3.m_iDigimonSkill = 1;
 		m_DigimonOrder3.m_bDigimonSkill = true;
 		m_DigimonOrder3.m_bDigimonOrder = true;
-		m_pBattle_UI_Manager->Digimon_UseSkill3(0);
+		m_pBattle_UI_Manager->Digimon_UseSkill3(m_DigimonOrder3.m_iDigimonSkill);
 	}
 
 	if (m_pGameInstance->Key_Down(DIK_X))
@@ -613,7 +644,7 @@ void CBattle_Manager::Digimon3_Skill()
 		m_DigimonOrder3.m_iDigimonSkill = 2;
 		m_DigimonOrder3.m_bDigimonSkill = true;
 		m_DigimonOrder3.m_bDigimonOrder = true;
-		m_pBattle_UI_Manager->Digimon_UseSkill3(1);
+		m_pBattle_UI_Manager->Digimon_UseSkill3(m_DigimonOrder3.m_iDigimonSkill);
 	}
 
 	if (m_pGameInstance->Key_Down(DIK_C))
@@ -621,7 +652,7 @@ void CBattle_Manager::Digimon3_Skill()
 		m_DigimonOrder3.m_iDigimonSkill = 3;
 		m_DigimonOrder3.m_bDigimonSkill = true;
 		m_DigimonOrder3.m_bDigimonOrder = true;
-		m_pBattle_UI_Manager->Digimon_UseSkill3(2);
+		m_pBattle_UI_Manager->Digimon_UseSkill3(m_DigimonOrder3.m_iDigimonSkill);
 	}
 }
 
@@ -759,7 +790,7 @@ void CBattle_Manager::Digimon3_Attack(_float fTimeDelta)
 void CBattle_Manager::EnemyDigimon_Info(_int EnemyDigimonID)
 {
 	m_pEnemyDigimon.clear();
-	m_iEnemyDigimonCount =/* m_pGameInstance->intRandom(1, 3)*/3;
+	m_iEnemyDigimonCount = m_pGameInstance->intRandom(1, 3);
 	for (_int i = 0; i < m_iEnemyDigimonCount; ++i)
 	{
 		m_pEnemyDigimon.push_back(Digimon_Create(EnemyDigimonID));

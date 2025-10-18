@@ -268,9 +268,6 @@
     <Filter Include="03.UI\Battle_Turn">
       <UniqueIdentifier>{df14d5cc-8059-4d2a-912f-52958ef2b161}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03.UI\Battle_Enemy_Hp">
-      <UniqueIdentifier>{d61863c9-6546-48ce-8704-ba8d20eab144}</UniqueIdentifier>
-    </Filter>
     <Filter Include="03.UI\Digivice\Hp">
       <UniqueIdentifier>{27fe5f3c-0568-449b-a5bd-69318780451a}</UniqueIdentifier>
     </Filter>
@@ -288,6 +285,102 @@
     </Filter>
     <Filter Include="03.UI\DamageFont">
       <UniqueIdentifier>{feb9f465-d934-42f2-a1b8-f23e1a51b861}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Digimon\00.Angewomon\Skill1">
+      <UniqueIdentifier>{5216e458-ff08-474a-b030-d18acb17a312}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Digimon\00.Angewomon\Skill2">
+      <UniqueIdentifier>{6a75a7d5-e0dc-4a64-8491-27dcc78ded0d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Digimon\00.Angewomon\Skill3">
+      <UniqueIdentifier>{685bbfc3-5410-4862-ac2b-af7df5ebda02}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Digimon\01.Blackwargreymon\Skill1">
+      <UniqueIdentifier>{fc45c066-db54-4f73-9e97-61c8d0567f49}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Digimon\01.Blackwargreymon\Skill2">
+      <UniqueIdentifier>{4d76e0d8-c912-4408-97f1-dc4c0e3776f8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Digimon\01.Blackwargreymon\Skill3">
+      <UniqueIdentifier>{b6354c24-899a-4d7e-897a-0c2bb453ae14}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Digimon\02.Devilmon\Skill1">
+      <UniqueIdentifier>{cad41bad-3d0e-4053-914f-ec8cab392620}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Digimon\02.Devilmon\Skill3">
+      <UniqueIdentifier>{4efb024d-43f0-4f5a-8a0b-4dbe5c5d1ffc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Digimon\02.Devilmon\Skill2">
+      <UniqueIdentifier>{56fa9e6c-9da9-4a5f-a397-ad70a239db80}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Digimon\03.Ladydevimon\Skill1">
+      <UniqueIdentifier>{640138f4-0b2c-4d23-b29b-8022bd9b6693}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Digimon\03.Ladydevimon\Skill2">
+      <UniqueIdentifier>{9da6d8d1-7cd8-4c08-a9ae-a2f19a9e075d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Digimon\03.Ladydevimon\Skill3">
+      <UniqueIdentifier>{7eace002-0730-41d1-9433-e75e8ec34170}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Digimon\04.Leomon\Skill1">
+      <UniqueIdentifier>{3da1a540-8005-4a90-b95b-68cef616d93b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Digimon\04.Leomon\Skill2">
+      <UniqueIdentifier>{6dc3941b-82dd-4f3a-9838-69071b98d50a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Digimon\04.Leomon\Skill3">
+      <UniqueIdentifier>{c9864e40-79f6-4915-b905-47f5dac036a6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Digimon\05.Metalgarumon\Skill1">
+      <UniqueIdentifier>{f21f68af-504a-48e2-931b-eaf4bc8cc7e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Digimon\05.Metalgarumon\Skill2">
+      <UniqueIdentifier>{e41faddd-13f2-4200-8c5e-6b34fe021076}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Digimon\05.Metalgarumon\Skill3">
+      <UniqueIdentifier>{640f127a-037e-4945-b48b-d42a00a569b9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Digimon\06.Metalgreymon\Skill">
+      <UniqueIdentifier>{9d864198-31f2-4aba-8542-9ea6ea3f719c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Digimon\06.Metalgreymon\Skill2">
+      <UniqueIdentifier>{e3f3a99c-0c73-42e2-a344-27c5400f604e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Digimon\06.Metalgreymon\Skill3">
+      <UniqueIdentifier>{e5cd6329-0cb4-4cb8-b4b8-3a80c172dafe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Digimon\07.Omegamon\Skill1">
+      <UniqueIdentifier>{82d08d5f-6b7d-49d5-a770-7c45c6c3e62d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Digimon\07.Omegamon\Skill2">
+      <UniqueIdentifier>{9b1a0b85-fcb1-4486-a7d7-e38af9a51c93}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Digimon\07.Omegamon\Skill3">
+      <UniqueIdentifier>{877fc047-9e28-46eb-a751-ed1c6f6d317e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Digimon\08.Wargreymon\Skill1">
+      <UniqueIdentifier>{3d2d9705-d9d0-4f40-b220-6341e5aac6a1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Digimon\08.Wargreymon\Skill2">
+      <UniqueIdentifier>{2c2d87df-8975-4bb9-82df-95abb70c3b81}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Digimon\08.Wargreymon\Skill3">
+      <UniqueIdentifier>{017728d4-ad93-414a-9f57-68407d4dfaa5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Digimon\09.Beelzebumon\Skill1">
+      <UniqueIdentifier>{ff2af306-450c-4cf8-8e77-a96716a8d3a7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Digimon\09.Beelzebumon\Skill2">
+      <UniqueIdentifier>{f888655c-908d-41fd-87a8-b42e86521c65}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Digimon\09.Beelzebumon\Skill3">
+      <UniqueIdentifier>{70eabc52-c85b-4eeb-804c-a215733bb4ab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03.UI\Battle_Enemy_Hp_BG">
+      <UniqueIdentifier>{d61863c9-6546-48ce-8704-ba8d20eab144}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03.UI\Battle_Enemy_Hp_BG\HpBar">
+      <UniqueIdentifier>{982c08b8-6488-40f5-a547-b04f2482cb75}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -540,8 +633,8 @@
     <ClInclude Include="..\public\Battle_Turn.h">
       <Filter>03.UI\Battle_Turn</Filter>
     </ClInclude>
-    <ClInclude Include="..\public\Battle_Enemy_Hp.h">
-      <Filter>03.UI\Battle_Enemy_Hp</Filter>
+    <ClInclude Include="..\public\Battle_Enemy_Hp_BG.h">
+      <Filter>03.UI\Battle_Enemy_Hp_BG</Filter>
     </ClInclude>
     <ClInclude Include="..\public\Digivice_Sp.h">
       <Filter>03.UI\Digivice\Sp</Filter>
@@ -560,6 +653,9 @@
     </ClInclude>
     <ClInclude Include="..\public\Damagefont.h">
       <Filter>03.UI\DamageFont</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\Battle_Enemy_HpBar.h">
+      <Filter>03.UI\Battle_Enemy_Hp_BG\HpBar</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -813,8 +909,8 @@
     <ClCompile Include="..\private\Battle_Turn.cpp">
       <Filter>03.UI\Battle_Turn</Filter>
     </ClCompile>
-    <ClCompile Include="..\private\Battle_Enemy_Hp.cpp">
-      <Filter>03.UI\Battle_Enemy_Hp</Filter>
+    <ClCompile Include="..\private\Battle_Enemy_Hp_BG.cpp">
+      <Filter>03.UI\Battle_Enemy_Hp_BG</Filter>
     </ClCompile>
     <ClCompile Include="..\private\Digivice_Sp.cpp">
       <Filter>03.UI\Digivice\Sp</Filter>
@@ -833,6 +929,9 @@
     </ClCompile>
     <ClCompile Include="..\private\Damagefont.cpp">
       <Filter>03.UI\DamageFont</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\Battle_Enemy_HpBar.cpp">
+      <Filter>03.UI\Battle_Enemy_Hp_BG\HpBar</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -879,6 +978,9 @@
       <Filter>97.ShaderFiles</Filter>
     </FxCompile>
     <FxCompile Include="..\Bin\ShaderFiles\Shader_Skill_Hover.hlsl">
+      <Filter>97.ShaderFiles</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Bin\ShaderFiles\Shader_Battle_Enemy_Hp.hlsl">
       <Filter>97.ShaderFiles</Filter>
     </FxCompile>
   </ItemGroup>

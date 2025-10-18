@@ -11,12 +11,12 @@ NS_END
 
 NS_BEGIN(Client)
 
-class CDigivice_Hp final : public CUIObject
+class CBattle_Enemy_Hp_BG final : public CUIObject
 {
 private:
-	CDigivice_Hp(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
-	CDigivice_Hp(const CDigivice_Hp& Prototype);
-	virtual ~CDigivice_Hp() = default;
+	CBattle_Enemy_Hp_BG(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
+	CBattle_Enemy_Hp_BG(const CBattle_Enemy_Hp_BG& Prototype);
+	virtual ~CBattle_Enemy_Hp_BG() = default;
 
 public:
 	virtual HRESULT Initialize_Prototype() override;
@@ -27,26 +27,25 @@ public:
 	virtual HRESULT Render() override;
 
 public:
-	void Set_MaxHp(_int MaxHp);
-	void Set_Damage(_int Damage);
 	void Set_Move(_float fX, _float fY);
+	void Set_Name(wstring& DigimonName);
 
 private:
 	CVIBuffer_Rect* m_pVIBufferCom = { nullptr };
 	CTexture* m_pTextureCom = { nullptr };
-	CTexture* m_pBgTextureCom = { nullptr };
 	CShader* m_pShaderCom = { nullptr };
 
-	_float m_iMaxHp{};
-	_float m_iCurrentHp{};
-	_float m_fHpRatio{};
+	class CBattle_Enemy_HpBar* m_pHpBar = { nullptr };
+	wstring m_strDigimon_Name;
 
 private:
 	HRESULT Ready_Components();
 	HRESULT Bind_ShaderResources();
 
+	HRESULT Create_HpBar(const _wstring& strLayerTag);
+
 public:
-	static CDigivice_Hp* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
+	static CBattle_Enemy_Hp_BG* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	virtual CGameObject* Clone(void* pArg) override;
 	virtual void Free() override;
 };

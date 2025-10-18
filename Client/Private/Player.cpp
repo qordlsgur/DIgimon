@@ -205,6 +205,11 @@ void CPlayer::Intersect_Enemy(_int pEnemy)
 		m_bOnInteract = false;
 }
 
+void CPlayer::First_Digimon(CContainerObject* First)
+{
+	m_pFirst_Digimon = First; 
+}
+
 void CPlayer::Jump(_float fTimeDelta)
 {
 	m_fJumpTime += fTimeDelta;

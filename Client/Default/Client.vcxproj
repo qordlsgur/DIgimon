@@ -159,7 +159,8 @@
     <ClInclude Include="..\Public\BattleBack.h" />
     <ClInclude Include="..\Public\BattleDash.h" />
     <ClInclude Include="..\public\Battle_Camera.h" />
-    <ClInclude Include="..\public\Battle_Enemy_Hp.h" />
+    <ClInclude Include="..\public\Battle_Enemy_Hp_BG.h" />
+    <ClInclude Include="..\public\Battle_Enemy_HpBar.h" />
     <ClInclude Include="..\public\Battle_Manager.h" />
     <ClInclude Include="..\public\Battle_Skill.h" />
     <ClInclude Include="..\public\Battle_Terrain.h" />
@@ -251,7 +252,8 @@
     <ClCompile Include="..\Private\BattleBack.cpp" />
     <ClCompile Include="..\Private\BattleDash.cpp" />
     <ClCompile Include="..\private\Battle_Camera.cpp" />
-    <ClCompile Include="..\private\Battle_Enemy_Hp.cpp" />
+    <ClCompile Include="..\private\Battle_Enemy_Hp_BG.cpp" />
+    <ClCompile Include="..\private\Battle_Enemy_HpBar.cpp" />
     <ClCompile Include="..\private\Battle_Manager.cpp" />
     <ClCompile Include="..\private\Battle_Skill.cpp" />
     <ClCompile Include="..\private\Battle_Terrain.cpp" />
@@ -340,6 +342,7 @@
     <Image Include="small.ico" />
   </ItemGroup>
   <ItemGroup>
+    <FxCompile Include="..\Bin\ShaderFiles\Shader_Battle_Enemy_Hp.hlsl" />
     <FxCompile Include="..\Bin\ShaderFiles\Shader_Battle_Timeline.hlsl" />
     <FxCompile Include="..\Bin\ShaderFiles\Shader_Digivice.hlsl" />
     <FxCompile Include="..\Bin\ShaderFiles\Shader_Digivice_Mask.hlsl" />

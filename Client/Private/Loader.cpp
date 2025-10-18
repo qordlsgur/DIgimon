@@ -22,7 +22,8 @@
 #pragma region Battle
 #include "Battle_Timeline.h"
 #include "Battle_Turn.h"
-#include "Battle_Enemy_Hp.h"
+#include "Battle_Enemy_Hp_BG.h"
+#include "Battle_Enemy_HpBar.h"
 #include "Battle_Skill.h"
 #include "KeyBord.h"
 #pragma endregion
@@ -307,6 +308,11 @@ HRESULT CLoader::Loading_For_GamePlay()
 	/* For.Prototype_Component_Texture_Battle_Rotation_Gauge_HP*/
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Battle_Rotation_Gauge_HP"),
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/Battle/Battle_Rotation_Gauge_HP.png"), 1))))
+		return E_FAIL;
+
+	/* For.Prototype_Component_Texture_Battle_Hp_BG*/
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Battle_Hp_BG"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/Battle/Battle_Hp_BG.png"), 1))))
 		return E_FAIL;
 
 	//º£Æ² UI----------------------------------------------------------------------------------------------------------------------------------------------
@@ -614,6 +620,11 @@ HRESULT CLoader::Loading_For_GamePlay()
 		CShader::Create(m_pDevice, m_pContext, TEXT("../Bin/ShaderFiles/Shader_Battle_Timeline.hlsl"), VTXPOSTEX::Elements, VTXPOSTEX::iNumElements))))
 		return E_FAIL;
 
+	/* For.Prototype_Component_Shader_Battle_Enemy_Hp*/
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Shader_Battle_Enemy_Hp"),
+		CShader::Create(m_pDevice, m_pContext, TEXT("../Bin/ShaderFiles/Shader_Battle_Enemy_Hp.hlsl"), VTXPOSTEX::Elements, VTXPOSTEX::iNumElements))))
+		return E_FAIL;
+
 	/* For.Prototype_Component_Shader_Inventory */
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Shader_Inventory"),
 		CShader::Create(m_pDevice, m_pContext, TEXT("../Bin/ShaderFiles/Shader_Inventory.hlsl"), VTXPOSTEX::Elements, VTXPOSTEX::iNumElements))))
@@ -796,9 +807,14 @@ HRESULT CLoader::Loading_For_GamePlay()
 		CBattle_Turn::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
+	/* For.Prototype_GameObject_Battle_Enemy_HpBG*/
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Battle_Enemy_HpBG"),
+		CBattle_Enemy_Hp_BG::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
 	/* For.Prototype_GameObject_Battle_Enemy_Hp*/
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Battle_Enemy_Hp"),
-		CBattle_Enemy_Hp::Create(m_pDevice, m_pContext))))
+		CBattle_Enemy_HpBar::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
 	/* For.Prototype_GameObject_Battle_Skill*/

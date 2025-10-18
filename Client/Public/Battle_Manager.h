@@ -38,6 +38,7 @@ public:
 	_vector Player_Digimon_Attack_Pos(_int Target);
 
 	void Enemy_Attack(_float fTimeDelta);
+	_int Enemy_Skill();
 	void Player_Set();
 
 	void ReturnToPosition(_float fTimeDelta);
@@ -128,6 +129,8 @@ private:
 	BATTLE_STATE					m_eBattle_State;
 
 	CContainerObject*				m_pCurrentDigimon = { nullptr };
+	CContainerObject*				m_pHitCurrentDigimon = { nullptr };
+
 
 	_bool							m_bPlayer_Death = { false };
 	_bool							m_bEnemy_Death = { false };
@@ -139,6 +142,7 @@ private:
 	_float							m_fDashTime{};
 
 	_int							m_iLook_Target_position{};
+	_int							m_iEnemyAttackSelect{};
 
 	ORDER							m_DigimonOrder1;
 	ORDER							m_DigimonOrder2;

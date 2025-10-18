@@ -1,29 +1,29 @@
-#include "Digivice_Hp.h"
+#include "Battle_Enemy_HpBar.h"
 #include "GameInstance.h"
 
-CDigivice_Hp::CDigivice_Hp(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
+CBattle_Enemy_HpBar::CBattle_Enemy_HpBar(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CUIObject{ pDevice, pContext }
 {
 }
 
-CDigivice_Hp::CDigivice_Hp(const CDigivice_Hp& Prototype)
+CBattle_Enemy_HpBar::CBattle_Enemy_HpBar(const CBattle_Enemy_HpBar& Prototype)
 	: CUIObject{ Prototype }
 {
 }
 
-HRESULT CDigivice_Hp::Initialize_Prototype()
+HRESULT CBattle_Enemy_HpBar::Initialize_Prototype()
 {
 	return S_OK;
 }
 
-HRESULT CDigivice_Hp::Initialize(void* pArg)
+HRESULT CBattle_Enemy_HpBar::Initialize(void* pArg)
 {
 	CUIObject::UIOBJECT_DESC	Desc{};
 
-	Desc.fX = 100.f;
-	Desc.fY = 100.f;
-	Desc.fSizeX = 260.f;
-	Desc.fSizeY = 16.f;
+	Desc.fX = 0.f;
+	Desc.fY = 0.f;
+	Desc.fSizeX = 168.f;
+	Desc.fSizeY = 18.f;
 
 	m_pRect = { long(Desc.fX - Desc.fSizeX * 0.5f), long(Desc.fY - Desc.fSizeY * 0.5f), long(Desc.fX + Desc.fSizeX * 0.5f), long(Desc.fY + Desc.fSizeY * 0.5f) };
 
@@ -36,13 +36,13 @@ HRESULT CDigivice_Hp::Initialize(void* pArg)
 	return S_OK;
 }
 
-void CDigivice_Hp::Priority_Update(_float fTimeDelta)
+void CBattle_Enemy_HpBar::Priority_Update(_float fTimeDelta)
 {
 }
 
-void CDigivice_Hp::Update(_float fTimeDelta)
+void CBattle_Enemy_HpBar::Update(_float fTimeDelta)
 {
-	_vector vWorldPos = XMVectorSet(m_fX - m_fWinSizeX * 0.5f, -m_fY + m_fWinSizeY * 0.5f, 0.f, 1.f);
+	_vector vWorldPos = XMVectorSet(m_fX + m_fParent_WorldPos.x, -(m_fY)+m_fParent_WorldPos.y, 0.f, 1.f);
 
 	m_pTransformCom->Set_Scale(m_fSizeX, m_fSizeY, 1.f);
 	m_pTransformCom->Set_State(STATE::POSITION, vWorldPos);
@@ -61,15 +61,13 @@ void CDigivice_Hp::Update(_float fTimeDelta)
 
 	if (m_fHpRatio < 0.f)
 		m_fHpRatio = 0.f;
-
 }
 
-void CDigivice_Hp::Late_Update(_float fTimeDelta)
+void CBattle_Enemy_HpBar::Late_Update(_float fTimeDelta)
 {
 }
 
-
-HRESULT CDigivice_Hp::Render()
+HRESULT CBattle_Enemy_HpBar::Render()
 {
 	if (FAILED(Bind_ShaderResources()))
 		return E_FAIL;
@@ -83,41 +81,48 @@ HRESULT CDigivice_Hp::Render()
 	if (FAILED(m_pVIBufferCom->Render()))
 		return E_FAIL;
 
+
 	return S_OK;
 }
 
-void CDigivice_Hp::Set_MaxHp(_int MaxHp)
+void CBattle_Enemy_HpBar::Set_Parent_WorldPos(_vector fParent_World)
+{
+	XMStoreFloat4(&m_fParent_WorldPos, fParent_World);
+}
+
+void CBattle_Enemy_HpBar::Set_MaxHp(_int MaxHp)
 {
 	m_iMaxHp = MaxHp;
 	m_iCurrentHp = MaxHp;
 }
 
-void CDigivice_Hp::Set_Damage(_int Damage)
+void CBattle_Enemy_HpBar::Set_Damage(_int Damage)
 {
 	m_iCurrentHp -= Damage;
 }
 
-void CDigivice_Hp::Set_Move(_float fX, _float fY)
+void CBattle_Enemy_HpBar::Set_Move(_float fX, _float fY)
 {
 	m_fX = fX;
 	m_fY = fY;
 }
 
-HRESULT CDigivice_Hp::Ready_Components()
+
+HRESULT CBattle_Enemy_HpBar::Ready_Components()
 {
 	/* Com_VIBuffer */
 	if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::STATIC), TEXT("Prototype_Component_VIBuffer_Rect"),
 		TEXT("Com_VIBuffer"), reinterpret_cast<CComponent**>(&m_pVIBufferCom))))
 		return E_FAIL;
 
-	/* Com_Digivice_Hp*/
-	if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Digivice_Status_HP"),
-		TEXT("Com_Digivice_Hp"), reinterpret_cast<CComponent**>(&m_pTextureCom))))
+	/* Com_Battle_Hp*/
+	if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Battle_Rotation_Gauge_HP"),
+		TEXT("Com_Battle_Hp"), reinterpret_cast<CComponent**>(&m_pTextureCom))))
 		return E_FAIL;
 
-	/* Com_Digivice_Hp_bg*/
-	if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Digivice_Status_BG"),
-		TEXT("Com_Digivice_Hp_bg"), reinterpret_cast<CComponent**>(&m_pBgTextureCom))))
+	/* Com_Battle_Hp_BG*/
+	if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Battle_Rotation_Gauge_BG"),
+		TEXT("Com_Battle_Hp_BG"), reinterpret_cast<CComponent**>(&m_pBgTextureCom))))
 		return E_FAIL;
 
 	/* Com_Shader */
@@ -128,7 +133,7 @@ HRESULT CDigivice_Hp::Ready_Components()
 	return S_OK;
 }
 
-HRESULT CDigivice_Hp::Bind_ShaderResources()
+HRESULT CBattle_Enemy_HpBar::Bind_ShaderResources()
 {
 	if (FAILED(m_pTransformCom->Bind_ShaderResource(m_pShaderCom, "g_WorldMatrix")))
 		return E_FAIL;
@@ -146,13 +151,13 @@ HRESULT CDigivice_Hp::Bind_ShaderResources()
 	return S_OK;
 }
 
-CDigivice_Hp* CDigivice_Hp::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
+CBattle_Enemy_HpBar* CBattle_Enemy_HpBar::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 {
-	CDigivice_Hp* pInstance = new CDigivice_Hp(pDevice, pContext);
+	CBattle_Enemy_HpBar* pInstance = new CBattle_Enemy_HpBar(pDevice, pContext);
 
 	if (FAILED(pInstance->Initialize_Prototype()))
 	{
-		MSG_BOX("Failed to Created : CBattle_Turn ");
+		MSG_BOX("Failed to Created : CBattle_Enemy_HpBar ");
 		Safe_Release(pInstance);
 	}
 
@@ -160,25 +165,25 @@ CDigivice_Hp* CDigivice_Hp::Create(ID3D11Device* pDevice, ID3D11DeviceContext* p
 }
 
 
-CGameObject* CDigivice_Hp::Clone(void* pArg)
+CGameObject* CBattle_Enemy_HpBar::Clone(void* pArg)
 {
-	CDigivice_Hp* pInstance = new CDigivice_Hp(*this);
+	CBattle_Enemy_HpBar* pInstance = new CBattle_Enemy_HpBar(*this);
 
 	if (FAILED(pInstance->Initialize(pArg)))
 	{
-		MSG_BOX("Failed to Created :CDigivice_Hp");
+		MSG_BOX("Failed to Created :CBattle_Enemy_HpBar");
 		Safe_Release(pInstance);
 	}
 
 	return pInstance;
 }
 
-void CDigivice_Hp::Free()
+void CBattle_Enemy_HpBar::Free()
 {
 	__super::Free();
 
-	Safe_Release(m_pBgTextureCom);
 	Safe_Release(m_pTextureCom);
+	Safe_Release(m_pBgTextureCom);
 	Safe_Release(m_pVIBufferCom);
 	Safe_Release(m_pShaderCom);
 }

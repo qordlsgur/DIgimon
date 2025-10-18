@@ -24,7 +24,7 @@ public:
 	HRESULT Initialize();
 
 public:
-	HRESULT Create_TimeLine();
+	HRESULT Create_TimeLine(_int MyDigimonCount, _int EnemyDigimonCount);
 
 	void Set_Battle_Turn_Order(deque<CContainerObject*>Digimon_Turn_Order);
 
@@ -46,8 +46,11 @@ public:
 	void Digimon_UseSkill3(_int SkillNum);
 	void Digimon_UseTarget3(_int Enemy);
 
+	HRESULT CreateHp(_int EnemyCount);
+
 private:
 	CGameInstance* m_pGameInstance = { nullptr };
+	_int m_iDigimonCount{};
 
 	deque<CContainerObject*>		m_pDigimon_Turn_Order;
 
@@ -61,13 +64,17 @@ private:
 	class CBattle_Timeline* m_pCurrent_TimeLine = { nullptr };
 	class CBattle_Skill* m_pDigimon_Skill = { nullptr };
 	class CKeyBord* m_pKeyBord = { nullptr };
+	class CBattle_Enemy_Hp_BG* m_pEnemy_Hp = { nullptr };
 
-	vector<CBattle_Skill*> m_pDigimon_Skills;
-	vector<CKeyBord*> m_pKeyBords;
+	vector<class CBattle_Skill*> m_pDigimon_Skills;
+	vector<class CKeyBord*> m_pKeyBords;
+	vector<class CBattle_Enemy_Hp_BG*> m_pEnemyHps;
 
 	_float2 m_fTurn_Panel[6];
 	_int m_iDigimon{};
 	_int m_iDigimon_Skill[3] = {};
+
+	_float2 m_iEnemy_HpPos[5] = {};
 
 public:
 	virtual void Free() override;

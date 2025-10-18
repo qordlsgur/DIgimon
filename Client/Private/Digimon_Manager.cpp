@@ -51,6 +51,7 @@ void CDigimon_Manager::Angewomon()
 	Info.Stage = DIGIMON_STAGE::ULTIMATE;
 	Info.Attribute = DIGIMON_ATTRIBUTE::VACCINE;
 	Info.DigimonInfo = TEXT("아름다운 여성의 모습을 한 대천사형 디지몬");
+	Info.Damage = 500;
 
 	Info.DigimonSkill1Info.SkillName = TEXT("뺨 때리기");
 	Info.DigimonSkill1Info.Sp = 0;
@@ -83,7 +84,6 @@ void CDigimon_Manager::Angewomon()
 	Info.SkillCount = 3;
 	Info.Hp = 5000;
 	Info.Sp = 2500;
-	Info.Damage = 500;
 	Info.AttackSpeed = 100;
 	Info.Exp = 0;
 	Info.Lv = 50;
@@ -100,6 +100,7 @@ void CDigimon_Manager::Blackwargreymon()
 	Info.Stage = DIGIMON_STAGE::MEGA;
 	Info.Attribute = DIGIMON_ATTRIBUTE::VIRUS;
 	Info.DigimonInfo = TEXT("칠흑의 용 전사 라고 불리는 두려운 존재인 바이러스종 워그레이몬");
+	Info.Damage = 1000;
 
 	Info.DigimonSkill1Info.SkillName = TEXT("드라몬 킬러");
 	Info.DigimonSkill1Info.Sp = 0;
@@ -112,9 +113,9 @@ void CDigimon_Manager::Blackwargreymon()
 
 	Info.DigimonSkill2Info.SkillName = TEXT("블랙 토네이도");
 	Info.DigimonSkill2Info.Sp = 175;
-	Info.DigimonSkill2Info.HitCount = 5;
-	Info.DigimonSkill2Info.DamageInfo = TEXT("기본 데미지 x 공격 횟수 x 20%");
-	Info.DigimonSkill2Info.Damage = static_cast<_int>(Info.Damage * Info.DigimonSkill2Info.HitCount * 0.2f);
+	Info.DigimonSkill2Info.HitCount = 1;
+	Info.DigimonSkill2Info.DamageInfo = TEXT("기본 데미지 x 공격 횟수 x 100%");
+	Info.DigimonSkill2Info.Damage = static_cast<_int>(Info.Damage * Info.DigimonSkill2Info.HitCount * 1.f);
 	Info.DigimonSkill2Info.Target = SKILL_TARGET::ENEMY;
 	Info.DigimonSkill2Info.Range = SKILL_RANGE::SINGLE;
 	Info.DigimonSkill2Info.SkillInfo = TEXT("몸을 빠르게 회전시켜 돌격해\n피해를 입힙니다.");
@@ -122,8 +123,8 @@ void CDigimon_Manager::Blackwargreymon()
 	Info.DigimonSkill3Info.SkillName = TEXT("암흑의 테라 광선");
 	Info.DigimonSkill3Info.Sp = 250;
 	Info.DigimonSkill3Info.HitCount = 1;
-	Info.DigimonSkill3Info.DamageInfo = TEXT("기본 데미지 x 공격 횟수 x 90%");
-	Info.DigimonSkill3Info.Damage = static_cast<_int>(Info.Damage * Info.DigimonSkill3Info.HitCount * 0.9f);
+	Info.DigimonSkill3Info.DamageInfo = TEXT("기본 데미지 x 공격 횟수 x 120%");
+	Info.DigimonSkill3Info.Damage = static_cast<_int>(Info.Damage * Info.DigimonSkill3Info.HitCount * 1.2f);
 	Info.DigimonSkill3Info.Target = SKILL_TARGET::ENEMY;
 	Info.DigimonSkill3Info.Range = SKILL_RANGE::SINGLE;
 	Info.DigimonSkill3Info.SkillInfo = TEXT("부정적인 사념을 모아 압축하여 던져\n피해를 입힙니다.");
@@ -132,7 +133,6 @@ void CDigimon_Manager::Blackwargreymon()
 	Info.SkillCount = 3;
 	Info.Hp = 7000;
 	Info.Sp = 3500;
-	Info.Damage = 1000;
 	Info.AttackSpeed = 130;
 	Info.Exp = 0;
 	Info.Lv = 90;
@@ -149,30 +149,31 @@ void CDigimon_Manager::Devilmon()
 	Info.Stage = DIGIMON_STAGE::CHAMPION;
 	Info.Attribute = DIGIMON_ATTRIBUTE::VIRUS;
 	Info.DigimonInfo = TEXT("칠흑의 옷으로 몸을 감싸고 있는 타천사형 디지몬");
+	Info.Damage = 300;
 
 	Info.DigimonSkill1Info.SkillName = TEXT("펀치");
 	Info.DigimonSkill1Info.Sp = 0;
 	Info.DigimonSkill1Info.HitCount = 1;
-	Info.DigimonSkill1Info.DamageInfo = TEXT("기본 데미지 x 공격 횟수 x 40%");
-	Info.DigimonSkill1Info.Damage = static_cast<_int>(Info.Damage * Info.DigimonSkill1Info.HitCount * 0.4f);
+	Info.DigimonSkill1Info.DamageInfo = TEXT("기본 데미지 x 공격 횟수 x 50%");
+	Info.DigimonSkill1Info.Damage = static_cast<_int>(Info.Damage * Info.DigimonSkill1Info.HitCount * 0.5f);
 	Info.DigimonSkill1Info.Target = SKILL_TARGET::ENEMY;
 	Info.DigimonSkill1Info.Range = SKILL_RANGE::SINGLE;
 	Info.DigimonSkill1Info.SkillInfo = TEXT("주먹을 이용해 피해를 입힙니다.");
 
 	Info.DigimonSkill2Info.SkillName = TEXT("데스 클로");
 	Info.DigimonSkill2Info.Sp = 100;
-	Info.DigimonSkill2Info.HitCount = 6;
-	Info.DigimonSkill2Info.DamageInfo = TEXT("기본 데미지 x 공격 횟수 x 10%");
-	Info.DigimonSkill2Info.Damage = static_cast<_int>(Info.Damage * Info.DigimonSkill2Info.HitCount * 0.1f);
+	Info.DigimonSkill2Info.HitCount = 1;
+	Info.DigimonSkill2Info.DamageInfo = TEXT("기본 데미지 x 공격 횟수 x 0.7%");
+	Info.DigimonSkill2Info.Damage = static_cast<_int>(Info.Damage * Info.DigimonSkill2Info.HitCount * 0.7f);
 	Info.DigimonSkill2Info.Target = SKILL_TARGET::ENEMY;
 	Info.DigimonSkill2Info.Range = SKILL_RANGE::SINGLE;
 	Info.DigimonSkill2Info.SkillInfo = TEXT("죽음의 손톱으로 피해를 입힙니다.");
 
 	Info.DigimonSkill3Info.SkillName = TEXT("헬 컨트렉트");
 	Info.DigimonSkill3Info.Sp = 250;
-	Info.DigimonSkill3Info.HitCount = 2;
-	Info.DigimonSkill3Info.DamageInfo = TEXT("기본 데미지 x 공격 횟수 x 30%");
-	Info.DigimonSkill3Info.Damage = static_cast<_int>(Info.Damage * Info.DigimonSkill3Info.HitCount * 0.3f);
+	Info.DigimonSkill3Info.HitCount = 1;
+	Info.DigimonSkill3Info.DamageInfo = TEXT("기본 데미지 x 공격 횟수 x 100%");
+	Info.DigimonSkill3Info.Damage = static_cast<_int>(Info.Damage * Info.DigimonSkill3Info.HitCount * 1.f);
 	Info.DigimonSkill3Info.Target = SKILL_TARGET::ENEMY;
 	Info.DigimonSkill3Info.Range = SKILL_RANGE::ALL;
 	Info.DigimonSkill3Info.SkillInfo = TEXT("저주의 말을 퍼부어 피해를 입힙니다.");
@@ -181,7 +182,6 @@ void CDigimon_Manager::Devilmon()
 	Info.SkillCount = 3;
 	Info.Hp = 2500;
 	Info.Sp = 1250;
-	Info.Damage = 300;
 	Info.AttackSpeed = 70;
 	Info.Exp = 0;
 	Info.Lv = 15;
@@ -198,6 +198,7 @@ void CDigimon_Manager::LedyDevimon()
 	Info.Stage = DIGIMON_STAGE::ULTIMATE;
 	Info.Attribute = DIGIMON_ATTRIBUTE::VIRUS;
 	Info.DigimonInfo = TEXT("고귀한 존재인 여성형 타천사 디지몬");
+	Info.Damage = 500;
 
 	Info.DigimonSkill1Info.SkillName = TEXT("다크니스 어텍");
 	Info.DigimonSkill1Info.Sp = 0;
@@ -230,7 +231,6 @@ void CDigimon_Manager::LedyDevimon()
 	Info.SkillCount = 3;
 	Info.Hp = 5000;
 	Info.Sp = 2500;
-	Info.Damage = 500;
 	Info.AttackSpeed = 100;
 	Info.Exp = 0;
 	Info.Lv = 50;
@@ -247,6 +247,7 @@ void CDigimon_Manager::Leomon()
 	Info.Stage = DIGIMON_STAGE::CHAMPION;
 	Info.Attribute = DIGIMON_ATTRIBUTE::VACCINE;
 	Info.DigimonInfo = TEXT("백수의 왕, 고상한 용사라 불리는 수인형 디지몬");
+	Info.Damage = 300;
 
 	Info.DigimonSkill1Info.SkillName = TEXT("검휘두르기");
 	Info.DigimonSkill1Info.Sp = 0;
@@ -268,9 +269,9 @@ void CDigimon_Manager::Leomon()
 
 	Info.DigimonSkill3Info.SkillName = TEXT("수왕파");
 	Info.DigimonSkill3Info.Sp = 200;
-	Info.DigimonSkill3Info.HitCount = 4;
-	Info.DigimonSkill3Info.DamageInfo = TEXT("기본 데미지 x 공격 횟수 x 25%");
-	Info.DigimonSkill3Info.Damage = static_cast<_int>(Info.Damage * Info.DigimonSkill3Info.HitCount * 0.25f);
+	Info.DigimonSkill3Info.HitCount = 1;
+	Info.DigimonSkill3Info.DamageInfo = TEXT("기본 데미지 x 공격 횟수 x 80%%");
+	Info.DigimonSkill3Info.Damage = static_cast<_int>(Info.Damage * Info.DigimonSkill3Info.HitCount * 0.8f);
 	Info.DigimonSkill3Info.Target = SKILL_TARGET::ENEMY;
 	Info.DigimonSkill3Info.Range = SKILL_RANGE::SINGLE;
 	Info.DigimonSkill3Info.SkillInfo = TEXT("지면을 뒤틀어 피해를 입힙니다.");
@@ -279,7 +280,6 @@ void CDigimon_Manager::Leomon()
 	Info.SkillCount = 3;
 	Info.Hp = 2500;
 	Info.Sp = 1250;
-	Info.Damage = 300;
 	Info.AttackSpeed = 70;
 	Info.Exp = 0;
 	Info.Lv = 15;
@@ -296,6 +296,7 @@ void CDigimon_Manager::Metalgarumon()
 	Info.Stage = DIGIMON_STAGE::MEGA;
 	Info.Attribute = DIGIMON_ATTRIBUTE::DATA;
 	Info.DigimonInfo = TEXT("전신의 대부분을 메탈화 한 것으로 파워업한 가루몬의 최종형태");
+	Info.Damage = 1000;
 
 	Info.DigimonSkill1Info.SkillName = TEXT("강철 발톱");
 	Info.DigimonSkill1Info.Sp = 0;
@@ -317,9 +318,9 @@ void CDigimon_Manager::Metalgarumon()
 
 	Info.DigimonSkill3Info.SkillName = TEXT("썰렁포");
 	Info.DigimonSkill3Info.Sp = 200;
-	Info.DigimonSkill3Info.HitCount = 5;
-	Info.DigimonSkill3Info.DamageInfo = TEXT("기본 데미지 x 공격 횟수 x 18%");
-	Info.DigimonSkill3Info.Damage = static_cast<_int>(Info.Damage * Info.DigimonSkill3Info.HitCount * 0.18f);
+	Info.DigimonSkill3Info.HitCount = 3;
+	Info.DigimonSkill3Info.DamageInfo = TEXT("기본 데미지 x 공격 횟수 x 40%");
+	Info.DigimonSkill3Info.Damage = static_cast<_int>(Info.Damage * Info.DigimonSkill3Info.HitCount * 0.4f);
 	Info.DigimonSkill3Info.Target = SKILL_TARGET::ENEMY;
 	Info.DigimonSkill3Info.Range = SKILL_RANGE::SINGLE;
 	Info.DigimonSkill3Info.SkillInfo = TEXT("입에서 냉기의 브레스를 발사해\n피해를 입힙니다.");
@@ -328,7 +329,6 @@ void CDigimon_Manager::Metalgarumon()
 	Info.SkillCount = 3;
 	Info.Hp = 7000;
 	Info.Sp = 7000;
-	Info.Damage = 1000;
 	Info.AttackSpeed = 130;
 	Info.Exp = 0;
 	Info.Lv = 90;
@@ -345,6 +345,7 @@ void CDigimon_Manager::Metalgeymon()
 	Info.Stage = DIGIMON_STAGE::ULTIMATE;
 	Info.Attribute = DIGIMON_ATTRIBUTE::VACCINE;
 	Info.DigimonInfo = TEXT("몸의 절반 이상을 기계화한 사이보그형 디지몬");
+	Info.Damage = 500;
 
 	Info.DigimonSkill1Info.SkillName = TEXT("물기");
 	Info.DigimonSkill1Info.Sp = 0;
@@ -377,7 +378,6 @@ void CDigimon_Manager::Metalgeymon()
 	Info.SkillCount = 3;
 	Info.Hp = 5000;
 	Info.Sp = 2500;
-	Info.Damage = 500;
 	Info.AttackSpeed = 100;
 	Info.Exp = 0;
 	Info.Lv = 50;
@@ -443,6 +443,7 @@ void CDigimon_Manager::Wargreymon()
 	Info.Stage = DIGIMON_STAGE::MEGA;
 	Info.Attribute = DIGIMON_ATTRIBUTE::VACCINE;
 	Info.DigimonInfo = TEXT("초금속 크롬디지조이드의 값옷을 입고 있는 최강의 용전사");
+	Info.Damage = 1000;
 
 	Info.DigimonSkill1Info.SkillName = TEXT("강철 발톱");
 	Info.DigimonSkill1Info.Sp = 0;
@@ -474,7 +475,6 @@ void CDigimon_Manager::Wargreymon()
 	Info.SkillCount = 3;
 	Info.Hp = 7000;
 	Info.Sp = 3500;
-	Info.Damage = 1000;
 	Info.AttackSpeed = 130;
 	Info.Exp = 0;
 	Info.Lv = 90;
@@ -491,6 +491,7 @@ void CDigimon_Manager::Beelzebumon()
 	Info.Stage = DIGIMON_STAGE::MEGA;
 	Info.Attribute = DIGIMON_ATTRIBUTE::VIRUS;
 	Info.DigimonInfo = TEXT("많은 악마형 디지몬을 통괄하는 능력을 가지면서도 고고하게 존재하는 마왕형 디지몬");
+	Info.Damage = 1000;
 
 	Info.DigimonSkill1Info.SkillName = TEXT("다크니스 클로");
 	Info.DigimonSkill1Info.Sp = 0;
@@ -523,7 +524,6 @@ void CDigimon_Manager::Beelzebumon()
 	Info.SkillCount = 3;
 	Info.Hp = 7000;
 	Info.Sp = 3500;
-	Info.Damage = 1000;
 	Info.AttackSpeed = 130;
 	Info.Exp = 0;
 	Info.Lv = 90;

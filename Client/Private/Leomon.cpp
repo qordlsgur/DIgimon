@@ -73,17 +73,27 @@ void CLeomon::Update(_float fTimeDelta)
 		}
 		else
 		{
+			if (Info.Hp <= 0)
+			{
+				Info.Hp = 0;
+				m_bLife = false;
+			}
+
 			if (m_bSkill1)
 			{
 				Skill1();
+				m_iDamage = Info.DigimonSkill1Info.Damage;
 			}
 			else if (m_bSkill2)
 			{
 				Skill2();
+				m_iDamage = Info.DigimonSkill2Info.Damage;
+
 			}
 			else if (m_bSkill3)
 			{
 				Skill3();
+				m_iDamage = Info.DigimonSkill3Info.Damage;
 			}
 
 			if (m_bBackJump)
