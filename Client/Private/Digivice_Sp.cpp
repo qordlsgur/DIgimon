@@ -91,6 +91,11 @@ void CDigivice_Sp::Set_MaxSp(_int MaxSp)
 	m_iCurrentSp = MaxSp;
 }
 
+void CDigivice_Sp::Set_CurrentSp(_int CurrentSp)
+{
+	m_iCurrentSp = CurrentSp;
+}
+
 void CDigivice_Sp::Set_Move(_float fX, _float fY)
 {
 	m_fX = fX;

@@ -614,6 +614,49 @@ void CDigimon_Manager::Set_Current_Digimon_Info(DIGIMON_INFO* Info)
 	m_CurrentDigimon.push_back(Info);
 }
 
+DIGIMON_INFO* CDigimon_Manager::Get_Current_Digimon_Info(_int Num)
+{
+	return m_CurrentDigimon[Num];
+}
+
+void CDigimon_Manager::Set_Digimon_Update(_int InfoNum, DIGIMON_STATE eState, _int Add)
+{
+	auto& Digimon = m_CurrentDigimon[InfoNum];
+
+	switch (eState)
+	{
+	case DIGIMON_STATE::HP:
+		Digimon->CurrentHp += Add;
+		if (Digimon->CurrentHp > Digimon->Hp)
+			Digimon->CurrentHp = Digimon->Hp;
+
+		if (Digimon->CurrentSp < 0)
+			Digimon->CurrentSp = 0;
+		break;
+
+	case DIGIMON_STATE::SP:
+		Digimon->CurrentSp += Add;
+		if (Digimon->CurrentSp > Digimon->Sp)
+			Digimon->CurrentSp = Digimon->Sp;
+
+		if (Digimon->CurrentSp < 0)
+			Digimon->CurrentSp = 0;
+		break;
+
+	case DIGIMON_STATE::EXP:
+		Digimon->CurrentExp += Add;
+		if (Digimon->CurrentExp >= Digimon->Exp)
+		{
+			while (Digimon->CurrentExp >= Digimon->Exp)
+			{
+				Digimon->CurrentExp -= Digimon->Exp;
+				Digimon->Lv++;
+			}
+		}
+		break;
+	}
+}
+
 DIGIMON_INFO* CDigimon_Manager::Search_Digimon(_int ID)
 {
 	auto iter = Find_Digimon(ID);

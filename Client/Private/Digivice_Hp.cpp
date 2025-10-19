@@ -92,6 +92,11 @@ void CDigivice_Hp::Set_MaxHp(_int MaxHp)
 	m_fCurrentHp = MaxHp;
 }
 
+void CDigivice_Hp::Set_CurrentHp(_int CurrentHp)
+{
+	m_fCurrentHp = CurrentHp;
+}
+
 void CDigivice_Hp::Set_Damage(_int Damage)
 {
 	m_fCurrentHp -= Damage;

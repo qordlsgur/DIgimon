@@ -32,12 +32,17 @@ public:
 	void Set_Enemy_Digimon(CContainerObject* Enemy);
 
 
+
+	void Set_Battle_Digimon(CContainerObject* Battle_Digimon);
+	void Battle_End();
 private:
 	//CGameInstance* m_pGameInstance = { nullptr };
 	CContainerObject* m_pPlayer = { nullptr };
 	CCollider* m_pPlayer_Collider = { nullptr };
 
 	vector<CContainerObject*> m_pEnemy_Digimon;
+
+	vector<CContainerObject*> m_pBattle_Digimon_Collider;
 
 public:
 	virtual void Free() override;

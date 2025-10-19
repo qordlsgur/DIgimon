@@ -28,15 +28,24 @@ public:
 
 public:
 	void Set_Move(_float fX, _float fY);
-	void Set_Name(wstring& DigimonName);
+	void Set_Name(wstring DigimonName);
 
+	void Set_MaxHp(_float MaxHp);
+	void Set_Damage(_int Damage);
 private:
 	CVIBuffer_Rect* m_pVIBufferCom = { nullptr };
 	CTexture* m_pTextureCom = { nullptr };
 	CShader* m_pShaderCom = { nullptr };
 
+	_tchar			m_szMaxHp[MAX_PATH] = {};
+	_tchar			m_szCurrentHp[MAX_PATH] = {};
+
+
 	class CBattle_Enemy_HpBar* m_pHpBar = { nullptr };
 	wstring m_strDigimon_Name;
+
+	_float m_fMaxHp{};
+	_float m_fCurrentHp{};
 
 private:
 	HRESULT Ready_Components();

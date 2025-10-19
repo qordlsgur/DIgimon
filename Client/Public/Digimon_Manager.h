@@ -47,6 +47,9 @@ public:
 
 	void Set_Digivice_Slot(_int SlotID, _bool Has, DIGIMON_INFO* Info);
 	void Set_Current_Digimon_Info(DIGIMON_INFO* Info);
+	DIGIMON_INFO* Get_Current_Digimon_Info(_int Num);
+
+	void Set_Digimon_Update(_int InfoNum, DIGIMON_STATE eState, _int Add);
 
 	//void Copy_Digimon();
 

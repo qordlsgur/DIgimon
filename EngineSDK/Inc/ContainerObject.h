@@ -46,6 +46,7 @@ public:
 	virtual void Set_AttackSpeed(_int AttackSpeed);
 	virtual void Set_Exp(_int Exp);
 	virtual void Set_Lv(_int Lv);
+	virtual void Gain_Exp(_int Exp);
 
 	virtual void UseSkill(_int Skill);
 	virtual void Skill1();

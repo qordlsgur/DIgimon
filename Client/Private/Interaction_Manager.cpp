@@ -51,9 +51,20 @@ void CInteraction_Manager::Set_Enemy_Digimon(CContainerObject* Enemy)
 	m_pEnemy_Digimon.push_back(Enemy);
 }
 
+void CInteraction_Manager::Set_Battle_Digimon(CContainerObject* Battle_Digimon)
+{
+	m_pBattle_Digimon_Collider.push_back(Battle_Digimon);
+}
+
+void CInteraction_Manager::Battle_End()
+{
+	m_pBattle_Digimon_Collider.clear();
+}
+
 void CInteraction_Manager::Free()
 {
 	__super::Free();
 
 	m_pEnemy_Digimon.clear();
+	m_pBattle_Digimon_Collider	.clear();
 }

@@ -111,9 +111,9 @@ void CDigivice_Slot::Set_Move(_float fX, _float fY)
 	m_fY = fY;
 }
 
-void CDigivice_Slot::Set_Info(DIGIMON_INFO* pInfo)
+void CDigivice_Slot::Set_Info(DIGIMON_INFO pInfo)
 {
-	m_Info = *pInfo;
+	m_Info = pInfo;
 }
 
 void CDigivice_Slot::OnClick()

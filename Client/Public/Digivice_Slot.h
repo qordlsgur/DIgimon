@@ -34,7 +34,7 @@ public:
 	_bool Get_HasDigimon() { return m_bHasDigimon; }
 
 
-	void Set_Info(DIGIMON_INFO* pInfo);
+	void Set_Info(DIGIMON_INFO pInfo);
 
 	virtual void OnClick() override;
 

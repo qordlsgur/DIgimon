@@ -57,13 +57,10 @@ void CBattle_Enemy_HpBar::Update(_float fTimeDelta)
 		long(m_fY + m_fSizeY * 0.5f)
 	};
 
-	m_fHpRatio = m_iCurrentHp / m_iMaxHp;
+	m_fHpRatio = m_fCurrentHp / m_fMaxHp;
 
 	if (m_fHpRatio < 0.f)
 		m_fHpRatio = 0.f;
-
-	_itow_s(static_cast<_int>(m_iMaxHp), m_szDigimonMaxHp, MAX_PATH, 10);
-	_itow_s(static_cast<int>(m_iCurrentHp), m_szCurrentHp, MAX_PATH, 10);
 }
 
 void CBattle_Enemy_HpBar::Late_Update(_float fTimeDelta)
@@ -94,13 +91,13 @@ void CBattle_Enemy_HpBar::Set_Parent_WorldPos(_vector fParent_World)
 
 void CBattle_Enemy_HpBar::Set_MaxHp(_float MaxHp)
 {
-	m_iMaxHp = MaxHp;
-	m_iCurrentHp = MaxHp;
+	m_fMaxHp = MaxHp;
+	m_fCurrentHp = MaxHp;
 }
 
 void CBattle_Enemy_HpBar::Set_Damage(_int Damage)
 {
-	m_iCurrentHp -= Damage;
+	m_fCurrentHp -= Damage;
 }
 
 void CBattle_Enemy_HpBar::Set_Move(_float fX, _float fY)

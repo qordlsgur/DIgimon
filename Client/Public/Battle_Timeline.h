@@ -7,6 +7,7 @@ NS_BEGIN(Engine)
 class CVIBuffer_Rect;
 class CTexture;
 class CShader;
+class CContainerObject;
 NS_END
 
 NS_BEGIN(Client)
@@ -27,7 +28,8 @@ public:
 	virtual HRESULT Render() override;
 
 public:
-	void Set_Digimon(_bool Enemy, _int DigimonId) { m_iEnemy = Enemy; m_iDigimon_Image = DigimonId; }
+	void Set_Digimon(_bool Enemy, _int DigimonId, CContainerObject* Digimon) {
+		m_iEnemy = Enemy; m_iDigimon_Image = DigimonId; m_pDigimon = Digimon;}
 	void Set_Move(_float2 OffSet);
 
 	void Set_MoveUp(_float2 OffSet);
@@ -39,6 +41,7 @@ public:
 	_bool Get_Lerp() { return m_bisLerp; }
 	void Set_SlowLerp(_bool Lerp) { m_bisSlowLerp = Lerp; }
 	
+	CContainerObject* Get_Digimon() { return m_pDigimon; }
 
 	void Set_OffSet(_float2 OffSet) { m_fOffSet = OffSet; }
 	void Set_SlowOffSet(_float2 OffSet) { m_fSlowOffSet = OffSet; }
@@ -49,6 +52,7 @@ private:
 	CTexture* m_pBattleTimeLineLineTextureCom = { nullptr };
 	CTexture* m_pDigimonTextureCom = { nullptr };
 	CShader* m_pShaderCom = { nullptr };
+	CContainerObject* m_pDigimon = { nullptr };
 
 private:
 	_int m_iDigimon_Image{};

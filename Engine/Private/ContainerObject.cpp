@@ -53,6 +53,9 @@ void CContainerObject::Late_Update(_float fTimeDelta)
 {
 	for (auto& Pair : m_PartObjects)
 		Pair.second->Late_Update(fTimeDelta);
+
+	if (Info.CurrentHp < 0)
+		m_bLife = false;
 }
 
 HRESULT CContainerObject::Render()
@@ -103,7 +106,7 @@ _int CContainerObject::Get_AttackSpeed()
 
 _int CContainerObject::Get_Exp()
 {
-	return Info.Exp;
+	return Info.ExpReward;
 }
 
 _int CContainerObject::Get_Lv()
@@ -169,6 +172,11 @@ void CContainerObject::Set_Lv(_int Lv)
 	int ones = Lv % 10;
 
 	Info.Lv += static_cast<int>(Info.Stage) * tens + ones;
+}
+
+void CContainerObject::Gain_Exp(_int Exp)
+{
+	Info.CurrentExp += Exp;
 }
 
 void CContainerObject::UseSkill(_int Skill)

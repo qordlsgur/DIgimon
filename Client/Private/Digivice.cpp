@@ -92,8 +92,18 @@ void CDigivice::Update(_float fTimeDelta)
 			m_pBattle_Skill[j]->Set_Digimon_SkillSet(m_pSelectSlot->Get_DigimonInfo().DigimonId, j);
 		}
 		Set_State(m_pSelectSlot->Get_DigimonInfo());
+		m_pDigivice_Hp->Set_CurrentHp(m_pSelectSlot->Get_DigimonInfo().CurrentHp);
+		m_pDigivice_Sp->Set_CurrentSp(m_pSelectSlot->Get_DigimonInfo().CurrentSp);
+		m_pDigivice_Exp->Set_Exp(m_pSelectSlot->Get_DigimonInfo().CurrentExp);
 		Set_Active(!m_bActive);
 	}
+
+	//if (m_pGameInstance->Key_Down(DIK_1))
+	//{
+	//	m_pDigimon_Manager->Set_Digimon_Update(0, DIGIMON_STATE::HP, -50000);
+	//	m_pBattle_Slot[0]->Set_Info(m_pDigimon_Manager->Get_Current_Digimon_Info(0));
+	//	m_pDigivice_Hp->Set_CurrentHp(m_pSelectSlot->Get_DigimonInfo().CurrentHp);
+	//}
 
 	m_pTransformCom->Set_Scale(m_fSizeX, m_fSizeY, 1.f);
 	for (_uint i = 0; i < m_iDigivice_Battle_Slot_Number; ++i)
@@ -172,7 +182,7 @@ HRESULT CDigivice::Render()
 		_float InfoAttackSpeed = (m_pGameInstance->FontSizeX(TEXT("14"), m_szDigimonAttackSpeed) - 12.f) * 0.5f;
 
 		m_pGameInstance->Render_Text(TEXT("18"), TEXT("디지바이스"), _float2(620.f, 70.f), XMVectorSet(0.f, 0.f, 1.f, 1.f));
-		m_pGameInstance->Render_Text(TEXT("17"), m_pSelectSlot->Get_DigimonInfo().DigimonName.c_str(), _float2(600.f, 120.f), XMVectorSet(1.f, 1.f, 1.f, 1.f));
+		m_pGameInstance->Render_Text(TEXT("17"), m_pSelectSlot->Get_DigimonInfo().DigimonName.c_str(), _float2(620.f, 120.f), XMVectorSet(1.f, 1.f, 1.f, 1.f));
 		m_pGameInstance->Render_Text(TEXT("14"), TEXT("세대"), _float2(880.f - State, 170.f), XMVectorSet(1.f, 1.f, 1.f, 1.f));
 		m_pGameInstance->Render_Text(TEXT("14"), TEXT("타입"), _float2(880.f - Attribute, 200.f), XMVectorSet(1.f, 1.f, 1.f, 1.f));
 		m_pGameInstance->Render_Text(TEXT("14"), TEXT("최대 HP"), _float2(880.f - MaxHp, 230.f), XMVectorSet(1.f, 1.f, 1.f, 1.f));
@@ -183,7 +193,6 @@ HRESULT CDigivice::Render()
 		m_pGameInstance->Render_Text(TEXT("15"), m_pSelectSlot->Get_DigimonInfo().DigimonSkill1Info.SkillName.c_str(), _float2(637.f, 476.f), XMVectorSet(1.f, 1.f, 1.f, 1.f));
 		m_pGameInstance->Render_Text(TEXT("15"), m_pSelectSlot->Get_DigimonInfo().DigimonSkill2Info.SkillName.c_str(), _float2(637.f, 536.f), XMVectorSet(1.f, 1.f, 1.f, 1.f));
 		m_pGameInstance->Render_Text(TEXT("15"), m_pSelectSlot->Get_DigimonInfo().DigimonSkill3Info.SkillName.c_str(), _float2(637.f, 596.f), XMVectorSet(1.f, 1.f, 1.f, 1.f));
-
 
 		m_pGameInstance->Render_Text(TEXT("14"), m_strDigimon_Stage[ENUM_CLASS(m_pSelectSlot->Get_DigimonInfo().Stage)].c_str(), _float2(1050.f - InfoState, 170.f), XMVectorSet(1.f, 1.f, 1.f, 1.f));
 		m_pGameInstance->Render_Text(TEXT("14"), m_strDigimon_Attribute[ENUM_CLASS(m_pSelectSlot->Get_DigimonInfo().Attribute)].c_str(), _float2(1050.f - InfoAttribute, 200.f), XMVectorSet(1.f, 1.f, 1.f, 1.f));
@@ -229,15 +238,16 @@ void CDigivice::Acquire_Digimon(_int ID)
 	{
 		if (false == m_pBattle_Mask[i]->Get_HasDigimon())
 		{
-			m_pBattle_Mask[i]->Set_Digimon_ID(ID);
-			m_pBattle_Mask[i]->Set_HasDigimon(true);
-			m_pBattle_Slot[i]->Set_Info(Set_Info(ID));
-			m_pBattle_Slot[i]->Set_HasDigimon(true);
+			Set_Info(ID);
 			m_pDigimon_Manager->Set_Digivice_Slot(i, true, Info);
+			m_pBattle_Mask[i]->Set_Digimon_ID(m_pDigimon_Manager->Get_Current_Digimon_Info(i)->DigimonId);
+			m_pBattle_Mask[i]->Set_HasDigimon(true);
+			m_pBattle_Slot[i]->Set_Info(*m_pDigimon_Manager->Get_Current_Digimon_Info(i));
+			m_pBattle_Slot[i]->Set_HasDigimon(true);
 			m_Digimon_ID[i] = ID;
 			for (int j = 0; j < m_pBattle_Slot[i]->Get_DigimonInfo().SkillCount; ++j)
 			{
-				m_pBattle_Skill[j]->Set_Digimon_SkillSet(ID, j);
+				m_pBattle_Skill[j]->Set_Digimon_SkillSet(m_pDigimon_Manager->Get_Current_Digimon_Info(i)->DigimonId, j);
 			}
 			return;
 		}
@@ -306,7 +316,7 @@ void CDigivice::OnHover()
 
 void CDigivice::Update_Digimopn()
 {
-	m_pBattle_Manager->Current_Digimon(&m_pBattle_Slot[0]->Get_DigimonInfo(), &m_pBattle_Slot[1]->Get_DigimonInfo(), &m_pBattle_Slot[2]->Get_DigimonInfo());
+	m_pBattle_Manager->Current_Digimon(m_pDigimon_Manager->Get_Current_Digimon_Info(0), m_pDigimon_Manager->Get_Current_Digimon_Info(1), m_pDigimon_Manager->Get_Current_Digimon_Info(2));
 }
 
 DIGIMON_INFO* CDigivice::Set_Info(_int ID)
@@ -333,6 +343,8 @@ DIGIMON_INFO* CDigivice::Set_Info(_int ID)
 		Info->Lv += m_pGameInstance->intRandom(1, 14);
 
 	m_pDigimon_Manager->Set_Current_Digimon_Info(Info);
+
+	m_pDigimon_Info.push_back(Info);
 
 	return Info;
 }

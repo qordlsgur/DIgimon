@@ -28,6 +28,7 @@ public:
 
 public:
 	void Set_MaxHp(_int MaxHp);
+	void Set_CurrentHp(_int CurrentHp);
 	void Set_Damage(_int Damage);
 	void Set_Move(_float fX, _float fY);
 

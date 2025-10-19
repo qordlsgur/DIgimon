@@ -33,18 +33,20 @@ public:
 	void Set_Damage(_int Damage);
 	void Set_Move(_float fX, _float fY);
 
+	_float Get_MaxHp() { return m_fMaxHp; }
+	_float Get_CurrentHp() { return m_fCurrentHp; }
+
 private:
 	CVIBuffer_Rect* m_pVIBufferCom = { nullptr };
 	CTexture* m_pTextureCom = { nullptr };
 	CTexture* m_pBgTextureCom = { nullptr };
 	CShader* m_pShaderCom = { nullptr };
 
-	_tchar			m_szDigimonMaxHp[MAX_PATH] = {};
-	_tchar			m_szCurrentHp[MAX_PATH] = {};
+
 
 	_float4 Pos;
-	_float m_iMaxHp{};
-	_float m_iCurrentHp{};
+	_float m_fMaxHp{};
+	_float m_fCurrentHp{};
 	_float m_fHpRatio{};
 
 private:

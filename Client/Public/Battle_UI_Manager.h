@@ -28,10 +28,12 @@ public:
 
 	void Set_Battle_Turn_Order(deque<CContainerObject*>Digimon_Turn_Order);
 
-	void Set_MyDigimon(DIGIMON_INFO* MyDigimon);
-	void Set_Enemy_Digimon(DIGIMON_INFO* EnemyDigimon);
+	void Set_MyDigimon(CContainerObject* MyDigimon);
+	void Set_Enemy_Digimon(CContainerObject* EnemyDigimon);
 
 	void Set_Timeline_Turn_Order();
+
+	void Digimon_Dead();
 
 	void Turn_Start();
 	void Turn_End();
@@ -46,16 +48,24 @@ public:
 	void Digimon_UseSkill3(_int SkillNum);
 	void Digimon_UseTarget3(_int Enemy);
 
-	HRESULT CreateHp(_int EnemyCount);
+	HRESULT CreateHp();
+	void Update_Enemy_HP(_int Num);
+
+	void Update_MyDigimon_Skill(CContainerObject* HitDigimon);
+	void Update_TimeLine(CContainerObject* HitDigimon);
 
 private:
 	CGameInstance* m_pGameInstance = { nullptr };
-	_int m_iDigimonCount{};
+	_int m_iMyDigimonCount{};
+	_int m_iEnemyDigimonCount{};
 
 	deque<CContainerObject*>		m_pDigimon_Turn_Order;
 
-	vector<DIGIMON_INFO*>		m_MyDigimon_Info;
-	vector<DIGIMON_INFO*>		m_EnemyDigimon_Info;
+	vector<CContainerObject*>	m_pPlayers;
+	vector<CContainerObject*>	m_pEnemys;
+
+	//vector<DIGIMON_INFO*>		m_MyDigimon_Info;
+	//vector<DIGIMON_INFO*>		m_EnemyDigimon_Info;
 
 	deque<class CBattle_Timeline*>	m_pTimeLines;
 	vector<class CBattle_Timeline*> m_pTimeLine_array;
@@ -75,7 +85,9 @@ private:
 	_int m_iDigimon_Skill[3] = {};
 
 	_float2 m_iEnemy_HpPos[5] = {};
+	_int m_iEnemy_Hp{};
 
+	_int m_iDeadDigimonNum{};
 public:
 	virtual void Free() override;
 };

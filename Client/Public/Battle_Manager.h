@@ -39,13 +39,19 @@ public:
 
 	void Enemy_Attack(_float fTimeDelta);
 	_int Enemy_Skill();
-	void Player_Set();
+
+	void Set_Turn();
+	void Turn_Update();
+
+
 
 	void ReturnToPosition(_float fTimeDelta);
 	void Set_Player(CContainerObject* pPlayer);
 	void Set_Digivice(CGameObject* pDigivice);
 	void Set_Battle(CGameObject* pBattle);
 	void Set_Battle_Terrain(CGameObject* pBattle_Terrain);
+
+	void Gain_Experience(_int Exp);
 
 	_bool Get_Battle() { return m_bBattleOn; }
 	void Set_Battle(_bool Battle) {	m_bBattleOn = Battle; }
@@ -80,6 +86,9 @@ public:
 	void Set_MyDigimon(CContainerObject* pPlayerDigimon);
 
 	void Battle_Tunr_Order();
+
+	void Digimon_Dead();
+	void Digimon_Alive();
 
 private:
 	_bool							m_bBattleOn = { false };
@@ -120,9 +129,6 @@ private:
 	vector<CContainerObject*>		m_pDigimonSort;
 	deque<CContainerObject*>		m_pDigimon_Turn_Order;
 
-	_int							m_pPlayerDigimon[3] = {-1};
-
-	_int							m_iEnemyDigimon[3] = {-1};
 
 	_float							m_fBattleTime{};
 
@@ -147,6 +153,9 @@ private:
 	ORDER							m_DigimonOrder1;
 	ORDER							m_DigimonOrder2;
 	ORDER							m_DigimonOrder3;
+
+	_int							m_iAlivePlayer{};
+	_int							m_iAliveEnemy{};
 
 private:
 

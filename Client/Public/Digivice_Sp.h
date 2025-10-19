@@ -28,6 +28,7 @@ public:
 
 public:
 	void Set_MaxSp(_int MaxSp);
+	void Set_CurrentSp(_int CurrentSp);
 	void Set_Move(_float fX, _float fY);
 
 private:

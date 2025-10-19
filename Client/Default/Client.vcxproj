@@ -154,6 +154,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\public\Angewomon.h" />
+    <ClInclude Include="..\public\AngewomonSkill1.h" />
+    <ClInclude Include="..\public\AngewomonSkill2.h" />
+    <ClInclude Include="..\public\AngewomonSkill3.h" />
     <ClInclude Include="..\Public\BackGround.h" />
     <ClInclude Include="..\public\Battle.h" />
     <ClInclude Include="..\Public\BattleBack.h" />
@@ -168,7 +171,13 @@
     <ClInclude Include="..\public\Battle_Turn.h" />
     <ClInclude Include="..\public\Battle_UI_Manager.h" />
     <ClInclude Include="..\public\Beelzebumon.h" />
+    <ClInclude Include="..\public\BeelzebumonSkill1.h" />
+    <ClInclude Include="..\public\BeelzebumonSkill2.h" />
+    <ClInclude Include="..\public\BeelzebumonSkill3.h" />
     <ClInclude Include="..\public\Blackwargreymon.h" />
+    <ClInclude Include="..\public\BlackwargreymonSkill1.h" />
+    <ClInclude Include="..\public\BlackwargreymonSkill2.h" />
+    <ClInclude Include="..\public\BlackwargreymonSkill3.h" />
     <ClInclude Include="..\Public\BldA.h" />
     <ClInclude Include="..\Public\BldB.h" />
     <ClInclude Include="..\Public\BldC.h" />
@@ -194,6 +203,9 @@
     <ClInclude Include="..\public\Damagefont.h" />
     <ClInclude Include="..\Public\Death.h" />
     <ClInclude Include="..\public\Devilmon.h" />
+    <ClInclude Include="..\public\DevilmonSkill1.h" />
+    <ClInclude Include="..\public\DevilmonSkill2.h" />
+    <ClInclude Include="..\public\DevilmonSkill3.h" />
     <ClInclude Include="..\public\Digimon_Manager.h" />
     <ClInclude Include="..\public\Digivice.h" />
     <ClInclude Include="..\public\Digivice_Exp.h" />
@@ -213,7 +225,13 @@
     <ClInclude Include="..\Public\Jump.h" />
     <ClInclude Include="..\public\KeyBord.h" />
     <ClInclude Include="..\public\Ladydevimon.h" />
+    <ClInclude Include="..\public\LadydevimonSkill1.h" />
+    <ClInclude Include="..\public\LadydevimonSkill2.h" />
+    <ClInclude Include="..\public\LadydevimonSkill3.h" />
     <ClInclude Include="..\public\Leomon.h" />
+    <ClInclude Include="..\public\LeomonSkill1.h" />
+    <ClInclude Include="..\public\LeomonSkill2.h" />
+    <ClInclude Include="..\public\LeomonSkill3.h" />
     <ClInclude Include="..\Public\Level_GamePlay.h" />
     <ClInclude Include="..\Public\Level_Loading.h" />
     <ClInclude Include="..\Public\Level_Logo.h" />
@@ -221,8 +239,17 @@
     <ClInclude Include="..\Public\LookAround.h" />
     <ClInclude Include="..\Public\MainApp.h" />
     <ClInclude Include="..\public\Metalgarumon.h" />
+    <ClInclude Include="..\public\MetalgarumonSkill1.h" />
+    <ClInclude Include="..\public\MetalgarumonSkill2.h" />
+    <ClInclude Include="..\public\MetalgarumonSkill3.h" />
     <ClInclude Include="..\public\Metalgreymon.h" />
+    <ClInclude Include="..\public\MetalgreymonSkill1.h" />
+    <ClInclude Include="..\public\MetalgreymonSkill2.h" />
+    <ClInclude Include="..\public\MetalgreymonSkill3.h" />
     <ClInclude Include="..\public\Omegamon.h" />
+    <ClInclude Include="..\public\OmegamonSkill1.h" />
+    <ClInclude Include="..\public\OmegamonSkill2.h" />
+    <ClInclude Include="..\public\OmegamonSkill3.h" />
     <ClInclude Include="..\public\PartyUHD.h" />
     <ClInclude Include="..\public\Player.h" />
     <ClInclude Include="..\Public\Roar.h" />
@@ -240,6 +267,9 @@
     <ClInclude Include="..\public\Terrain.h" />
     <ClInclude Include="..\public\UHD_Slot.h" />
     <ClInclude Include="..\public\Wargreymon.h" />
+    <ClInclude Include="..\public\WargreymonSkill1.h" />
+    <ClInclude Include="..\public\WargreymonSkill2.h" />
+    <ClInclude Include="..\public\WargreymonSkill3.h" />
     <ClInclude Include="Client.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="Resource.h" />
@@ -247,6 +277,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\private\Angewomon.cpp" />
+    <ClCompile Include="..\private\AngewomonSkill1.cpp" />
+    <ClCompile Include="..\private\AngewomonSkill2.cpp" />
+    <ClCompile Include="..\private\AngewomonSkill3.cpp" />
     <ClCompile Include="..\Private\BackGround.cpp" />
     <ClCompile Include="..\private\Battle.cpp" />
     <ClCompile Include="..\Private\BattleBack.cpp" />
@@ -261,7 +294,13 @@
     <ClCompile Include="..\private\Battle_Turn.cpp" />
     <ClCompile Include="..\private\Battle_UI_Manager.cpp" />
     <ClCompile Include="..\private\Beelzebumon.cpp" />
+    <ClCompile Include="..\private\BeelzebumonSkill1.cpp" />
+    <ClCompile Include="..\private\BeelzebumonSkill2.cpp" />
+    <ClCompile Include="..\private\BeelzebumonSkill3.cpp" />
     <ClCompile Include="..\private\Blackwargreymon.cpp" />
+    <ClCompile Include="..\private\BlackwargreymonSkill1.cpp" />
+    <ClCompile Include="..\private\BlackwargreymonSkill2.cpp" />
+    <ClCompile Include="..\private\BlackwargreymonSkill3.cpp" />
     <ClCompile Include="..\Private\BldA.cpp" />
     <ClCompile Include="..\Private\BldB.cpp" />
     <ClCompile Include="..\Private\BldC.cpp" />
@@ -286,6 +325,9 @@
     <ClCompile Include="..\private\Damagefont.cpp" />
     <ClCompile Include="..\Private\Death.cpp" />
     <ClCompile Include="..\private\Devilmon.cpp" />
+    <ClCompile Include="..\private\DevilmonSkill1.cpp" />
+    <ClCompile Include="..\private\DevilmonSkill2.cpp" />
+    <ClCompile Include="..\private\DevilmonSkill3.cpp" />
     <ClCompile Include="..\private\Digimon_Manager.cpp" />
     <ClCompile Include="..\private\Digivice.cpp" />
     <ClCompile Include="..\private\Digivice_Exp.cpp" />
@@ -305,7 +347,13 @@
     <ClCompile Include="..\Private\Jump.cpp" />
     <ClCompile Include="..\private\KeyBord.cpp" />
     <ClCompile Include="..\private\Ladydevimon.cpp" />
+    <ClCompile Include="..\private\LadydevimonSkill1.cpp" />
+    <ClCompile Include="..\private\LadydevimonSkill2.cpp" />
+    <ClCompile Include="..\private\LadydevimonSkill3.cpp" />
     <ClCompile Include="..\private\Leomon.cpp" />
+    <ClCompile Include="..\private\LeomonSkill1.cpp" />
+    <ClCompile Include="..\private\LeomonSkill2.cpp" />
+    <ClCompile Include="..\private\LeomonSkill3.cpp" />
     <ClCompile Include="..\Private\Level_GamePlay.cpp" />
     <ClCompile Include="..\Private\Level_Loading.cpp" />
     <ClCompile Include="..\Private\Level_Logo.cpp" />
@@ -313,8 +361,17 @@
     <ClCompile Include="..\Private\LookAround.cpp" />
     <ClCompile Include="..\Private\MainApp.cpp" />
     <ClCompile Include="..\private\Metalgarumon.cpp" />
+    <ClCompile Include="..\private\MetalgarumonSkill1.cpp" />
+    <ClCompile Include="..\private\MetalgarumonSkill2.cpp" />
+    <ClCompile Include="..\private\MetalgarumonSkill3.cpp" />
     <ClCompile Include="..\private\Metalgreymon.cpp" />
+    <ClCompile Include="..\private\MetalgreymonSkill1.cpp" />
+    <ClCompile Include="..\private\MetalgreymonSkill2.cpp" />
+    <ClCompile Include="..\private\MetalgreymonSkill3.cpp" />
     <ClCompile Include="..\private\Omegamon.cpp" />
+    <ClCompile Include="..\private\OmegamonSkill1.cpp" />
+    <ClCompile Include="..\private\OmegamonSkill2.cpp" />
+    <ClCompile Include="..\private\OmegamonSkill3.cpp" />
     <ClCompile Include="..\private\PartyUHD.cpp" />
     <ClCompile Include="..\private\Player.cpp" />
     <ClCompile Include="..\Private\Roar.cpp" />
@@ -332,6 +389,9 @@
     <ClCompile Include="..\private\Terrain.cpp" />
     <ClCompile Include="..\private\UHD_Slot.cpp" />
     <ClCompile Include="..\private\Wargreymon.cpp" />
+    <ClCompile Include="..\private\WargreymonSkill1.cpp" />
+    <ClCompile Include="..\private\WargreymonSkill2.cpp" />
+    <ClCompile Include="..\private\WargreymonSkill3.cpp" />
     <ClCompile Include="Client.cpp" />
   </ItemGroup>
   <ItemGroup>

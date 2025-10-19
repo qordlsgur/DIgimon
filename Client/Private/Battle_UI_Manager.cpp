@@ -22,7 +22,9 @@ HRESULT CBattle_UI_Manager::Initialize()
 
 HRESULT CBattle_UI_Manager::Create_TimeLine(_int MyDigimonCount, _int EnemyDigimonCount)
 {
-	m_iDigimonCount = MyDigimonCount + EnemyDigimonCount;
+	m_iMyDigimonCount = MyDigimonCount;
+	m_iEnemyDigimonCount = EnemyDigimonCount;
+	_int m_iDigimonCount = m_iMyDigimonCount + m_iEnemyDigimonCount;
 	m_pTurn = static_cast<CBattle_Turn*>(m_pGameInstance->Add_GameObject_ToLayer_ToCreate(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Battle_Turn"),
 		ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Layer_Battle_Turn")));
 	if (m_pTurn == nullptr)
@@ -59,15 +61,15 @@ void CBattle_UI_Manager::Set_Battle_Turn_Order(deque<CContainerObject*> Digimon_
 	m_pDigimon_Turn_Order = Digimon_Turn_Order;
 }
 
-void CBattle_UI_Manager::Set_MyDigimon(DIGIMON_INFO* MyDigimon)
+void CBattle_UI_Manager::Set_MyDigimon(CContainerObject* MyDigimon)
 {
 	m_iDigimon++;
-	m_MyDigimon_Info.push_back(MyDigimon);
+	m_pPlayers.push_back(MyDigimon);
 }
 
-void CBattle_UI_Manager::Set_Enemy_Digimon(DIGIMON_INFO* EnemyDigimon)
+void CBattle_UI_Manager::Set_Enemy_Digimon(CContainerObject* EnemyDigimon)
 {
-	m_EnemyDigimon_Info.push_back(EnemyDigimon);
+	m_pEnemys.push_back(EnemyDigimon);
 }
 
 void CBattle_UI_Manager::Set_Timeline_Turn_Order()
@@ -75,9 +77,14 @@ void CBattle_UI_Manager::Set_Timeline_Turn_Order()
 	for (size_t i = 0; i < m_pDigimon_Turn_Order.size(); ++i)
 	{
 		if (false == m_pDigimon_Turn_Order[i]->Get_Monster())
-			m_pTimeLine_array[i]->Set_Digimon(false, m_pDigimon_Turn_Order[i]->Get_ID());
+		{
+			m_pTimeLine_array[i]->Set_Digimon(false, m_pDigimon_Turn_Order[i]->Get_ID(), m_pDigimon_Turn_Order[i]);
+		}
 		else
-			m_pTimeLine_array[i]->Set_Digimon(true, m_pDigimon_Turn_Order[i]->Get_ID());
+		{
+			m_pTimeLine_array[i]->Set_Digimon(true, m_pDigimon_Turn_Order[i]->Get_ID(), m_pDigimon_Turn_Order[i]);
+
+		}
 	}
 
 	for (auto& Timeline : m_pTimeLine_array)
@@ -89,6 +96,10 @@ void CBattle_UI_Manager::Set_Timeline_Turn_Order()
 
 	for (auto& Timeline : m_pTimeLines)
 		Timeline->Set_Active(true);
+}
+
+void CBattle_UI_Manager::Digimon_Dead()
+{
 }
 
 void CBattle_UI_Manager::Turn_Start()
@@ -119,7 +130,7 @@ void CBattle_UI_Manager::Turn_End()
 
 HRESULT CBattle_UI_Manager::Create_Skill()
 {
-	for (size_t i = 0; i < m_MyDigimon_Info.size(); ++i)
+	for (size_t i = 0; i < m_pEnemys.size(); ++i)
 	{
 		for (_int i = 0; i < 3; ++i)
 		{
@@ -144,53 +155,53 @@ HRESULT CBattle_UI_Manager::Create_Skill()
 void CBattle_UI_Manager::Set_Skill()
 {
 	m_pDigimon_Skills[0]->Set_Move(300, 650);
-	m_pDigimon_Skills[0]->Set_Digimon_SkillSet(m_MyDigimon_Info[0]->DigimonId, 0);
+	m_pDigimon_Skills[0]->Set_Digimon_SkillSet(m_pPlayers[0]->Get_ID(), 0);
 	m_pDigimon_Skills[0]->Set_Hover(true);
 	m_pKeyBords[0]->Set_Move(300, 700);
 	m_pKeyBords[0]->Set_KeyBord(0);
 	m_pKeyBords[0]->Set_Hover(true);
 	m_pDigimon_Skills[1]->Set_Move(365, 650);
-	m_pDigimon_Skills[1]->Set_Digimon_SkillSet(m_MyDigimon_Info[0]->DigimonId, 1);
+	m_pDigimon_Skills[1]->Set_Digimon_SkillSet(m_pPlayers[0]->Get_ID(), 1);
 	m_pKeyBords[1]->Set_Move(365, 700);
 	m_pKeyBords[1]->Set_KeyBord(1);
 	m_pDigimon_Skills[2]->Set_Move(430, 650);
-	m_pDigimon_Skills[2]->Set_Digimon_SkillSet(m_MyDigimon_Info[0]->DigimonId, 2);
+	m_pDigimon_Skills[2]->Set_Digimon_SkillSet(m_pPlayers[0]->Get_ID(), 2);
 	m_pKeyBords[2]->Set_Move(430, 700);
 	m_pKeyBords[2]->Set_KeyBord(2);
 
-	if (m_MyDigimon_Info.size() > 1)
+	if (m_pPlayers.size() > 1)
 	{
 		m_pDigimon_Skills[3]->Set_Move(665, 650);
-		m_pDigimon_Skills[3]->Set_Digimon_SkillSet(m_MyDigimon_Info[1]->DigimonId, 0);
+		m_pDigimon_Skills[3]->Set_Digimon_SkillSet(m_pPlayers[1]->Get_ID(), 0);
 		m_pDigimon_Skills[3]->Set_Hover(true);
 		m_pKeyBords[3]->Set_Move(665, 700);
 		m_pKeyBords[3]->Set_KeyBord(3);
 		m_pKeyBords[3]->Set_Hover(true);
 		m_pDigimon_Skills[4]->Set_Move(730, 650);
-		m_pDigimon_Skills[4]->Set_Digimon_SkillSet(m_MyDigimon_Info[1]->DigimonId, 1);
+		m_pDigimon_Skills[4]->Set_Digimon_SkillSet(m_pPlayers[1]->Get_ID(), 1);
 		m_pKeyBords[4]->Set_Move(730, 700);
 		m_pKeyBords[4]->Set_KeyBord(4);
 		m_pDigimon_Skills[5]->Set_Move(795, 650);
-		m_pDigimon_Skills[5]->Set_Digimon_SkillSet(m_MyDigimon_Info[1]->DigimonId, 2);
+		m_pDigimon_Skills[5]->Set_Digimon_SkillSet(m_pPlayers[1]->Get_ID(), 2);
 		m_pKeyBords[5]->Set_Move(795, 700);
 		m_pKeyBords[5]->Set_KeyBord(5);
 
 	}
 
-	if (m_MyDigimon_Info.size() > 2)
+	if (m_pPlayers.size() > 2)
 	{
 		m_pDigimon_Skills[6]->Set_Move(1030, 650);
-		m_pDigimon_Skills[6]->Set_Digimon_SkillSet(m_MyDigimon_Info[2]->DigimonId, 0);
+		m_pDigimon_Skills[6]->Set_Digimon_SkillSet(m_pPlayers[2]->Get_ID(), 0);
 		m_pDigimon_Skills[6]->Set_Hover(true);
 		m_pKeyBords[6]->Set_Move(1030, 700);
 		m_pKeyBords[6]->Set_KeyBord(6);
 		m_pKeyBords[6]->Set_Hover(true);
 		m_pDigimon_Skills[7]->Set_Move(1095, 650);
-		m_pDigimon_Skills[7]->Set_Digimon_SkillSet(m_MyDigimon_Info[2]->DigimonId, 1);
+		m_pDigimon_Skills[7]->Set_Digimon_SkillSet(m_pPlayers[2]->Get_ID(), 1);
 		m_pKeyBords[7]->Set_Move(1095, 700);
 		m_pKeyBords[7]->Set_KeyBord(7);
 		m_pDigimon_Skills[8]->Set_Move(1160, 650);
-		m_pDigimon_Skills[8]->Set_Digimon_SkillSet(m_MyDigimon_Info[2]->DigimonId, 2);
+		m_pDigimon_Skills[8]->Set_Digimon_SkillSet(m_pPlayers[2]->Get_ID(), 2);
 		m_pKeyBords[8]->Set_Move(1160, 700);
 		m_pKeyBords[8]->Set_KeyBord(8);
 	}
@@ -272,9 +283,9 @@ void CBattle_UI_Manager::Digimon_UseTarget3(_int Enemy)
 	}
 }
 
-HRESULT CBattle_UI_Manager::CreateHp(_int EnemyCount)
+HRESULT CBattle_UI_Manager::CreateHp()
 {
-	for (int i = 0; i < EnemyCount; ++i)
+	for (int i = 0; i < m_iEnemyDigimonCount; ++i)
 	{
 		m_pEnemy_Hp = static_cast<CBattle_Enemy_Hp_BG*>(m_pGameInstance->Add_GameObject_ToLayer_ToCreate(
 			ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Battle_Enemy_HpBG"), ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Layer_Battle_Enemy_Hp")));
@@ -282,6 +293,7 @@ HRESULT CBattle_UI_Manager::CreateHp(_int EnemyCount)
 			return E_FAIL;
 
 		m_pEnemyHps.push_back(m_pEnemy_Hp);
+		m_iEnemy_Hp++;
 	}
 
 	m_iEnemy_HpPos[0] = _float2(450.f, 50.f);
@@ -290,29 +302,115 @@ HRESULT CBattle_UI_Manager::CreateHp(_int EnemyCount)
 	m_iEnemy_HpPos[3] = _float2(780.f, 50.f);
 	m_iEnemy_HpPos[4] = _float2(890.f, 50.f);
 
-	if (EnemyCount == 1)
+	if (m_iEnemyDigimonCount == 1)
 	{
 		m_pEnemyHps[0]->Set_Move(m_iEnemy_HpPos[2].x, m_iEnemy_HpPos[2].y);
-		m_pEnemyHps[0]->Set_Name(m_EnemyDigimon_Info[0]->DigimonName);
+		m_pEnemyHps[0]->Set_Name(m_pEnemys[0]->Get_Digimon_Name());
+		m_pEnemyHps[0]->Set_MaxHp(static_cast<_float>(m_pEnemys[0]->Get_Hp()));
+		m_pEnemyHps[0]->Set_Active(true);
 	}
-	else if (EnemyCount == 2)
+	else if (m_iEnemyDigimonCount == 2)
 	{
 		m_pEnemyHps[0]->Set_Move(m_iEnemy_HpPos[1].x, m_iEnemy_HpPos[1].y);
-		m_pEnemyHps[0]->Set_Name(m_EnemyDigimon_Info[0]->DigimonName);
+		m_pEnemyHps[0]->Set_Name(m_pEnemys[0]->Get_Digimon_Name());
+		m_pEnemyHps[0]->Set_MaxHp(static_cast<_float>(m_pEnemys[0]->Get_Hp()));
+		m_pEnemyHps[0]->Set_Active(true);
+
 		m_pEnemyHps[1]->Set_Move(m_iEnemy_HpPos[3].x, m_iEnemy_HpPos[3].y);
-		m_pEnemyHps[1]->Set_Name(m_EnemyDigimon_Info[1]->DigimonName);
+		m_pEnemyHps[1]->Set_Name(m_pEnemys[1]->Get_Digimon_Name());
+		m_pEnemyHps[1]->Set_MaxHp(static_cast<_float>(m_pEnemys[1]->Get_Hp()));
+		m_pEnemyHps[1]->Set_Active(true);
 	}
-	else if (EnemyCount == 3)
+	else if (m_iEnemyDigimonCount == 3)
 	{
 		m_pEnemyHps[0]->Set_Move(m_iEnemy_HpPos[0].x, m_iEnemy_HpPos[0].y);
-		m_pEnemyHps[0]->Set_Name(m_EnemyDigimon_Info[0]->DigimonName);
+		m_pEnemyHps[0]->Set_Name(m_pEnemys[0]->Get_Digimon_Name());
+		m_pEnemyHps[0]->Set_MaxHp(static_cast<_float>(m_pEnemys[0]->Get_Hp()));
+		m_pEnemyHps[0]->Set_Active(true);
+
 		m_pEnemyHps[1]->Set_Move(m_iEnemy_HpPos[2].x, m_iEnemy_HpPos[2].y);
-		m_pEnemyHps[1]->Set_Name(m_EnemyDigimon_Info[1]->DigimonName);
+		m_pEnemyHps[1]->Set_Name(m_pEnemys[1]->Get_Digimon_Name());
+		m_pEnemyHps[1]->Set_MaxHp(static_cast<_float>(m_pEnemys[1]->Get_Hp()));
+		m_pEnemyHps[1]->Set_Active(true);
+
 		m_pEnemyHps[2]->Set_Move(m_iEnemy_HpPos[4].x, m_iEnemy_HpPos[4].y);
-		m_pEnemyHps[2]->Set_Name(m_EnemyDigimon_Info[2]->DigimonName);
+		m_pEnemyHps[2]->Set_Name(m_pEnemys[2]->Get_Digimon_Name());
+		m_pEnemyHps[2]->Set_MaxHp(static_cast<_float>(m_pEnemys[2]->Get_Hp()));
+		m_pEnemyHps[2]->Set_Active(true);
 	}
 
 	return S_OK;
+}
+
+void CBattle_UI_Manager::Update_Enemy_HP(_int Num)
+{
+	if (m_pEnemyHps.size() == 2)
+	{
+		if (Num == 0)
+		{
+			m_pEnemyHps[0]->Set_Active(false);
+			m_pEnemyHps[1]->Set_Move(m_iEnemy_HpPos[2].x, m_iEnemy_HpPos[2].y);
+		}
+
+		else if (Num == 1)
+		{
+			m_pEnemyHps[1]->Set_Active(false);
+			m_pEnemyHps[0]->Set_Move(m_iEnemy_HpPos[2].x, m_iEnemy_HpPos[2].y);
+		}
+	}
+
+	else if (m_pEnemyHps.size() == 3)
+	{
+		if (Num == 0)
+		{
+			m_pEnemyHps[0]->Set_Active(false);
+			m_pEnemyHps[1]->Set_Move(m_iEnemy_HpPos[1].x, m_iEnemy_HpPos[1].y);
+			m_pEnemyHps[2]->Set_Move(m_iEnemy_HpPos[3].x, m_iEnemy_HpPos[3].y);
+			m_pEnemyHps.erase(m_pEnemyHps.begin());
+		}
+
+		else if (Num == 1)
+		{
+			m_pEnemyHps[1]->Set_Active(false);
+			m_pEnemyHps[0]->Set_Move(m_iEnemy_HpPos[1].x, m_iEnemy_HpPos[1].y);
+			m_pEnemyHps[2]->Set_Move(m_iEnemy_HpPos[3].x, m_iEnemy_HpPos[3].y);
+			m_pEnemyHps.erase(m_pEnemyHps.begin() + 1);
+		}
+		else if (Num == 2)
+		{
+			m_pEnemyHps[2]->Set_Active(false);
+			m_pEnemyHps[0]->Set_Move(m_iEnemy_HpPos[1].x, m_iEnemy_HpPos[1].y);
+			m_pEnemyHps[1]->Set_Move(m_iEnemy_HpPos[3].x, m_iEnemy_HpPos[3].y);
+			m_pEnemyHps.erase(m_pEnemyHps.begin() + 2);
+		}
+	}
+}
+
+void CBattle_UI_Manager::Update_MyDigimon_Skill(CContainerObject* HitDigimon)
+{
+	for (size_t i = 0; i < m_pDigimon_Turn_Order.size(); ++i)
+	{
+
+	}
+}
+
+void CBattle_UI_Manager::Update_TimeLine(CContainerObject* HitDigimon)
+{
+	for (size_t i = 0; i < m_pTimeLines.size(); ++i)
+	{
+		if (m_pTimeLines[i]->Get_Digimon() == HitDigimon)
+		{
+			m_pTimeLines[i]->Set_Move(_float2(1500.f, 0.f));
+			m_pTimeLines.erase(m_pTimeLines.begin() + i);
+			break;
+		}
+	}
+
+	for (size_t i = m_iDeadDigimonNum; i < m_pTimeLines.size(); ++i)
+	{
+		m_pTimeLines[i]->Set_Move(m_fTurn_Panel[i]);
+	}
+
 }
 
 void CBattle_UI_Manager::Free()
