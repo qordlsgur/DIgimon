@@ -796,7 +796,7 @@ void CBattle_Manager::EnemyDigimon_Info(_int EnemyDigimonID)
 		m_pEnemyDigimon.push_back(Digimon_Create(EnemyDigimonID));
 
 		m_pEnemyDigimon[i]->Set_Hp(1500);
-		m_pEnemyDigimon[i]->Set_Sp(5000);
+		m_pEnemyDigimon[i]->Set_Sp(500);
 		m_pEnemyDigimon[i]->Set_Damage(m_pGameInstance->intRandom(250, 500));
 		m_pEnemyDigimon[i]->Set_AttackSpeed(5);
 		m_pEnemyDigimon[i]->Set_Exp(m_pGameInstance->intRandom(900, 1000));

@@ -204,14 +204,14 @@ CComponent* CGameInstance::Get_PartObject_Component(_uint iLevelIndex, const _ws
 	return m_pObject_Manager->Get_PartObject_Component(iLevelIndex, strLayerTag, strPartTag, strComponentTag, iIndex);
 }
 
-HRESULT CGameInstance::Add_GameObject_ToLayer(_uint iPrototypeLevelIndex, const _wstring& strPrototypeTag, _uint iLayerLevelIndex, const _wstring& strLayerTag, void* pArg)
+HRESULT CGameInstance::Add_GameObject_ToLayer(_uint iPrototypeLevelIndex, const _wstring& strPrototypeTag, _uint iLayerLevelIndex, const _wstring& strLayerTag, void* pArg, _bool Anum)
 {
-	return m_pObject_Manager->Add_GameObject_ToLayer(iPrototypeLevelIndex, strPrototypeTag, iLayerLevelIndex, strLayerTag, pArg);
+	return m_pObject_Manager->Add_GameObject_ToLayer(iPrototypeLevelIndex, strPrototypeTag, iLayerLevelIndex, strLayerTag, pArg, Anum);
 }
 
-CGameObject* CGameInstance::Add_GameObject_ToLayer_ToCreate(_uint iPrototypeLevelIndex, const _wstring& strPrototypeTag, _uint iLayerLevelIndex, const _wstring& strLayerTag, void* pArg)
+CGameObject* CGameInstance::Add_GameObject_ToLayer_ToCreate(_uint iPrototypeLevelIndex, const _wstring& strPrototypeTag, _uint iLayerLevelIndex, const _wstring& strLayerTag, void* pArg, _bool Anum)
 {
-	return m_pObject_Manager->Add_GameObject_ToLayer_ToCreate(iPrototypeLevelIndex, strPrototypeTag, iLayerLevelIndex, strLayerTag, pArg);
+	return m_pObject_Manager->Add_GameObject_ToLayer_ToCreate(iPrototypeLevelIndex, strPrototypeTag, iLayerLevelIndex, strLayerTag, pArg, Anum);
 }
 
 #pragma endregion

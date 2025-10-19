@@ -70,10 +70,14 @@ private:
 	wstring	m_strDigimon_Attribute[3] = {};
 
 	_tchar			m_szDigimonHp[MAX_PATH] = {};
-	_tchar			m_szDigimonMaxHp[MAX_PATH] = {};
 	_tchar			m_szDigimonSp[MAX_PATH] = {};
+	_tchar			m_szDigimonMaxExp[MAX_PATH] = {};
+	_tchar			m_szDigimonCurrentExp[MAX_PATH] = {};
 	_tchar			m_szDigimonDamage[MAX_PATH] = {};
 	_tchar			m_szDigimonAttackSpeed[MAX_PATH] = {};
+	_tchar			m_szCurrentHp[MAX_PATH] = {};
+	_tchar			m_szCurrentSp[MAX_PATH] = {};
+	_tchar			m_szCurrentEXp[MAX_PATH] = {};
 
 	DIGIMON_INFO* Info;
 

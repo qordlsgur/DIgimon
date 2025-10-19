@@ -27,7 +27,7 @@ public:
 	virtual HRESULT Render() override;
 
 public:
-	void Set_MaxSp(_float MaxSp);
+	void Set_MaxSp(_int MaxSp);
 	void Set_Move(_float fX, _float fY);
 
 private:
@@ -36,8 +36,8 @@ private:
 	CTexture* m_pBgTextureCom = { nullptr };
 	CShader* m_pShaderCom = { nullptr };
 
-	_float m_iMaxSp{};
-	_float m_iCurrentSp{};
+	_int m_iMaxSp{};
+	_int m_iCurrentSp{};
 	_float m_fSpRatio{};
 
 private:

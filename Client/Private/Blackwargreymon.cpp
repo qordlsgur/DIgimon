@@ -124,9 +124,6 @@ void CBlackwargreymon::Update(_float fTimeDelta)
 			m_fFontUp = 13.5f;
 		}
 
-
-
-
 		m_pFsm->Update(fTimeDelta);
 		m_pColliderCom->Update(XMLoadFloat4x4(m_pTransformCom->Get_WorldMatrixPtr()));
 

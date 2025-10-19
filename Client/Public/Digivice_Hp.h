@@ -37,8 +37,8 @@ private:
 	CTexture* m_pBgTextureCom = { nullptr };
 	CShader* m_pShaderCom = { nullptr };
 
-	_float m_iMaxHp{};
-	_float m_iCurrentHp{};
+	_int m_fMaxHp{};
+	_int m_fCurrentHp{};
 	_float m_fHpRatio{};
 
 private:

@@ -27,8 +27,9 @@ public:
 	virtual HRESULT Render() override;
 
 public:
-	void Set_MaxExp(_float MaxExp);
+	void Set_MaxExp(_int MaxExp);
 	void Set_Move(_float fX, _float fY);
+	void Set_Exp(_int m_iExp);
 
 private:
 	CVIBuffer_Rect* m_pVIBufferCom = { nullptr };
@@ -36,8 +37,8 @@ private:
 	CTexture* m_pBgTextureCom = { nullptr };
 	CShader* m_pShaderCom = { nullptr };
 
-	_float m_iMaxExp{};
-	_float m_iCurrentExp{};
+	_int m_iMaxExp{};
+	_int m_iCurrentExp{};
 	_float m_fExpRatio{};
 
 

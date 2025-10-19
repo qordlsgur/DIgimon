@@ -21,9 +21,9 @@ public:
 	HRESULT Initialize(_uint iNumLevels);
 
 	/* 원형을 찾고 복제하여 레이어에 추가한다. */
-	HRESULT Add_GameObject_ToLayer(_uint iPrototypeLevelIndex, const _wstring& strPrototypeTag, _uint iLayerLevelIndex, const _wstring& strLayerTag, void* pArg);
+	HRESULT Add_GameObject_ToLayer(_uint iPrototypeLevelIndex, const _wstring& strPrototypeTag, _uint iLayerLevelIndex, const _wstring& strLayerTag, void* pArg, _bool Anim = true);
 
-	CGameObject* Add_GameObject_ToLayer_ToCreate(_uint iPrototypeLevelIndex, const _wstring& strPrototypeTag, _uint iLayerLevelIndex, const _wstring& strLayerTag, void* pArg);
+	CGameObject* Add_GameObject_ToLayer_ToCreate(_uint iPrototypeLevelIndex, const _wstring& strPrototypeTag, _uint iLayerLevelIndex, const _wstring& strLayerTag, void* pArg, _bool Anim = true);
 
 	void Priority_Update(_float fTimeDelta);
 	void Update(_float fTimeDelta);
@@ -36,6 +36,7 @@ private:
 	_uint								m_iNumLevels = {};
 	map<const _wstring, class CLayer*>* m_pLayers = { nullptr };
 	class CGameInstance*				m_pGameInstance = { nullptr };
+	_bool								m_bAnim = { false };
 
 private:
 	class CLayer* Find_Layer(_uint iLayerLevelIndex, const _wstring& strLayerTag);

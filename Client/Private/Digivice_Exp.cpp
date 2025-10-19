@@ -57,8 +57,7 @@ void CDigivice_Exp::Update(_float fTimeDelta)
 		long(m_fY + m_fSizeY * 0.5f)
 	};
 
-	if (m_iMaxExp != 0)
-		m_fExpRatio = m_iCurrentExp / m_iMaxExp;
+	m_fExpRatio = m_iCurrentExp / static_cast<_float>(m_iMaxExp);
 }
 
 void CDigivice_Exp::Late_Update(_float fTimeDelta)
@@ -83,16 +82,20 @@ HRESULT CDigivice_Exp::Render()
 	return S_OK;
 }
 
-void CDigivice_Exp::Set_MaxExp(_float MaxExp)
+void CDigivice_Exp::Set_MaxExp(_int MaxExp)
 {
 	m_iMaxExp = MaxExp;
-	m_iCurrentExp = MaxExp;
 }
 
 void CDigivice_Exp::Set_Move(_float fX, _float fY)
 {
 	m_fX = fX;
 	m_fY = fY;
+}
+
+void CDigivice_Exp::Set_Exp(_int m_iExp)
+{
+	m_iCurrentExp = m_iExp;
 }
 
 HRESULT CDigivice_Exp::Ready_Components()

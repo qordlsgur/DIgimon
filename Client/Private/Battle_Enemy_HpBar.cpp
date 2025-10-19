@@ -47,7 +47,7 @@ void CBattle_Enemy_HpBar::Update(_float fTimeDelta)
 	m_pTransformCom->Set_Scale(m_fSizeX, m_fSizeY, 1.f);
 	m_pTransformCom->Set_State(STATE::POSITION, vWorldPos);
 
-	_float4 Pos;
+	
 	XMStoreFloat4(&Pos, vWorldPos);
 
 	m_pRect = {
@@ -61,6 +61,9 @@ void CBattle_Enemy_HpBar::Update(_float fTimeDelta)
 
 	if (m_fHpRatio < 0.f)
 		m_fHpRatio = 0.f;
+
+	_itow_s(static_cast<_int>(m_iMaxHp), m_szDigimonMaxHp, MAX_PATH, 10);
+	_itow_s(static_cast<int>(m_iCurrentHp), m_szCurrentHp, MAX_PATH, 10);
 }
 
 void CBattle_Enemy_HpBar::Late_Update(_float fTimeDelta)
@@ -80,8 +83,7 @@ HRESULT CBattle_Enemy_HpBar::Render()
 
 	if (FAILED(m_pVIBufferCom->Render()))
 		return E_FAIL;
-
-
+	
 	return S_OK;
 }
 
@@ -90,7 +92,7 @@ void CBattle_Enemy_HpBar::Set_Parent_WorldPos(_vector fParent_World)
 	XMStoreFloat4(&m_fParent_WorldPos, fParent_World);
 }
 
-void CBattle_Enemy_HpBar::Set_MaxHp(_int MaxHp)
+void CBattle_Enemy_HpBar::Set_MaxHp(_float MaxHp)
 {
 	m_iMaxHp = MaxHp;
 	m_iCurrentHp = MaxHp;

@@ -87,8 +87,8 @@ HRESULT CBattle_Enemy_Hp_BG::Render()
 	m_pHpBar->Render();
 
 
-	_float InfoState = (m_pGameInstance->FontSizeX(TEXT("14"), m_strDigimon_Name.c_str())-12.f) * 0.5f;
-	m_pGameInstance->Render_Text(TEXT("14"), /*m_strDigimon_Name.c_str()*/TEXT("블랙워그레이몬"), _float2(m_fX - InfoState, m_fY - 30.f));
+	_float InfoState = (m_pGameInstance->FontSizeX(TEXT("14"), m_strDigimon_Name.c_str()) - 12.f) * 0.5f + 10.f;
+	m_pGameInstance->Render_Text(TEXT("14"), m_strDigimon_Name.c_str(), _float2(m_fX - InfoState, m_fY - 30.f));
 
 	return S_OK;
 }

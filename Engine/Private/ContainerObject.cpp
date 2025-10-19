@@ -139,11 +139,13 @@ void CContainerObject::Set_Digimon_Info(DIGIMON_INFO* Digimon_Info)
 void CContainerObject::Set_Hp(_int Hp)
 {
 	Info.Hp += Hp;
+	Info.CurrentHp += Hp;
 }
 
 void CContainerObject::Set_Sp(_int Sp)
 {
 	Info.Sp += Sp;
+	Info.CurrentSp += Sp;
 }
 
 void CContainerObject::Set_Damage(_int Damage)
@@ -158,7 +160,7 @@ void CContainerObject::Set_AttackSpeed(_int AttackSpeed)
 
 void CContainerObject::Set_Exp(_int Exp)
 {
-	Info.Exp = (1000 * static_cast<int>(Info.Stage)) + Exp;
+	Info.ExpReward = (1000 * static_cast<int>(Info.Stage)) + Exp;
 }
 
 void CContainerObject::Set_Lv(_int Lv)
@@ -250,7 +252,7 @@ _int CContainerObject::Skill_Damage()
 void CContainerObject::Set_HitDamage(_int Damage)
 {
 	m_iHitDamage = Damage;
-	Info.Hp -= m_iHitDamage;
+	Info.CurrentHp -= m_iHitDamage;
 }
 
 CPartObject* CContainerObject::Find_PartObject(const _wstring& strPartTag)

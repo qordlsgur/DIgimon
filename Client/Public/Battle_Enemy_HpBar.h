@@ -29,7 +29,7 @@ public:
 public:
 	void Set_Parent_WorldPos(_vector fParent_World);
 
-	void Set_MaxHp(_int MaxHp);
+	void Set_MaxHp(_float MaxHp);
 	void Set_Damage(_int Damage);
 	void Set_Move(_float fX, _float fY);
 
@@ -39,6 +39,10 @@ private:
 	CTexture* m_pBgTextureCom = { nullptr };
 	CShader* m_pShaderCom = { nullptr };
 
+	_tchar			m_szDigimonMaxHp[MAX_PATH] = {};
+	_tchar			m_szCurrentHp[MAX_PATH] = {};
+
+	_float4 Pos;
 	_float m_iMaxHp{};
 	_float m_iCurrentHp{};
 	_float m_fHpRatio{};

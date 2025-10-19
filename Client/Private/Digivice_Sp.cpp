@@ -59,7 +59,8 @@ void CDigivice_Sp::Update(_float fTimeDelta)
 	};
 
 
-	m_fSpRatio = m_iCurrentSp / m_iMaxSp;
+	m_fSpRatio = m_iCurrentSp / static_cast<_float>(m_iMaxSp);
+
 
 }
 
@@ -84,7 +85,7 @@ HRESULT CDigivice_Sp::Render()
 	return S_OK;
 }
 
-void CDigivice_Sp::Set_MaxSp(_float MaxSp)
+void CDigivice_Sp::Set_MaxSp(_int MaxSp)
 {
 	m_iMaxSp = MaxSp;
 	m_iCurrentSp = MaxSp;

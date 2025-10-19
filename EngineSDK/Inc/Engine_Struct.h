@@ -267,10 +267,14 @@ namespace Engine
 		DIGIMON_STAGE Stage;
 		DIGIMON_ATTRIBUTE Attribute;
 		int Hp{};
+		int CurrentHp{};
 		int Sp{};
+		int CurrentSp{};
 		int Damage{};
 		int AttackSpeed{};
 		int Exp{};
+		int CurrentExp{};
+		int ExpReward{};
 		int Lv{};
 	}DIGIMON_INFO;
 

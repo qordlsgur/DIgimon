@@ -102,6 +102,8 @@ HRESULT CMainApp::Ready_Default_Setting()
 		return E_FAIL;
 	if (FAILED(m_pGameInstance->Add_Font(TEXT("42"), TEXT("../Bin/Resources/Fonts/Noto_42.spritefont"))))
 		return E_FAIL;
+	if (FAILED(m_pGameInstance->Add_Font(TEXT("as"), TEXT("../Bin/Resources/Fonts/13.spritefont"))))
+		return E_FAIL;
 
 	return S_OK;
 }

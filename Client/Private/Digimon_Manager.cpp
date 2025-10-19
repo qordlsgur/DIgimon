@@ -83,9 +83,13 @@ void CDigimon_Manager::Angewomon()
 	Info.DigimonSkillImage = TEXT("Prototype_Component_Texture_Angewomon_Skill");
 	Info.SkillCount = 3;
 	Info.Hp = 5000;
+	Info.CurrentHp = 5000;
 	Info.Sp = 2500;
+	Info.CurrentSp = 2500;
 	Info.AttackSpeed = 100;
-	Info.Exp = 0;
+	Info.Exp = 10000;
+	Info.CurrentExp = 0;
+	Info.ExpReward = 1000;
 	Info.Lv = 50;
 
 	Digimon_Add(Info.DigimonId, Info);
@@ -132,9 +136,13 @@ void CDigimon_Manager::Blackwargreymon()
 	Info.DigimonSkillImage = TEXT("Prototype_Component_Texture_Blackwargreymon_Skill");
 	Info.SkillCount = 3;
 	Info.Hp = 7000;
+	Info.CurrentHp = 7000;
 	Info.Sp = 3500;
+	Info.CurrentSp = 3500;
 	Info.AttackSpeed = 130;
-	Info.Exp = 0;
+	Info.Exp = 20000;
+	Info.CurrentExp = 0;
+	Info.ExpReward = 3000;
 	Info.Lv = 90;
 
 	Digimon_Add(Info.DigimonId, Info);
@@ -181,9 +189,13 @@ void CDigimon_Manager::Devilmon()
 	Info.DigimonSkillImage = TEXT("Prototype_Component_Texture_Devilmon_Skill");
 	Info.SkillCount = 3;
 	Info.Hp = 2500;
+	Info.CurrentHp = 2500;
 	Info.Sp = 1250;
+	Info.CurrentSp = 1250;
 	Info.AttackSpeed = 70;
-	Info.Exp = 0;
+	Info.Exp = 5000;
+	Info.CurrentExp = 0;
+	Info.ExpReward = 500;
 	Info.Lv = 15;
 
 	Digimon_Add(Info.DigimonId, Info);
@@ -230,9 +242,13 @@ void CDigimon_Manager::LedyDevimon()
 	Info.DigimonSkillImage = TEXT("Prototype_Component_Texture_Ladydevimon_Skill");
 	Info.SkillCount = 3;
 	Info.Hp = 5000;
+	Info.CurrentHp = 5000;
 	Info.Sp = 2500;
+	Info.CurrentSp = 2500;
 	Info.AttackSpeed = 100;
-	Info.Exp = 0;
+	Info.Exp = 10000;
+	Info.CurrentExp = 0;
+	Info.ExpReward = 1000;
 	Info.Lv = 50;
 
 	Digimon_Add(Info.DigimonId, Info);
@@ -279,9 +295,13 @@ void CDigimon_Manager::Leomon()
 	Info.DigimonSkillImage = TEXT("Prototype_Component_Texture_Leomon_Skill");
 	Info.SkillCount = 3;
 	Info.Hp = 2500;
+	Info.CurrentHp = 2500;
 	Info.Sp = 1250;
+	Info.CurrentSp = 1250;
 	Info.AttackSpeed = 70;
-	Info.Exp = 0;
+	Info.Exp = 5000;
+	Info.CurrentExp = 0;
+	Info.ExpReward = 500;
 	Info.Lv = 15;
 
 	Digimon_Add(Info.DigimonId, Info);
@@ -328,9 +348,13 @@ void CDigimon_Manager::Metalgarumon()
 	Info.DigimonSkillImage = TEXT("Prototype_Component_Texture_Metalgarumon_Skill");
 	Info.SkillCount = 3;
 	Info.Hp = 7000;
+	Info.CurrentHp = 7000;
 	Info.Sp = 7000;
+	Info.CurrentSp = 7000;
 	Info.AttackSpeed = 130;
-	Info.Exp = 0;
+	Info.Exp = 20000;
+	Info.CurrentExp = 0;
+	Info.ExpReward = 3000;
 	Info.Lv = 90;
 
 	Digimon_Add(Info.DigimonId, Info);
@@ -377,9 +401,13 @@ void CDigimon_Manager::Metalgeymon()
 	Info.DigimonSkillImage = TEXT("Prototype_Component_Texture_Metalgreymon_Skill");
 	Info.SkillCount = 3;
 	Info.Hp = 5000;
+	Info.CurrentHp = 5000;
 	Info.Sp = 2500;
+	Info.CurrentSp = 2500;
 	Info.AttackSpeed = 100;
-	Info.Exp = 0;
+	Info.Exp = 10000;
+	Info.CurrentExp = 0;
+	Info.ExpReward = 1000;
 	Info.Lv = 50;
 
 	Digimon_Add(Info.DigimonId, Info);
@@ -425,10 +453,14 @@ void CDigimon_Manager::Omegamoon()
 	Info.DigimonSkillImage = TEXT("Prototype_Component_Texture_Omegamon_Skill");
 	Info.SkillCount = 3;
 	Info.Hp = 10000;
+	Info.CurrentHp = 10000;
 	Info.Sp = 5000;
+	Info.CurrentSp = 5000;
 	Info.Damage = 1300;
 	Info.AttackSpeed = 150;
-	Info.Exp = 0;
+	Info.Exp = 20000;
+	Info.CurrentExp = 0;
+	Info.ExpReward = 3000;
 	Info.Lv = 90;
 
 	Digimon_Add(Info.DigimonId, Info);
@@ -474,9 +506,13 @@ void CDigimon_Manager::Wargreymon()
 	Info.DigimonSkillImage = TEXT("Prototype_Component_Texture_Wargreymon_Skill");
 	Info.SkillCount = 3;
 	Info.Hp = 7000;
+	Info.CurrentHp = 7000;
 	Info.Sp = 3500;
+	Info.CurrentSp = 3500;
 	Info.AttackSpeed = 130;
-	Info.Exp = 0;
+	Info.Exp = 20000;
+	Info.CurrentExp = 0;
+	Info.ExpReward = 3000;
 	Info.Lv = 90;
 
 	Digimon_Add(Info.DigimonId, Info);
@@ -523,9 +559,13 @@ void CDigimon_Manager::Beelzebumon()
 	Info.DigimonSkillImage = TEXT("Prototype_Component_Texture_Beelzebumon_Skill");
 	Info.SkillCount = 3;
 	Info.Hp = 7000;
+	Info.CurrentHp = 7000;
 	Info.Sp = 3500;
+	Info.CurrentSp = 3500;
 	Info.AttackSpeed = 130;
-	Info.Exp = 0;
+	Info.Exp = 20000;
+	Info.CurrentExp = 0;
+	Info.ExpReward = 3000;
 	Info.Lv = 90;
 
 	Digimon_Add(Info.DigimonId, Info);

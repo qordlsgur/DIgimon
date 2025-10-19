@@ -163,7 +163,7 @@ void CTerrain::LoadObject(const wstring& strPrototype, _float4x4 worldMatrix)
 	wstring strName = L"Object_Layer";
 
 	m_pObject = dynamic_cast<T*>(m_pGameInstance->Add_GameObject_ToLayer_ToCreate(ENUM_CLASS(LEVEL::GAMEPLAY), strPrototype,
-		ENUM_CLASS(LEVEL::GAMEPLAY), strName));
+		ENUM_CLASS(LEVEL::GAMEPLAY), strName, nullptr, false));
 
 	m_pObject->Set_Matrix(worldMatrix);
 

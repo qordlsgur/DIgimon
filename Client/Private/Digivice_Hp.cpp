@@ -57,7 +57,7 @@ void CDigivice_Hp::Update(_float fTimeDelta)
 		long(m_fY + m_fSizeY * 0.5f)
 	};
 
-	m_fHpRatio = m_iCurrentHp / m_iMaxHp;
+	m_fHpRatio = m_fCurrentHp / static_cast<_float>(m_fMaxHp);
 
 	if (m_fHpRatio < 0.f)
 		m_fHpRatio = 0.f;
@@ -88,13 +88,13 @@ HRESULT CDigivice_Hp::Render()
 
 void CDigivice_Hp::Set_MaxHp(_int MaxHp)
 {
-	m_iMaxHp = MaxHp;
-	m_iCurrentHp = MaxHp;
+	m_fMaxHp = MaxHp;
+	m_fCurrentHp = MaxHp;
 }
 
 void CDigivice_Hp::Set_Damage(_int Damage)
 {
-	m_iCurrentHp -= Damage;
+	m_fCurrentHp -= Damage;
 }
 
 void CDigivice_Hp::Set_Move(_float fX, _float fY)
