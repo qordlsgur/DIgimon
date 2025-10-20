@@ -382,6 +382,9 @@
     <Filter Include="02.GameObjects\Digimon\06.Metalgreymon\Skill1">
       <UniqueIdentifier>{9d864198-31f2-4aba-8542-9ea6ea3f719c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.GameObjects\Skill">
+      <UniqueIdentifier>{3835e570-4904-4c83-8911-fb765f269fb4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -746,6 +749,9 @@
     </ClInclude>
     <ClInclude Include="..\public\DevilmonSkill3.h">
       <Filter>02.GameObjects\Digimon\02.Devilmon\Skill3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\SkillObject.h">
+      <Filter>02.GameObjects\Skill</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1112,6 +1118,9 @@
     </ClCompile>
     <ClCompile Include="..\private\DevilmonSkill3.cpp">
       <Filter>02.GameObjects\Digimon\02.Devilmon\Skill3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\SkillObject.cpp">
+      <Filter>02.GameObjects\Skill</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

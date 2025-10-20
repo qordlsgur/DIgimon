@@ -16,6 +16,7 @@ public:
 
 public:
 	HRESULT Add_GameObject(class CGameObject* pGameObject);
+	HRESULT Add_NonGameObject(class CGameObject* pGameObject);
 	void Priority_Update(_float fTimeDelta);
 	void Update(_float fTimeDelta);
 	void Late_Update(_float fTimeDelta);
@@ -24,6 +25,7 @@ public:
 
 private:
 	list<class CGameObject*>			m_GameObjects;
+	list<class CGameObject*>			m_NonGameObjects;
 
 public:
 	static CLayer* Create();

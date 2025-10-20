@@ -13,6 +13,11 @@ typedef struct tagGameObjectDesc : public CTransform::TRANSFORM_DESC
 {
 
 }GAMEOBJECT_DESC;
+typedef struct tagPosition
+{
+	_matrix fmatrix;
+}POSITION;
+
 protected:
 	CGameObject(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	CGameObject(const CGameObject& Prototype);

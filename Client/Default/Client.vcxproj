@@ -257,6 +257,7 @@
     <ClInclude Include="..\Public\Skill1.h" />
     <ClInclude Include="..\Public\Skill2.h" />
     <ClInclude Include="..\Public\Skill3.h" />
+    <ClInclude Include="..\public\SkillObject.h" />
     <ClInclude Include="..\Public\Sky.h" />
     <ClInclude Include="..\public\Spawner.h" />
     <ClInclude Include="..\Public\Stand.h" />
@@ -379,6 +380,7 @@
     <ClCompile Include="..\Private\Skill1.cpp" />
     <ClCompile Include="..\Private\Skill2.cpp" />
     <ClCompile Include="..\Private\Skill3.cpp" />
+    <ClCompile Include="..\private\SkillObject.cpp" />
     <ClCompile Include="..\Private\Sky.cpp" />
     <ClCompile Include="..\private\Spawner.cpp" />
     <ClCompile Include="..\Private\Stand.cpp" />

@@ -80,6 +80,11 @@ _bool CCollider::Intersect(CCollider* pTarget)
 	return m_isColl;
 }
 
+void CCollider::Set_Matrix(_matrix Matrix)
+{
+	m_pBounding->Set_Matrix(Matrix);
+}
+
 #endif
 
 CCollider* CCollider::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)

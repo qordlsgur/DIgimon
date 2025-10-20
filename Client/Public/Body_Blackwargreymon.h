@@ -36,13 +36,11 @@ public:
 
 public:
 	virtual void Set_Animation(const _char* szName, _bool bisLoop = true) override;
-	_float Get_TrackPosition() { return m_fTrackPosition; }
 private:
 	CModel* m_pModelCom = { nullptr };
 	CShader* m_pShaderCom = { nullptr };
 
 	_matrix RootBone{};
-	_float m_fTrackPosition{};
 private:
 	HRESULT Ready_Components();
 	HRESULT Bind_ShaderResources();

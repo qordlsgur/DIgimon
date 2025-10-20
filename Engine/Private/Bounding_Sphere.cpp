@@ -30,6 +30,11 @@ _bool CBounding_Sphere::Intersect(CBounding* pTarget)
 	return isColl;
 }
 
+void CBounding_Sphere::Set_Matrix(_matrix Matrix)
+{
+	m_pMatrix = Matrix;
+}
+
 #ifdef _DEBUG
 
 HRESULT CBounding_Sphere::Render(PrimitiveBatch<VertexPositionColor>* pBatch, _fvector vColor)

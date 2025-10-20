@@ -14,7 +14,7 @@ CComponent* CLayer::Get_Component(const _wstring& strComponentTag, _uint iIndex)
 		++iter;
 
 	return (*iter)->Find_Component(strComponentTag);
-	
+
 }
 
 CComponent* CLayer::Get_PartObject_Component(const _wstring& strPartTag, const _wstring& strComponentTag, _uint iIndex)
@@ -33,6 +33,16 @@ HRESULT CLayer::Add_GameObject(CGameObject* pGameObject)
 		return E_FAIL;
 
 	m_GameObjects.push_back(pGameObject);
+
+	return S_OK;
+}
+
+HRESULT CLayer::Add_NonGameObject(CGameObject* pGameObject)
+{
+	if (nullptr == pGameObject)
+		return E_FAIL;
+
+	m_NonGameObjects.push_back(pGameObject);
 
 	return S_OK;
 }
@@ -70,6 +80,11 @@ void CLayer::Clear()
 		Safe_Release(pGameObject);
 
 	m_GameObjects.clear();
+
+	for (auto& pGameObject : m_NonGameObjects)
+		Safe_Release(pGameObject);
+
+	m_NonGameObjects.clear();
 }
 
 void CLayer::Clear_DeadObj()
@@ -101,5 +116,10 @@ void CLayer::Free()
 		Safe_Release(pGameObject);
 
 	m_GameObjects.clear();
-	
+
+	for (auto& pGameObject : m_NonGameObjects)
+		Safe_Release(pGameObject);
+
+	m_NonGameObjects.clear();
+
 }

@@ -61,6 +61,15 @@ void CBattle_UI_Manager::Set_Battle_Turn_Order(deque<CContainerObject*> Digimon_
 	m_pDigimon_Turn_Order = Digimon_Turn_Order;
 }
 
+void CBattle_UI_Manager::Set_Hpbar(CContainerObject* Enemy, _int Damage)
+{
+	for (size_t i = 0; i < m_pEnemys.size(); ++i)
+	{
+		if (Enemy == m_pEnemys[i])
+			m_pEnemyHps[i]->Set_Damage(Damage);
+	}
+}
+
 void CBattle_UI_Manager::Set_MyDigimon(CContainerObject* MyDigimon)
 {
 	m_iDigimon++;
@@ -410,12 +419,13 @@ void CBattle_UI_Manager::Update_TimeLine(CContainerObject* HitDigimon)
 	{
 		m_pTimeLines[i]->Set_Move(m_fTurn_Panel[i]);
 	}
-
 }
 
 void CBattle_UI_Manager::Free()
 {
 	__super::Free();
+
+	
 
 	Safe_Release(m_pGameInstance);
 }

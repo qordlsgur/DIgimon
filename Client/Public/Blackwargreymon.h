@@ -32,6 +32,8 @@ public:
 	virtual void Skill2() override;
 	virtual void Skill3() override;
 
+	void Creat_Skill(_int SkillNum);
+
 public:
 	virtual _int Intersect(class CCollider* pPlayer_Collider) override;
 
@@ -44,11 +46,15 @@ private:
 	class CDigimon_Manager* m_pDigimon_Manager = { nullptr };
 	class CStateMachine* m_pFsm = { nullptr };
 
+	class CBlackwargreymonSkill3* m_pSkill3= { nullptr };
+
 	_bool m_bMove = false;
 	_bool m_bisHit = { false };
 	_float m_fTime{};
 	_float m_fFontUp{};
 	_float m_fRandom{};
+
+	_bool		m_bSkillCreate = { false };
 private:
 	HRESULT Ready_PartObjects();
 

@@ -27,6 +27,7 @@ public:
 	HRESULT Create_TimeLine(_int MyDigimonCount, _int EnemyDigimonCount);
 
 	void Set_Battle_Turn_Order(deque<CContainerObject*>Digimon_Turn_Order);
+	void Set_Hpbar(CContainerObject* Enemy, _int Damage);
 
 	void Set_MyDigimon(CContainerObject* MyDigimon);
 	void Set_Enemy_Digimon(CContainerObject* EnemyDigimon);

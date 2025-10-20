@@ -110,8 +110,6 @@ void CBattle_Manager::Update(_float fTimeDelta)
 			break;
 
 		case BATTLE_STATE::END:
-			m_pHitCurrentDigimon->Set_Life(false);
-
 			if (!m_pCurrentDigimon->Get_Monster())
 				m_pCurrentDigimon->LookAt(m_fPlayer_Look);
 			else
@@ -973,6 +971,15 @@ void CBattle_Manager::Digimon_Dead()
 void CBattle_Manager::Digimon_Alive()
 {
 	m_pBattle_UI_Manager->Set_Battle_Turn_Order(m_pDigimon_Turn_Order);
+	if (m_pHitCurrentDigimon->Get_Monster())
+	{
+		m_pHitCurrentDigimon->Set_HitDamage(m_pCurrentDigimon->Get_Damage());
+		m_pBattle_UI_Manager->Set_Hpbar(m_pHitCurrentDigimon, m_pCurrentDigimon->Get_Damage());
+	}
+	else
+	{
+		m_pHitCurrentDigimon->Set_HitDamage(m_pCurrentDigimon->Get_Damage());
+	}
 }
 
 void CBattle_Manager::Free()
@@ -981,6 +988,10 @@ void CBattle_Manager::Free()
 
 	m_pMyDigimon.clear();
 	m_pEnemyDigimon.clear();
+	m_pDigimonSort.clear();
+	m_pDigimon_Turn_Order.clear();
+
+
 
 	Safe_Release(m_pGameInstance);
 }

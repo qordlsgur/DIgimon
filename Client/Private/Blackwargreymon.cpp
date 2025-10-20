@@ -4,6 +4,7 @@
 #include "PartObject.h"
 #include "StateMachine.h"
 #include "Digimon_Manager.h"
+#include "BlackwargreymonSkill3.h"
 
 CBlackwargreymon::CBlackwargreymon(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CContainerObject{ pDevice, pContext }
@@ -70,6 +71,12 @@ void CBlackwargreymon::Update(_float fTimeDelta)
 			}
 			if (!m_bMove)
 				m_pFsm->Enter(DIGIMONSTATE::STAND, m_pPart_Body);
+
+			if (m_pGameInstance->Key_Down(DIK_3))
+			{
+				Creat_Skill(3);
+			}
+
 		}
 		else
 		{
@@ -83,6 +90,7 @@ void CBlackwargreymon::Update(_float fTimeDelta)
 			{
 				Skill1();
 				m_iDamage = Info.DigimonSkill1Info.Damage;
+				
 			}
 			else if (m_bSkill2)
 			{
@@ -94,6 +102,13 @@ void CBlackwargreymon::Update(_float fTimeDelta)
 			{
 				Skill3();
 				m_iDamage = Info.DigimonSkill3Info.Damage;
+
+				if(m_bSkillCreate == true)
+				if (m_pPart_Body->Get_TrackPosition() == 25.f)
+				{
+					m_bSkillCreate = false;
+					Creat_Skill(3);
+				}
 			}
 
 			if (m_bBackJump)
@@ -198,6 +213,8 @@ void CBlackwargreymon::UseSkill(_int Skill)
 
 	else if (Skill == 3)
 		m_bSkill3 = true;
+
+
 }
 
 void CBlackwargreymon::Skill1()
@@ -240,6 +257,26 @@ void CBlackwargreymon::Skill3()
 	}
 }
 
+void CBlackwargreymon::Creat_Skill(_int SkillNum)
+{
+	POSITION Desc;
+	Desc.fmatrix = XMLoadFloat4x4(m_pTransformCom->Get_WorldMatrixPtr());
+	switch (SkillNum)
+	{
+	case 1:
+		break;
+
+	case 2:
+		break;
+
+	case 3:
+	m_pGameInstance->Add_GameObject_ToLayer(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_BlackwargreymonSkill3"),
+			ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Layer_BlackwargreymonSkill3"), &Desc);
+
+		break;
+	}
+}
+
 
 HRESULT CBlackwargreymon::Ready_PartObjects()
 {
@@ -262,6 +299,7 @@ HRESULT CBlackwargreymon::Ready_PartObjects()
 	if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Collider_Sphere"),
 		TEXT("Com_Collider_Sphere"), reinterpret_cast<CComponent**>(&m_pColliderCom), &SphereDesc)))
 		return E_FAIL;
+
 
 	return S_OK;
 }

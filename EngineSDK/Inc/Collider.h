@@ -22,12 +22,11 @@ public:
 public:
 	_bool Intersect(CCollider* pTarget);
 
-
+	void Set_Matrix(_matrix	Matrix);
 
 private:
-	class CBounding* m_pBounding = { nullptr };
+	class CBounding*	m_pBounding = { nullptr };
 	_bool				m_isColl = { false };
-
 #ifdef _DEBUG
 private:
 	PrimitiveBatch<DirectX::VertexPositionColor>* m_pBatch = { nullptr };

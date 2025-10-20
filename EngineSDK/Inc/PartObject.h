@@ -31,12 +31,16 @@ public:
 	virtual _bool Get_AnimFinish() { return m_isAnimFinish; }
 	virtual void Set_State(DIGIMONSTATE eState) { m_eState = eState; }
 
+	virtual _float Get_TrackPosition() { return m_fTrackPosition; }
+
 protected:
 	class CTransform* m_pParentTransformCom = { nullptr };
 
 	_float4x4			m_CombinedWorldMatrix = {};
 	_bool				m_isAnimFinish = { false };
 	DIGIMONSTATE		m_eState = { DIGIMONSTATE::END };
+	_float m_fTrackPosition{};
+
 public:
 	virtual CGameObject* Clone(void* pArg) = 0;
 	virtual void Free() override;

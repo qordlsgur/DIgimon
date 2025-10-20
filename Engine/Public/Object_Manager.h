@@ -35,11 +35,13 @@ private:
 
 	_uint								m_iNumLevels = {};
 	map<const _wstring, class CLayer*>* m_pLayers = { nullptr };
+	map<const _wstring, class CLayer*>* m_pNonLayers = { nullptr };
 	class CGameInstance*				m_pGameInstance = { nullptr };
 	_bool								m_bAnim = { false };
 
 private:
 	class CLayer* Find_Layer(_uint iLayerLevelIndex, const _wstring& strLayerTag);
+	class CLayer* Find_NonAnimLayer(_uint iLayerLevelIndex, const _wstring& strLayerTag);
 
 public:
 	static CObject_Manager* Create(_uint iNumLevels);
