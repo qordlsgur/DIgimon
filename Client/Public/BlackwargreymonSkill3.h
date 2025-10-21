@@ -27,17 +27,20 @@ public:
 public:
 	void Set_Pos(_float fX, _float fY);
 
-private:
-
-
+	//virtual CCollider* Get_Collider() override;
+	virtual _int Get_Damage() override;
 private:
 	CCollider* m_pColliderCom = { nullptr };
 
-	_float m_fX;
-	_float m_fY;
+	class CInteraction_Manager* m_pInteraction_Manager = { nullptr };
 
-	_matrix m;
+	_vector m_vFirst{};
 
+	_vector Pos{};
+
+	_bool m_bFirst = { false };
+	_bool m_bSize = { false };
+	_bool m_bEnd = { false };
 private:
 	HRESULT Ready_PartObjects();
 

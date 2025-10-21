@@ -209,7 +209,6 @@ _bool CModel::Play_Animation(_float fTimeDelta)
 		return false;
 
 
-
 	if (m_bAnimEnd == true)
 	{
 		if (m_Change_Anim == true)
@@ -218,6 +217,7 @@ _bool CModel::Play_Animation(_float fTimeDelta)
 			m_Animations[m_iPreviousAnimIndex]->Save_TransformationMatrices(m_Bones, fTimeDelta, m_Lerp);
 			m_Animations[m_iPreviousAnimIndex]->Reset();
 			m_Animations[m_iCurrentAnimIndex]->CompareStringVectors(m_Lerp);
+			m_Animations[m_iCurrentAnimIndex]->Reset();
 			m_Change_Anim = false;
 			m_fCurrentTrackPosition = 0.f;
 		}
@@ -232,7 +232,9 @@ _bool CModel::Play_Animation(_float fTimeDelta)
 
 			XMStoreFloat4x4(Get_BoneMatrixPtr("Root"), Root);
 			pBone->Update_CombinedTransformationMatrix(m_Bones, XMLoadFloat4x4(&m_PreTransformMatrix));
+
 		}
+
 	}
 
 	else
@@ -240,7 +242,12 @@ _bool CModel::Play_Animation(_float fTimeDelta)
 		/* 내가 재생하고자하는 애니메이션(공격모션)이 이용하고 있는 뼈들의 상태 변환정보(TransformationMatrix)를 갱신해준다.*/
 		m_Animations[m_iCurrentAnimIndex]->Update_TransformationMatrices(m_Bones, m_isLoop, fTimeDelta);
 
-		m_fCurrentTrackPosition = m_Animations[m_iCurrentAnimIndex]->Get_CurrentTrackPosition();
+		if (m_iCurrentAnimIndex >= 8 && m_iCurrentAnimIndex <= 10)
+		{
+
+			m_fCurrentTrackPosition = m_Animations[m_iCurrentAnimIndex]->Get_CurrentTrackPosition();
+		}
+
 
 		/* 모든 뼈를 순회하면서 CombinedTransformationMatrix를 갱신한다. */
 		for (auto& pBone : m_Bones)

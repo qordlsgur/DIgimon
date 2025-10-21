@@ -7,6 +7,7 @@ NS_BEGIN(Engine)
 class CVIBuffer_Rect;
 class CTexture;
 class CShader;
+class CContainerObject;
 NS_END
 
 NS_BEGIN(Client)
@@ -28,10 +29,8 @@ public:
 
 public:
 	void Set_Move(_float fX, _float fY);
-	void Set_Name(wstring DigimonName);
+	void Set_Enemy(CContainerObject* Enemy);
 
-	void Set_MaxHp(_float MaxHp);
-	void Set_Damage(_int Damage);
 private:
 	CVIBuffer_Rect* m_pVIBufferCom = { nullptr };
 	CTexture* m_pTextureCom = { nullptr };
@@ -42,7 +41,7 @@ private:
 
 
 	class CBattle_Enemy_HpBar* m_pHpBar = { nullptr };
-	wstring m_strDigimon_Name;
+	CContainerObject* m_pEnemy = { nullptr };
 
 	_float m_fMaxHp{};
 	_float m_fCurrentHp{};

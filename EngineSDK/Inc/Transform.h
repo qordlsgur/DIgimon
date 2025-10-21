@@ -81,6 +81,8 @@ public:
 	// 이 함수는 물체를 Look 처다보게 해 주는 함수이다.
 	void LookAt(_fvector vAt);
 
+	void SizeUp(_float fX, _float fY, _float fZ);
+
 public:
 	void Jump(_float fHight);
 	void Set_Y(_float y);

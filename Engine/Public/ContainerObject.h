@@ -30,7 +30,9 @@ public:
 	virtual DIGIMON_ATTRIBUTE Get_Attribute();
 	virtual const wstring& Get_Digimon_Info();
 	virtual _int Get_Hp();
+	virtual _int Get_CurrentHp();
 	virtual _int Get_Sp();
+	virtual _int Get_CurrentSp();
 	virtual _int Get_Damage();
 	virtual _int Get_AttackSpeed();
 	virtual _int Get_Exp();
@@ -92,6 +94,11 @@ public:
 	virtual _int Skill_Damage();
 	virtual void Set_HitDamage(_int Damage);
 
+	virtual void TargetPos(_vector Target) { m_vTarget_Position = Target; }
+
+	virtual void Set_Hit(_bool Hit) { m_bHit = Hit; }
+	virtual _bool Get_Hit() { return m_bHit ; }
+
 protected:
 	map<const _wstring, class CPartObject*>			m_PartObjects;
 
@@ -111,6 +118,8 @@ protected:
 	_bool m_bSkill2 = { false };
 	_bool m_bSkill3 = { false };
 	_bool m_bTurnEnd = { true };
+	_bool m_bHit = { false };
+	_vector m_vTarget_Position{};
 
 	queue<DIGIMONSTATE> m_eSkill_State;
 

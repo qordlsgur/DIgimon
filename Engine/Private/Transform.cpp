@@ -3,12 +3,12 @@
 #include "Navigation.h"
 
 CTransform::CTransform(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
-    : CComponent{ pDevice, pContext }
+	: CComponent{ pDevice, pContext }
 {
 }
 
 CTransform::CTransform(const CTransform& Prototype)
-    : CComponent{ Prototype }
+	: CComponent{ Prototype }
 {
 }
 
@@ -22,11 +22,11 @@ _float3 CTransform::Get_Scale() const
 	// 생각을 해 보자면 이제 저거를 계산용으로 한다고 하면 1,0,0,0으로 계산을 하면 결국
 	// 3,0,0,0이라서 저렇게 만든 것 같다.
 	// 그러면 이제 X를 받든 Y를 받든 Z를 받든 W를 받는 결국 값은 다 똑같아서 X로 받는다.
-    return _float3(
-        XMVectorGetX(XMVector3Length(Get_State(STATE::RIGHT))),
-        XMVectorGetX(XMVector3Length(Get_State(STATE::UP))),
-        XMVectorGetX(XMVector3Length(Get_State(STATE::LOOK)))
-    );
+	return _float3(
+		XMVectorGetX(XMVector3Length(Get_State(STATE::RIGHT))),
+		XMVectorGetX(XMVector3Length(Get_State(STATE::UP))),
+		XMVectorGetX(XMVector3Length(Get_State(STATE::LOOK)))
+	);
 }
 
 void CTransform::Set_Scale(_float fX, _float fY, _float fZ)
@@ -39,20 +39,20 @@ void CTransform::Set_Scale(_float fX, _float fY, _float fZ)
 HRESULT CTransform::Initialize_Prototype()
 {
 	XMStoreFloat4x4(&m_WorldMatrix, XMMatrixIdentity());
-    return S_OK;
+	return S_OK;
 }
 
 HRESULT CTransform::Initialize(void* pArg)
 {
-    if (nullptr == pArg)
-        return S_OK;
+	if (nullptr == pArg)
+		return S_OK;
 
-    TRANSFORM_DESC* pDesc = static_cast<TRANSFORM_DESC*>(pArg);
+	TRANSFORM_DESC* pDesc = static_cast<TRANSFORM_DESC*>(pArg);
 
-    m_fSpeedPerSec = pDesc->fSpeedPerSec;
-    m_fRotationPerSec = pDesc->fRotationPerSec;
+	m_fSpeedPerSec = pDesc->fSpeedPerSec;
+	m_fRotationPerSec = pDesc->fRotationPerSec;
 
-    return S_OK;
+	return S_OK;
 }
 
 // 셰이더에 Worldmatrix를 넘기기 위해 만들어 둠
@@ -129,7 +129,7 @@ void CTransform::Go_Right(_float fTimeDelta)
 
 
 void CTransform::Turn(_fvector vAxis, _float fTimeDelta)
-{	
+{
 	// 이 함수는 이제 물체를 프레임마다 회전을 시키기 위해서 사용하는 함수로 임의의 축을
 	// 기준으로 메 프레임마다 회전을 해주는 함수이다. 
 
@@ -160,7 +160,7 @@ void CTransform::Rotation(_fvector vAxis, _float fRadian)
 {
 	// 이 함수는 임의의 축으로 한번 회전 한다.
 	// 이제 건물이나, 나무 이런 변하지 않는 것들은 이거로 처리한다.
-	
+
 	// 스케일을 바꾸지 않기 위해서 미리 받아온다.
 	_float3		vScale = Get_Scale();
 
@@ -259,6 +259,21 @@ void CTransform::LookAt(_fvector vAt)
 	Set_State(STATE::RIGHT, XMVector3Normalize(vRight) * vScale.x);
 	Set_State(STATE::UP, XMVector3Normalize(vUp) * vScale.y);
 	Set_State(STATE::LOOK, XMVector3Normalize(vLook) * vScale.z);
+}
+
+void CTransform::SizeUp(_float fX, _float fY, _float fZ)
+{
+	_float3 vScale = Get_Scale();
+
+	// 누적해서 스케일 계산
+	vScale.x += fX;
+	vScale.y += fY;
+	vScale.z += fZ;
+
+	// 각 축 벡터 방향은 그대로, 길이만 스케일 적용
+	Set_State(STATE::RIGHT, XMVectorSet(1.f, 0.f, 0.f, 0.f) * vScale.x);
+	Set_State(STATE::UP, XMVectorSet(0.f, 1.f, 0.f, 0.f) * vScale.y);
+	Set_State(STATE::LOOK, XMVectorSet(0.f, 0.f, 1.f, 0.f) * vScale.z);
 }
 
 void CTransform::Jump(_float fHight)
@@ -440,31 +455,31 @@ void CTransform::Target_Pos_Move(_fvector Target_Pos, _float fTimeDelta)
 
 CTransform* CTransform::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 {
-    CTransform* pInstance = new CTransform(pDevice, pContext);
+	CTransform* pInstance = new CTransform(pDevice, pContext);
 
-    if (FAILED(pInstance->Initialize_Prototype()))
-    {
-        MSG_BOX(" Failed to Create : Transform ");
-        Safe_Release(pInstance);
-    }
+	if (FAILED(pInstance->Initialize_Prototype()))
+	{
+		MSG_BOX(" Failed to Create : Transform ");
+		Safe_Release(pInstance);
+	}
 
-    return pInstance;
+	return pInstance;
 }
 
 CComponent* CTransform::Clone(void* pArg)
 {
-    CTransform* pInstance = new CTransform(*this);
+	CTransform* pInstance = new CTransform(*this);
 
-    if (FAILED(pInstance->Initialize(pArg)))
-    {
-        MSG_BOX(" Failed to Cloned : Transform ");
-        Safe_Release(pInstance);
-    }
+	if (FAILED(pInstance->Initialize(pArg)))
+	{
+		MSG_BOX(" Failed to Cloned : Transform ");
+		Safe_Release(pInstance);
+	}
 
-    return pInstance;
+	return pInstance;
 }
 
 void CTransform::Free()
 {
-    __super::Free();
+	__super::Free();
 }

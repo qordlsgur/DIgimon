@@ -98,6 +98,7 @@ private:
 
 	class CDigimon_Manager*			m_pDigimon_Manager = { nullptr };
 	class CBattle_UI_Manager*		m_pBattle_UI_Manager = { nullptr };
+	class CInteraction_Manager*		m_pInteraction_Manager = { nullptr };
 
 	vector<CContainerObject*>		m_pMyDigimon;
 	vector<CContainerObject*>		m_pEnemyDigimon;

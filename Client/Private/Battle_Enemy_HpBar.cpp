@@ -95,9 +95,9 @@ void CBattle_Enemy_HpBar::Set_MaxHp(_float MaxHp)
 	m_fCurrentHp = MaxHp;
 }
 
-void CBattle_Enemy_HpBar::Set_Damage(_int Damage)
+void CBattle_Enemy_HpBar::Set_CurrentHp(_float CurrentHp)
 {
-	m_fCurrentHp -= Damage;
+	m_fCurrentHp = CurrentHp;
 }
 
 void CBattle_Enemy_HpBar::Set_Move(_float fX, _float fY)

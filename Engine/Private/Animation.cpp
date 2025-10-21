@@ -90,6 +90,7 @@ void CAnimation::Change_TransformationMatrices(class CModel* pModel, const vecto
 {
 	/* 내 애니메이션의 현재 재생위치. */
 	// 틱마다 중첩해서 값을 증가 시킴
+	m_fCurrentTrackPosition = 0.f;
 	m_fSaveTime += fTimeDelta;
 	m_fBlendTime = 0.2f;
 	m_fTick = clamp(m_fSaveTime / m_fBlendTime, 0.f, 1.f);

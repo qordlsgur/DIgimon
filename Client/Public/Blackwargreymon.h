@@ -2,6 +2,7 @@
 #include "Client_Defines.h"
 #include "ContainerObject.h"
 #include "StateMachine.h"
+#include "SkillObject.h"
 
 NS_BEGIN(Engine)
 class CNavigation;
@@ -45,8 +46,6 @@ private:
 
 	class CDigimon_Manager* m_pDigimon_Manager = { nullptr };
 	class CStateMachine* m_pFsm = { nullptr };
-
-	class CBlackwargreymonSkill3* m_pSkill3= { nullptr };
 
 	_bool m_bMove = false;
 	_bool m_bisHit = { false };

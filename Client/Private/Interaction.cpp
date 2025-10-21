@@ -26,10 +26,12 @@ HRESULT CInteraction::Initialize(void* pArg)
 
 void CInteraction::Priority_Update(_float fTimeDelta)
 {
+	m_pInteraction_Manager->Priority_Update();
 }
 
 void CInteraction::Update(_float fTimeDelta)
 {
+	m_pInteraction_Manager->Update();
 }
 
 void CInteraction::Late_Update(_float fTimeDelta)

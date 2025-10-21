@@ -30,7 +30,7 @@ public:
 	void Set_Parent_WorldPos(_vector fParent_World);
 
 	void Set_MaxHp(_float MaxHp);
-	void Set_Damage(_int Damage);
+	void Set_CurrentHp(_float CurrentHp);
 	void Set_Move(_float fX, _float fY);
 
 	_float Get_MaxHp() { return m_fMaxHp; }

@@ -1,7 +1,7 @@
 #include "Battle_Enemy_Hp_BG.h"
 #include "GameInstance.h"
 #include "Battle_Enemy_HpBar.h"
-
+#include "ContainerObject.h"
 CBattle_Enemy_Hp_BG::CBattle_Enemy_Hp_BG(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CUIObject{ pDevice, pContext }
 {
@@ -37,6 +37,8 @@ HRESULT CBattle_Enemy_Hp_BG::Initialize(void* pArg)
 	if (FAILED(Create_HpBar(TEXT("Layer_Enemy_HpBar"))))
 		return E_FAIL;
 
+
+
 	return S_OK;
 }
 
@@ -64,6 +66,10 @@ void CBattle_Enemy_Hp_BG::Update(_float fTimeDelta)
 		};
 
 		m_pHpBar->Set_Parent_WorldPos(m_pTransformCom->Get_State(STATE::POSITION));
+
+
+		m_fCurrentHp = static_cast<_float>(m_pEnemy->Get_CurrentHp());
+		m_pHpBar->Set_CurrentHp(m_fCurrentHp);
 
 		_itow_s(static_cast<_int>(m_fMaxHp), m_szMaxHp, MAX_PATH, 10);
 		_itow_s(static_cast<_int>(m_fCurrentHp), m_szCurrentHp, MAX_PATH, 10);
@@ -97,8 +103,8 @@ HRESULT CBattle_Enemy_Hp_BG::Render()
 		m_pHpBar->Render();
 
 
-		_float InfoState = (m_pGameInstance->FontSizeX(TEXT("14"), m_strDigimon_Name.c_str()) - 12.f) * 0.5f + 10.f;
-		m_pGameInstance->Render_Text(TEXT("14"), m_strDigimon_Name.c_str(), _float2(m_fX - InfoState, m_fY - 30.f));
+		_float InfoState = (m_pGameInstance->FontSizeX(TEXT("14"), m_pEnemy->Get_Digimon_Name().c_str()) - 12.f) * 0.5f + 10.f;
+		m_pGameInstance->Render_Text(TEXT("14"), m_pEnemy->Get_Digimon_Name().c_str(), _float2(m_fX - InfoState, m_fY - 30.f));
 
 		m_pGameInstance->Render_Text(TEXT("12"), m_szMaxHp, _float2(m_fX, m_fY - 2.5f));
 
@@ -117,24 +123,12 @@ void CBattle_Enemy_Hp_BG::Set_Move(_float fX, _float fY)
 	m_fY = fY;
 }
 
-void CBattle_Enemy_Hp_BG::Set_Name(wstring DigimonName)
+void CBattle_Enemy_Hp_BG::Set_Enemy(CContainerObject* Enemy)
 {
-	m_strDigimon_Name = DigimonName;
+	m_pEnemy = Enemy;
+	m_fMaxHp = static_cast<_float>(m_pEnemy->Get_Hp());
+	m_pHpBar->Set_MaxHp(m_fMaxHp);
 }
-
-void CBattle_Enemy_Hp_BG::Set_MaxHp(_float MaxHp)
-{
-	m_pHpBar->Set_MaxHp(MaxHp);
-	m_fMaxHp = MaxHp;
-	m_fCurrentHp = MaxHp;
-}
-
-void CBattle_Enemy_Hp_BG::Set_Damage(_int Damage)
-{
-	m_pHpBar->Set_Damage(Damage);
-	m_fCurrentHp -= Damage;
-}
-
 
 HRESULT CBattle_Enemy_Hp_BG::Ready_Components()
 {

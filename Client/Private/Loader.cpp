@@ -1058,15 +1058,15 @@ HRESULT CLoader::Loading_For_GamePlay()
 	//	CAngewomonSkill3::Create(m_pDevice, m_pContext))))
 	//	return E_FAIL;
 
-	///* For.Prototype_GameObject_BlackwargreymonSkill1*/
-	//if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_BlackwargreymonSkill1"),
-	//	CBlackwargreymonSkill1::Create(m_pDevice, m_pContext))))
-	//	return E_FAIL;
+	/* For.Prototype_GameObject_BlackwargreymonSkill1*/
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_BlackwargreymonSkill1"),
+		CBlackwargreymonSkill1::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
 
-	///* For.Prototype_GameObject_BlackwargreymonSkill2*/
-	//if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_BlackwargreymonSkill2"),
-	//	CBlackwargreymonSkill2::Create(m_pDevice, m_pContext))))
-	//	return E_FAIL;
+	/* For.Prototype_GameObject_BlackwargreymonSkill2*/
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_BlackwargreymonSkill2"),
+		CBlackwargreymonSkill2::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
 
 	/* For.Prototype_GameObject_BlackwargreymonSkill3*/
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_BlackwargreymonSkill3"),

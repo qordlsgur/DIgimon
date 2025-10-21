@@ -26,19 +26,33 @@ HRESULT CSkillObject::Initialize(void* pArg)
 
 void CSkillObject::Priority_Update(_float fTimeDelta)
 {
+    if (m_bHit == true)
+        m_isDead = true;
 }
 
 void CSkillObject::Update(_float fTimeDelta)
 {
+    if (m_bHit == true)
+        m_isDead = true;
 }
 
 void CSkillObject::Late_Update(_float fTimeDelta)
 {
+    if (m_bHit == true)
+        m_isDead = true;
 }
 
 HRESULT CSkillObject::Render()
 {
     return S_OK;
+}
+
+void CSkillObject::Set_Move(_vector Position)
+{
+}
+
+void CSkillObject::Move(_float fTimeDatel)
+{
 }
 
 void CSkillObject::Free()

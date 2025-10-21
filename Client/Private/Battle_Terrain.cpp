@@ -50,10 +50,10 @@ HRESULT CBattle_Terrain::Initialize(void* pArg)
 
 		m_vPlayerDigimonPos[i] = XMVectorSet(130.f - fX, 0.f, 130.f, 1.f);
 		m_vMonsterDigimonPos[i] = XMVectorSet(130.f - fX, 0.f, 70.f, 1.f);
-		m_vPlayerDigimonAttackPos[i] = XMVectorSet(130.f - fX, 0.f, 80.f, 1.f);
-		m_vMonsterDigimonAttackPos[i] = XMVectorSet(130.f - fX, 0.f, 120.f, 1.f);
+		m_vPlayerDigimonAttackPos[i] = XMVectorSet(130.f - fX, 0.f, 85.f, 1.f);
+		m_vMonsterDigimonAttackPos[i] = XMVectorSet(130.f - fX, 0.f, 115.f, 1.f);
 	}
-
+	
 	m_vPlayerPos = XMVectorSet(100.f, 0.f, 150.f, 1.f);
 
 	m_pBattle_Manager->Set_Battle_Pos(m_vMonsterDigimonPos, m_vPlayerDigimonPos, m_vPlayerPos, m_vMonsterDigimonAttackPos, m_vPlayerDigimonAttackPos);

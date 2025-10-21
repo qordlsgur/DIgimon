@@ -63,11 +63,11 @@ void CBattle_UI_Manager::Set_Battle_Turn_Order(deque<CContainerObject*> Digimon_
 
 void CBattle_UI_Manager::Set_Hpbar(CContainerObject* Enemy, _int Damage)
 {
-	for (size_t i = 0; i < m_pEnemys.size(); ++i)
-	{
-		if (Enemy == m_pEnemys[i])
-			m_pEnemyHps[i]->Set_Damage(Damage);
-	}
+	//for (size_t i = 0; i < m_pEnemys.size(); ++i)
+	//{
+	//	if (Enemy == m_pEnemys[i])
+	//		m_pEnemyHps[i]->Set_Damage(Damage);
+	//}
 }
 
 void CBattle_UI_Manager::Set_MyDigimon(CContainerObject* MyDigimon)
@@ -314,37 +314,31 @@ HRESULT CBattle_UI_Manager::CreateHp()
 	if (m_iEnemyDigimonCount == 1)
 	{
 		m_pEnemyHps[0]->Set_Move(m_iEnemy_HpPos[2].x, m_iEnemy_HpPos[2].y);
-		m_pEnemyHps[0]->Set_Name(m_pEnemys[0]->Get_Digimon_Name());
-		m_pEnemyHps[0]->Set_MaxHp(static_cast<_float>(m_pEnemys[0]->Get_Hp()));
+		m_pEnemyHps[0]->Set_Enemy(m_pEnemys[0]);
 		m_pEnemyHps[0]->Set_Active(true);
 	}
 	else if (m_iEnemyDigimonCount == 2)
 	{
 		m_pEnemyHps[0]->Set_Move(m_iEnemy_HpPos[1].x, m_iEnemy_HpPos[1].y);
-		m_pEnemyHps[0]->Set_Name(m_pEnemys[0]->Get_Digimon_Name());
-		m_pEnemyHps[0]->Set_MaxHp(static_cast<_float>(m_pEnemys[0]->Get_Hp()));
+		m_pEnemyHps[0]->Set_Enemy(m_pEnemys[0]);
 		m_pEnemyHps[0]->Set_Active(true);
 
 		m_pEnemyHps[1]->Set_Move(m_iEnemy_HpPos[3].x, m_iEnemy_HpPos[3].y);
-		m_pEnemyHps[1]->Set_Name(m_pEnemys[1]->Get_Digimon_Name());
-		m_pEnemyHps[1]->Set_MaxHp(static_cast<_float>(m_pEnemys[1]->Get_Hp()));
+		m_pEnemyHps[1]->Set_Enemy(m_pEnemys[1]);
 		m_pEnemyHps[1]->Set_Active(true);
 	}
 	else if (m_iEnemyDigimonCount == 3)
 	{
 		m_pEnemyHps[0]->Set_Move(m_iEnemy_HpPos[0].x, m_iEnemy_HpPos[0].y);
-		m_pEnemyHps[0]->Set_Name(m_pEnemys[0]->Get_Digimon_Name());
-		m_pEnemyHps[0]->Set_MaxHp(static_cast<_float>(m_pEnemys[0]->Get_Hp()));
+		m_pEnemyHps[0]->Set_Enemy(m_pEnemys[0]);
 		m_pEnemyHps[0]->Set_Active(true);
 
 		m_pEnemyHps[1]->Set_Move(m_iEnemy_HpPos[2].x, m_iEnemy_HpPos[2].y);
-		m_pEnemyHps[1]->Set_Name(m_pEnemys[1]->Get_Digimon_Name());
-		m_pEnemyHps[1]->Set_MaxHp(static_cast<_float>(m_pEnemys[1]->Get_Hp()));
+		m_pEnemyHps[1]->Set_Enemy(m_pEnemys[1]);
 		m_pEnemyHps[1]->Set_Active(true);
 
 		m_pEnemyHps[2]->Set_Move(m_iEnemy_HpPos[4].x, m_iEnemy_HpPos[4].y);
-		m_pEnemyHps[2]->Set_Name(m_pEnemys[2]->Get_Digimon_Name());
-		m_pEnemyHps[2]->Set_MaxHp(static_cast<_float>(m_pEnemys[2]->Get_Hp()));
+		m_pEnemyHps[2]->Set_Enemy(m_pEnemys[2]);
 		m_pEnemyHps[2]->Set_Active(true);
 	}
 

@@ -89,9 +89,19 @@ _int CContainerObject::Get_Hp()
 	return Info.Hp;
 }
 
+_int CContainerObject::Get_CurrentHp()
+{
+	return Info.CurrentHp;
+}
+
 _int CContainerObject::Get_Sp()
 {
 	return Info.Sp;
+}
+
+_int CContainerObject::Get_CurrentSp()
+{
+	return Info.CurrentSp;
 }
 
 _int CContainerObject::Get_Damage()
@@ -261,6 +271,7 @@ void CContainerObject::Set_HitDamage(_int Damage)
 {
 	m_iHitDamage = Damage;
 	Info.CurrentHp -= m_iHitDamage;
+	m_bHit = true;
 }
 
 CPartObject* CContainerObject::Find_PartObject(const _wstring& strPartTag)

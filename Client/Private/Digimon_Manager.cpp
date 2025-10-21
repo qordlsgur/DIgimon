@@ -616,6 +616,9 @@ void CDigimon_Manager::Set_Current_Digimon_Info(DIGIMON_INFO* Info)
 
 DIGIMON_INFO* CDigimon_Manager::Get_Current_Digimon_Info(_int Num)
 {
+	if (m_CurrentDigimon.size() <= Num)
+		return nullptr;
+
 	return m_CurrentDigimon[Num];
 }
 
