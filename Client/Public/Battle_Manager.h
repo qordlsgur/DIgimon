@@ -77,7 +77,7 @@ public:
 
 	CContainerObject* Digimon_Create(_int EnemyDigimonID);
 	template<typename T>
-	CContainerObject* Digimon(const wstring& strPrototype);
+	T* Digimon(const wstring& strPrototype);
 
 	void Set_Player_Pos(_vector Pos);
 	void Set_First_Digimon_Pos(_vector Pos);
@@ -108,8 +108,9 @@ private:
 
 	CContainerObject*				m_pPlayer = { nullptr }; 
 	CGameObject*					m_pDigivice = { nullptr };
-
 	CGameObject*					m_pBattle_Terrain = { nullptr };
+	CContainerObject*				m_pFirst_Digimon = { nullptr };
+
 
 	_vector							m_pPlayer_Pos{};
 	_vector							m_pFirst_Digimon_Pos{};

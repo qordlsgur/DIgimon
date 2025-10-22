@@ -782,7 +782,10 @@ void CDigimon_Manager::Free()
 {
 	__super::Free();
 
-	m_vDigivice_Battle_Slot.clear();
+	m_Digimon_Info.clear();
+	m_Digimon_Model.clear();
+	m_Digimon_Prototype.clear();
+	m_pDigimon_Skill.clear();
 
-	Safe_Release(m_pGameInstance);
+	//Safe_Release(m_pGameInstance);
 }

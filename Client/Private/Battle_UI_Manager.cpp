@@ -57,39 +57,45 @@ HRESULT CBattle_UI_Manager::Create_TimeLine(_int MyDigimonCount, _int EnemyDigim
 	return S_OK;
 }
 
-void CBattle_UI_Manager::Deleta_TimeLine()
+void CBattle_UI_Manager::Battle_End()
 {
 	for (size_t i = 0; i < m_pTimeLine_array.size(); ++i)
 	{
-		Safe_Release(m_pTimeLine_array[i]);
-	}
-	m_pTimeLine_array.clear();
-	for (size_t i = 0; i < m_pDigimon_Turn_Order.size(); ++i)
-	{
-		Safe_Release(m_pDigimon_Turn_Order[i]);
-	}
-	m_pDigimon_Turn_Order.clear();
-	for (size_t i = 0; i < m_pEnemys.size(); ++i)
-	{
-		Safe_Release(m_pEnemys[i]);
-	}
-	m_pEnemys.clear();
-	for (size_t i = 0; i < m_pPlayers.size(); ++i)
-	{
-		Safe_Release(m_pPlayers[i]);
+		m_pTimeLine_array[i]->Set_isDead(true);
 	}
 
+	for (size_t i = 0; i < m_pKeyBords.size(); ++i)
+	{
+		m_pKeyBords[i]->Set_isDead(true);
+	}
+	m_pKeyBords.clear();
+
+	for (size_t i = 0; i < m_pDigimon_Skills.size(); ++i)
+	{
+		m_pDigimon_Skills[i]->Set_isDead(true);
+	}
+	m_pDigimon_Skills.clear();
+
+	for (size_t i = 0; i < m_pEnemyHps.size(); ++i)
+	{
+		m_pEnemyHps[i]->Set_isDead(true);
+	}
+	m_pEnemyHps.clear();
+
+	m_pTurn->Set_isDead(true);
+
+	m_pTimeLine_array.clear();
+	m_pTimeLines.clear();
+	m_pEnemys.clear();
 	m_pPlayers.clear();
+	m_pDigimon_Turn_Order.clear();
 }
 
 void CBattle_UI_Manager::Set_Battle_Turn_Order(deque<CContainerObject*> Digimon_Turn_Order)
 {
+	// 받아온걸 그대로 저장해줌
 	if (m_bBattle)
-	{
-
-		// 받아온걸 그대로 저장해줌
 		m_pDigimon_Turn_Order = Digimon_Turn_Order;
-	}
 }
 
 void CBattle_UI_Manager::Set_Hpbar(CContainerObject* Enemy, _int Damage)
@@ -114,72 +120,72 @@ void CBattle_UI_Manager::Set_Enemy_Digimon(CContainerObject* EnemyDigimon)
 
 void CBattle_UI_Manager::Set_Timeline_Turn_Order()
 {
-	if (m_bBattle)
+	// 이제 타임라인을 정해주는데 우선 디지몬이 아군인지 적군인지 아이디랑 혹시 모르니 정보까지 다 넘겨준다
+	// 이러면 아이디 안받아도 될듯?
+	for (size_t i = 0; i < m_pDigimon_Turn_Order.size(); ++i)
 	{
-
-		// 이제 타임라인을 정해주는데 우선 디지몬이 아군인지 적군인지 아이디랑 혹시 모르니 정보까지 다 넘겨준다
-		// 이러면 아이디 안받아도 될듯?
-		for (size_t i = 0; i < m_pDigimon_Turn_Order.size(); ++i)
+		if (false == m_pDigimon_Turn_Order[i]->Get_Monster())
 		{
-			if (false == m_pDigimon_Turn_Order[i]->Get_Monster())
-			{
-				m_pTimeLine_array[i]->Set_Digimon(false, m_pDigimon_Turn_Order[i]->Get_ID(), m_pDigimon_Turn_Order[i]);
-			}
-			else
-			{
-				m_pTimeLine_array[i]->Set_Digimon(true, m_pDigimon_Turn_Order[i]->Get_ID(), m_pDigimon_Turn_Order[i]);
-
-			}
+			m_pTimeLine_array[i]->Set_Digimon(false, m_pDigimon_Turn_Order[i]->Get_ID(), m_pDigimon_Turn_Order[i]);
 		}
-
-		// 이제 그 순서대로 deque에 넣어준다(위에서 넣었는데 또 넣는다고?)
-		for (auto& Timeline : m_pTimeLine_array)
+		else
 		{
-			m_pTimeLines.push_back(Timeline);
+			m_pTimeLine_array[i]->Set_Digimon(true, m_pDigimon_Turn_Order[i]->Get_ID(), m_pDigimon_Turn_Order[i]);
+
 		}
-
-		// turn이라는 영어 글씨를 띄워주고
-		m_pTurn->Set_Active(true);
-
-		// 혹시 모르니 타임라인들을 다 true로 바꿔서 다 보이게 해준다.
-		for (auto& Timeline : m_pTimeLines)
-			Timeline->Set_Active(true);
 	}
-}
 
-void CBattle_UI_Manager::Digimon_Dead()
-{
+	// 이제 그 순서대로 deque에 넣어준다(위에서 넣었는데 또 넣는다고?)
+	for (auto& Timeline : m_pTimeLine_array)
+	{
+		m_pTimeLines.push_back(Timeline);
+	}
+
+	// turn이라는 영어 글씨를 띄워주고
+	m_pTurn->Set_Active(true);
+
+	// 혹시 모르니 타임라인들을 다 true로 바꿔서 다 보이게 해준다.
+	for (auto& Timeline : m_pTimeLines)
+		Timeline->Set_Active(true);
+
 }
 
 void CBattle_UI_Manager::Turn_Start()
 {
 	if (m_bBattle)
 	{
-		m_pCurrent_TimeLine = m_pTimeLines.front();
-		m_pTimeLines.pop_front();
-		//m_pTimeLines.back()->Set_Active(true);
+		if (!m_pTimeLines.empty())
+		{
+			m_pCurrent_TimeLine = m_pTimeLines.front();
+			m_pTimeLines.pop_front();
+		}
 	}
+
 }
 
 void CBattle_UI_Manager::Turn_End()
 {
 	if (m_bBattle)
 	{
-		m_pCurrent_TimeLine->Set_SizeDown();
-		m_pCurrent_TimeLine->Set_Move(m_fTurn_Panel[m_pTimeLines.size()]);
-		m_pCurrent_TimeLine->Set_Active(false);
-
-		m_pTimeLines.push_back(m_pCurrent_TimeLine);
-
-		m_pTimeLines[0]->Set_OffSet(m_fTurn_Panel[0]);
-		m_pTimeLines[0]->Set_Lerp(true);
-
-		for (size_t i = 1; i < m_pTimeLines.size(); ++i)
+		if (!m_pTimeLines.empty() && m_pCurrent_TimeLine != nullptr)
 		{
-			m_pTimeLines[i]->Set_SlowOffSet(m_fTurn_Panel[i]);
-			m_pTimeLines[i]->Set_SlowLerp(true);
+			m_pCurrent_TimeLine->Set_SizeDown();
+			m_pCurrent_TimeLine->Set_Move(m_fTurn_Panel[m_pTimeLines.size()]);
+			m_pCurrent_TimeLine->Set_Active(false);
+
+			m_pTimeLines.push_back(m_pCurrent_TimeLine);
+
+			m_pTimeLines[0]->Set_OffSet(m_fTurn_Panel[0]);
+			m_pTimeLines[0]->Set_Lerp(true);
+
+			for (size_t i = 1; i < m_pTimeLines.size(); ++i)
+			{
+				m_pTimeLines[i]->Set_SlowOffSet(m_fTurn_Panel[i]);
+				m_pTimeLines[i]->Set_SlowLerp(true);
+			}
 		}
 	}
+
 }
 
 HRESULT CBattle_UI_Manager::Create_Skill()
@@ -263,112 +269,92 @@ void CBattle_UI_Manager::Set_Skill()
 	}
 }
 
-void CBattle_UI_Manager::Delete_SKill()
-{
-	for (size_t i = 0; i < m_pKeyBords.size(); ++i)
-	{
-		Safe_Release(m_pKeyBords[i]);
-	}
-	for (size_t i = 0; i < m_pDigimon_Skills.size(); ++i)
-	{
-		Safe_Release(m_pDigimon_Skills[i]);
-	}
-	m_pKeyBords.clear();
-	m_pDigimon_Skills.clear();
-}
-
 void CBattle_UI_Manager::Digimon_UseSkill1(_int SkillNum)
 {
-	if (m_bBattle)
+
+	_int Num = SkillNum - 1;
+	m_iDigimon_Skill[0] = SkillNum;
+	for (_int i = 0; i < 3; ++i)
 	{
-		_int Num = SkillNum - 1;
-		m_iDigimon_Skill[0] = SkillNum;
-		for (_int i = 0; i < 3; ++i)
-		{
-			if (Num == i)
-				m_pDigimon_Skills[i]->Set_Hover(true);
-			else
-				m_pDigimon_Skills[i]->Set_Hover(false);
-		}
+		if (Num == i)
+			m_pDigimon_Skills[i]->Set_Hover(true);
+		else
+			m_pDigimon_Skills[i]->Set_Hover(false);
 	}
+
 }
 
 void CBattle_UI_Manager::Digimon_UseTarget1(_int Enemy)
 {
-	if (m_bBattle)
-	{
-		_int Num = Enemy - 1;
 
-		for (_int i = 0; i < 3; ++i)
-		{
-			if (Num == i)
-				m_pKeyBords[i]->Set_Hover(true);
-			else
-				m_pKeyBords[i]->Set_Hover(false);
-		}
+	_int Num = Enemy - 1;
+
+	for (_int i = 0; i < 3; ++i)
+	{
+		if (Num == i)
+			m_pKeyBords[i]->Set_Hover(true);
+		else
+			m_pKeyBords[i]->Set_Hover(false);
 	}
+
 }
 
 void CBattle_UI_Manager::Digimon_UseSkill2(_int SkillNum)
 {
-	if (m_bBattle)
+
+	_int Num = SkillNum + 2;
+	m_iDigimon_Skill[1] = Num;
+	for (_int i = 3; i < 6; ++i)
 	{
-		_int Num = SkillNum + 2;
-		m_iDigimon_Skill[1] = Num;
-		for (_int i = 3; i < 6; ++i)
-		{
-			if (Num == i)
-				m_pDigimon_Skills[i]->Set_Hover(true);
-			else
-				m_pDigimon_Skills[i]->Set_Hover(false);
-		}
+		if (Num == i)
+			m_pDigimon_Skills[i]->Set_Hover(true);
+		else
+			m_pDigimon_Skills[i]->Set_Hover(false);
+
 	}
 }
 
 void CBattle_UI_Manager::Digimon_UseTarget2(_int Enemy)
 {
-	if (m_bBattle)
+
+	_int Num = Enemy + 2;
+	for (_int i = 3; i < 6; ++i)
 	{
-		_int Num = Enemy + 2;
-		for (_int i = 3; i < 6; ++i)
-		{
-			if (Num == i)
-				m_pKeyBords[i]->Set_Hover(true);
-			else
-				m_pKeyBords[i]->Set_Hover(false);
-		}
+		if (Num == i)
+			m_pKeyBords[i]->Set_Hover(true);
+		else
+			m_pKeyBords[i]->Set_Hover(false);
+
 	}
 }
 
 void CBattle_UI_Manager::Digimon_UseSkill3(_int SkillNum)
 {
-	if (m_bBattle)
+
+	_int Num = SkillNum + 5;
+	m_iDigimon_Skill[2] = SkillNum;
+	for (_int i = 6; i < 9; ++i)
 	{
-		_int Num = SkillNum + 5;
-		m_iDigimon_Skill[2] = SkillNum;
-		for (_int i = 6; i < 9; ++i)
-		{
-			if (Num == i)
-				m_pDigimon_Skills[i]->Set_Hover(true);
-			else
-				m_pDigimon_Skills[i]->Set_Hover(false);
-		}
+		if (Num == i)
+			m_pDigimon_Skills[i]->Set_Hover(true);
+		else
+			m_pDigimon_Skills[i]->Set_Hover(false);
+
 	}
 }
 
 void CBattle_UI_Manager::Digimon_UseTarget3(_int Enemy)
 {
-	if (m_bBattle)
+
+	_int Num = Enemy + 5;
+	for (_int i = 6; i < 9; ++i)
 	{
-		_int Num = Enemy + 5;
-		for (_int i = 6; i < 9; ++i)
-		{
-			if (Num == i)
-				m_pKeyBords[i]->Set_Hover(true);
-			else
-				m_pKeyBords[i]->Set_Hover(false);
-		}
+		if (Num == i)
+			m_pKeyBords[i]->Set_Hover(true);
+		else
+			m_pKeyBords[i]->Set_Hover(false);
 	}
+
 }
 
 HRESULT CBattle_UI_Manager::CreateHp()
@@ -430,7 +416,23 @@ HRESULT CBattle_UI_Manager::CreateHp()
 
 void CBattle_UI_Manager::Update_Enemy_HP(_int Num)
 {
-	if (m_bBattle)
+
+	if (m_pEnemyHps.size() == 2)
+	{
+		if (Num == 0)
+		{
+			m_pEnemyHps[0]->Set_Active(false);
+			m_pEnemyHps[1]->Set_Move(m_iEnemy_HpPos[2].x, m_iEnemy_HpPos[2].y);
+		}
+
+		else if (Num == 1)
+		{
+			m_pEnemyHps[1]->Set_Active(false);
+			m_pEnemyHps[0]->Set_Move(m_iEnemy_HpPos[2].x, m_iEnemy_HpPos[2].y);
+		}
+	}
+
+	if (m_iEnemy_Hp == 3)
 	{
 		if (m_pEnemyHps.size() == 2)
 		{
@@ -445,102 +447,73 @@ void CBattle_UI_Manager::Update_Enemy_HP(_int Num)
 				m_pEnemyHps[1]->Set_Active(false);
 				m_pEnemyHps[0]->Set_Move(m_iEnemy_HpPos[2].x, m_iEnemy_HpPos[2].y);
 			}
+
+			else if (Num == 2)
+			{
+				m_pEnemyHps[1]->Set_Active(false);
+				m_pEnemyHps[0]->Set_Move(m_iEnemy_HpPos[2].x, m_iEnemy_HpPos[2].y);
+			}
 		}
 
-		if (m_iEnemy_Hp == 3)
+		else if (m_pEnemyHps.size() == 3)
 		{
-			if (m_pEnemyHps.size() == 2)
+			if (Num == 0)
 			{
-				if (Num == 0)
-				{
-					m_pEnemyHps[0]->Set_Active(false);
-					m_pEnemyHps[1]->Set_Move(m_iEnemy_HpPos[2].x, m_iEnemy_HpPos[2].y);
-				}
-
-				else if (Num == 1)
-				{
-					m_pEnemyHps[1]->Set_Active(false);
-					m_pEnemyHps[0]->Set_Move(m_iEnemy_HpPos[2].x, m_iEnemy_HpPos[2].y);
-				}
-
-				else if (Num == 2)
-				{
-					m_pEnemyHps[1]->Set_Active(false);
-					m_pEnemyHps[0]->Set_Move(m_iEnemy_HpPos[2].x, m_iEnemy_HpPos[2].y);
-				}
+				m_pEnemyHps[0]->Set_Active(false);
+				m_pEnemyHps[1]->Set_Move(m_iEnemy_HpPos[1].x, m_iEnemy_HpPos[1].y);
+				m_pEnemyHps[2]->Set_Move(m_iEnemy_HpPos[3].x, m_iEnemy_HpPos[3].y);
+				m_pEnemyHps.erase(m_pEnemyHps.begin());
 			}
 
-			else if (m_pEnemyHps.size() == 3)
+			else if (Num == 1)
 			{
-				if (Num == 0)
-				{
-					m_pEnemyHps[0]->Set_Active(false);
-					m_pEnemyHps[1]->Set_Move(m_iEnemy_HpPos[1].x, m_iEnemy_HpPos[1].y);
-					m_pEnemyHps[2]->Set_Move(m_iEnemy_HpPos[3].x, m_iEnemy_HpPos[3].y);
-					m_pEnemyHps.erase(m_pEnemyHps.begin());
-				}
-
-				else if (Num == 1)
-				{
-					m_pEnemyHps[1]->Set_Active(false);
-					m_pEnemyHps[0]->Set_Move(m_iEnemy_HpPos[1].x, m_iEnemy_HpPos[1].y);
-					m_pEnemyHps[2]->Set_Move(m_iEnemy_HpPos[3].x, m_iEnemy_HpPos[3].y);
-					m_pEnemyHps.erase(m_pEnemyHps.begin() + 1);
-				}
-				else if (Num == 2)
-				{
-					m_pEnemyHps[2]->Set_Active(false);
-					m_pEnemyHps[0]->Set_Move(m_iEnemy_HpPos[1].x, m_iEnemy_HpPos[1].y);
-					m_pEnemyHps[1]->Set_Move(m_iEnemy_HpPos[3].x, m_iEnemy_HpPos[3].y);
-					m_pEnemyHps.erase(m_pEnemyHps.begin() + 2);
-				}
+				m_pEnemyHps[1]->Set_Active(false);
+				m_pEnemyHps[0]->Set_Move(m_iEnemy_HpPos[1].x, m_iEnemy_HpPos[1].y);
+				m_pEnemyHps[2]->Set_Move(m_iEnemy_HpPos[3].x, m_iEnemy_HpPos[3].y);
+				m_pEnemyHps.erase(m_pEnemyHps.begin() + 1);
+			}
+			else if (Num == 2)
+			{
+				m_pEnemyHps[2]->Set_Active(false);
+				m_pEnemyHps[0]->Set_Move(m_iEnemy_HpPos[1].x, m_iEnemy_HpPos[1].y);
+				m_pEnemyHps[1]->Set_Move(m_iEnemy_HpPos[3].x, m_iEnemy_HpPos[3].y);
+				m_pEnemyHps.erase(m_pEnemyHps.begin() + 2);
 			}
 		}
-
 	}
+
+
 }
 
-void CBattle_UI_Manager::Delete_Hp()
-{
-	//m_pEnemy_Hp->Set_isDead(true);
-	for (size_t i = 0; i < m_pEnemyHps.size(); ++i)
-	{
-		//m_pEnemyHps[i]->Set_isDead(true);
-		Safe_Release(m_pEnemyHps[i]);
-	}
-	m_pEnemyHps.clear();
-}
 
 void CBattle_UI_Manager::Update_MyDigimon_Skill(CContainerObject* HitDigimon)
 {
-	if (m_bBattle)
-	{
-		for (size_t i = 0; i < m_pDigimon_Turn_Order.size(); ++i)
-		{
 
-		}
+	for (size_t i = 0; i < m_pDigimon_Turn_Order.size(); ++i)
+	{
+
 	}
+
 }
 
 void CBattle_UI_Manager::Update_TimeLine(CContainerObject* HitDigimon)
 {
-	if (m_bBattle)
-	{
-		for (size_t i = 0; i < m_pTimeLines.size(); ++i)
-		{
-			if (m_pTimeLines[i]->Get_Digimon() == HitDigimon)
-			{
-				m_pTimeLines[i]->Set_Move(_float2(1500.f, 0.f));
-				m_pTimeLines.erase(m_pTimeLines.begin() + i);
-				break;
-			}
-		}
 
-		for (size_t i = m_iDeadDigimonNum; i < m_pTimeLines.size(); ++i)
+	for (size_t i = 0; i < m_pTimeLines.size(); ++i)
+	{
+		if (m_pTimeLines[i]->Get_Digimon() == HitDigimon)
 		{
-			m_pTimeLines[i]->Set_Move(m_fTurn_Panel[i]);
+			m_pTimeLines[i]->Set_Move(_float2(1500.f, 0.f));
+			m_pTimeLines.erase(m_pTimeLines.begin() + i);
+			break;
 		}
 	}
+
+	for (size_t i = m_iDeadDigimonNum; i < m_pTimeLines.size(); ++i)
+	{
+		m_pTimeLines[i]->Set_Move(m_fTurn_Panel[i]);
+	}
+
 }
 
 void CBattle_UI_Manager::Free()
@@ -549,5 +522,5 @@ void CBattle_UI_Manager::Free()
 
 
 
-	Safe_Release(m_pGameInstance);
+	//Safe_Release(m_pGameInstance);
 }

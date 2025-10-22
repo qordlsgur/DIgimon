@@ -316,7 +316,6 @@ void CLeomon::Free()
 	__super::Free();
 
 	Safe_Release(m_pFsm);
-	Safe_Release(m_pPart_Body);
 	Safe_Release(m_pColliderCom);
 
 }

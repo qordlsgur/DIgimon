@@ -1,6 +1,5 @@
 #include "Battle_Manager.h"
 
-
 #include "GameInstance.h"
 #include "GameObject.h"
 #include "ContainerObject.h"
@@ -53,75 +52,81 @@ void CBattle_Manager::Update(_float fTimeDelta)
 	m_fBattleTime += fTimeDelta; // 시간 중첩
 	if (m_bPlayer_Death || m_bEnemy_Death)
 	{
+		m_pBattle_UI_Manager->Battle_End();
+
 		if (m_fBattleTime > 1.f)
 			Battle_End();
 	}
 
-	Digimon1_Skill();
-	Digimon2_Skill();
-	Digimon3_Skill();
-	DigimonTargetOrder();
-
-	switch (m_eBattle_State)
+	else
 	{
-	case BATTLE_STATE::START:
-		if (m_fBattleTime >= 1.f) // 1초가 지나면
+
+		Digimon1_Skill();
+		Digimon2_Skill();
+		Digimon3_Skill();
+		DigimonTargetOrder();
+
+		switch (m_eBattle_State)
 		{
-			m_pCurrentDigimon = m_pDigimon_Turn_Order.front();	// 제일 앞에 있는걸 저장하고
-			m_pReturnPosition = m_pCurrentDigimon->Get_Position();
-			m_fBackJumpTime = 0.f;
-			m_pDigimon_Turn_Order.pop_front();					// 제잎 앞에꺼를 지움
-			m_pBattle_UI_Manager->Turn_Start();
-			m_eBattle_State = BATTLE_STATE::SKILL;
-			m_fBattleTime = 0.f;							// 그리고 시간 초기화
-		}
-
-		break;
-
-	case BATTLE_STATE::SKILL:
-		m_fBattleTime = 0.f;									// 시간 초기화 
-
-		if (m_pCurrentDigimon->Get_Life())						// 다시 살아있으면 실행
-		{
-			if (!m_pCurrentDigimon->Get_Monster())				// 플레이어 디지몬이면 플레이어 디지몬 공격 실행
+		case BATTLE_STATE::START:
+			if (m_fBattleTime >= 1.f) // 1초가 지나면
 			{
-				Player_Attack(fTimeDelta);								// 스킬은 한번만 실행함
+				m_pCurrentDigimon = m_pDigimon_Turn_Order.front();	// 제일 앞에 있는걸 저장하고
+				m_pReturnPosition = m_pCurrentDigimon->Get_Position();
+				m_fBackJumpTime = 0.f;
+				m_pDigimon_Turn_Order.pop_front();					// 제잎 앞에꺼를 지움
+				m_pBattle_UI_Manager->Turn_Start();
+				m_eBattle_State = BATTLE_STATE::SKILL;
+				m_fBattleTime = 0.f;							// 그리고 시간 초기화
 			}
-			else												// 몬스터면 몬스터 실행
+
+			break;
+
+		case BATTLE_STATE::SKILL:
+			m_fBattleTime = 0.f;									// 시간 초기화 
+
+			if (m_pCurrentDigimon->Get_Life())						// 다시 살아있으면 실행
 			{
-				Enemy_Attack(fTimeDelta);
+				if (!m_pCurrentDigimon->Get_Monster())				// 플레이어 디지몬이면 플레이어 디지몬 공격 실행
+				{
+					Player_Attack(fTimeDelta);								// 스킬은 한번만 실행함
+				}
+				else												// 몬스터면 몬스터 실행
+				{
+					Enemy_Attack(fTimeDelta);
+				}
 			}
-		}
-		if (!m_pCurrentDigimon->Get_SkillMove())
-			m_eBattle_State = BATTLE_STATE::ING;
+			if (!m_pCurrentDigimon->Get_SkillMove())
+				m_eBattle_State = BATTLE_STATE::ING;
 
-		break;
+			break;
 
-	case BATTLE_STATE::ING:
-		if (m_pCurrentDigimon->Get_BackJump())
-			ReturnToPosition(fTimeDelta);
-		else
-		{
-			if (m_pCurrentDigimon->Get_TurnEnd())
+		case BATTLE_STATE::ING:
+			if (m_pCurrentDigimon->Get_BackJump())
+				ReturnToPosition(fTimeDelta);
+			else
 			{
-				m_eBattle_State = BATTLE_STATE::END;
+				if (m_pCurrentDigimon->Get_TurnEnd())
+				{
+					m_eBattle_State = BATTLE_STATE::END;
+				}
 			}
+			break;
+
+		case BATTLE_STATE::END:
+			if (!m_pCurrentDigimon->Get_Monster())
+				m_pCurrentDigimon->LookAt(m_fPlayer_Look);
+			else
+				m_pCurrentDigimon->LookAt(m_fEnemyDigimon_Look);
+
+			Turn_Update();
+			m_fBattleTime = 0.f;									// 정확한 시간을 위해 0으로 초기화
+			m_pBattle_UI_Manager->Turn_End();
+			m_fDashTime = 0.f;
+			m_eBattle_State = BATTLE_STATE::START;					// 처음으로 옮김
+			m_bSkill = false;
+			break;
 		}
-		break;
-
-	case BATTLE_STATE::END:
-		if (!m_pCurrentDigimon->Get_Monster())
-			m_pCurrentDigimon->LookAt(m_fPlayer_Look);
-		else
-			m_pCurrentDigimon->LookAt(m_fEnemyDigimon_Look);
-
-		Turn_Update();
-		m_fBattleTime = 0.f;									// 정확한 시간을 위해 0으로 초기화
-		m_pBattle_UI_Manager->Turn_End();
-		m_fDashTime = 0.f;
-		m_eBattle_State = BATTLE_STATE::START;					// 처음으로 옮김
-		m_bSkill = false;
-		break;
 	}
 
 }
@@ -546,41 +551,26 @@ void CBattle_Manager::Battle_System()
 void CBattle_Manager::Battle_End()
 {
 	m_pBattle_UI_Manager->Set_Battle(false);
-	m_iAliveEnemy = m_iAliveEnemy = 0;
-	//m_pBattle_UI_Manager->Deleta_TimeLine();
-	//m_pBattle_UI_Manager->Delete_SKill();
-	//m_pBattle_UI_Manager->Delete_Hp();
+	m_iAliveEnemy = m_iAlivePlayer = 0;
 
-	//for (size_t i = 0; i < m_pEnemyDigimon.size(); ++i)
-	//{
-	//	Safe_Release(m_pEnemyDigimon[i]);
-	//}
+	for (size_t i = 0; i < m_pDigimon_Turn_Order.size(); ++i)
+	{
+		if (m_pFirst_Digimon != m_pDigimon_Turn_Order[i])
+			m_pDigimon_Turn_Order[i]->Set_isDead(true);
+	}
 
-	//for (size_t i = 0; i < m_pDigimonSort.size(); ++i)
-	//{
-	//	Safe_Release(m_pDigimonSort[i]);
-	//}
-	//for (size_t i = 0; i < m_pMyDigimon.size(); ++i)
-	//{
-	//	m_pMyDigimon_Infos[i]->CurrentExp += m_iAdd_Exp;
-	//	if (i != 0)
-	//		Safe_Release(m_pMyDigimon[i]);
-	//}
-	//for (size_t i = 0; i < m_pMyDigimon_Infos.size(); ++i)
-	//{
-	//	m_pDigimon_Manager->Set_Current_Digimon_Info(m_pMyDigimon_Infos[i]);
-	//}
-	//for (size_t i = 0; i < m_pDigimon_Turn_Order.size(); ++i)
-	//{
-	//	Safe_Release(m_pDigimon_Turn_Order[i]);
-	//}
-	//m_pDigimon_Turn_Order.clear();
-	//m_pMyDigimon.clear();
-	//m_pDigimonSort.clear();
+	m_pMyDigimon.clear();
+	m_pEnemyDigimon.clear();
+	m_pMyDigimon_Infos.clear();
+	m_pDigimonSort.clear();
+	m_pDigimon_Turn_Order.clear();
 
-	//Safe_Release(m_pCurrentDigimon);
+	m_pFirst_Digimon = nullptr;
+	m_pBattle_Terrain = nullptr;
+	m_pBattle = nullptr;
+	m_pCurrentDigimon = nullptr;
+	m_pHitCurrentDigimon = nullptr;
 
-	//Safe_Release(m_pHitCurrentDigimon);
 	m_bBattleOn = false;
 }
 
@@ -651,6 +641,7 @@ void CBattle_Manager::Current_Digimon(DIGIMON_INFO* Digimon_Info_1, DIGIMON_INFO
 	// 전투가 시작이 되면 내 디지몬들을 최대 3마리 까지 만들고 m_pMyDigimon에 저장을 함
 	// 전투가 끝나면 이 디지몬들을 세팅 해준다.
 	m_iPlayerDigimonCount = 1;
+	m_pFirst_Digimon = static_cast<CPlayer*>(m_pPlayer)->First_Digimon();
 	m_pMyDigimon.push_back(static_cast<CPlayer*>(m_pPlayer)->First_Digimon());
 	m_pBattle_UI_Manager->Set_MyDigimon(m_pMyDigimon[0]);
 	m_pMyDigimon_Infos.push_back(&m_pMyDigimon[0]->CurrentInfo());
@@ -958,12 +949,10 @@ CContainerObject* CBattle_Manager::Digimon_Create(_int EnemyDigimonID)
 }
 
 template<typename T>
-CContainerObject* CBattle_Manager::Digimon(const wstring& strPrototype)
+T* CBattle_Manager::Digimon(const wstring& strPrototype)
 {
-	CContainerObject* m_pDigimon = { nullptr };
-	m_pDigimon = dynamic_cast<T*>(m_pGameInstance->Add_GameObject_ToLayer_ToCreate(ENUM_CLASS(LEVEL::GAMEPLAY), strPrototype, ENUM_CLASS(LEVEL::GAMEPLAY), L"Object_EnemyDigimon"));
-
-	return  m_pDigimon;
+	return   dynamic_cast<T*>(m_pGameInstance->Add_GameObject_ToLayer_ToCreate(
+		ENUM_CLASS(LEVEL::GAMEPLAY), strPrototype, ENUM_CLASS(LEVEL::GAMEPLAY), L"Object_EnemyDigimon"));
 }
 
 void CBattle_Manager::Set_Player_Pos(_vector Pos)
@@ -1091,10 +1080,9 @@ void CBattle_Manager::Free()
 
 	m_pMyDigimon.clear();
 	m_pEnemyDigimon.clear();
+	m_pMyDigimon_Infos.clear();
 	m_pDigimonSort.clear();
 	m_pDigimon_Turn_Order.clear();
 
-
-
-	Safe_Release(m_pGameInstance);
+	//Safe_Release(m_pGameInstance);
 }

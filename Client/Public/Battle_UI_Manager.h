@@ -25,7 +25,7 @@ public:
 
 public:
 	HRESULT Create_TimeLine(_int MyDigimonCount, _int EnemyDigimonCount);
-	void	Deleta_TimeLine();
+	void	Battle_End();
 
 	void Set_Battle_Turn_Order(deque<CContainerObject*>Digimon_Turn_Order);
 	void Set_Hpbar(CContainerObject* Enemy, _int Damage);
@@ -42,7 +42,6 @@ public:
 
 	HRESULT Create_Skill();
 	void Set_Skill();
-	void Delete_SKill();
 
 	void Digimon_UseSkill1(_int SkillNum);
 	void Digimon_UseTarget1(_int Enemy);
@@ -53,12 +52,12 @@ public:
 
 	HRESULT CreateHp();
 	void Update_Enemy_HP(_int Num);
-	void Delete_Hp();
 
 	void Update_MyDigimon_Skill(CContainerObject* HitDigimon);
 	void Update_TimeLine(CContainerObject* HitDigimon);
 
-	void Set_Battle(_bool Battle) { m_bBattle = Battle; }
+	void Set_Battle(_bool Battle) { m_bBattle = Battle;	}
+
 private:
 	CGameInstance* m_pGameInstance = { nullptr };
 	_int m_iMyDigimonCount{};
@@ -94,7 +93,8 @@ private:
 
 	_int m_iDeadDigimonNum{};
 
-	_bool m_bBattle = { false };
+	_bool	m_bBattle = { false };
+
 public:
 	virtual void Free() override;
 };

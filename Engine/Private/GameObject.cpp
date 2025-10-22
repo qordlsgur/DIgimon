@@ -98,12 +98,8 @@ void CGameObject::OnClick()
 // 원본이 없으면 종료시킨다.
 HRESULT CGameObject::Add_Component(_uint iPrototypeLevelIndex, const _wstring& strPrototypeTag, const _wstring& strComponentTag, CComponent** ppOut, void* pArg)
 {
-	auto it = m_Components.find(strComponentTag);
-	if (it != m_Components.end())
-	{
-		Safe_Release(it->second);  // 참조 카운트 감소 및 삭제
-		m_Components.erase(it);
-	}
+	if (nullptr != Find_Component(strComponentTag))
+		return E_FAIL;
 
 	// 새로운 컴포넌트 생성
 	CComponent* pComponent = dynamic_cast<CComponent*>(

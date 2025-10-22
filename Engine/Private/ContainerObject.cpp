@@ -47,6 +47,8 @@ void CContainerObject::Update(_float fTimeDelta)
 {
 	for (auto& Pair : m_PartObjects)
 		Pair.second->Update(fTimeDelta);
+	if (Info.CurrentHp < 0)
+		Info.CurrentHp = 0;
 }
 
 void CContainerObject::Late_Update(_float fTimeDelta)
@@ -54,7 +56,7 @@ void CContainerObject::Late_Update(_float fTimeDelta)
 	for (auto& Pair : m_PartObjects)
 		Pair.second->Late_Update(fTimeDelta);
 
-	if (Info.CurrentHp < 0)
+	if (Info.CurrentHp <= 0)
 		m_bLife = false;
 }
 

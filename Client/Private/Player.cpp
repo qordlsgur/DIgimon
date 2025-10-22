@@ -321,6 +321,5 @@ void CPlayer::Free()
 
 	Safe_Release(m_pNavigationCom);
 	Safe_Release(m_pColliderCom);
-	Safe_Release(m_pPart_Body);
 	Safe_Release(m_pFsm);
 }
