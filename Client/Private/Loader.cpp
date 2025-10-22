@@ -396,7 +396,15 @@ HRESULT CLoader::Loading_For_GamePlay()
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/KeyBord/Key%d.png"), 10))))
 		return E_FAIL;
 
+	//Noise-------------------------------------------------------------------------------------------------------------------------------------------
+
+		/* For.Prototype_Component_Texture_Noise*/
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Noise"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/Noise/Noise%d.png"), 3))))
+		return E_FAIL;
+
 	//디지몬UI이미지-------------------------------------------------------------------------------------------------------------------------------------------
+
 
 #pragma region UI
 
@@ -472,7 +480,7 @@ HRESULT CLoader::Loading_For_GamePlay()
 
 	/* For.Prototype_Component_Texture_Terrain */
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Terrain"),
-		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/Terrain/Tile0.jpg"), 1))))
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/Terrain/Tile0.png"), 1))))
 		return E_FAIL;
 
 	/* For.Prototype_Component_Texture_Sky */
@@ -1043,20 +1051,20 @@ HRESULT CLoader::Loading_For_GamePlay()
 
 	//디지몬 스킬---------------------------------------------------------------------------------------------------------------------------
 
-	///* For.Prototype_GameObject_AngewomonSkill1*/
-	//if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_AngewomonSkill1"),
-	//	CAngewomonSkill1::Create(m_pDevice, m_pContext))))
-	//	return E_FAIL;
+	/* For.Prototype_GameObject_AngewomonSkill1*/
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_AngewomonSkill1"),
+		CAngewomonSkill1::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
 
-	///* For.Prototype_GameObject_AngewomonSkill2*/
-	//if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_AngewomonSkill2"),
-	//	CAngewomonSkill2::Create(m_pDevice, m_pContext))))
-	//	return E_FAIL;
+	/* For.Prototype_GameObject_AngewomonSkill2*/
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_AngewomonSkill2"),
+		CAngewomonSkill2::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
 
-	///* For.Prototype_GameObject_AngewomonSkill3*/
-	//if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_AngewomonSkill3"),
-	//	CAngewomonSkill3::Create(m_pDevice, m_pContext))))
-	//	return E_FAIL;
+	/* For.Prototype_GameObject_AngewomonSkill3*/
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_AngewomonSkill3"),
+		CAngewomonSkill3::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
 
 	/* For.Prototype_GameObject_BlackwargreymonSkill1*/
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_BlackwargreymonSkill1"),

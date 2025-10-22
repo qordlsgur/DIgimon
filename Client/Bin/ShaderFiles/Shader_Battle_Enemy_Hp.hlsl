@@ -3,7 +3,12 @@
 matrix g_WorldMatrix, g_ViewMatrix, g_ProjMatrix;
 
 Texture2D g_Texture1;
+Texture2D g_Texture2;
+Texture2D g_DessolveTexture;
 
+float Current;
+
+float DissolveTime;
 
 // : 이 친구는 시메틱 이라고 한다. 선언하는 함수를 보면 시메틱 네임 이라는게 있다.
 struct VS_IN // 구조체랑 똑같음 
@@ -55,23 +60,85 @@ PS_OUT PS_MAIN(PS_IN In)
 
     // 1번 텍스처 샘플링
     float4 color1 = g_Texture1.Sample(DefaultSampler, In.vTexcoord);
+    float4 Dissolve = g_DessolveTexture.Sample(DefaultSampler, In.vTexcoord);
     
     if (color1.a != 0)
         color1.a = 0.7f;
+        
+    if (DissolveTime > Dissolve.r)
+        discard;
+    
+    color1 *= Dissolve;
     
     Out.vColor = color1;
     
     return Out;
 }
 
+struct PS_HP_IN
+{
+    float4 vPosition : SV_POSITION;
+    float2 vTexcoord : TEXCOORD0;
+};
+
+
+struct PS_HP_OUT
+{
+    float4 vColor : SV_TARGET0; // 현재 장치에 바인딩 된 0번째 값
+};
+
+PS_HP_OUT PS_HP_MIAN(PS_HP_IN In)
+{
+    PS_OUT Out;
+
+    float4 color = float4(0.f, 0.f, 0.f, 0.f);
+    
+       // 1번 텍스처: 배경, 그대로 출력
+    float4 color1 = g_Texture1.Sample(DefaultSampler, In.vTexcoord);
+    float4 Dissolve = g_DessolveTexture.Sample(DefaultSampler, In.vTexcoord);
+    color = color1;
+    
+    if (Current != 0)
+    {
+        float2 uv = In.vTexcoord;
+        float4 color2 = g_Texture2.Sample(DefaultSampler, uv);
+
+        if (uv.x >= Current)
+            color2.a = 0;
+
+        color = lerp(color, color2, color2.a);
+    }
+   
+        
+    if (DissolveTime > Dissolve.r)
+    {
+        discard;
+        color *= Dissolve;
+        
+    }
+ 
+    
+    Out.vColor = color;
+
+    return Out;
+}
+
 technique11 DefaultTechnique
 {
 		// pass도 여러개 정의 가능하다.
-    pass DefaultPass
+    pass HpBG
     {
         SetDepthStencilState(DSS_None, 0);
         SetBlendState(BS_AlphaBlend, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
         VertexShader = compile vs_5_0 VS_MAIN();
         PixelShader = compile ps_5_0 PS_MAIN();
+    }
+
+    pass HpBar
+    {
+        SetDepthStencilState(DSS_None, 0);
+        SetBlendState(BS_AlphaBlend, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
+        VertexShader = compile vs_5_0 VS_MAIN();
+        PixelShader = compile ps_5_0 PS_HP_MIAN();
     }
 }

@@ -7,18 +7,18 @@
 #include "SkillObject.h"
 
 CLeomon::CLeomon(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
-    : CContainerObject{ pDevice, pContext }
+	: CContainerObject{ pDevice, pContext }
 {
 }
 
 CLeomon::CLeomon(const CLeomon& Prototype)
-    : CContainerObject{ Prototype }
+	: CContainerObject{ Prototype }
 {
 }
 
 HRESULT CLeomon::Initialize_Prototype()
 {
-    return S_OK;
+	return S_OK;
 }
 
 HRESULT CLeomon::Initialize(void* pArg)
@@ -77,50 +77,67 @@ void CLeomon::Update(_float fTimeDelta)
 			if (Info.Hp <= 0)
 			{
 				Info.Hp = 0;
-				m_bLife = false;
+				m_bDie = true;
 			}
 
-			if (m_bSkill1)
+			if (!m_bDie)
 			{
-				Skill1();
-				m_iDamage = Info.DigimonSkill1Info.Damage / Info.DigimonSkill1Info.HitCount * 10000;
-				if (static_cast<int>(m_pPart_Body->Get_TrackPosition()) == 17)
+				if (m_bSkill1)
 				{
-					Creat_Skill(1);
+					Skill1();
+					m_iDamage = Info.DigimonSkill1Info.Damage / Info.DigimonSkill1Info.HitCount * 1000;
+					if (static_cast<int>(m_pPart_Body->Get_TrackPosition()) == 17)
+					{
+						Creat_Skill(1);
+					}
+					if (static_cast<int>(m_pPart_Body->Get_TrackPosition()) == 31)
+					{
+						Creat_Skill(1);
+					}
 				}
-				if (static_cast<int>(m_pPart_Body->Get_TrackPosition()) == 31)
+				else if (m_bSkill2)
 				{
-					Creat_Skill(1);
+					Skill2();
+					m_iDamage = Info.DigimonSkill2Info.Damage / Info.DigimonSkill2Info.HitCount;
+					if (static_cast<int>(m_pPart_Body->Get_TrackPosition()) == 42)
+					{
+						Creat_Skill(2);
+					}
 				}
-			}
-			else if (m_bSkill2)
-			{
-				Skill2();
-				m_iDamage = Info.DigimonSkill2Info.Damage / Info.DigimonSkill2Info.HitCount;
-				if (static_cast<int>(m_pPart_Body->Get_TrackPosition()) == 42)
+				else if (m_bSkill3)
 				{
-					Creat_Skill(2);
+					Skill3();
+					m_iDamage = Info.DigimonSkill3Info.Damage / Info.DigimonSkill3Info.HitCount;
+					if (static_cast<int>(m_pPart_Body->Get_TrackPosition()) == 30)
+					{
+						Creat_Skill(3);
+					}
 				}
-			}
-			else if (m_bSkill3)
-			{
-				Skill3();
-				m_iDamage = Info.DigimonSkill3Info.Damage / Info.DigimonSkill3Info.HitCount;
-				if (static_cast<int>(m_pPart_Body->Get_TrackPosition()) == 30)
-				{
-					Creat_Skill(3);
-				}
-			}
 
-			if (m_bBackJump)
-			{
-				m_pFsm->Enter(DIGIMONSTATE::BATTLEBACK, m_pPart_Body);
-			}
+				if (m_bBackJump)
+				{
+					m_pFsm->Enter(DIGIMONSTATE::BATTLEBACK, m_pPart_Body);
+				}
 
-			if (!m_bSkill1 && !m_bSkill2 && !m_bSkill3 && !m_bBackJump)
+				if (!m_bSkill1 && !m_bSkill2 && !m_bSkill3 && !m_bBackJump)
+				{
+					m_bTurnEnd = true;
+					m_pFsm->Enter(DIGIMONSTATE::STANDBATTLE, m_pPart_Body);
+				}
+			}
+			else
 			{
-				m_bTurnEnd = true;
-				m_pFsm->Enter(DIGIMONSTATE::STANDBATTLE, m_pPart_Body);
+				m_pFsm->Enter(DIGIMONSTATE::DEATH, m_pPart_Body);
+
+				if (m_pPart_Body->Get_AnimFinish())
+				{
+					if (m_bMonster)
+					{
+						m_pPart_Body->Set_Dissolve(true);
+					}
+
+				}
+
 			}
 		}
 		m_pFsm->Update(fTimeDelta);

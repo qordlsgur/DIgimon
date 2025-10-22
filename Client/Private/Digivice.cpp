@@ -53,9 +53,6 @@ HRESULT CDigivice::Initialize(void* pArg)
 	if (FAILED(Create_Slot(L"Layout_Digivice_Slot")))
 		return E_FAIL;
 
-	if (FAILED(Create_Skill(L"Layer_Digivice_Skill")))
-		return E_FAIL;
-
 	if (FAILED(Create_Target(L"Layer_Digivice_Target")))
 		return E_FAIL;
 
@@ -64,9 +61,9 @@ HRESULT CDigivice::Initialize(void* pArg)
 
 	m_Digimon_ID.resize(8, -1);
 
-	Acquire_Digimon(1);
-	Acquire_Digimon(4);
-	Acquire_Digimon(7);
+	Acquire_Digimon(0);
+	Acquire_Digimon(0);
+	Acquire_Digimon(0);
 	m_strDigimon_Stage[0] = L"유아기";
 	m_strDigimon_Stage[1] = L"성장기";
 	m_strDigimon_Stage[2] = L"성숙기";
@@ -87,10 +84,7 @@ void CDigivice::Update(_float fTimeDelta)
 	if (m_pGameInstance->Key_Down(DIK_V))
 	{
 		m_pSelectSlot = m_pBattle_Slot[0];
-		for (int j = 0; j < m_pSelectSlot->Get_DigimonInfo().SkillCount; ++j)
-		{
-			m_pBattle_Skill[j]->Set_Digimon_SkillSet(m_pSelectSlot->Get_DigimonInfo().DigimonId, j);
-		}
+		m_iSlot_Number = 0;
 		Set_State(m_pSelectSlot->Get_DigimonInfo());
 		m_pDigivice_Hp->Set_CurrentHp(m_pSelectSlot->Get_DigimonInfo().CurrentHp);
 		m_pDigivice_Sp->Set_CurrentSp(m_pSelectSlot->Get_DigimonInfo().CurrentSp);
@@ -225,7 +219,7 @@ HRESULT CDigivice::Render()
 
 		for (_uint i = 0; i < m_iDigivice_Battle_Skill_Number; ++i)
 		{
-			m_pBattle_Skill[i]->Render();
+			m_pSkills[m_iSlot_Number][i]->Render();
 		}
 
 	}
@@ -245,10 +239,9 @@ void CDigivice::Acquire_Digimon(_int ID)
 			m_pBattle_Slot[i]->Set_Info(*m_pDigimon_Manager->Get_Current_Digimon_Info(i));
 			m_pBattle_Slot[i]->Set_HasDigimon(true);
 			m_Digimon_ID[i] = ID;
-			for (int j = 0; j < m_pBattle_Slot[i]->Get_DigimonInfo().SkillCount; ++j)
-			{
-				m_pBattle_Skill[j]->Set_Digimon_SkillSet(m_pDigimon_Manager->Get_Current_Digimon_Info(i)->DigimonId, j);
-			}
+			wstring Layer_Tag = TEXT("Layer_Digivice_Skill") + to_wstring(m_iSkillCount);
+			Create_Skill(Layer_Tag, m_iSkillCount, ID);
+			m_iSkillCount++;
 			return;
 		}
 	}
@@ -284,10 +277,7 @@ void CDigivice::OnClick()
 				if (m_pBattle_Slot[i]->Get_HasDigimon())
 				{
 					m_pSelectSlot = m_pBattle_Slot[i];
-					for (int j = 0; j < m_pSelectSlot->Get_DigimonInfo().SkillCount; ++j)
-					{
-						m_pBattle_Skill[j]->Set_Digimon_SkillSet(m_pSelectSlot->Get_DigimonInfo().DigimonId, j);
-					}
+					m_iSlot_Number = i;
 				}
 			}
 		}
@@ -305,11 +295,11 @@ void CDigivice::OnHover()
 	{
 		if (PtInRect(m_pBattle_Skill[i]->Get_Pos(), pPt))
 		{
-			m_pBattle_Skill[i]->Set_Digimon_Skill_Info_Pos(static_cast<_float>(pPt.x), static_cast<_float>(pPt.y));
+			m_pSkills[m_iSlot_Number][i]->Set_Digimon_Skill_Info_Pos(static_cast<_float>(pPt.x), static_cast<_float>(pPt.y));
 		}
 		else
 		{
-			m_pBattle_Skill[i]->Set_Hover();
+			m_pSkills[m_iSlot_Number][i]->Set_Hover();
 		}
 	}
 }
@@ -467,8 +457,9 @@ HRESULT CDigivice::Create_Slot(const _wstring& strLayerTag)
 	return S_OK;
 }
 
-HRESULT CDigivice::Create_Skill(const _wstring& strLayerTag)
+HRESULT CDigivice::Create_Skill(const _wstring& strLayerTag, _int SlotID, _int DigimonID)
 {
+	m_pBattle_Skill.clear();
 	for (_uint i = 0; i < m_iDigivice_Battle_Skill_Number; ++i)
 	{
 		m_pDigivice_Skill = static_cast<CDigivice_Skill*>(m_pGameInstance->Add_GameObject_ToLayer_ToCreate(
@@ -489,9 +480,10 @@ HRESULT CDigivice::Create_Skill(const _wstring& strLayerTag)
 
 
 		m_pBattle_Skill[i]->Set_Move(startX, startY);
-
+		m_pBattle_Skill[i]->Set_Digimon_SkillSet(DigimonID, i, SlotID);
 	}
 
+	m_pSkills.emplace(SlotID, m_pBattle_Skill);
 	return S_OK;
 }
 

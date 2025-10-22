@@ -77,80 +77,91 @@ void CBlackwargreymon::Update(_float fTimeDelta)
 			if (Info.Hp <= 0)
 			{
 				Info.Hp = 0;
-				m_bLife = false;
+				m_bDie = true;
 			}
 
-
-			if (m_bSkill1)
+			if (!m_bDie)
 			{
-				Skill1();
-				m_iDamage = Info.DigimonSkill1Info.Damage * 10000;
-
-				if (static_cast<int>(m_pPart_Body->Get_TrackPosition()) == 23)
+				if (m_bSkill1)
 				{
-					Creat_Skill(1);
+					Skill1();
+					m_iDamage = Info.DigimonSkill1Info.Damage / Info.DigimonSkill1Info.HitCount;
+
+					if (static_cast<int>(m_pPart_Body->Get_TrackPosition()) == 23)
+					{
+						Creat_Skill(1);
+					}
+					if (static_cast<int>(m_pPart_Body->Get_TrackPosition()) == 38)
+					{
+						Creat_Skill(1);
+					}
 				}
-				if (static_cast<int>(m_pPart_Body->Get_TrackPosition()) == 38)
+				else if (m_bSkill2)
 				{
-					Creat_Skill(1);
+					Skill2();
+					m_iDamage = Info.DigimonSkill2Info.Damage / Info.DigimonSkill2Info.HitCount;
+					if (static_cast<int>(m_pPart_Body->Get_TrackPosition()) == 54.f)
+					{
+						Creat_Skill(2);
+					}
 				}
-			}
-			else if (m_bSkill2)
-			{
-				Skill2();
-				m_iDamage = Info.DigimonSkill2Info.Damage;
-				if (static_cast<int>(m_pPart_Body->Get_TrackPosition()) == 54.f)
+
+				else if (m_bSkill3)
 				{
-					Creat_Skill(2);
+					Skill3();
+					m_iDamage = Info.DigimonSkill3Info.Damage / Info.DigimonSkill3Info.HitCount;
+					if (static_cast<int>(m_pPart_Body->Get_TrackPosition()) == 17.f)
+					{
+						Creat_Skill(3);
+					}
 				}
-			}
 
-			else if (m_bSkill3)
-			{
-				Skill3();
-				m_iDamage = Info.DigimonSkill3Info.Damage;
-
-
-				if (static_cast<int>(m_pPart_Body->Get_TrackPosition()) == 17.f)
+				if (m_bBackJump)
 				{
-					Creat_Skill(3);
+					m_pFsm->Enter(DIGIMONSTATE::BATTLEBACK, m_pPart_Body);
+				}
+
+				if (!m_bSkill1 && !m_bSkill2 && !m_bSkill3 && !m_bBackJump)
+				{
+					m_bTurnEnd = true;
+					m_pFsm->Enter(DIGIMONSTATE::STANDBATTLE, m_pPart_Body);
 				}
 			}
-
-			if (m_bBackJump)
+			else
 			{
-				m_pFsm->Enter(DIGIMONSTATE::BATTLEBACK, m_pPart_Body);
-			}
+				m_pFsm->Enter(DIGIMONSTATE::DEATH, m_pPart_Body);
 
-			if (!m_bSkill1 && !m_bSkill2 && !m_bSkill3 && !m_bBackJump)
-			{
-				m_bTurnEnd = true;
-				m_pFsm->Enter(DIGIMONSTATE::STANDBATTLE, m_pPart_Body);
+				if (m_pPart_Body->Get_AnimFinish())
+				{
+					if (m_bMonster)
+					{
+						m_pPart_Body->Set_Dissolve(true);
+					}
+
+				}
+
 			}
 		}
-
-		//if (m_pGameInstance->Key_Down(DIK_1))
-		//{
-		//	m_bisHit = !m_bisHit;
-		//	m_fRandom = m_pGameInstance->Random(-3.f, 3.f);
-		//}
-
-		//if (m_bisHit)
-		//{
-		//	DamageUp(fTimeDelta);
-		//}
-		//else
-		//{
-		//	m_fTime = 0.f;
-		//	m_fFontUp = 13.5f;
-		//}
-
 		m_pFsm->Update(fTimeDelta);
 		m_pColliderCom->Update(XMLoadFloat4x4(m_pTransformCom->Get_WorldMatrixPtr()));
 		__super::Update(fTimeDelta);
 	}
 }
+//if (m_pGameInstance->Key_Down(DIK_1))
+//{
+//	m_bisHit = !m_bisHit;
+//	m_fRandom = m_pGameInstance->Random(-3.f, 3.f);
+//}
 
+//if (m_bisHit)
+//{
+//	DamageUp(fTimeDelta);
+//}
+//else
+//{
+//	m_fTime = 0.f;
+//	m_fFontUp = 13.5f;
+//}
 void CBlackwargreymon::Late_Update(_float fTimeDelta)
 {
 	if (m_bLife)

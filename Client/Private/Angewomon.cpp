@@ -4,7 +4,7 @@
 #include "PartObject.h"
 #include "StateMachine.h"
 #include "Digimon_Manager.h"
-
+#include "SkillObject.h"
 
 CAngewomon::CAngewomon(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CContainerObject{ pDevice, pContext }
@@ -74,41 +74,72 @@ void CAngewomon::Update(_float fTimeDelta)
 			}
 			if (!m_bMove)
 				m_pFsm->Enter(DIGIMONSTATE::STAND, m_pPart_Body);
+
 		}
 		else
 		{
 			if (Info.Hp <= 0)
 			{
 				Info.Hp = 0;
-				m_bLife = false;
+				m_bDie = true;
 			}
 
-			if (m_bSkill1)
+			if (!m_bDie)
 			{
-				Skill1();
-				m_iDamage = Info.DigimonSkill1Info.Damage;
-			}
-			else if (m_bSkill2)
-			{
-				Skill2();
-				m_iDamage = Info.DigimonSkill2Info.Damage;
+				m_vLook = m_pTransformCom->Get_State(STATE::LOOK).m128_f32[2];
+				if (m_bSkill1)
+				{
+					Skill1();
+					m_iDamage = Info.DigimonSkill1Info.Damage / Info.DigimonSkill1Info.HitCount;
 
-			}
-			else if (m_bSkill3)
-			{
-				Skill3();
-				m_iDamage = Info.DigimonSkill3Info.Damage;
-			}
+					if (static_cast<int>(m_pPart_Body->Get_TrackPosition()) == 29)
+					{
+						Creat_Skill(1);
+					}
+				}
+				else if (m_bSkill2)
+				{
+					Skill2();
+					m_iDamage = Info.DigimonSkill2Info.Damage / Info.DigimonSkill2Info.HitCount;
+					if (static_cast<int>(m_pPart_Body->Get_TrackPosition()) == 47.f)
+					{
+						Creat_Skill(2);
+					}
+				}
+				else if (m_bSkill3)
+				{
+					Skill3();
+					m_iDamage = Info.DigimonSkill3Info.Damage / Info.DigimonSkill3Info.HitCount;
+					if (static_cast<int>(m_pPart_Body->Get_TrackPosition()) == 68.f)
+					{
+						Creat_Skill(3);
+					}
+				}
 
-			if (m_bBackJump)
-			{
-				m_pFsm->Enter(DIGIMONSTATE::BATTLEBACK, m_pPart_Body);
-			}
+				if (m_bBackJump)
+				{
+					m_pFsm->Enter(DIGIMONSTATE::BATTLEBACK, m_pPart_Body);
+				}
 
-			if (!m_bSkill1 && !m_bSkill2 && !m_bSkill3 && !m_bBackJump)
+				if (!m_bSkill1 && !m_bSkill2 && !m_bSkill3 && !m_bBackJump)
+				{
+					m_bTurnEnd = true;
+					m_pFsm->Enter(DIGIMONSTATE::STANDBATTLE, m_pPart_Body);
+				}
+			}
+			else
 			{
-				m_bTurnEnd = true;
-				m_pFsm->Enter(DIGIMONSTATE::STANDBATTLE, m_pPart_Body);
+				m_pFsm->Enter(DIGIMONSTATE::DEATH, m_pPart_Body);
+
+				if (m_pPart_Body->Get_AnimFinish())
+				{
+					if (m_bMonster)
+					{
+						m_pPart_Body->Set_Dissolve(true);
+					}
+
+				}
+
 			}
 		}
 		m_pFsm->Update(fTimeDelta);
@@ -199,6 +230,36 @@ void CAngewomon::Skill3()
 	{
 		m_bSkill = false;
 		m_bSkill3 = false;
+	}
+}
+
+void CAngewomon::Creat_Skill(_int SkillNum)
+{
+	CSkillObject::POSITION Desc;
+	Desc.m_vPosition = m_pTransformCom->Get_State(STATE::POSITION);
+	Desc.m_vTargetPosition = m_vTarget_Position;
+	Desc.m_vLook = m_vLook;
+	switch (SkillNum)
+	{
+	case 1:
+		Desc.iDamage = m_iDamage;
+		m_pGameInstance->Add_GameObject_ToLayer(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_AngewomonSkill1"),
+			ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Layer_AngewomonSkill1"), &Desc);
+		break;
+
+	case 2:
+		Desc.iDamage = m_iDamage;
+		m_pGameInstance->Add_GameObject_ToLayer(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_AngewomonSkill1"),
+			ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Layer_AngewomonSkill2"), &Desc);
+
+		break;
+
+	case 3:
+		Desc.iDamage = m_iDamage;
+		m_pGameInstance->Add_GameObject_ToLayer(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_AngewomonSkill1"),
+			ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Layer_AngewomonSkill3"), &Desc);
+
+		break;
 	}
 }
 

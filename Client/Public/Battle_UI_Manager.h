@@ -51,7 +51,9 @@ public:
 	void Digimon_UseTarget3(_int Enemy);
 
 	HRESULT CreateHp();
-	void Update_Enemy_HP(_int Num);
+	void Die_Enemy_HP(_int Num);
+	void Update_Enemy_HP();
+	void Set_Hp(class CBattle_Enemy_Hp_BG* Hp) {m_pEnemy_Hp = Hp;}
 
 	void Update_MyDigimon_Skill(CContainerObject* HitDigimon);
 	void Update_TimeLine(CContainerObject* HitDigimon);
@@ -88,8 +90,11 @@ private:
 	_int m_iDigimon{};
 	_int m_iDigimon_Skill[3] = {};
 
+	_int m_iDie_Enemy{};
+
 	_float2 m_iEnemy_HpPos[5] = {};
 	_int m_iEnemy_Hp{};
+	_bool m_bFullDigimon = { false };
 
 	_int m_iDeadDigimonNum{};
 

@@ -6,6 +6,7 @@
 NS_BEGIN(Engine)
 class CModel;
 class CShader;
+class CTexture;
 NS_END
 
 NS_BEGIN(Client)
@@ -39,8 +40,10 @@ public:
 private:
 	CModel* m_pModelCom = { nullptr };
 	CShader* m_pShaderCom = { nullptr };
+	CTexture* m_pDissolveTextureCom = { nullptr };
 
 	_matrix RootBone{};
+
 private:
 	HRESULT Ready_Components();
 	HRESULT Bind_ShaderResources();

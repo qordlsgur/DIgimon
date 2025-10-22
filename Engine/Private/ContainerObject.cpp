@@ -47,17 +47,17 @@ void CContainerObject::Update(_float fTimeDelta)
 {
 	for (auto& Pair : m_PartObjects)
 		Pair.second->Update(fTimeDelta);
-	if (Info.CurrentHp < 0)
+	if (Info.CurrentHp <= 0)
+	{
+		m_bDie = true;
 		Info.CurrentHp = 0;
+	}
 }
 
 void CContainerObject::Late_Update(_float fTimeDelta)
 {
 	for (auto& Pair : m_PartObjects)
 		Pair.second->Late_Update(fTimeDelta);
-
-	if (Info.CurrentHp <= 0)
-		m_bLife = false;
 }
 
 HRESULT CContainerObject::Render()
@@ -273,7 +273,17 @@ void CContainerObject::Set_HitDamage(_int Damage)
 {
 	m_iHitDamage = Damage;
 	Info.CurrentHp -= m_iHitDamage;
+	if (Info.CurrentHp < m_iHitDamage)
+		Info.CurrentHp = 0;
 	m_bHit = true;
+}
+
+void CContainerObject::Set_Dissolve(_bool Dissolve)
+{
+}
+
+void CContainerObject::Creat_Skill(_int SkillNum)
+{
 }
 
 CPartObject* CContainerObject::Find_PartObject(const _wstring& strPartTag)

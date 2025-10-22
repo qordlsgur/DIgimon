@@ -32,7 +32,7 @@ public:
 	virtual void Set_State(DIGIMONSTATE eState) { m_eState = eState; }
 
 	virtual _float Get_TrackPosition() { return m_fTrackPosition; }
-
+	virtual void Set_Dissolve(_bool Dissolve) { m_bDissolve = Dissolve; }
 protected:
 	class CTransform* m_pParentTransformCom = { nullptr };
 
@@ -40,6 +40,8 @@ protected:
 	_bool				m_isAnimFinish = { false };
 	DIGIMONSTATE		m_eState = { DIGIMONSTATE::END };
 	_float m_fTrackPosition{};
+	_bool m_bDissolve = { false };
+	_float m_fTime{};
 
 public:
 	virtual CGameObject* Clone(void* pArg) = 0;

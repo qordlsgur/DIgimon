@@ -150,6 +150,10 @@ void CBattle_UI_Manager::Set_Timeline_Turn_Order()
 
 }
 
+void CBattle_UI_Manager::Digimon_Dead()
+{
+}
+
 void CBattle_UI_Manager::Turn_Start()
 {
 	if (m_bBattle)
@@ -361,6 +365,8 @@ HRESULT CBattle_UI_Manager::CreateHp()
 {
 	// 이제 적 몬스터들의 체력바를 띄워 주는데 적의 갯수만큼 생성을 해준다.
 	// 적이 최대 3마리인데 hp바의 위치를 조절하기 위해서 위치를 다 잡아주고
+	if (m_iEnemyDigimonCount = 3)
+		m_bFullDigimon = true;
 	for (int i = 0; i < m_iEnemyDigimonCount; ++i)
 	{
 		m_pEnemy_Hp = static_cast<CBattle_Enemy_Hp_BG*>(m_pGameInstance->Add_GameObject_ToLayer_ToCreate(
@@ -369,7 +375,7 @@ HRESULT CBattle_UI_Manager::CreateHp()
 			return E_FAIL;
 
 		m_pEnemyHps.push_back(m_pEnemy_Hp);
-		m_iEnemy_Hp++;
+		//m_iEnemy_Hp++;
 	}
 
 	m_iEnemy_HpPos[0] = _float2(450.f, 50.f);
@@ -414,67 +420,90 @@ HRESULT CBattle_UI_Manager::CreateHp()
 	return S_OK;
 }
 
-void CBattle_UI_Manager::Update_Enemy_HP(_int Num)
+void CBattle_UI_Manager::Die_Enemy_HP(_int Num)
 {
-
-	if (m_pEnemyHps.size() == 2)
-	{
-		if (Num == 0)
-		{
-			m_pEnemyHps[0]->Set_Active(false);
-			m_pEnemyHps[1]->Set_Move(m_iEnemy_HpPos[2].x, m_iEnemy_HpPos[2].y);
-		}
-
-		else if (Num == 1)
-		{
-			m_pEnemyHps[1]->Set_Active(false);
-			m_pEnemyHps[0]->Set_Move(m_iEnemy_HpPos[2].x, m_iEnemy_HpPos[2].y);
-		}
-	}
-
-	if (m_iEnemy_Hp == 3)
+	m_iDie_Enemy = Num;
+	if (m_bFullDigimon)
 	{
 		if (m_pEnemyHps.size() == 2)
 		{
-			if (Num == 0)
+			if (Num == 1)
 			{
-				m_pEnemyHps[0]->Set_Active(false);
-				m_pEnemyHps[1]->Set_Move(m_iEnemy_HpPos[2].x, m_iEnemy_HpPos[2].y);
-			}
-
-			else if (Num == 1)
-			{
-				m_pEnemyHps[1]->Set_Active(false);
-				m_pEnemyHps[0]->Set_Move(m_iEnemy_HpPos[2].x, m_iEnemy_HpPos[2].y);
+				m_pEnemyHps[0]->Set_Dissolve(true);
 			}
 
 			else if (Num == 2)
 			{
-				m_pEnemyHps[1]->Set_Active(false);
+				m_pEnemyHps[1]->Set_Dissolve(true);
+			}
+		}
+
+		if (m_pEnemyHps.size() == 3)
+		{
+			if (Num == 0)
+			{
+				m_pEnemyHps[0]->Set_Dissolve(true);
+			}
+
+			else if (Num == 1)
+			{
+				m_pEnemyHps[1]->Set_Dissolve(true);
+			}
+			else if (Num == 2)
+			{
+				m_pEnemyHps[2]->Set_Dissolve(true);
+			}
+		}
+	}
+
+	else
+	{
+		if (Num == 0)
+		{
+			m_pEnemyHps[0]->Set_Dissolve(true);
+		}
+
+		else if (Num == 1)
+		{
+			m_pEnemyHps[1]->Set_Dissolve(true);
+		}
+	}
+}
+
+void CBattle_UI_Manager::Update_Enemy_HP()
+{
+	if (m_bFullDigimon) 
+	{
+		if (m_pEnemyHps.size() == 2)
+		{
+			if (m_iDie_Enemy == 1)
+			{
+				m_pEnemyHps[1]->Set_Move(m_iEnemy_HpPos[2].x, m_iEnemy_HpPos[2].y);
+			}
+
+			else if (m_iDie_Enemy == 2)
+			{
 				m_pEnemyHps[0]->Set_Move(m_iEnemy_HpPos[2].x, m_iEnemy_HpPos[2].y);
 			}
 		}
 
-		else if (m_pEnemyHps.size() == 3)
+		if (m_pEnemyHps.size() == 3)
 		{
-			if (Num == 0)
+			if (m_iDie_Enemy == 0)
 			{
-				m_pEnemyHps[0]->Set_Active(false);
 				m_pEnemyHps[1]->Set_Move(m_iEnemy_HpPos[1].x, m_iEnemy_HpPos[1].y);
 				m_pEnemyHps[2]->Set_Move(m_iEnemy_HpPos[3].x, m_iEnemy_HpPos[3].y);
 				m_pEnemyHps.erase(m_pEnemyHps.begin());
 			}
 
-			else if (Num == 1)
+			else if (m_iDie_Enemy == 1)
 			{
-				m_pEnemyHps[1]->Set_Active(false);
 				m_pEnemyHps[0]->Set_Move(m_iEnemy_HpPos[1].x, m_iEnemy_HpPos[1].y);
 				m_pEnemyHps[2]->Set_Move(m_iEnemy_HpPos[3].x, m_iEnemy_HpPos[3].y);
 				m_pEnemyHps.erase(m_pEnemyHps.begin() + 1);
 			}
-			else if (Num == 2)
+			else if (m_iDie_Enemy == 2)
 			{
-				m_pEnemyHps[2]->Set_Active(false);
 				m_pEnemyHps[0]->Set_Move(m_iEnemy_HpPos[1].x, m_iEnemy_HpPos[1].y);
 				m_pEnemyHps[1]->Set_Move(m_iEnemy_HpPos[3].x, m_iEnemy_HpPos[3].y);
 				m_pEnemyHps.erase(m_pEnemyHps.begin() + 2);
@@ -482,7 +511,18 @@ void CBattle_UI_Manager::Update_Enemy_HP(_int Num)
 		}
 	}
 
+	else
+	{
+		if (m_iDie_Enemy == 0)
+		{
+			m_pEnemyHps[1]->Set_Move(m_iEnemy_HpPos[2].x, m_iEnemy_HpPos[2].y);
+		}
 
+		else if (m_iDie_Enemy == 1)
+		{
+			m_pEnemyHps[0]->Set_Move(m_iEnemy_HpPos[2].x, m_iEnemy_HpPos[2].y);
+		}
+	}
 }
 
 

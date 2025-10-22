@@ -76,35 +76,53 @@ void CMetalgreymon::Update(_float fTimeDelta)
 			if (Info.Hp <= 0)
 			{
 				Info.Hp = 0;
-				m_bLife = false;
+				m_bDie = true;
 			}
 
-			if (m_bSkill1)
+			if (!m_bDie)
 			{
-				Skill1();
-				m_iDamage = Info.DigimonSkill1Info.Damage;
-			}
-			else if (m_bSkill2)
-			{
-				Skill2();
-				m_iDamage = Info.DigimonSkill2Info.Damage;
+				if (m_bSkill1)
+				{
+					Skill1();
+					m_iDamage = Info.DigimonSkill1Info.Damage;
+				}
+				else if (m_bSkill2)
+				{
+					Skill2();
+					m_iDamage = Info.DigimonSkill2Info.Damage;
 
-			}
-			else if (m_bSkill3)
-			{
-				Skill3();
-				m_iDamage = Info.DigimonSkill3Info.Damage;
+				}
+				else if (m_bSkill3)
+				{
+					Skill3();
+					m_iDamage = Info.DigimonSkill3Info.Damage;
+				}
+
+				if (m_bBackJump)
+				{
+					m_pFsm->Enter(DIGIMONSTATE::BATTLEBACK, m_pPart_Body);
+				}
+
+				if (!m_bSkill1 && !m_bSkill2 && !m_bSkill3 && !m_bBackJump)
+				{
+					m_bTurnEnd = true;
+					m_pFsm->Enter(DIGIMONSTATE::STANDBATTLE, m_pPart_Body);
+				}
 			}
 
-			if (m_bBackJump)
+			else
 			{
-				m_pFsm->Enter(DIGIMONSTATE::BATTLEBACK, m_pPart_Body);
-			}
+				m_pFsm->Enter(DIGIMONSTATE::DEATH, m_pPart_Body);
 
-			if (!m_bSkill1 && !m_bSkill2 && !m_bSkill3 && !m_bBackJump)
-			{
-				m_bTurnEnd = true;
-				m_pFsm->Enter(DIGIMONSTATE::STANDBATTLE, m_pPart_Body);
+				if (m_pPart_Body->Get_AnimFinish())
+				{
+					if (m_bMonster)
+					{
+						m_pPart_Body->Set_Dissolve(true);
+					}
+
+				}
+
 			}
 		}
 		m_pFsm->Update(fTimeDelta);

@@ -99,6 +99,11 @@ public:
 	virtual void Set_Hit(_bool Hit) { m_bHit = Hit; }
 	virtual _bool Get_Hit() { return m_bHit ; }
 
+	virtual _bool Get_Die() { return m_bDie; }
+	virtual void Set_Dissolve(_bool Dissolve);
+
+	virtual void Creat_Skill(_int SkillNum);
+
 protected:
 	map<const _wstring, class CPartObject*>			m_PartObjects;
 
@@ -119,7 +124,9 @@ protected:
 	_bool m_bSkill3 = { false };
 	_bool m_bTurnEnd = { true };
 	_bool m_bHit = { false };
+	_bool m_bDie = { false };
 	_vector m_vTarget_Position{};
+	_float m_vLook{};
 
 	queue<DIGIMONSTATE> m_eSkill_State;
 

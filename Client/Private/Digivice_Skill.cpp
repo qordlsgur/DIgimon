@@ -119,19 +119,14 @@ void CDigivice_Skill::Set_Hover()
 	m_pSkill_Info->Set_Hover(false);
 }
 
-HRESULT CDigivice_Skill::Set_Digimon_SkillSet(_int ID, _int Digimon_Skill)
+HRESULT CDigivice_Skill::Set_Digimon_SkillSet(_int ID, _int Digimon_Skill, _int SlotID)
 {
-	if (m_iDigimon_ID == ID)
-		return S_OK;
-
-	if (m_pDigimonSKillTextureCom != nullptr)
-		Safe_Release(m_pDigimonSKillTextureCom);
-
 	m_iDigimon_ID = ID;
 
+	wstring Layer_Tag = TEXT("Com_Digimon_Skill") + to_wstring(SlotID);
 	/* Com_Digimon_Skill*/
 	if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::GAMEPLAY), m_pManager->Search_Digimon(m_iDigimon_ID)->DigimonSkillImage,
-		TEXT("Com_Digimon_Skill"), reinterpret_cast<CComponent**>(&m_pDigimonSKillTextureCom))))
+		Layer_Tag, reinterpret_cast<CComponent**>(&m_pDigimonSKillTextureCom))))
 		return E_FAIL;
 
 	m_iDigimon_Skill = Digimon_Skill;

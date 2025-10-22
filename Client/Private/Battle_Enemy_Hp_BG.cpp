@@ -2,6 +2,7 @@
 #include "GameInstance.h"
 #include "Battle_Enemy_HpBar.h"
 #include "ContainerObject.h"
+#include "Battle_UI_Manager.h"
 CBattle_Enemy_Hp_BG::CBattle_Enemy_Hp_BG(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CUIObject{ pDevice, pContext }
 {
@@ -37,8 +38,9 @@ HRESULT CBattle_Enemy_Hp_BG::Initialize(void* pArg)
 	if (FAILED(Create_HpBar(TEXT("Layer_Enemy_HpBar"))))
 		return E_FAIL;
 
-
-
+	m_pUI_Manager = CBattle_UI_Manager::GetInstance();
+	m_pUI_Manager->Set_Hp(this);
+	
 	return S_OK;
 }
 
@@ -73,6 +75,20 @@ void CBattle_Enemy_Hp_BG::Update(_float fTimeDelta)
 
 		_itow_s(static_cast<_int>(m_fMaxHp), m_szMaxHp, MAX_PATH, 10);
 		_itow_s(static_cast<_int>(m_fCurrentHp), m_szCurrentHp, MAX_PATH, 10);
+
+		m_fHpRatio = m_fCurrentHp / m_fMaxHp;
+
+		if (m_fHpRatio <= 0.f)
+			m_fHpRatio = 0.f;
+
+		if (m_bDissolve)
+			m_fTime += fTimeDelta;
+
+		if (m_fTime >= 0.5f)
+		{
+			m_pUI_Manager->Update_Enemy_HP();
+			m_bActive = false;
+		}
 	}
 }
 
@@ -130,6 +146,12 @@ void CBattle_Enemy_Hp_BG::Set_Enemy(CContainerObject* Enemy)
 	m_pHpBar->Set_MaxHp(m_fMaxHp);
 }
 
+void CBattle_Enemy_Hp_BG::Set_Dissolve(_bool Dissolve)
+{
+	m_bDissolve = Dissolve;
+	m_pHpBar->Set_Dissolve(Dissolve);
+}
+
 HRESULT CBattle_Enemy_Hp_BG::Ready_Components()
 {
 	/* Com_VIBuffer */
@@ -140,6 +162,11 @@ HRESULT CBattle_Enemy_Hp_BG::Ready_Components()
 	/* Com_Battle_HpBG*/
 	if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Battle_Hp_BG"),
 		TEXT("Com_Battle_HpBG"), reinterpret_cast<CComponent**>(&m_pTextureCom))))
+		return E_FAIL;
+
+	/* Com_Battle_Dissolve*/
+	if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Noise"),
+		TEXT("Com_Battle_Dissolve"), reinterpret_cast<CComponent**>(&m_pDissolveTextureCom))))
 		return E_FAIL;
 
 	/* Com_Shader */
@@ -160,6 +187,13 @@ HRESULT CBattle_Enemy_Hp_BG::Bind_ShaderResources()
 		return E_FAIL;
 	if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture1", 0)))
 		return E_FAIL;
+	if (FAILED(m_pDissolveTextureCom->Bind_ShaderResource(m_pShaderCom, "g_DessolveTexture", 0)))
+		return E_FAIL;
+
+	if (FAILED(m_pShaderCom->Bind_State("DissolveTime", m_fTime)))
+		return E_FAIL;
+
+
 
 	return S_OK;
 }
@@ -208,6 +242,7 @@ void CBattle_Enemy_Hp_BG::Free()
 {
 	__super::Free();
 
+	Safe_Release(m_pDissolveTextureCom);
 	Safe_Release(m_pTextureCom);
 	Safe_Release(m_pVIBufferCom);
 	Safe_Release(m_pShaderCom);

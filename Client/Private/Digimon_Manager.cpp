@@ -446,7 +446,7 @@ void CDigimon_Manager::Omegamoon()
 	Info.DigimonSkill3Info.Sp = 250;
 	Info.DigimonSkill3Info.HitCount = 3;
 	Info.DigimonSkill3Info.DamageInfo = TEXT("기본 데미지 x 공격 횟수 x 40%");
-	Info.DigimonSkill3Info.Damage = static_cast<_int>(Info.Damage * Info.DigimonSkill3Info.HitCount * 0.4f);
+	Info.DigimonSkill3Info.Damage = static_cast<_int>(Info.Damage * Info.DigimonSkill3Info.HitCount * 0.5f);
 	Info.DigimonSkill3Info.Target = SKILL_TARGET::ENEMY;
 	Info.DigimonSkill3Info.Range = SKILL_RANGE::SINGLE;
 	Info.DigimonSkill3Info.SkillInfo = TEXT("가루루 캐논으로 공격을 날려\n피해를 입힙니다.");

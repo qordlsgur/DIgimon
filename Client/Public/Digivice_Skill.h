@@ -43,7 +43,7 @@ public:
 
 	//DIGIMON_INFO Get_DigimonInfo() { return m_Info; }
 
-	HRESULT Set_Digimon_SkillSet(_int ID, _int Digimon_Skill);
+	HRESULT Set_Digimon_SkillSet(_int ID, _int Digimon_Skill, _int SlotID);
 
 private:
 	CVIBuffer_Rect* m_pVIBufferCom = { nullptr };

@@ -53,6 +53,9 @@ void CBody_Metalgarumon::Update(_float fTimeDelta)
 
 	XMStoreFloat4x4(&m_CombinedWorldMatrix,
 		XMLoadFloat4x4(m_pTransformCom->Get_WorldMatrixPtr()) * XMLoadFloat4x4(m_pParentTransformCom->Get_WorldMatrixPtr()));
+
+	if (m_bDissolve)
+		m_fTime += fTimeDelta / 3.f;
 }
 
 void CBody_Metalgarumon::Late_Update(_float fTimeDelta)
@@ -77,8 +80,18 @@ HRESULT CBody_Metalgarumon::Render()
 		/*if (FAILED(m_pModelCom->Bind_Material(i, m_pShaderCom, "g_DiffuseTexture", aiTextureType_DIFFUSE, 0)))
 			return E_FAIL;*/
 
-		if (FAILED(m_pShaderCom->Begin(0)))
-			return E_FAIL;
+		if (m_bDissolve)
+		{
+			if (FAILED(m_pShaderCom->Begin(1)))
+				return E_FAIL;
+		}
+
+		else
+		{
+			if (FAILED(m_pShaderCom->Begin(0)))
+				return E_FAIL;
+		}
+
 
 
 		if (FAILED(m_pModelCom->Render(i)))
@@ -106,6 +119,11 @@ HRESULT CBody_Metalgarumon::Ready_Components()
 		TEXT("Com_Shader"), reinterpret_cast<CComponent**>(&m_pShaderCom))))
 		return E_FAIL;
 
+	/* Com_Battle_Dissolve*/
+	if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Noise"),
+		TEXT("Com_Battle_Dissolve"), reinterpret_cast<CComponent**>(&m_pDissolveTextureCom))))
+		return E_FAIL;
+
 	return S_OK;
 }
 
@@ -119,7 +137,10 @@ HRESULT CBody_Metalgarumon::Bind_ShaderResources()
 	if (FAILED(m_pShaderCom->Bind_Matrix("g_ProjMatrix", m_pGameInstance->Get_Transform_Float4x4(D3DTS::PROJ))))
 		return E_FAIL;
 
-
+	if (FAILED(m_pDissolveTextureCom->Bind_ShaderResource(m_pShaderCom, "g_DessolveTexture", 0)))
+		return E_FAIL;
+	if (FAILED(m_pShaderCom->Bind_State("DissolveTime", m_fTime)))
+		return E_FAIL;
 
 
 	return S_OK;
@@ -155,6 +176,7 @@ void CBody_Metalgarumon::Free()
 {
 	__super::Free();
 
+	Safe_Release(m_pDissolveTextureCom);
 	Safe_Release(m_pModelCom);
 	Safe_Release(m_pShaderCom);
 }

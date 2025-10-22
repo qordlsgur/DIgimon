@@ -13,6 +13,7 @@ public:
 		_vector m_vPosition;
 		_vector m_vTargetPosition;
 		_int	iDamage;
+		_float	m_vLook;
 	}POSITION;
 protected:
 	CSkillObject(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);

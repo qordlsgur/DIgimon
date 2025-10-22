@@ -47,8 +47,8 @@ HRESULT CBlackwargreymonSkill2::Initialize(void* pArg)
 void CBlackwargreymonSkill2::Priority_Update(_float fTimeDelta)
 {
 	__super::Priority_Update(fTimeDelta);
-
 }
+
 void CBlackwargreymonSkill2::Update(_float fTimeDelta)
 {
 	m_pTransformCom->Set_State((STATE::POSITION), m_vTarget_pos);
@@ -89,7 +89,7 @@ HRESULT CBlackwargreymonSkill2::Ready_PartObjects()
 		TEXT("Com_Collider_Sphere"), reinterpret_cast<CComponent**>(&m_pColliderCom), &SphereDesc)))
 		return E_FAIL;
 
-	return S_OK;;
+	return S_OK;
 }
 
 CBlackwargreymonSkill2* CBlackwargreymonSkill2::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)

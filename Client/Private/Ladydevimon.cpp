@@ -73,38 +73,48 @@ void CLadydevimon::Update(_float fTimeDelta)
 		}
 		else
 		{
-			if (Info.Hp <= 0)
-			{
-				Info.Hp = 0;
-				m_bLife = false;
-			}
 
-			if (m_bSkill1)
+			if (!m_bDie)
 			{
-				Skill1();
-				m_iDamage = Info.DigimonSkill1Info.Damage;
-			}
-			else if (m_bSkill2)
-			{
-				Skill2();
-				m_iDamage = Info.DigimonSkill2Info.Damage;
+				if (m_bSkill1)
+				{
+					Skill1();
+					m_iDamage = Info.DigimonSkill1Info.Damage;
+				}
+				else if (m_bSkill2)
+				{
+					Skill2();
+					m_iDamage = Info.DigimonSkill2Info.Damage;
 
-			}
-			else if (m_bSkill3)
-			{
-				Skill3();
-				m_iDamage = Info.DigimonSkill3Info.Damage;
-			}
+				}
+				else if (m_bSkill3)
+				{
+					Skill3();
+					m_iDamage = Info.DigimonSkill3Info.Damage;
+				}
 
-			if (m_bBackJump)
-			{
-				m_pFsm->Enter(DIGIMONSTATE::BATTLEBACK, m_pPart_Body);
-			}
+				if (m_bBackJump)
+				{
+					m_pFsm->Enter(DIGIMONSTATE::BATTLEBACK, m_pPart_Body);
+				}
 
-			if (!m_bSkill1 && !m_bSkill2 && !m_bSkill3 && !m_bBackJump)
+				if (!m_bSkill1 && !m_bSkill2 && !m_bSkill3 && !m_bBackJump)
+				{
+					m_bTurnEnd = true;
+					m_pFsm->Enter(DIGIMONSTATE::STANDBATTLE, m_pPart_Body);
+				}
+			}
+			else
 			{
-				m_bTurnEnd = true;
-				m_pFsm->Enter(DIGIMONSTATE::STANDBATTLE, m_pPart_Body);
+				m_pFsm->Enter(DIGIMONSTATE::DEATH, m_pPart_Body, false, false);
+
+				if (m_pPart_Body->Get_AnimFinish())
+				{
+					if (m_bMonster)
+					{
+						m_pPart_Body->Set_Dissolve(true);
+					}
+				}
 			}
 		}
 		m_pFsm->Update(fTimeDelta);
@@ -171,10 +181,10 @@ void CLadydevimon::Skill1()
 	{
 		m_pFsm->Enter(DIGIMONSTATE::BATTLEDASH, m_pPart_Body);
 	}
-	else if(!m_bSkillMove)
+	else if (!m_bSkillMove)
 	{
 		m_pFsm->Enter(DIGIMONSTATE::SKILL1, m_pPart_Body, false, false);
-		if(m_bSkill1 && m_pPart_Body->Get_AnimFinish())
+		if (m_bSkill1 && m_pPart_Body->Get_AnimFinish())
 		{
 			m_bSkill = false;
 			m_bSkill1 = false;

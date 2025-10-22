@@ -31,9 +31,13 @@ public:
 	void Set_Move(_float fX, _float fY);
 	void Set_Enemy(CContainerObject* Enemy);
 
+	void Set_Dissolve(_bool Dissolve);
 private:
+	class CBattle_UI_Manager* m_pUI_Manager = { nullptr };
+
 	CVIBuffer_Rect* m_pVIBufferCom = { nullptr };
 	CTexture* m_pTextureCom = { nullptr };
+	CTexture* m_pDissolveTextureCom = { nullptr };
 	CShader* m_pShaderCom = { nullptr };
 
 	_tchar			m_szMaxHp[MAX_PATH] = {};
@@ -45,7 +49,12 @@ private:
 
 	_float m_fMaxHp{};
 	_float m_fCurrentHp{};
+	_float m_fHpRatio{};
 
+	_float m_fDeathTimer{};
+	_float m_fTime{};
+
+	_bool m_bDissolve = { false };
 private:
 	HRESULT Ready_Components();
 	HRESULT Bind_ShaderResources();

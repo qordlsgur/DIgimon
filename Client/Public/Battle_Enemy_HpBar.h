@@ -36,14 +36,17 @@ public:
 	_float Get_MaxHp() { return m_fMaxHp; }
 	_float Get_CurrentHp() { return m_fCurrentHp; }
 
+	void Set_Dissolve(_bool Dissolve) { m_bDissolve = Dissolve; }
+
 private:
 	CVIBuffer_Rect* m_pVIBufferCom = { nullptr };
 	CTexture* m_pTextureCom = { nullptr };
 	CTexture* m_pBgTextureCom = { nullptr };
+	CTexture* m_pDissolveTextureCom = { nullptr };
 	CShader* m_pShaderCom = { nullptr };
 
-
-
+	_float m_fTime{};
+	_bool m_bDissolve = { false };
 	_float4 Pos;
 	_float m_fMaxHp{};
 	_float m_fCurrentHp{};
