@@ -36,6 +36,8 @@ public:
 		return m_isDead;
 	}
 
+	void Set_isDead(_bool Dead) { m_isDead = Dead; }
+
 	class CComponent* Find_Component(const _wstring& strComponentTag);
 
 	virtual _vector Get_Transform();

@@ -43,7 +43,7 @@ public:
 	void Set_Turn();
 	void Turn_Update();
 
-
+	void Set_End(_bool End) { m_bEnemy_Death = End; }
 
 	void ReturnToPosition(_float fTimeDelta);
 	void Set_Player(CContainerObject* pPlayer);
@@ -57,6 +57,7 @@ public:
 	void Set_Battle(_bool Battle) {	m_bBattleOn = Battle; }
 
 	void Battle_System();
+	void Battle_End();
 
 	void Enemy_Position();
 	void Player_Digimon_Position();
@@ -79,13 +80,14 @@ public:
 	CContainerObject* Digimon(const wstring& strPrototype);
 
 	void Set_Player_Pos(_vector Pos);
+	void Set_First_Digimon_Pos(_vector Pos);
 	_vector Get_Player_Pos();
 
 	void Set_Battle_Pos(_vector* vEmemyDigimon, _vector* vPlayerDigimon, _vector Player, _vector* vEnemyDigimonAttackPos, _vector* vPlayerDigimonAttackPos);
 
 	void Set_MyDigimon(CContainerObject* pPlayerDigimon);
 
-	void Battle_Tunr_Order();
+	void Battle_Turn_Order();
 
 	void Digimon_Dead();
 	void Digimon_Alive();
@@ -102,6 +104,7 @@ private:
 
 	vector<CContainerObject*>		m_pMyDigimon;
 	vector<CContainerObject*>		m_pEnemyDigimon;
+	vector<DIGIMON_INFO*>			m_pMyDigimon_Infos;
 
 	CContainerObject*				m_pPlayer = { nullptr }; 
 	CGameObject*					m_pDigivice = { nullptr };
@@ -109,6 +112,7 @@ private:
 	CGameObject*					m_pBattle_Terrain = { nullptr };
 
 	_vector							m_pPlayer_Pos{};
+	_vector							m_pFirst_Digimon_Pos{};
 
 	_vector							m_vPlayerDigimonAttackLookAtEnemy{};
 	_vector							m_vEnemyAttackLookAtPlayerDigimon{};
@@ -158,6 +162,7 @@ private:
 	_int							m_iAlivePlayer{};
 	_int							m_iAliveEnemy{};
 
+	_int							m_iAdd_Exp{};
 private:
 
 public:

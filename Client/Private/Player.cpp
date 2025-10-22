@@ -161,18 +161,30 @@ void CPlayer::Update(_float fTimeDelta)
 	m_pFsm->Update(fTimeDelta);
 	m_pColliderCom->Update(XMLoadFloat4x4(m_pTransformCom->Get_WorldMatrixPtr()));
 
-	if (m_bOnInteract && !m_pBattle_Manager->Get_Battle())
+	if (/*m_bOnInteract && */!m_pBattle_Manager->Get_Battle())
 	{
 		if (m_pGameInstance->Key_Down(DIK_F))
 		{
+			// f를 누르면 플레어으의 위치를 기록한다.
 			m_pBattle_Manager->Set_Player_Pos(m_pTransformCom->Get_State(STATE::POSITION));
-			m_pBattle_Manager->EnemyDigimon_Info(m_iEnemy);
+			m_pBattle_Manager->Set_First_Digimon_Pos(m_pFirst_Digimon->Get_Position());
+			// 적 디지몬을 생성 한다.
+			m_pBattle_Manager->EnemyDigimon_Info(3);
+			// 그리고 전투를 하기 위해서 세팅을 해준다.
 			m_pBattle_Manager->Battle_System();
+			// 세팅이 끝나면 이제 전투한다고 bool값을 바꿔주면서 카메라도 바꿔준다.
 			m_pBattle_Manager->Set_Battle(true);
 			m_pCamera_Manager->Set_Battle(true);
 		}
 	}
 
+	if (m_pBattle_Manager->Get_Battle())
+	{
+		if (m_pGameInstance->Key_Down(DIK_G))
+		{
+			m_pBattle_Manager->Set_End(true);
+		}
+	}
 	__super::Update(fTimeDelta);
 }
 

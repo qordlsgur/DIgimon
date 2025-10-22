@@ -40,7 +40,7 @@ HRESULT CBlackwargreymonSkill3::Initialize(void* pArg)
 	m_iDamage = Pos->iDamage;
 	m_vPosition = Pos->m_vPosition;
 
-	m_pTarget_pos = Pos->m_vTargetPosition;
+	m_vTarget_pos = Pos->m_vTargetPosition;
 
 	m_vPosition.m128_f32[1] += 10.f;
 	m_vPosition.m128_f32[2] += 20.f;
@@ -67,14 +67,14 @@ void CBlackwargreymonSkill3::Update(_float fTimeDelta)
 	Pos = m_pTransformCom->Get_State(STATE::POSITION);
 	if (m_bFirst == false)
 	{
-		XMVECTOR direction = XMVectorSubtract(m_vFirst, Pos);  // 
+		_vector direction = XMVectorSubtract(m_vFirst, Pos);  // 
 		float distance = XMVectorGetX(XMVector3Length(direction)); 
 
 		if (distance < 0.001f) // 거의 도착하면
 			return;
 
-		XMVECTOR dirNormalized = XMVector3Normalize(direction); 
-		XMVECTOR move = XMVectorScale(dirNormalized, m_fSpeed * fTimeDelta);
+		_vector dirNormalized = XMVector3Normalize(direction); 
+		_vector move = XMVectorScale(dirNormalized, m_fSpeed * fTimeDelta);
 
 		if (XMVectorGetX(XMVector3Length(move)) > distance) 
 		{
@@ -95,18 +95,18 @@ void CBlackwargreymonSkill3::Update(_float fTimeDelta)
 
 	if (m_bFirst && m_bSize && !m_bEnd)
 	{
-		XMVECTOR direction = XMVectorSubtract(m_pTarget_pos, Pos);
-		float distance = XMVectorGetX(XMVector3Length(direction));
+		_vector direction = XMVectorSubtract(m_vTarget_pos, Pos);
+		_float distance = XMVectorGetX(XMVector3Length(direction));
 
 		if (distance < 0.001f)
 			return;
 
-		XMVECTOR dirNormalized = XMVector3Normalize(direction);
-		XMVECTOR move = XMVectorScale(dirNormalized, m_fSpeed * fTimeDelta * 3.5f);
+		_vector dirNormalized = XMVector3Normalize(direction);
+		_vector move = XMVectorScale(dirNormalized, m_fSpeed * fTimeDelta * 3.5f);
 
 		if (XMVectorGetX(XMVector3Length(move)) > distance)
 		{
-			Pos = m_pTarget_pos;
+			Pos = m_vTarget_pos;
 			m_bEnd = true;
 		}
 		else

@@ -28,7 +28,7 @@ public:
 	virtual HRESULT Render();
 
 public:
-	void Set_TargetPos(_fvector Pos) { m_pTarget_pos = Pos; }
+	void Set_TargetPos(_fvector Pos) { m_vTarget_pos = Pos; }
 	void Set_TrakPosition(_float TrakPosition) { m_fTrakPosition = TrakPosition; }
 
 	virtual void Set_Move(_vector Position);
@@ -38,7 +38,7 @@ public:
 	virtual _int Get_Damage() = 0;
 protected:
 	_vector		m_vPosition{};
-	_vector		m_pTarget_pos{};
+	_vector		m_vTarget_pos{};
 
 	_float		m_fSpeed{};
 

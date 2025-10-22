@@ -298,7 +298,7 @@ void CDigimon_Manager::Leomon()
 	Info.CurrentHp = 2500;
 	Info.Sp = 1250;
 	Info.CurrentSp = 1250;
-	Info.AttackSpeed = 70;
+	Info.AttackSpeed = 700;
 	Info.Exp = 5000;
 	Info.CurrentExp = 0;
 	Info.ExpReward = 500;
@@ -422,6 +422,7 @@ void CDigimon_Manager::Omegamoon()
 	Info.Stage = DIGIMON_STAGE::MEGA;
 	Info.Attribute = DIGIMON_ATTRIBUTE::VACCINE;
 	Info.DigimonInfo = TEXT("선을 바라는 사람들의 강한 의지에 의해서 융햡해 탄생한 성기사형 디지몬");
+	Info.Damage = 1300;
 
 	Info.DigimonSkill1Info.SkillName = TEXT("그레이 소드");
 	Info.DigimonSkill1Info.Sp = 0;
@@ -456,7 +457,6 @@ void CDigimon_Manager::Omegamoon()
 	Info.CurrentHp = 10000;
 	Info.Sp = 5000;
 	Info.CurrentSp = 5000;
-	Info.Damage = 1300;
 	Info.AttackSpeed = 150;
 	Info.Exp = 20000;
 	Info.CurrentExp = 0;

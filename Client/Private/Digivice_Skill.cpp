@@ -121,6 +121,9 @@ void CDigivice_Skill::Set_Hover()
 
 HRESULT CDigivice_Skill::Set_Digimon_SkillSet(_int ID, _int Digimon_Skill)
 {
+	if (m_iDigimon_ID == ID)
+		return S_OK;
+
 	m_iDigimon_ID = ID;
 
 	/* Com_Digimon_Skill*/

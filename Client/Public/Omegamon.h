@@ -32,6 +32,8 @@ public:
 	virtual void Skill2() override;
 	virtual void Skill3() override;
 
+	void Creat_Skill(_int SkillNum);
+
 private:
 	CPartObject* m_pPart_Body = { nullptr };
 	CCollider* m_pColliderCom = { nullptr };
@@ -39,7 +41,8 @@ private:
 	class CDigimon_Manager* m_pDigimon_Manager = { nullptr };
 	class CStateMachine* m_pFsm = { nullptr };
 
-	_bool m_bMove = false;
+	_bool m_bMove = { false };
+	_bool m_bisHit = { false };
 
 private:
 	virtual void UseSkill(_int Skill) override;

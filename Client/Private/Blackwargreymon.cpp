@@ -4,6 +4,7 @@
 #include "PartObject.h"
 #include "StateMachine.h"
 #include "Digimon_Manager.h"
+#include "SkillObject.h"
 
 CBlackwargreymon::CBlackwargreymon(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CContainerObject{ pDevice, pContext }
@@ -83,7 +84,7 @@ void CBlackwargreymon::Update(_float fTimeDelta)
 			if (m_bSkill1)
 			{
 				Skill1();
-				m_iDamage = Info.DigimonSkill1Info.Damage;
+				m_iDamage = Info.DigimonSkill1Info.Damage * 10000;
 
 				if (static_cast<int>(m_pPart_Body->Get_TrackPosition()) == 23)
 				{
@@ -205,7 +206,6 @@ void CBlackwargreymon::UseSkill(_int Skill)
 {
 	m_bSkill = true;
 	m_bTurnEnd = false;
-	m_bSkillCreate = true;
 	if (Skill == 1)
 	{
 		if (!m_bSkillMove)
@@ -292,7 +292,6 @@ void CBlackwargreymon::Creat_Skill(_int SkillNum)
 
 		break;
 	}
-	m_bSkillCreate = false;
 }
 
 

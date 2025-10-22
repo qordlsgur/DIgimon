@@ -26,20 +26,17 @@ HRESULT CSkillObject::Initialize(void* pArg)
 
 void CSkillObject::Priority_Update(_float fTimeDelta)
 {
-    if (m_bHit == true)
-        m_isDead = true;
+
 }
 
 void CSkillObject::Update(_float fTimeDelta)
 {
-    if (m_bHit == true)
-        m_isDead = true;
+
 }
 
 void CSkillObject::Late_Update(_float fTimeDelta)
 {
-    if (m_bHit == true)
-        m_isDead = true;
+
 }
 
 HRESULT CSkillObject::Render()

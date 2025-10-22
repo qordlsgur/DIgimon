@@ -2,7 +2,6 @@
 #include "Client_Defines.h"
 #include "ContainerObject.h"
 #include "StateMachine.h"
-#include "SkillObject.h"
 
 NS_BEGIN(Engine)
 class CNavigation;
@@ -47,13 +46,12 @@ private:
 	class CDigimon_Manager* m_pDigimon_Manager = { nullptr };
 	class CStateMachine* m_pFsm = { nullptr };
 
-	_bool m_bMove = false;
+	_bool m_bMove = { false };
 	_bool m_bisHit = { false };
 	_float m_fTime{};
 	_float m_fFontUp{};
 	_float m_fRandom{};
 
-	_bool		m_bSkillCreate = { false };
 private:
 	HRESULT Ready_PartObjects();
 

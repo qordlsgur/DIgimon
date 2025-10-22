@@ -30,6 +30,7 @@ HRESULT CBattle::Initialize(void* pArg)
 
 void CBattle::Priority_Update(_float fTimeDelta)
 {
+	m_Battle = m_pBattle_Manager->Get_Battle();
 	if (m_Battle)
 	{
 		m_pBattle_Manager->Priority_Update(fTimeDelta);
@@ -38,8 +39,6 @@ void CBattle::Priority_Update(_float fTimeDelta)
 
 void CBattle::Update(_float fTimeDelta)
 {
-	m_Battle = m_pBattle_Manager->Get_Battle();
-
 	if (m_Battle)
 	{
 		m_pBattle_Manager->Update(fTimeDelta);

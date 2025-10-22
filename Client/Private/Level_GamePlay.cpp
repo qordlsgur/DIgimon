@@ -246,13 +246,13 @@ HRESULT CLevel_GamePlay::Ready_Layer_Interaction(const _wstring& strLayerTag)
 
 HRESULT CLevel_GamePlay::Ready_Layer_Monster(const _wstring& strLayerTag)
 {
-	CSpawner::SPAWNER_POS   SpawnPos[4]{};
-	SpawnPos[0].SpawnerPos = XMVectorSet(770.f, 0.f, 650.f, 0.f);
+	/*CSpawner::SPAWNER_POS   SpawnPos[4]{};
+	SpawnPos[0].SpawnerPos = XMVectorSet(300.f, 0.f, 300.f, 0.f);
 	SpawnPos[0].strPrototypeTag = TEXT("Prototype_GameObject_Ladydevimon");
 
 	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Spawner"),
 		ENUM_CLASS(LEVEL::GAMEPLAY), strLayerTag, &SpawnPos[0])))
-		return E_FAIL;
+		return E_FAIL;*/
 
 	//SpawnPos[1].SpawnerPos = XMVectorSet(770.f, 0.f, 650.f, 0.f);
 	//SpawnPos[1].strPrototypeTag = TEXT("Prototype_GameObject_Angewomon");

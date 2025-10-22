@@ -4,6 +4,7 @@
 #include "PartObject.h"
 #include "StateMachine.h"
 #include "Digimon_Manager.h"
+#include "SkillObject.h"
 
 COmegamon::COmegamon(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CContainerObject{ pDevice, pContext }
@@ -83,18 +84,45 @@ void COmegamon::Update(_float fTimeDelta)
 			if (m_bSkill1)
 			{
 				Skill1();
-				m_iDamage = Info.DigimonSkill1Info.Damage;
+				m_iDamage = Info.DigimonSkill1Info.Damage / Info.DigimonSkill1Info.HitCount * 10000;
+				if (static_cast<int>(m_pPart_Body->Get_TrackPosition()) == 10)
+				{
+					Creat_Skill(1);
+				}
+				if (static_cast<int>(m_pPart_Body->Get_TrackPosition()) == 22)
+				{
+					Creat_Skill(1);
+				}
+				if (static_cast<int>(m_pPart_Body->Get_TrackPosition()) == 42)
+				{
+					Creat_Skill(1);
+				}
 			}
 			else if (m_bSkill2)
 			{
 				Skill2();
-				m_iDamage = Info.DigimonSkill2Info.Damage;
-
+				m_iDamage = Info.DigimonSkill2Info.Damage / Info.DigimonSkill2Info.HitCount;
+				if (static_cast<int>(m_pPart_Body->Get_TrackPosition()) == 67)
+				{
+					Creat_Skill(2);
+				}
 			}
 			else if (m_bSkill3)
 			{
 				Skill3();
-				m_iDamage = Info.DigimonSkill3Info.Damage;
+				m_iDamage = Info.DigimonSkill3Info.Damage/Info.DigimonSkill3Info.HitCount;
+				if (static_cast<int>(m_pPart_Body->Get_TrackPosition()) == 70)
+				{
+					Creat_Skill(3);
+				}
+				if (static_cast<int>(m_pPart_Body->Get_TrackPosition()) == 80)
+				{
+					Creat_Skill(3);
+				}
+				if (static_cast<int>(m_pPart_Body->Get_TrackPosition()) == 90)
+				{
+					Creat_Skill(3);
+				}
 			}
 
 			if (m_bBackJump)
@@ -198,6 +226,35 @@ void COmegamon::Skill3()
 	{
 		m_bSkill = false;
 		m_bSkill3 = false;
+	}
+}
+
+void COmegamon::Creat_Skill(_int SkillNum)
+{
+	CSkillObject::POSITION Desc;
+	Desc.m_vPosition = m_pTransformCom->Get_State(STATE::POSITION);
+	Desc.m_vTargetPosition = m_vTarget_Position;
+	switch (SkillNum)
+	{
+	case 1:
+		Desc.iDamage = m_iDamage;
+		m_pGameInstance->Add_GameObject_ToLayer(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_OmegamonSkill1"),
+			ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Layer_OmegamonSkill1"), &Desc);
+		break;
+
+	case 2:
+		Desc.iDamage = m_iDamage;
+		m_pGameInstance->Add_GameObject_ToLayer(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_OmegamonSkill2"),
+			ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Layer_OmegamonSkill2"), &Desc);
+
+		break;
+
+	case 3:
+		Desc.iDamage = m_iDamage;
+		m_pGameInstance->Add_GameObject_ToLayer(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_OmegamonSkill3"),
+			ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Layer_OmegamonSkill3"), &Desc);
+
+		break;
 	}
 }
 

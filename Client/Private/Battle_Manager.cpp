@@ -44,91 +44,91 @@ HRESULT CBattle_Manager::Initialize()
 
 void CBattle_Manager::Priority_Update(_float fTimeDelta)
 {
-	Digimon1_Skill();
-	Digimon2_Skill();
-	Digimon3_Skill();
-	DigimonTargetOrder();
+
 }
 
 void CBattle_Manager::Update(_float fTimeDelta)
 {
 
 	m_fBattleTime += fTimeDelta; // 시간 중첩
-
-	if (m_iAlivePlayer == 0 || m_iAliveEnemy == 0)
+	if (m_bPlayer_Death || m_bEnemy_Death)
 	{
-		if (m_fBattleTime >= 3.f)
-			m_bBattleOn = false;
+		if (m_fBattleTime > 1.f)
+			Battle_End();
 	}
 
-	else
+	Digimon1_Skill();
+	Digimon2_Skill();
+	Digimon3_Skill();
+	DigimonTargetOrder();
+
+	switch (m_eBattle_State)
 	{
-		switch (m_eBattle_State)
+	case BATTLE_STATE::START:
+		if (m_fBattleTime >= 1.f) // 1초가 지나면
 		{
-		case BATTLE_STATE::START:
-			if (m_fBattleTime >= 1.f) // 1초가 지나면
-			{
-				m_pCurrentDigimon = m_pDigimon_Turn_Order.front();	// 제일 앞에 있는걸 저장하고
-				m_pReturnPosition = m_pCurrentDigimon->Get_Position();
-				m_fBackJumpTime = 0.f;
-				m_pDigimon_Turn_Order.pop_front();					// 제잎 앞에꺼를 지움
-				m_pBattle_UI_Manager->Turn_Start();
-				m_eBattle_State = BATTLE_STATE::SKILL;
-				m_fBattleTime = 0.f;							// 그리고 시간 초기화
-			}
-
-			break;
-
-		case BATTLE_STATE::SKILL:
-			m_fBattleTime = 0.f;									// 시간 초기화 
-
-			if (m_pCurrentDigimon->Get_Life())						// 다시 살아있으면 실행
-			{
-				if (!m_pCurrentDigimon->Get_Monster())				// 플레이어 디지몬이면 플레이어 디지몬 공격 실행
-				{
-					Player_Attack(fTimeDelta);								// 스킬은 한번만 실행함
-				}
-				else												// 몬스터면 몬스터 실행
-				{
-					Enemy_Attack(fTimeDelta);
-				}
-			}
-			if (!m_pCurrentDigimon->Get_SkillMove())
-				m_eBattle_State = BATTLE_STATE::ING;
-
-			break;
-
-		case BATTLE_STATE::ING:
-			if (m_pCurrentDigimon->Get_BackJump())
-				ReturnToPosition(fTimeDelta);
-			else
-			{
-				if (m_pCurrentDigimon->Get_TurnEnd())
-				{
-					m_eBattle_State = BATTLE_STATE::END;
-				}
-			}
-			break;
-
-		case BATTLE_STATE::END:
-			if (!m_pCurrentDigimon->Get_Monster())
-				m_pCurrentDigimon->LookAt(m_fPlayer_Look);
-			else
-				m_pCurrentDigimon->LookAt(m_fEnemyDigimon_Look);
-
-			Turn_Update();
-			m_fBattleTime = 0.f;									// 정확한 시간을 위해 0으로 초기화
-			m_pBattle_UI_Manager->Turn_End();
-			m_fDashTime = 0.f;
-			m_eBattle_State = BATTLE_STATE::START;					// 처음으로 옮김
-			m_bSkill = false;
-			break;
+			m_pCurrentDigimon = m_pDigimon_Turn_Order.front();	// 제일 앞에 있는걸 저장하고
+			m_pReturnPosition = m_pCurrentDigimon->Get_Position();
+			m_fBackJumpTime = 0.f;
+			m_pDigimon_Turn_Order.pop_front();					// 제잎 앞에꺼를 지움
+			m_pBattle_UI_Manager->Turn_Start();
+			m_eBattle_State = BATTLE_STATE::SKILL;
+			m_fBattleTime = 0.f;							// 그리고 시간 초기화
 		}
+
+		break;
+
+	case BATTLE_STATE::SKILL:
+		m_fBattleTime = 0.f;									// 시간 초기화 
+
+		if (m_pCurrentDigimon->Get_Life())						// 다시 살아있으면 실행
+		{
+			if (!m_pCurrentDigimon->Get_Monster())				// 플레이어 디지몬이면 플레이어 디지몬 공격 실행
+			{
+				Player_Attack(fTimeDelta);								// 스킬은 한번만 실행함
+			}
+			else												// 몬스터면 몬스터 실행
+			{
+				Enemy_Attack(fTimeDelta);
+			}
+		}
+		if (!m_pCurrentDigimon->Get_SkillMove())
+			m_eBattle_State = BATTLE_STATE::ING;
+
+		break;
+
+	case BATTLE_STATE::ING:
+		if (m_pCurrentDigimon->Get_BackJump())
+			ReturnToPosition(fTimeDelta);
+		else
+		{
+			if (m_pCurrentDigimon->Get_TurnEnd())
+			{
+				m_eBattle_State = BATTLE_STATE::END;
+			}
+		}
+		break;
+
+	case BATTLE_STATE::END:
+		if (!m_pCurrentDigimon->Get_Monster())
+			m_pCurrentDigimon->LookAt(m_fPlayer_Look);
+		else
+			m_pCurrentDigimon->LookAt(m_fEnemyDigimon_Look);
+
+		Turn_Update();
+		m_fBattleTime = 0.f;									// 정확한 시간을 위해 0으로 초기화
+		m_pBattle_UI_Manager->Turn_End();
+		m_fDashTime = 0.f;
+		m_eBattle_State = BATTLE_STATE::START;					// 처음으로 옮김
+		m_bSkill = false;
+		break;
 	}
+
 }
 
 void CBattle_Manager::Late_Update(_float fTimeDelta)
 {
+
 }
 
 void CBattle_Manager::Player_Attack(_float fTimeDelta)
@@ -453,6 +453,7 @@ _int CBattle_Manager::Enemy_Skill()
 
 void CBattle_Manager::Set_Turn()
 {
+	// 이제 다 세팅을 해줬으면 그 순서로 deque에 집어넣어 주고 매니저에 넘겨준다.
 	for (_int i = 0; i < m_pDigimonSort.size(); ++i)
 	{
 		m_pDigimon_Turn_Order.push_back(m_pDigimonSort[i]);
@@ -509,33 +510,78 @@ void CBattle_Manager::Set_Battle_Terrain(CGameObject* pBattle_Terrain)
 
 void CBattle_Manager::Gain_Experience(_int Exp)
 {
-
-	//for (size_t i = 0; i < m_pMyDigimon.size(); ++i)
-	//{
-	//	if (m_pMyDigimon[i]->Get_Life() == true)
-	//	{
-	//		m_pMyDigimon[i]->Set_Exp(Exp);
-	//	}
-	//}
+	m_iAdd_Exp += Exp;
 }
 
 void CBattle_Manager::Battle_System()
 {
+	m_pBattle_UI_Manager->Set_Battle(true);
+	// 우선 플레이어 디지몬을 생성 해준다.
 	static_cast<CDigivice*>(m_pDigivice)->Update_Digimopn();
+	// UI에 타임라인을 만들어 준다 이전에 적 몬스터를 다 만들어 놨고 아군 디지몬도 다 생성을 해서 그 갯수만큼 정보를 가지고 타임라인을 만든다.
 	m_pBattle_UI_Manager->Create_TimeLine(m_iPlayerDigimonCount, m_iEnemyDigimonCount);
+	// 이제 플레이어의 위치를 옮겨주고
 	m_pPlayer->Set_Position(m_vPlayerBattlePos.m128_f32[0], m_vPlayerBattlePos.m128_f32[2]);
+	// 아군이랑 적군 몬스터중 먼저 전멸하는 걸 확인하기 위해서 bool값을 2개 만들어 준다.
 	m_bPlayer_Death = false;
 	m_bEnemy_Death = false;
+	// 전투의 상태도 start부터 시작하게 만들어 준다.
 	m_eBattle_State = BATTLE_STATE::START;
+	// 이제 내 디지몬들이랑 적 디지몬들의 위치를 조정 해준다.
 	Player_Digimon_Position();
 	Enemy_Position();
-	Battle_Tunr_Order();
+	// 전투의 순서를 정해준다.
+	Battle_Turn_Order();
+
+	// 이제 UI들을 다 정리 해준다.
 	m_pBattle_UI_Manager->Set_Timeline_Turn_Order();
 	m_pBattle_UI_Manager->CreateHp();
 	m_pBattle_UI_Manager->Create_Skill();
 	m_pBattle_UI_Manager->Set_Skill();
+	// 내 디지몬들이랑 적 디지몬의 갯수도 저장 해준다.
 	m_iAlivePlayer = m_iPlayerDigimonCount;
 	m_iAliveEnemy = m_iEnemyDigimonCount;
+}
+
+void CBattle_Manager::Battle_End()
+{
+	m_pBattle_UI_Manager->Set_Battle(false);
+	m_iAliveEnemy = m_iAliveEnemy = 0;
+	//m_pBattle_UI_Manager->Deleta_TimeLine();
+	//m_pBattle_UI_Manager->Delete_SKill();
+	//m_pBattle_UI_Manager->Delete_Hp();
+
+	//for (size_t i = 0; i < m_pEnemyDigimon.size(); ++i)
+	//{
+	//	Safe_Release(m_pEnemyDigimon[i]);
+	//}
+
+	//for (size_t i = 0; i < m_pDigimonSort.size(); ++i)
+	//{
+	//	Safe_Release(m_pDigimonSort[i]);
+	//}
+	//for (size_t i = 0; i < m_pMyDigimon.size(); ++i)
+	//{
+	//	m_pMyDigimon_Infos[i]->CurrentExp += m_iAdd_Exp;
+	//	if (i != 0)
+	//		Safe_Release(m_pMyDigimon[i]);
+	//}
+	//for (size_t i = 0; i < m_pMyDigimon_Infos.size(); ++i)
+	//{
+	//	m_pDigimon_Manager->Set_Current_Digimon_Info(m_pMyDigimon_Infos[i]);
+	//}
+	//for (size_t i = 0; i < m_pDigimon_Turn_Order.size(); ++i)
+	//{
+	//	Safe_Release(m_pDigimon_Turn_Order[i]);
+	//}
+	//m_pDigimon_Turn_Order.clear();
+	//m_pMyDigimon.clear();
+	//m_pDigimonSort.clear();
+
+	//Safe_Release(m_pCurrentDigimon);
+
+	//Safe_Release(m_pHitCurrentDigimon);
+	m_bBattleOn = false;
 }
 
 void CBattle_Manager::Enemy_Position()
@@ -602,15 +648,18 @@ void CBattle_Manager::Player_Digimon_Position()
 
 void CBattle_Manager::Current_Digimon(DIGIMON_INFO* Digimon_Info_1, DIGIMON_INFO* Digimon_Info_2, DIGIMON_INFO* Digimon_Info_3)
 {
+	// 전투가 시작이 되면 내 디지몬들을 최대 3마리 까지 만들고 m_pMyDigimon에 저장을 함
+	// 전투가 끝나면 이 디지몬들을 세팅 해준다.
 	m_iPlayerDigimonCount = 1;
 	m_pMyDigimon.push_back(static_cast<CPlayer*>(m_pPlayer)->First_Digimon());
 	m_pBattle_UI_Manager->Set_MyDigimon(m_pMyDigimon[0]);
-
+	m_pMyDigimon_Infos.push_back(&m_pMyDigimon[0]->CurrentInfo());
 	if (Digimon_Info_2 != nullptr && Digimon_Info_2->Hp != 0)
 	{
 		m_iPlayerDigimonCount++;
 		m_pMyDigimon.push_back(Digimon_Create(Digimon_Info_2->DigimonId));
 		m_pBattle_UI_Manager->Set_MyDigimon(m_pMyDigimon[1]);
+		m_pMyDigimon_Infos.push_back(&m_pMyDigimon[1]->CurrentInfo());
 	}
 
 	if (Digimon_Info_3 != nullptr && Digimon_Info_3->Hp != 0)
@@ -618,6 +667,7 @@ void CBattle_Manager::Current_Digimon(DIGIMON_INFO* Digimon_Info_1, DIGIMON_INFO
 		m_iPlayerDigimonCount++;
 		m_pMyDigimon.push_back(Digimon_Create(Digimon_Info_3->DigimonId));
 		m_pBattle_UI_Manager->Set_MyDigimon(m_pMyDigimon[2]);
+		m_pMyDigimon_Infos.push_back(&m_pMyDigimon[2]->CurrentInfo());
 	}
 }
 
@@ -838,8 +888,10 @@ void CBattle_Manager::Digimon3_Attack(_float fTimeDelta)
 
 void CBattle_Manager::EnemyDigimon_Info(_int EnemyDigimonID)
 {
+	// 적 디지몬을 생성하기 위해서 우선 안에 있는 값을 다 밀어버린다.
 	m_pEnemyDigimon.clear();
-	m_iEnemyDigimonCount = /*m_pGameInstance->intRandom(1, 3)*/3;
+	// 그 후에 적 디지몬의 갯수를 저장하고
+	m_iEnemyDigimonCount = /*m_pGameInstance->intRandom(1, 3)*/2;
 	for (_int i = 0; i < m_iEnemyDigimonCount; ++i)
 	{
 		m_pEnemyDigimon.push_back(Digimon_Create(EnemyDigimonID));
@@ -851,6 +903,7 @@ void CBattle_Manager::EnemyDigimon_Info(_int EnemyDigimonID)
 		m_pEnemyDigimon[i]->Set_Exp(m_pGameInstance->intRandom(900, 1000));
 		m_pEnemyDigimon[i]->Set_Lv(m_pGameInstance->intRandom(1, 92));
 
+		// UI에 디지몬의 정보를 넘겨준다.
 		m_pBattle_UI_Manager->Set_Enemy_Digimon(m_pEnemyDigimon[i]);
 	}
 }
@@ -918,6 +971,11 @@ void CBattle_Manager::Set_Player_Pos(_vector Pos)
 	m_pPlayer_Pos = Pos;
 }
 
+void CBattle_Manager::Set_First_Digimon_Pos(_vector Pos)
+{
+	m_pFirst_Digimon_Pos = Pos;
+}
+
 _vector CBattle_Manager::Get_Player_Pos()
 {
 	return m_pPlayer_Pos;
@@ -942,8 +1000,10 @@ void CBattle_Manager::Set_MyDigimon(CContainerObject* pPlayerDigimon)
 	m_pMyDigimon.push_back(pPlayerDigimon);
 }
 
-void CBattle_Manager::Battle_Tunr_Order()
+void CBattle_Manager::Battle_Turn_Order()
 {
+	// 내 디지몬이랑 적 디지몬을 다 받아서 공격 속도를 비교한 다음에 우선 순위를 정해주는데 
+	// 공격 속도가 똑같으면 이거를 계속 다르게 갱신 안하려고 stable_sort로 들어간 순서대로 먼저 오게한다.
 	for (auto iter : m_pMyDigimon)
 	{
 		m_pDigimonSort.push_back(iter);
@@ -971,6 +1031,7 @@ void CBattle_Manager::Digimon_Dead()
 			{
 				m_pBattle_UI_Manager->Update_Enemy_HP(static_cast<int>(i));
 				m_iAliveEnemy--;
+				Gain_Experience(m_pHitCurrentDigimon->Get_Exp());
 			}
 		}
 	}
@@ -980,6 +1041,7 @@ void CBattle_Manager::Digimon_Dead()
 		{
 			if (m_pHitCurrentDigimon == m_pMyDigimon[i])
 			{
+				m_pMyDigimon_Infos[i]->CurrentHp = 0;
 				m_pBattle_UI_Manager->Update_MyDigimon_Skill(m_pHitCurrentDigimon);
 				m_iAlivePlayer--;
 			}
@@ -997,6 +1059,10 @@ void CBattle_Manager::Digimon_Dead()
 	}
 	m_pBattle_UI_Manager->Set_Battle_Turn_Order(m_pDigimon_Turn_Order);
 
+	if (m_iAlivePlayer == 0)
+		m_bPlayer_Death = true;
+	if (m_iAliveEnemy == 0)
+		m_bEnemy_Death = true;
 }
 
 void CBattle_Manager::Digimon_Alive()
@@ -1008,7 +1074,13 @@ void CBattle_Manager::Digimon_Alive()
 	}
 	else
 	{
-
+		for (size_t i = 0; i < m_pMyDigimon.size(); ++i)
+		{
+			if (m_pHitCurrentDigimon == m_pMyDigimon[i])
+			{
+				m_pMyDigimon_Infos[i]->CurrentHp = m_pHitCurrentDigimon->Get_CurrentHp();
+			}
+		}
 	}
 
 }

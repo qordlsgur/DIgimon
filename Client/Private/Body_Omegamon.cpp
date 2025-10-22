@@ -58,6 +58,8 @@ void CBody_Omegamon::Update(_float fTimeDelta)
 
     XMStoreFloat4x4(&m_CombinedWorldMatrix,
         XMLoadFloat4x4(m_pTransformCom->Get_WorldMatrixPtr()) * XMLoadFloat4x4(m_pParentTransformCom->Get_WorldMatrixPtr()));
+
+    m_fTrackPosition = m_pModelCom->Get_CurrentTrackPosition();
 }
 
 void CBody_Omegamon::Late_Update(_float fTimeDelta)

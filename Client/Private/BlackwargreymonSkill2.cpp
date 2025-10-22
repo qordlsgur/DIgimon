@@ -37,9 +37,9 @@ HRESULT CBlackwargreymonSkill2::Initialize(void* pArg)
 
 	m_iDamage = Pos->iDamage;
 
-	m_pTarget_pos = Pos->m_vTargetPosition;
+	m_vTarget_pos = Pos->m_vTargetPosition;
 
-	m_pTransformCom->Set_State(STATE::POSITION, m_pTarget_pos);
+	m_pTransformCom->Set_State(STATE::POSITION, m_vTarget_pos);
 
 	return S_OK;
 }
@@ -51,7 +51,7 @@ void CBlackwargreymonSkill2::Priority_Update(_float fTimeDelta)
 }
 void CBlackwargreymonSkill2::Update(_float fTimeDelta)
 {
-	m_pTransformCom->Set_State((STATE::POSITION), m_pTarget_pos);
+	m_pTransformCom->Set_State((STATE::POSITION), m_vTarget_pos);
 
 	m_pColliderCom->Update(XMLoadFloat4x4(m_pTransformCom->Get_WorldMatrixPtr()));
 

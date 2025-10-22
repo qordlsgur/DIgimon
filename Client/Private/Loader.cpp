@@ -1103,20 +1103,20 @@ HRESULT CLoader::Loading_For_GamePlay()
 	//	CLadydevimonSkill3::Create(m_pDevice, m_pContext))))
 	//	return E_FAIL;
 
-	///* For.Prototype_GameObject_LeomonSkill1*/
-	//if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_LeomonSkill1"),
-	//	CLeomonSkill1::Create(m_pDevice, m_pContext))))
-	//	return E_FAIL;
+	/* For.Prototype_GameObject_LeomonSkill1*/
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_LeomonSkill1"),
+		CLeomonSkill1::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
 
-	///* For.Prototype_GameObject_LeomonSkill2*/
-	//if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_LeomonSkill2"),
-	//	CLeomonSkill2::Create(m_pDevice, m_pContext))))
-	//	return E_FAIL;
+	/* For.Prototype_GameObject_LeomonSkill2*/
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_LeomonSkill2"),
+		CLeomonSkill2::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
 
-	///* For.Prototype_GameObject_LeomonSkill3*/
-	//if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_LeomonSkill3"),
-	//	CLeomonSkill3::Create(m_pDevice, m_pContext))))
-	//	return E_FAIL;
+	/* For.Prototype_GameObject_LeomonSkill3*/
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_LeomonSkill3"),
+		CLeomonSkill3::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
 
 	///* For.Prototype_GameObject_MetalgarumonSkill1*/
 	//if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_MetalgarumonSkill1"),
@@ -1148,20 +1148,20 @@ HRESULT CLoader::Loading_For_GamePlay()
 	//	CMetalgreymonSkill3::Create(m_pDevice, m_pContext))))
 	//	return E_FAIL;
 
-	///* For.Prototype_GameObject_OmegamonSkill1*/
-	//if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_OmegamonSkill1"),
-	//	COmegamonSkill1::Create(m_pDevice, m_pContext))))
-	//	return E_FAIL;
+	/* For.Prototype_GameObject_OmegamonSkill1*/
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_OmegamonSkill1"),
+		COmegamonSkill1::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
 
-	///* For.Prototype_GameObject_OmegamonSkill2*/
-	//if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_OmegamonSkill2"),
-	//	COmegamonSkill2::Create(m_pDevice, m_pContext))))
-	//	return E_FAIL;
+	/* For.Prototype_GameObject_OmegamonSkill2*/
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_OmegamonSkill2"),
+		COmegamonSkill2::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
 
-	///* For.Prototype_GameObject_OmegamonSkill3*/
-	//if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_OmegamonSkill3"),
-	//	COmegamonSkill3::Create(m_pDevice, m_pContext))))
-	//	return E_FAIL;
+	/* For.Prototype_GameObject_OmegamonSkill3*/
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_OmegamonSkill3"),
+		COmegamonSkill3::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
 
 	///* For.Prototype_GameObject_WargreymonSkill1*/
 	//if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_WargreymonSkill1"),
