@@ -33,6 +33,8 @@ private:
 	CContainerObject* m_pPlayer = { nullptr };
 	class CInteraction_Manager* m_pInteraction_Manager = { nullptr };
 
+	_bool m_bLast = { false };
+
 private:
 	HRESULT Ready_PartObjects();
 

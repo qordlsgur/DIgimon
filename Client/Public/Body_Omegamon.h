@@ -39,6 +39,7 @@ public:
 	virtual void Set_Animation(const _char* szName, _bool bisLoop = true) override;
 
 	void Time() { m_bDissolve = false; m_fTime = 0; }
+	void Num(_int a) { num += a; }
 
 private:
 	CModel* m_pModelCom = { nullptr };
@@ -47,6 +48,7 @@ private:
 
 	_matrix RootBone{};
 	_bool isCanon = false;
+	_int num{};
 private:
 	void Canon();
 

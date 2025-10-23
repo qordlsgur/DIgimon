@@ -400,7 +400,7 @@ HRESULT CLoader::Loading_For_GamePlay()
 
 		/* For.Prototype_Component_Texture_Noise*/
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Noise"),
-		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/Noise/Noise%d.png"), 3))))
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/Noise/Noise%d.png"), 9))))
 		return E_FAIL;
 
 	//디지몬UI이미지-------------------------------------------------------------------------------------------------------------------------------------------

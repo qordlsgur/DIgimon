@@ -82,6 +82,16 @@ void COmegamon::Update(_float fTimeDelta)
 			{
 				static_cast<CBody_Omegamon*>(m_pPart_Body)->Time();
 			}
+
+			if (m_pGameInstance->Key_Down(DIK_K))
+			{
+				static_cast<CBody_Omegamon*>(m_pPart_Body)->Num(-1);
+			}
+
+			if (m_pGameInstance->Key_Down(DIK_L))
+			{
+				static_cast<CBody_Omegamon*>(m_pPart_Body)->Num(+1);
+			}
 		}
 		else
 		{

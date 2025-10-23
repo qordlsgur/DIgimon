@@ -64,7 +64,11 @@ void CBody_Omegamon::Update(_float fTimeDelta)
     if (m_bDissolve)
         m_fTime += fTimeDelta / 3.f;
 
+    if (num > 8)
+        num = 0;
 
+    if (num < 0)
+        num = 8;
 }
 
 void CBody_Omegamon::Late_Update(_float fTimeDelta)
@@ -110,6 +114,10 @@ HRESULT CBody_Omegamon::Render()
             if (FAILED(m_pModelCom->Render(1)))
                 return E_FAIL;
         }
+
+        wstring a = to_wstring(num);
+        m_pGameInstance->Render_Text(TEXT("18"), a.c_str(), _float2(620.f, 70.f), XMVectorSet(0.f, 0.f, 1.f, 1.f));
+
     }
 
     return S_OK;
@@ -161,7 +169,7 @@ HRESULT CBody_Omegamon::Bind_ShaderResources()
         return E_FAIL;
     if (FAILED(m_pShaderCom->Bind_Matrix("g_ProjMatrix", m_pGameInstance->Get_Transform_Float4x4(D3DTS::PROJ))))
         return E_FAIL;
-    if (FAILED(m_pDissolveTextureCom->Bind_ShaderResource(m_pShaderCom, "g_DessolveTexture", 0)))
+    if (FAILED(m_pDissolveTextureCom->Bind_ShaderResource(m_pShaderCom, "g_DessolveTexture", num)))
         return E_FAIL;
     if (FAILED(m_pShaderCom->Bind_State("DissolveTime", m_fTime)))
         return E_FAIL;

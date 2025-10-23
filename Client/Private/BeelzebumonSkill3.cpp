@@ -62,13 +62,17 @@ void CBeelzebumonSkill3::Priority_Update(_float fTimeDelta)
 
 void CBeelzebumonSkill3::Update(_float fTimeDelta)
 {
-	if (m_bHit)
+	if (m_bHit && !m_bLast)
 	{
 		m_fSpeed += fTimeDelta;
 	}
 
-	if (m_fSpeed >= 0.3f)
+	if (m_fSpeed >= 2.2f)
+	{
 		m_bHit = false;
+		m_bLast = true;
+		m_fSpeed = 0;
+	}
 
 	m_pTransformCom->Target_Pos_Move(m_vTarget_pos, fTimeDelta);
 
