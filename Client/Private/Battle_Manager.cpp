@@ -97,10 +97,15 @@ void CBattle_Manager::Update(_float fTimeDelta)
 			}
 			if (!m_pCurrentDigimon->Get_SkillMove())
 				m_eBattle_State = BATTLE_STATE::ING;
-
+			else
+			{
+				m_fDashTime += fTimeDelta;
+				m_eBattle_State = BATTLE_STATE::SKILL;
+			}
 			break;
 
 		case BATTLE_STATE::ING:
+			m_bSkill = true;
 			if (m_pCurrentDigimon->Get_BackJump())
 				ReturnToPosition(fTimeDelta);
 			else
@@ -824,12 +829,10 @@ void CBattle_Manager::Digimon1_Attack(_float fTimeDelta)
 	m_pCurrentDigimon->LookAt(Player_Digimon_Attack_Pos(m_DigimonOrder1.m_iTarget));
 	m_pCurrentDigimon->UseSkill(m_DigimonOrder1.m_iDigimonSkill);
 	m_pInteraction_Manager->Set_Hit_Digimon(m_pHitCurrentDigimon);
-	m_bSkill = true;
-	m_DigimonOrder1.m_bDigimonSkill = false;
+
+
 	m_pBattle_UI_Manager->Digimon_UseSkill1(1);
 	m_pBattle_UI_Manager->Digimon_UseTarget1(1);
-	if (m_pCurrentDigimon->Get_SkillMove())
-		m_fDashTime += fTimeDelta;
 
 	if (m_fDashTime >= 0.1f)
 	{
@@ -845,12 +848,9 @@ void CBattle_Manager::Digimon2_Attack(_float fTimeDelta)
 	m_pCurrentDigimon->LookAt(Player_Digimon_Attack_Pos(m_DigimonOrder2.m_iTarget));
 	m_pCurrentDigimon->UseSkill(m_DigimonOrder2.m_iDigimonSkill);
 	m_pInteraction_Manager->Set_Hit_Digimon(m_pHitCurrentDigimon);
-	m_bSkill = true;
-	m_DigimonOrder2.m_bDigimonSkill = false;
+
 	m_pBattle_UI_Manager->Digimon_UseSkill2(1);
 	m_pBattle_UI_Manager->Digimon_UseTarget2(1);
-	if (m_pCurrentDigimon->Get_SkillMove())
-		m_fDashTime += fTimeDelta;
 
 	if (m_fDashTime >= 0.1f)
 	{
@@ -866,12 +866,9 @@ void CBattle_Manager::Digimon3_Attack(_float fTimeDelta)
 	m_pCurrentDigimon->LookAt(Player_Digimon_Attack_Pos(m_DigimonOrder3.m_iTarget));
 	m_pCurrentDigimon->UseSkill(m_DigimonOrder3.m_iDigimonSkill);
 	m_pInteraction_Manager->Set_Hit_Digimon(m_pHitCurrentDigimon);
-	m_bSkill = true;
-	m_DigimonOrder3.m_bDigimonSkill = false;
+
 	m_pBattle_UI_Manager->Digimon_UseSkill3(1);
 	m_pBattle_UI_Manager->Digimon_UseTarget3(1);
-	if (m_pCurrentDigimon->Get_SkillMove())
-		m_fDashTime += fTimeDelta;
 
 	if (m_fDashTime >= 0.1f)
 	{
@@ -1077,6 +1074,22 @@ void CBattle_Manager::Digimon_Alive()
 				m_pMyDigimon_Infos[i]->CurrentHp = m_pHitCurrentDigimon->Get_CurrentHp();
 			}
 		}
+	}
+
+	if (m_pCurrentDigimon == m_pMyDigimon[0])
+	{
+		m_DigimonOrder1.m_bDigimonSkill = false;
+		return;
+	}
+	else if (m_pCurrentDigimon == m_pMyDigimon[1])
+	{
+		m_DigimonOrder2.m_bDigimonSkill = false;
+		return;
+	}
+	else if (m_pCurrentDigimon == m_pMyDigimon[2])
+	{
+		m_DigimonOrder3.m_bDigimonSkill = false;
+		return;
 	}
 
 }
