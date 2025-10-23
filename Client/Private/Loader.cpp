@@ -1187,20 +1187,20 @@ HRESULT CLoader::Loading_For_GamePlay()
 	//	CWargreymonSkill3::Create(m_pDevice, m_pContext))))
 	//	return E_FAIL;
 
-	///* For.Prototype_GameObject_BeelzebumonSkill1*/
-	//if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_BeelzebumonSkill1"),
-	//	CBeelzebumonSkill1::Create(m_pDevice, m_pContext))))
-	//	return E_FAIL;
+	/* For.Prototype_GameObject_BeelzebumonSkill1*/
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_BeelzebumonSkill1"),
+		CBeelzebumonSkill1::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
 
-	///* For.Prototype_GameObject_BeelzebumonSkill2*/
-	//if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_BeelzebumonSkill2"),
-	//	CBeelzebumonSkill2::Create(m_pDevice, m_pContext))))
-	//	return E_FAIL;
+	/* For.Prototype_GameObject_BeelzebumonSkill2*/
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_BeelzebumonSkill2"),
+		CBeelzebumonSkill2::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
 
-	///* For.Prototype_GameObject_BeelzebumonSkill3*/
-	//if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_BeelzebumonSkill3"),
-	//	CBeelzebumonSkill3::Create(m_pDevice, m_pContext))))
-	//	return E_FAIL;
+	/* For.Prototype_GameObject_BeelzebumonSkill3*/
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_BeelzebumonSkill3"),
+		CBeelzebumonSkill3::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
 
 
 

@@ -2,12 +2,12 @@
 #include "GameInstance.h"
 
 CSkillObject::CSkillObject(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
-    : CGameObject{ pDevice, pContext }
+    : CContainerObject{ pDevice, pContext }
 {
 }
 
 CSkillObject::CSkillObject(const CSkillObject& Prototype)
-    : CGameObject{ Prototype }
+    : CContainerObject{ Prototype }
 {
 }
 

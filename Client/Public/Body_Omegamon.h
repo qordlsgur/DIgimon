@@ -38,6 +38,8 @@ public:
 public:
 	virtual void Set_Animation(const _char* szName, _bool bisLoop = true) override;
 
+	void Time() { m_bDissolve = false; m_fTime = 0; }
+
 private:
 	CModel* m_pModelCom = { nullptr };
 	CShader* m_pShaderCom = { nullptr };

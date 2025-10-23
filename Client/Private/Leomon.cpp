@@ -85,7 +85,7 @@ void CLeomon::Update(_float fTimeDelta)
 				if (m_bSkill1)
 				{
 					Skill1();
-					m_iDamage = Info.DigimonSkill1Info.Damage / Info.DigimonSkill1Info.HitCount * 1000;
+					m_iDamage = Info.DigimonSkill1Info.Damage / Info.DigimonSkill1Info.HitCount;
 					if (static_cast<int>(m_pPart_Body->Get_TrackPosition()) == 17)
 					{
 						Creat_Skill(1);
@@ -253,6 +253,7 @@ void CLeomon::Creat_Skill(_int SkillNum)
 	CSkillObject::POSITION Desc;
 	Desc.m_vPosition = m_pTransformCom->Get_State(STATE::POSITION);
 	Desc.m_vTargetPosition = m_vTarget_Position;
+	Desc.Look = m_bMonster;
 	switch (SkillNum)
 	{
 	case 1:

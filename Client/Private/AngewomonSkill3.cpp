@@ -20,25 +20,38 @@ HRESULT CAngewomonSkill3::Initialize(void* pArg)
 {
 	CGameObject::GAMEOBJECT_DESC	Desc{};
 	Desc.fRotationPerSec = XMConvertToRadians(180.0f);
-	Desc.fSpeedPerSec = 10.f;
+	Desc.fSpeedPerSec = 300.f;
 
 	if (FAILED(__super::Initialize(&Desc)))
 		return E_FAIL;
 
-	if (FAILED(Ready_PartObjects()))
-		return E_FAIL;
-
 	m_pInteraction_Manager = CInteraction_Manager::GetInstance();
 	m_pInteraction_Manager->Set_Attack_Digimon(this);
-	m_pInteraction_Manager->Set_Skill_Collider(m_pColliderCom);
+
 
 	const POSITION* Pos = static_cast<const POSITION*>(pArg);
 
 	m_iDamage = Pos->iDamage;
 
+	m_vPosition = Pos->m_vPosition;
+
+	m_iDamage = Pos->iDamage;
+	m_vPosition = Pos->m_vPosition;
+
+	m_vPosition.m128_f32[1] += 10.f;
+	if (Pos->Look == 0)
+	{
+		m_vPosition.m128_f32[2] -= 10.f;
+	}
+	else if (Pos->Look == 1)
+	{
+		m_vPosition.m128_f32[2] += 10.f;
+	}
 	m_vTarget_pos = Pos->m_vTargetPosition;
 
-	m_pTransformCom->Set_State(STATE::POSITION, m_vTarget_pos);
+	m_pTransformCom->Set_State(STATE::POSITION, m_vPosition);
+	if (FAILED(Ready_PartObjects()))
+		return E_FAIL;
 
 	return S_OK;
 }
@@ -50,7 +63,7 @@ void CAngewomonSkill3::Priority_Update(_float fTimeDelta)
 
 void CAngewomonSkill3::Update(_float fTimeDelta)
 {
-	m_pTransformCom->Set_State((STATE::POSITION), m_vTarget_pos);
+	m_pTransformCom->Target_Pos_Move(m_vTarget_pos, fTimeDelta);
 
 	m_pColliderCom->Update(XMLoadFloat4x4(m_pTransformCom->Get_WorldMatrixPtr()));
 
@@ -59,7 +72,7 @@ void CAngewomonSkill3::Update(_float fTimeDelta)
 
 void CAngewomonSkill3::Late_Update(_float fTimeDelta)
 {
-	m_pGameInstance->Add_RenderGroup(RENDER::NONBLEND, this);
+	m_pGameInstance->Add_RenderGroup(RENDER::UI, this);
 	__super::Late_Update(fTimeDelta);
 }
 
@@ -88,7 +101,10 @@ HRESULT CAngewomonSkill3::Ready_PartObjects()
 		TEXT("Com_Collider_Sphere"), reinterpret_cast<CComponent**>(&m_pColliderCom), &SphereDesc)))
 		return E_FAIL;
 
-	return S_OK;;
+	m_pInteraction_Manager->Set_Skill_Collider(m_pColliderCom);
+	m_pColliderCom->Set_Matrix(XMLoadFloat4x4(m_pTransformCom->Get_WorldMatrixPtr()));
+
+	return S_OK;
 }
 
 CAngewomonSkill3* CAngewomonSkill3::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)

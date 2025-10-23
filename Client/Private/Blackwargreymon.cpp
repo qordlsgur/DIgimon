@@ -281,6 +281,7 @@ void CBlackwargreymon::Creat_Skill(_int SkillNum)
 	CSkillObject::POSITION Desc;
 	Desc.m_vPosition = m_pTransformCom->Get_State(STATE::POSITION);
 	Desc.m_vTargetPosition = m_vTarget_Position;
+	Desc.Look = m_bMonster;
 	switch (SkillNum)
 	{
 	case 1:

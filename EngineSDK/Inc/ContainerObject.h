@@ -81,6 +81,8 @@ public:
 	virtual void LookAt(_float iRadian);
 	virtual void LookAt(_vector Pos);
 	virtual void Set_Position(_float fX, _float fZ);
+	virtual void Set_Position(_vector Pos);
+
 	virtual void Set_y(_float fY);
 
 	virtual _int Intersect(class CCollider* pPlayer_Collider);

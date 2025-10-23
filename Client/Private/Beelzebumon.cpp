@@ -4,6 +4,7 @@
 #include "PartObject.h"
 #include "StateMachine.h"
 #include "Digimon_Manager.h"
+#include "SkillObject.h"
 
 CBeelzebumon::CBeelzebumon(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CContainerObject{ pDevice, pContext }
@@ -85,18 +86,70 @@ void CBeelzebumon::Update(_float fTimeDelta)
 				if (m_bSkill1)
 				{
 					Skill1();
-					m_iDamage = Info.DigimonSkill1Info.Damage;
+					m_iDamage = Info.DigimonSkill1Info.Damage / Info.DigimonSkill1Info.HitCount;
+
+					if (static_cast<int>(m_pPart_Body->Get_TrackPosition()) == 37)
+					{
+						Creat_Skill(1);
+					}
+					if (static_cast<int>(m_pPart_Body->Get_TrackPosition()) == 43)
+					{
+						Creat_Skill(1);
+					}
+					if (static_cast<int>(m_pPart_Body->Get_TrackPosition()) == 50)
+					{
+						Creat_Skill(1);
+					}
+					if (static_cast<int>(m_pPart_Body->Get_TrackPosition()) == 56)
+					{
+						Creat_Skill(1);
+					}
+					if (static_cast<int>(m_pPart_Body->Get_TrackPosition()) == 68)
+					{
+						Creat_Skill(1);
+					}
 				}
 				else if (m_bSkill2)
 				{
 					Skill2();
-					m_iDamage = Info.DigimonSkill2Info.Damage;
-
+					m_iDamage = Info.DigimonSkill2Info.Damage / Info.DigimonSkill2Info.HitCount;
+					if (static_cast<int>(m_pPart_Body->Get_TrackPosition()) == 38)
+					{
+						Creat_Skill(2);
+					}
+					if (static_cast<int>(m_pPart_Body->Get_TrackPosition()) == 54)
+					{
+						Creat_Skill(2);
+					}
+					if (static_cast<int>(m_pPart_Body->Get_TrackPosition()) == 70)
+					{
+						Creat_Skill(2);
+					}
+					if (static_cast<int>(m_pPart_Body->Get_TrackPosition()) == 84)
+					{
+						Creat_Skill(2);
+					}
+					if (static_cast<int>(m_pPart_Body->Get_TrackPosition()) == 100)
+					{
+						Creat_Skill(2);
+					}
+					if (static_cast<int>(m_pPart_Body->Get_TrackPosition()) == 118)
+					{
+						Creat_Skill(2);
+					}
+					if (static_cast<int>(m_pPart_Body->Get_TrackPosition()) == 143)
+					{
+						Creat_Skill(2);
+					}
 				}
 				else if (m_bSkill3)
 				{
 					Skill3();
-					m_iDamage = Info.DigimonSkill3Info.Damage;
+					m_iDamage = Info.DigimonSkill3Info.Damage / Info.DigimonSkill3Info.HitCount;
+					if (static_cast<int>(m_pPart_Body->Get_TrackPosition()) == 62)
+					{
+						Creat_Skill(3);
+					}	
 				}
 
 				if (m_bBackJump)
@@ -118,16 +171,13 @@ void CBeelzebumon::Update(_float fTimeDelta)
 			else
 			{
 				m_pFsm->Enter(DIGIMONSTATE::DEATH, m_pPart_Body);
-
 				if (m_pPart_Body->Get_AnimFinish())
 				{
 					if (m_bMonster)
 					{
 						m_pPart_Body->Set_Dissolve(true);
 					}
-
 				}
-
 			}
 		}
 		m_pFsm->Update(fTimeDelta);
@@ -221,6 +271,36 @@ void CBeelzebumon::Skill3()
 	{
 		m_bSkill = false;
 		m_bSkill3 = false;
+	}
+}
+
+void CBeelzebumon::Creat_Skill(_int SkillNum)
+{
+	CSkillObject::POSITION Desc;
+	Desc.m_vPosition = m_pTransformCom->Get_State(STATE::POSITION);
+	Desc.m_vTargetPosition = m_vTarget_Position;
+	Desc.Look = m_bMonster;
+	switch (SkillNum)
+	{
+	case 1:
+		Desc.iDamage = m_iDamage;
+		m_pGameInstance->Add_GameObject_ToLayer(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_BeelzebumonSkill1"),
+			ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Layer_BeelzebumonSkill1"), &Desc);
+		break;
+
+	case 2:
+		Desc.iDamage = m_iDamage;
+		m_pGameInstance->Add_GameObject_ToLayer(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_BeelzebumonSkill2"),
+			ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Layer_BeelzebumonSkill2"), &Desc);
+
+		break;
+
+	case 3:
+		Desc.iDamage = m_iDamage;
+		m_pGameInstance->Add_GameObject_ToLayer(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_BeelzebumonSkill3"),
+			ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Layer_BeelzebumonSkill3"), &Desc);
+
+		break;
 	}
 }
 

@@ -21,29 +21,36 @@ HRESULT COmegamonSkill3::Initialize(void* pArg)
 {
 	CGameObject::GAMEOBJECT_DESC	Desc{};
 	Desc.fRotationPerSec = XMConvertToRadians(180.0f);
-	Desc.fSpeedPerSec = 10.f;
-
-	m_fSpeed = 50.f;
+	Desc.fSpeedPerSec = 500.f;
 
 	if (FAILED(__super::Initialize(&Desc)))
 		return E_FAIL;
 
-	if (FAILED(Ready_PartObjects()))
-		return E_FAIL;
 
 	m_pInteraction_Manager = CInteraction_Manager::GetInstance();
 	m_pInteraction_Manager->Set_Attack_Digimon(this);
-	m_pInteraction_Manager->Set_Skill_Collider(m_pColliderCom);
 
 	const POSITION* Pos = static_cast<const POSITION*>(pArg);
 
 	m_iDamage = Pos->iDamage;
-
 	m_vPosition = Pos->m_vPosition;
-
 	m_vTarget_pos = Pos->m_vTargetPosition;
 
+	m_vPosition.m128_f32[1] += 10.f;
+	if (Pos->Look == 0)
+	{
+		m_vPosition.m128_f32[2] -= 10.f;
+	}
+	else if (Pos->Look == 1)
+	{
+		m_vPosition.m128_f32[2] += 10.f;
+	}
+
+	m_vTarget_pos.m128_f32[1] += 5.f;
 	m_pTransformCom->Set_State(STATE::POSITION, m_vPosition);
+
+	if (FAILED(Ready_PartObjects()))
+		return E_FAIL;
 
 	return S_OK;
 }
@@ -55,17 +62,7 @@ void COmegamonSkill3::Priority_Update(_float fTimeDelta)
 
 void COmegamonSkill3::Update(_float fTimeDelta)
 {
-	Pos = m_pTransformCom->Get_State(STATE::POSITION);
-
-	_vector Dir = XMVectorSubtract(m_vTarget_pos, Pos);
-	_float distance = XMVectorGetX(XMVector3Length(Dir));
-
-	_vector dirNormalized = XMVector3Normalize(Dir);
-	_vector move = XMVectorScale(dirNormalized, m_fSpeed * fTimeDelta * 3.5f);
-
-	Pos = XMVectorAdd(Pos, move); // ÀÌµ¿
-
-	m_pTransformCom->Set_State((STATE::POSITION), Pos);
+	m_pTransformCom->Target_Pos_Move(m_vTarget_pos, fTimeDelta);
 
 	m_pColliderCom->Update(XMLoadFloat4x4(m_pTransformCom->Get_WorldMatrixPtr()));
 
@@ -106,6 +103,9 @@ HRESULT COmegamonSkill3::Ready_PartObjects()
 	if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Collider_Sphere"),
 		TEXT("Com_Collider_Sphere"), reinterpret_cast<CComponent**>(&m_pColliderCom), &SphereDesc)))
 		return E_FAIL;
+
+	m_pColliderCom->Update(XMLoadFloat4x4(m_pTransformCom->Get_WorldMatrixPtr()));
+	m_pInteraction_Manager->Set_Skill_Collider(m_pColliderCom);
 
 	return S_OK;
 }

@@ -28,12 +28,9 @@ HRESULT CBlackwargreymonSkill3::Initialize(void* pArg)
 	if (FAILED(__super::Initialize(&Desc)))
 		return E_FAIL;
 
-	if (FAILED(Ready_PartObjects()))
-		return E_FAIL;
 
 	m_pInteraction_Manager = CInteraction_Manager::GetInstance();
 	m_pInteraction_Manager->Set_Attack_Digimon(this);
-	m_pInteraction_Manager->Set_Skill_Collider(m_pColliderCom);
 
 	const POSITION* Pos = static_cast<const POSITION*>(pArg);
 
@@ -43,12 +40,25 @@ HRESULT CBlackwargreymonSkill3::Initialize(void* pArg)
 	m_vTarget_pos = Pos->m_vTargetPosition;
 
 	m_vPosition.m128_f32[1] += 10.f;
-	m_vPosition.m128_f32[2] += 20.f;
+
+	m_vPosition.m128_f32[1] += 10.f;
+	if (Pos->Look == 0)
+	{
+		m_vPosition.m128_f32[2] -= 20.f;
+	}
+	else if (Pos->Look == 1)
+	{
+		m_vPosition.m128_f32[2] += 20.f;
+	}
 
 	m_vFirst = Pos->m_vPosition;
 	m_vFirst.m128_f32[1] += 50.f;
 
 	m_pTransformCom->Set_State(STATE::POSITION, m_vPosition);
+
+
+	if (FAILED(Ready_PartObjects()))
+		return E_FAIL;
 
 	return S_OK;
 }
@@ -64,10 +74,10 @@ void CBlackwargreymonSkill3::Update(_float fTimeDelta)
 	{
 
 	}
-	Pos = m_pTransformCom->Get_State(STATE::POSITION);
+	m_vCurrent_pos = m_pTransformCom->Get_State(STATE::POSITION);
 	if (m_bFirst == false)
 	{
-		_vector direction = XMVectorSubtract(m_vFirst, Pos);  // 
+		_vector direction = XMVectorSubtract(m_vFirst, m_vCurrent_pos);  // 
 		float distance = XMVectorGetX(XMVector3Length(direction)); 
 
 		if (distance < 0.001f) // 거의 도착하면
@@ -78,11 +88,11 @@ void CBlackwargreymonSkill3::Update(_float fTimeDelta)
 
 		if (XMVectorGetX(XMVector3Length(move)) > distance) 
 		{
-			Pos = m_vFirst;
+			m_vCurrent_pos = m_vFirst;
 			m_bFirst = true;
 		}
 		else
-			Pos = XMVectorAdd(Pos, move);
+			m_vCurrent_pos = XMVectorAdd(m_vCurrent_pos, move);
 	}
 
 	else if (m_bFirst && !m_bSize)
@@ -95,7 +105,7 @@ void CBlackwargreymonSkill3::Update(_float fTimeDelta)
 
 	if (m_bFirst && m_bSize && !m_bEnd)
 	{
-		_vector direction = XMVectorSubtract(m_vTarget_pos, Pos);
+		_vector direction = XMVectorSubtract(m_vTarget_pos, m_vCurrent_pos);
 		_float distance = XMVectorGetX(XMVector3Length(direction));
 
 		if (distance < 0.001f)
@@ -106,14 +116,14 @@ void CBlackwargreymonSkill3::Update(_float fTimeDelta)
 
 		if (XMVectorGetX(XMVector3Length(move)) > distance)
 		{
-			Pos = m_vTarget_pos;
+			m_vCurrent_pos = m_vTarget_pos;
 			m_bEnd = true;
 		}
 		else
-			Pos = XMVectorAdd(Pos, move); // 이동
+			m_vCurrent_pos = XMVectorAdd(m_vCurrent_pos, move); // 이동
 	}
 
-	m_pTransformCom->Set_State((STATE::POSITION), Pos);
+	m_pTransformCom->Set_State((STATE::POSITION), m_vCurrent_pos);
 
 	m_pColliderCom->Update(XMLoadFloat4x4(m_pTransformCom->Get_WorldMatrixPtr()));
 
@@ -156,6 +166,10 @@ HRESULT CBlackwargreymonSkill3::Ready_PartObjects()
 	if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Collider_Sphere"),
 		TEXT("Com_Collider_Sphere"), reinterpret_cast<CComponent**>(&m_pColliderCom), &SphereDesc)))
 		return E_FAIL;
+
+	m_pInteraction_Manager->Set_Skill_Collider(m_pColliderCom);
+
+	m_pColliderCom->Update(XMLoadFloat4x4(m_pTransformCom->Get_WorldMatrixPtr()));
 
 	return S_OK;
 }

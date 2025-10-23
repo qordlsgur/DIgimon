@@ -23,20 +23,17 @@ void CInteraction_Manager::Update()
 {
 	if (m_pAttackDigimon != nullptr)
 	{
-		for (auto it : m_pBattle_Digimon_Collider)
+		if (!m_pAttackDigimon->Get_Hit())
 		{
-			if (it->Intersect(m_pSkill_Collider) != -1)
+			for (auto it : m_pBattle_Digimon_Collider)
 			{
-				it->Set_HitDamage(m_pAttackDigimon->Get_Damage());
-				m_pAttackDigimon->Set_Hit(true);
+				if (it->Intersect(m_pSkill_Collider) != -1)
+				{
+					it->Set_HitDamage(m_pAttackDigimon->Get_Damage());
+					m_pAttackDigimon->Set_Hit(true);
+				}
 			}
 		}
-	}
-
-	if (m_pAttackDigimon != nullptr)
-	{
-		if (m_pAttackDigimon->Get_Hit())
-			m_pAttackDigimon = nullptr;
 	}
 }
 

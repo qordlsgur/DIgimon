@@ -58,6 +58,7 @@ public:
 
 	void Battle_System();
 	void Battle_End();
+	void Return_Move();
 
 	void Enemy_Position();
 	void Player_Digimon_Position();

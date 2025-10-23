@@ -72,6 +72,16 @@ void COmegamon::Update(_float fTimeDelta)
 			}
 			if (!m_bMove)
 				m_pFsm->Enter(DIGIMONSTATE::STAND, m_pPart_Body);
+
+			if (m_pGameInstance->Key_Down(DIK_3))
+			{
+				static_cast<CBody_Omegamon*>(m_pPart_Body)->Set_Dissolve(true);
+			}
+
+			if (m_pGameInstance->Key_Down(DIK_2))
+			{
+				static_cast<CBody_Omegamon*>(m_pPart_Body)->Time();
+			}
 		}
 		else
 		{
@@ -253,6 +263,7 @@ void COmegamon::Creat_Skill(_int SkillNum)
 	CSkillObject::POSITION Desc;
 	Desc.m_vPosition = m_pTransformCom->Get_State(STATE::POSITION);
 	Desc.m_vTargetPosition = m_vTarget_Position;
+	Desc.Look = m_bMonster;
 	switch (SkillNum)
 	{
 	case 1:

@@ -227,6 +227,11 @@ void CContainerObject::Set_Position(_float fX, _float fZ)
 	m_pTransformCom->Set_State(STATE::POSITION, XMVectorSet(fX, 0.f, fZ, 1.f));
 }
 
+void CContainerObject::Set_Position(_vector Pos)
+{
+	m_pTransformCom->Set_State(STATE::POSITION, Pos);
+}
+
 void CContainerObject::Set_y(_float fY)
 {
 	m_pTransformCom->Set_Y(fY);

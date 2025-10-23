@@ -63,6 +63,8 @@ void CBody_Omegamon::Update(_float fTimeDelta)
 
     if (m_bDissolve)
         m_fTime += fTimeDelta / 3.f;
+
+
 }
 
 void CBody_Omegamon::Late_Update(_float fTimeDelta)

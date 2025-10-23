@@ -298,7 +298,7 @@ void CDigimon_Manager::Leomon()
 	Info.CurrentHp = 2500;
 	Info.Sp = 1250;
 	Info.CurrentSp = 1250;
-	Info.AttackSpeed = 700;
+	Info.AttackSpeed = 70;
 	Info.Exp = 5000;
 	Info.CurrentExp = 0;
 	Info.ExpReward = 500;

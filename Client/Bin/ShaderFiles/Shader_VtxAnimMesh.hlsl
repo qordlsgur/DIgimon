@@ -2,9 +2,9 @@
 #include "Engine_Shader_Defines.hlsli"
 
 matrix g_WorldMatrix, g_ViewMatrix, g_ProjMatrix;
-texture2D g_DiffuseTexture;
+Texture2D g_DiffuseTexture;
 
-texture2D g_DessolveTexture;
+Texture2D g_DessolveTexture;
 /* 메시다 ㅇ영향을 주는 뼈들의 집합*/
 matrix g_BoneMatrices[512];
 
@@ -112,13 +112,32 @@ PS_OUT PS_DISSOLVE_MAIN(PS_IN In)
 {
     PS_OUT Out;
     
+    // 이미지
     float4 Dissolve = g_DessolveTexture.Sample(DefaultSampler, In.vTexcoord);
-    
+    // 이미지의 색상
+    float3 baseColor = g_DiffuseTexture.Sample(DefaultSampler, In.vTexcoord).rgb;
+
     vector vMtrlDiffuse = g_DiffuseTexture.Sample(DefaultSampler, In.vTexcoord);
     if (vMtrlDiffuse.a < 0.4f)
         discard;
     
-    if (DissolveTime > Dissolve.r)
+    float Time = DissolveTime * 1.2f;
+    
+    // 엣지란 경계선 느낌으로 시간이랑 색상이랑 거의 같은 구간이 엣지이다.
+    // 계산 방식은 두 값의 차이가 작을 수록 경계선에 가깝다.
+    // 즉 엣지가 작을수록 경계선에 있다는 뜻
+    // 그대로 사용을 하면 너무 넓어서 이거를 조절해준다.
+    // 5로 하면 두껍게 넓게 펴지고 25로 하면 얇은 불빛 같은 경계
+    // 50 은 매우 얇고 가는선 처럼 보인다.
+    float edge = saturate(1.0 - abs(Time - Dissolve.r) * 5.0f);
+    
+    // 제곱을 해주는거로 값이 크면 얇아지고 작으면 넓어짐
+    edge = pow(edge, 1.0f);
+    
+    float3 outlineColor = float3(1.0, 0.6, 0.0);
+    vMtrlDiffuse.rgb = lerp(baseColor, outlineColor, edge);
+    
+    if (Time > Dissolve.r)
         discard;
    
     vMtrlDiffuse.a *= Dissolve.a;

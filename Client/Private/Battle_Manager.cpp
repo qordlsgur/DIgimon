@@ -565,13 +565,20 @@ void CBattle_Manager::Battle_End()
 	m_pDigimonSort.clear();
 	m_pDigimon_Turn_Order.clear();
 
-	m_pFirst_Digimon = nullptr;
 	m_pBattle_Terrain = nullptr;
 	m_pBattle = nullptr;
 	m_pCurrentDigimon = nullptr;
 	m_pHitCurrentDigimon = nullptr;
 
 	m_bBattleOn = false;
+	Return_Move();
+}
+
+void CBattle_Manager::Return_Move()
+{
+	m_pPlayer->Set_Position(m_pPlayer_Pos);
+	m_pFirst_Digimon->Set_Position(m_pFirst_Digimon_Pos);
+	m_pFirst_Digimon = nullptr;
 }
 
 void CBattle_Manager::Enemy_Position()

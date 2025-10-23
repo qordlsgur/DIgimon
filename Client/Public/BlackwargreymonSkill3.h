@@ -36,8 +36,6 @@ private:
 
 	_vector m_vFirst{};
 
-	_vector Pos{};
-
 	_bool m_bFirst = { false };
 	_bool m_bSize = { false };
 	_bool m_bEnd = { false };

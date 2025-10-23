@@ -1,11 +1,11 @@
 #pragma once
 
 #include "Client_Defines.h"
-#include "GameObject.h"
+#include "ContainerObject.h"
 
 NS_BEGIN(Client)
 
-class CSkillObject abstract : public CGameObject
+class CSkillObject abstract : public CContainerObject
 {
 public:
 	typedef struct tagPosition
@@ -13,7 +13,7 @@ public:
 		_vector m_vPosition;
 		_vector m_vTargetPosition;
 		_int	iDamage;
-		_float	m_vLook;
+		_int	Look;
 	}POSITION;
 protected:
 	CSkillObject(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
@@ -40,6 +40,7 @@ public:
 protected:
 	_vector		m_vPosition{};
 	_vector		m_vTarget_pos{};
+	_vector		m_vCurrent_pos{};
 
 	_float		m_fSpeed{};
 

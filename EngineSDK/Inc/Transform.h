@@ -51,6 +51,8 @@ public:
 
 	void Set_WorldMatrix(_float4x4 Matrix) { m_WorldMatrix = Matrix; }
 
+	void Update_WoldMatrix();
+
 public:
 	virtual HRESULT Initialize_Prototype();
 	virtual HRESULT Initialize(void* pArg);

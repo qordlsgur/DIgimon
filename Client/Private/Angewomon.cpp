@@ -86,7 +86,6 @@ void CAngewomon::Update(_float fTimeDelta)
 
 			if (!m_bDie)
 			{
-				m_vLook = m_pTransformCom->Get_State(STATE::LOOK).m128_f32[2];
 				if (m_bSkill1)
 				{
 					Skill1();
@@ -238,26 +237,26 @@ void CAngewomon::Creat_Skill(_int SkillNum)
 	CSkillObject::POSITION Desc;
 	Desc.m_vPosition = m_pTransformCom->Get_State(STATE::POSITION);
 	Desc.m_vTargetPosition = m_vTarget_Position;
-	Desc.m_vLook = m_vLook;
+	Desc.Look = m_bMonster;
 	switch (SkillNum)
 	{
 	case 1:
 		Desc.iDamage = m_iDamage;
-		m_pGameInstance->Add_GameObject_ToLayer(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_AngewomonSkill1"),
-			ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Layer_AngewomonSkill1"), &Desc);
+		m_pGameInstance->Add_GameObject_ToLayer(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_BeelzebumonSkill1"),
+			ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Layer_BeelzebumonSkill1"), &Desc);
 		break;
 
 	case 2:
 		Desc.iDamage = m_iDamage;
-		m_pGameInstance->Add_GameObject_ToLayer(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_AngewomonSkill1"),
-			ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Layer_AngewomonSkill2"), &Desc);
+		m_pGameInstance->Add_GameObject_ToLayer(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_BeelzebumonSkill2"),
+			ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Layer_BeelzebumonSkill2"), &Desc);
 
 		break;
 
 	case 3:
 		Desc.iDamage = m_iDamage;
-		m_pGameInstance->Add_GameObject_ToLayer(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_AngewomonSkill1"),
-			ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Layer_AngewomonSkill3"), &Desc);
+		m_pGameInstance->Add_GameObject_ToLayer(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_BeelzebumonSkill3"),
+			ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Layer_BeelzebumonSkill3"), &Desc);
 
 		break;
 	}

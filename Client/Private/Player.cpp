@@ -161,7 +161,7 @@ void CPlayer::Update(_float fTimeDelta)
 	m_pFsm->Update(fTimeDelta);
 	m_pColliderCom->Update(XMLoadFloat4x4(m_pTransformCom->Get_WorldMatrixPtr()));
 
-	if (/*m_bOnInteract && */!m_pBattle_Manager->Get_Battle())
+	if (m_bOnInteract && !m_pBattle_Manager->Get_Battle())
 	{
 		if (m_pGameInstance->Key_Down(DIK_F))
 		{

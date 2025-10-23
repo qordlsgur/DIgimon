@@ -36,6 +36,20 @@ void CTransform::Set_Scale(_float fX, _float fY, _float fZ)
 	Set_State(STATE::LOOK, XMVector3Normalize(Get_State(STATE::LOOK)) * fZ);
 }
 
+void CTransform::Update_WoldMatrix()
+{
+	_matrix Sacle = XMMatrixScaling(Get_State(STATE::RIGHT).m128_f32[0], Get_State(STATE::UP).m128_f32[1], Get_State(STATE::LOOK).m128_f32[2]);
+	_matrix Rot = XMMatrixRotationY(XMConvertToRadians(-180.f));
+	_matrix Translation = XMMatrixTranslation(Get_State(STATE::POSITION).m128_f32[0], Get_State(STATE::POSITION).m128_f32[1], Get_State(STATE::POSITION).m128_f32[2]);
+	_matrix World = Sacle * Rot * Translation;
+
+	_float4x4 matWorld;
+
+	XMStoreFloat4x4(&matWorld, World);
+
+	Set_WorldMatrix(matWorld);
+}
+
 HRESULT CTransform::Initialize_Prototype()
 {
 	XMStoreFloat4x4(&m_WorldMatrix, XMMatrixIdentity());

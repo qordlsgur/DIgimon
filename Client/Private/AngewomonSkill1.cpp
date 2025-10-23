@@ -26,12 +26,10 @@ HRESULT CAngewomonSkill1::Initialize(void* pArg)
 	if (FAILED(__super::Initialize(&Desc)))
 		return E_FAIL;
 
-	if (FAILED(Ready_PartObjects()))
-		return E_FAIL;
 
 	m_pInteraction_Manager = CInteraction_Manager::GetInstance();
 	m_pInteraction_Manager->Set_Attack_Digimon(this);
-	m_pInteraction_Manager->Set_Skill_Collider(m_pColliderCom);
+
 
 	const POSITION* Pos = static_cast<const POSITION*>(pArg);
 
@@ -40,6 +38,9 @@ HRESULT CAngewomonSkill1::Initialize(void* pArg)
 	m_vTarget_pos = Pos->m_vTargetPosition;
 
 	m_pTransformCom->Set_State(STATE::POSITION, m_vTarget_pos);
+
+	if (FAILED(Ready_PartObjects()))
+		return E_FAIL;
 
 	return S_OK;
 }
@@ -89,6 +90,9 @@ HRESULT CAngewomonSkill1::Ready_PartObjects()
 	if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Collider_Sphere"),
 		TEXT("Com_Collider_Sphere"), reinterpret_cast<CComponent**>(&m_pColliderCom), &SphereDesc)))
 		return E_FAIL;
+
+	m_pInteraction_Manager->Set_Skill_Collider(m_pColliderCom);
+	m_pColliderCom->Set_Matrix(XMLoadFloat4x4(m_pTransformCom->Get_WorldMatrixPtr()));
 
 	return S_OK;;
 }
