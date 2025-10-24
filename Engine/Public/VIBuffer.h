@@ -16,8 +16,8 @@ public:
 	virtual HRESULT Initialize(void* pArg) override;
 
 public:
-	HRESULT Bind_Resources();
-	HRESULT Render();
+	virtual HRESULT Bind_Resources();
+	virtual HRESULT Render();
 
 protected:
 	// DX9에서는 LPDRIECT3DVETREXBUFFER9이렇게 선언을 하고 VertexBuffer를 만들고

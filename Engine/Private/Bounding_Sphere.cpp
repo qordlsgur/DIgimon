@@ -32,7 +32,7 @@ _bool CBounding_Sphere::Intersect(CBounding* pTarget)
 
 void CBounding_Sphere::Set_Matrix(_matrix Matrix)
 {
-	m_pMatrix = Matrix;
+	m_pOriginalDesc->Transform(*m_pDesc, Matrix);
 }
 
 #ifdef _DEBUG

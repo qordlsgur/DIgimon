@@ -23,7 +23,14 @@ RasterizerState RS_Wireframe
 
 RasterizerState RS_Cull_Front
 {
+    FillMode = Solid;
     CullMode = Front;
+};
+
+RasterizerState RS_Cull_Default
+{
+    FillMode = Solid;
+    CullMode = None;
 };
 
 DepthStencilState DSS_Default

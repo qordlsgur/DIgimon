@@ -112,6 +112,7 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>../public/;../../EngineSDK/Inc/</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -136,6 +137,7 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>../public/;../../EngineSDK/Inc/</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -157,6 +159,8 @@
     <ClInclude Include="..\public\AngewomonSkill1.h" />
     <ClInclude Include="..\public\AngewomonSkill2.h" />
     <ClInclude Include="..\public\AngewomonSkill3.h" />
+    <ClInclude Include="..\public\AngewomonSkill3_Part2.h" />
+    <ClInclude Include="..\public\AngewomonSkill3_Part1.h" />
     <ClInclude Include="..\Public\BackGround.h" />
     <ClInclude Include="..\public\Battle.h" />
     <ClInclude Include="..\Public\BattleBack.h" />
@@ -258,6 +262,8 @@
     <ClInclude Include="..\Public\Skill2.h" />
     <ClInclude Include="..\Public\Skill3.h" />
     <ClInclude Include="..\public\SkillObject.h" />
+    <ClInclude Include="..\public\Skill_Effect_Image.h" />
+    <ClInclude Include="..\public\Skill_Model.h" />
     <ClInclude Include="..\Public\Sky.h" />
     <ClInclude Include="..\public\Spawner.h" />
     <ClInclude Include="..\Public\Stand.h" />
@@ -281,6 +287,8 @@
     <ClCompile Include="..\private\AngewomonSkill1.cpp" />
     <ClCompile Include="..\private\AngewomonSkill2.cpp" />
     <ClCompile Include="..\private\AngewomonSkill3.cpp" />
+    <ClCompile Include="..\private\AngewomonSkill3_Part2.cpp" />
+    <ClCompile Include="..\private\AngewomonSkill3_Part1.cpp" />
     <ClCompile Include="..\Private\BackGround.cpp" />
     <ClCompile Include="..\private\Battle.cpp" />
     <ClCompile Include="..\Private\BattleBack.cpp" />
@@ -381,6 +389,8 @@
     <ClCompile Include="..\Private\Skill2.cpp" />
     <ClCompile Include="..\Private\Skill3.cpp" />
     <ClCompile Include="..\private\SkillObject.cpp" />
+    <ClCompile Include="..\private\Skill_Effect_Image.cpp" />
+    <ClCompile Include="..\private\Skill_Model.cpp" />
     <ClCompile Include="..\Private\Sky.cpp" />
     <ClCompile Include="..\private\Spawner.cpp" />
     <ClCompile Include="..\Private\Stand.cpp" />
@@ -411,6 +421,7 @@
     <FxCompile Include="..\Bin\ShaderFiles\Shader_Digivice_State.hlsl" />
     <FxCompile Include="..\Bin\ShaderFiles\Shader_Digivice_Target.hlsl" />
     <FxCompile Include="..\Bin\ShaderFiles\Shader_Hover.hlsl" />
+    <FxCompile Include="..\Bin\ShaderFiles\Shader_Image_effect.hlsl" />
     <FxCompile Include="..\Bin\ShaderFiles\Shader_Inventory.hlsl" />
     <FxCompile Include="..\Bin\ShaderFiles\Shader_Skill_Hover.hlsl" />
     <FxCompile Include="..\Bin\ShaderFiles\Shader_Skill_Image.hlsl" />
@@ -420,6 +431,7 @@
     <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxMesh.hlsl" />
     <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxNorTex.hlsl" />
     <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxPosTex.hlsl" />
+    <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxSkillMesh.hlsl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

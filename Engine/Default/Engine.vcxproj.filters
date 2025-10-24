@@ -190,6 +190,18 @@
     <ClInclude Include="..\public\Target_Manager.h">
       <Filter>01.Utility\11.RenderTarget\Manager</Filter>
     </ClInclude>
+    <ClInclude Include="..\public\VIBuffer_Rect_Instance.h">
+      <Filter>01.Utility\03.Components\VIBuffer\Instance\Rect</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\VIBuffer_Point_Instance.h">
+      <Filter>01.Utility\03.Components\VIBuffer\Instance\Point</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\Effect.h">
+      <Filter>01.Utility\02.GameObjects\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\VIBuffer_Instance.h">
+      <Filter>01.Utility\03.Components\VIBuffer\Instance</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Private\Base.cpp">
@@ -338,6 +350,18 @@
     </ClCompile>
     <ClCompile Include="..\private\Target_Manager.cpp">
       <Filter>01.Utility\11.RenderTarget\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\VIBuffer_Rect_Instance.cpp">
+      <Filter>01.Utility\03.Components\VIBuffer\Instance\Rect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\VIBuffer_Point_Instance.cpp">
+      <Filter>01.Utility\03.Components\VIBuffer\Instance\Point</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\Effect.cpp">
+      <Filter>01.Utility\02.GameObjects\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\VIBuffer_Instance.cpp">
+      <Filter>01.Utility\03.Components\VIBuffer\Instance</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -508,6 +532,18 @@
     </Filter>
     <Filter Include="01.Utility\11.RenderTarget\Manager">
       <UniqueIdentifier>{84c868ab-b419-4e38-8fa7-e3d9678fc54b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Utility\02.GameObjects\Effect">
+      <UniqueIdentifier>{8a457d64-6769-4088-abe3-218ec9f863f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Utility\03.Components\VIBuffer\Instance">
+      <UniqueIdentifier>{316fd36e-740a-411d-b251-44a2917d54ba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Utility\03.Components\VIBuffer\Instance\Point">
+      <UniqueIdentifier>{73708a82-21e8-4b81-b363-f7747d6ccc0f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Utility\03.Components\VIBuffer\Instance\Rect">
+      <UniqueIdentifier>{1696a38a-b01c-4aa4-bf4f-f415b6dae379}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

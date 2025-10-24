@@ -61,7 +61,7 @@ HRESULT CDigivice::Initialize(void* pArg)
 
 	m_Digimon_ID.resize(8, -1);
 
-	Acquire_Digimon(2);
+	Acquire_Digimon(0);
 	Acquire_Digimon(1);
 	Acquire_Digimon(8);
 	m_strDigimon_Stage[0] = L"À¯¾Æ±â";

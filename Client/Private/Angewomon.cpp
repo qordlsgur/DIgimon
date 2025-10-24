@@ -75,6 +75,21 @@ void CAngewomon::Update(_float fTimeDelta)
 			if (!m_bMove)
 				m_pFsm->Enter(DIGIMONSTATE::STAND, m_pPart_Body);
 
+				//if (m_pGameInstance->Key_Down(DIK_1))
+				//{
+				//	m_pFsm->Enter(DIGIMONSTATE::SKILL3, m_pPart_Body, false, false);
+				//	m_bMove = true;
+				//}
+				//m_iSkill = static_cast<_int>(m_pPart_Body->Get_TrackPosition());
+				//if (m_iSkill == 68)
+				//	Creat_Skill(3);
+				//m_bMonster = true;
+				//if (m_bMove && m_pPart_Body->Get_AnimFinish())
+				//{
+				//	m_bMove = false;
+				//}
+				//if (!m_bMove)
+				//	m_pFsm->Enter(DIGIMONSTATE::STAND, m_pPart_Body);
 		}
 		else
 		{
@@ -129,7 +144,7 @@ void CAngewomon::Update(_float fTimeDelta)
 					Skill3();
 					m_iDamage = static_cast<_int>(Info.Damage * Info.DigimonSkill2Info.HitCount * 1.3f);
 					m_iSkill = static_cast<_int>(m_pPart_Body->Get_TrackPosition());
-					if (m_iSkill == 68)
+					if (m_iSkill == 24)
 					{
 						if (m_iLastSkill != m_iSkill)
 						{
@@ -270,21 +285,21 @@ void CAngewomon::Creat_Skill(_int SkillNum)
 	{
 	case 1:
 		Desc.iDamage = m_iDamage;
-		m_pGameInstance->Add_GameObject_ToLayer(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_BeelzebumonSkill1"),
-			ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Layer_BeelzebumonSkill1"), &Desc);
+		m_pGameInstance->Add_GameObject_ToLayer(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_AngewomonSkill1"),
+			ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Layer_Angewomon1"), &Desc);
 		break;
 
 	case 2:
 		Desc.iDamage = m_iDamage;
-		m_pGameInstance->Add_GameObject_ToLayer(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_BeelzebumonSkill2"),
-			ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Layer_BeelzebumonSkill2"), &Desc);
+		m_pGameInstance->Add_GameObject_ToLayer(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_AngewomonSkill2"),
+			ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Layer_Angewomon2"), &Desc);
 
 		break;
 
 	case 3:
 		Desc.iDamage = m_iDamage;
-		m_pGameInstance->Add_GameObject_ToLayer(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_BeelzebumonSkill3"),
-			ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Layer_BeelzebumonSkill3"), &Desc);
+		m_pGameInstance->Add_GameObject_ToLayer(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_AngewomonSkill3"),
+			ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Layer_Angewomon3"), &Desc);
 
 		break;
 	}

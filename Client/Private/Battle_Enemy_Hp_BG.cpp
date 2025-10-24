@@ -3,6 +3,7 @@
 #include "Battle_Enemy_HpBar.h"
 #include "ContainerObject.h"
 #include "Battle_UI_Manager.h"
+
 CBattle_Enemy_Hp_BG::CBattle_Enemy_Hp_BG(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CUIObject{ pDevice, pContext }
 {

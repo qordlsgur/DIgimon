@@ -169,7 +169,7 @@ void CPlayer::Update(_float fTimeDelta)
 			m_pBattle_Manager->Set_Player_Pos(m_pTransformCom->Get_State(STATE::POSITION));
 			m_pBattle_Manager->Set_First_Digimon_Pos(m_pFirst_Digimon->Get_Position());
 			// 적 디지몬을 생성 한다.
-			m_pBattle_Manager->EnemyDigimon_Info(3);
+			m_pBattle_Manager->EnemyDigimon_Info(0);
 			// 그리고 전투를 하기 위해서 세팅을 해준다.
 			m_pBattle_Manager->Battle_System();
 			// 세팅이 끝나면 이제 전투한다고 bool값을 바꿔주면서 카메라도 바꿔준다.

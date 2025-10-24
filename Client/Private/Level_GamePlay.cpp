@@ -189,6 +189,15 @@ HRESULT CLevel_GamePlay::Ready_Layer_Player(const _wstring& strLayerTag)
 	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Player"),
 		ENUM_CLASS(LEVEL::GAMEPLAY), strLayerTag)))
 		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Skill_Model"),
+		ENUM_CLASS(LEVEL::GAMEPLAY), strLayerTag)))
+		return E_FAIL;	
+	//
+	//if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Skill_Effect_Image"),
+	//	ENUM_CLASS(LEVEL::GAMEPLAY), strLayerTag)))
+	//	return E_FAIL;
+
 	return S_OK;
 }
 
@@ -258,7 +267,7 @@ HRESULT CLevel_GamePlay::Ready_Layer_Interaction(const _wstring& strLayerTag)
 
 HRESULT CLevel_GamePlay::Ready_Layer_Monster(const _wstring& strLayerTag)
 {
-	CSpawner::SPAWNER_POS   SpawnPos[4]{};
+	CSpawner::SPAWNER_POS   SpawnPos[1]{};
 	SpawnPos[0].SpawnerPos = XMVectorSet(660.f, 0.f, 540.f, 0.f);
 	SpawnPos[0].strPrototypeTag = TEXT("Prototype_GameObject_Ladydevimon");
 
@@ -266,12 +275,12 @@ HRESULT CLevel_GamePlay::Ready_Layer_Monster(const _wstring& strLayerTag)
 		ENUM_CLASS(LEVEL::GAMEPLAY), strLayerTag, &SpawnPos[0])))
 		return E_FAIL;
 
-	SpawnPos[1].SpawnerPos = XMVectorSet(770.f, 0.f, 650.f, 0.f);
-	SpawnPos[1].strPrototypeTag = TEXT("Prototype_GameObject_Angewomon");
+	//SpawnPos[1].SpawnerPos = XMVectorSet(770.f, 0.f, 650.f, 0.f);
+	//SpawnPos[1].strPrototypeTag = TEXT("Prototype_GameObject_Angewomon");
 
-	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Spawner"),
-		ENUM_CLASS(LEVEL::GAMEPLAY), strLayerTag, &SpawnPos[1])))
-		return E_FAIL;
+	//if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Spawner"),
+	//	ENUM_CLASS(LEVEL::GAMEPLAY), strLayerTag, &SpawnPos[1])))
+	//	return E_FAIL;
 
 	return S_OK;
 }

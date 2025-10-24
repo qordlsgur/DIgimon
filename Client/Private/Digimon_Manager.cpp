@@ -83,7 +83,7 @@ void CDigimon_Manager::Angewomon()
 	Info.CurrentHp = 5000;
 	Info.Sp = 2500;
 	Info.CurrentSp = 2500;
-	Info.AttackSpeed = 100;
+	Info.AttackSpeed = 1000;
 	Info.Exp = 10000;
 	Info.CurrentExp = 0;
 	Info.ExpReward = 1000;

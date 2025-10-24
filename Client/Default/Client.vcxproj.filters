@@ -385,6 +385,12 @@
     <Filter Include="02.GameObjects\Skill">
       <UniqueIdentifier>{3835e570-4904-4c83-8911-fb765f269fb4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.GameObjects\SkillModel">
+      <UniqueIdentifier>{01e4018e-6721-40e5-9826-3fc68fa5f9c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Digimon\00.Angewomon\Skill3\Parts">
+      <UniqueIdentifier>{cd9c71fe-ea89-4115-838b-0acf2a127cdb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -752,6 +758,18 @@
     </ClInclude>
     <ClInclude Include="..\public\SkillObject.h">
       <Filter>02.GameObjects\Skill</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\Skill_Model.h">
+      <Filter>02.GameObjects\SkillModel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\Skill_Effect_Image.h">
+      <Filter>02.GameObjects\SkillModel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\AngewomonSkill3_Part2.h">
+      <Filter>02.GameObjects\Digimon\00.Angewomon\Skill3\Parts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\AngewomonSkill3_Part1.h">
+      <Filter>02.GameObjects\Digimon\00.Angewomon\Skill3\Parts</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1122,6 +1140,18 @@
     <ClCompile Include="..\private\SkillObject.cpp">
       <Filter>02.GameObjects\Skill</Filter>
     </ClCompile>
+    <ClCompile Include="..\private\Skill_Model.cpp">
+      <Filter>02.GameObjects\SkillModel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\Skill_Effect_Image.cpp">
+      <Filter>02.GameObjects\SkillModel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\AngewomonSkill3_Part2.cpp">
+      <Filter>02.GameObjects\Digimon\00.Angewomon\Skill3\Parts</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\AngewomonSkill3_Part1.cpp">
+      <Filter>02.GameObjects\Digimon\00.Angewomon\Skill3\Parts</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxPosTex.hlsl">
@@ -1170,6 +1200,12 @@
       <Filter>97.ShaderFiles</Filter>
     </FxCompile>
     <FxCompile Include="..\Bin\ShaderFiles\Shader_Battle_Enemy_Hp.hlsl">
+      <Filter>97.ShaderFiles</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Bin\ShaderFiles\Shader_Image_effect.hlsl">
+      <Filter>97.ShaderFiles</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxSkillMesh.hlsl">
       <Filter>97.ShaderFiles</Filter>
     </FxCompile>
   </ItemGroup>
