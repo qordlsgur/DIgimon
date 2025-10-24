@@ -44,11 +44,11 @@ HRESULT CBlackwargreymonSkill3::Initialize(void* pArg)
 	m_vPosition.m128_f32[1] += 10.f;
 	if (Pos->Look == 0)
 	{
-		m_vPosition.m128_f32[2] -= 20.f;
+		m_vPosition.m128_f32[2] -= 15.f;
 	}
 	else if (Pos->Look == 1)
 	{
-		m_vPosition.m128_f32[2] += 20.f;
+		m_vPosition.m128_f32[2] += 15.f;
 	}
 
 	m_vFirst = Pos->m_vPosition;
@@ -97,9 +97,9 @@ void CBlackwargreymonSkill3::Update(_float fTimeDelta)
 
 	else if (m_bFirst && !m_bSize)
 	{
-		m_pTransformCom->SizeUp(0.023f, 0.023f, 0.023f);
+		m_pTransformCom->SizeUp(0.14f, 0.14f, 0.14f);
 
-		if (m_pTransformCom->Get_Scale().x >= 3.f)
+		if (m_pTransformCom->Get_Scale().x >= 15.f)
 			m_bSize = true;
 	}
 
@@ -160,7 +160,7 @@ HRESULT CBlackwargreymonSkill3::Ready_PartObjects()
 {
 	/* Com_Sphere*/
 	CBounding_Sphere::BOUNDING_SPHERE_DESC SphereDesc{};
-	SphereDesc.fRadius = 10.f;
+	SphereDesc.fRadius = 2.f;
 	SphereDesc.vCenter = _float3(0.f, SphereDesc.fRadius, 0.f);
 
 	if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Collider_Sphere"),

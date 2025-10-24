@@ -59,15 +59,50 @@ void CDevilmon::Update(_float fTimeDelta)
 	{
 		if (!m_bBattle)
 		{
-			if (!m_bMonster)
+			//if (!m_bMonster)
+			//{
+			//	m_pTransformCom->LookAtPlayer(m_pDigimon_Manager->PlayerPos(), fTimeDelta);
+			//	m_bMove = false;
+			//	if (m_pTransformCom->FollowPlayer(m_pDigimon_Manager->PlayerPos(), 30, fTimeDelta))
+			//	{
+			//		m_pFsm->Enter(DIGIMONSTATE::RUN, m_pPart_Body);
+			//		m_bMove = true;
+			//	}
+			//}
+			//if (!m_bMove)
+			//	m_pFsm->Enter(DIGIMONSTATE::STAND, m_pPart_Body);
+			if (m_pGameInstance->Key_Down(DIK_1))
 			{
-				m_pTransformCom->LookAtPlayer(m_pDigimon_Manager->PlayerPos(), fTimeDelta);
+				m_pFsm->Enter(DIGIMONSTATE::SKILL3, m_pPart_Body, false, false);
+				m_bMove = true;
+			}
+
+			m_iSkill = static_cast<_int>(m_pPart_Body->Get_TrackPosition());
+			if (m_iSkill == 111)
+				Creat_Skill(3);
+			m_bMonster = true;
+			//switch (m_iSkill)
+			//{
+			//case 30:
+			//case 33:
+			//case 35:
+			//case 38:
+			//case 43:
+			//case 45:
+			//	if (m_iSkill != m_iLastSkill) // 이전과 다를 때만 실행
+			//	{
+			//		Creat_Skill(2);
+			//		m_iLastSkill = m_iSkill;
+			//	}
+			//	break;
+			//default:
+			//	m_iLastSkill = -1;
+			//	break;
+			//}
+
+			if (m_bMove && m_pPart_Body->Get_AnimFinish())
+			{
 				m_bMove = false;
-				if (m_pTransformCom->FollowPlayer(m_pDigimon_Manager->PlayerPos(), 30, fTimeDelta))
-				{
-					m_pFsm->Enter(DIGIMONSTATE::RUN, m_pPart_Body);
-					m_bMove = true;
-				}
 			}
 			if (!m_bMove)
 				m_pFsm->Enter(DIGIMONSTATE::STAND, m_pPart_Body);
@@ -134,7 +169,7 @@ void CDevilmon::Update(_float fTimeDelta)
 				{
 					if (m_iLastSkill != m_iSkill)
 					{
-						Creat_Skill(1);
+						Creat_Skill(3);
 						m_iLastSkill = m_iSkill; // 마지막으로 실행한 트랙 위치 저장
 					}
 				}

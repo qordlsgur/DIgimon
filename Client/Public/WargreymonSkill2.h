@@ -33,7 +33,9 @@ private:
 	class CInteraction_Manager* m_pInteraction_Manager = { nullptr };
 
 	_vector m_vFirst{};
+	_float m_fTime{};
 
+	_bool m_bStart = { false };
 	_bool m_bFirst = { false };
 	_bool m_bSize = { false };
 	_bool m_bEnd = { false };

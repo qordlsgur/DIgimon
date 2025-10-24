@@ -69,8 +69,6 @@ void CWargreymon::Update(_float fTimeDelta)
 					m_bMove = true;
 				}
 			}
-			if (!m_bMove)
-				m_pFsm->Enter(DIGIMONSTATE::STAND, m_pPart_Body);
 		}
 		else
 		{
@@ -113,7 +111,7 @@ void CWargreymon::Update(_float fTimeDelta)
 					Skill2();
 					m_iDamage = static_cast<_int>(Info.Damage * Info.DigimonSkill2Info.HitCount * 1.2f);
 					m_iSkill = static_cast<_int>(m_pPart_Body->Get_TrackPosition());
-					if (m_iSkill == 17)
+					if (m_iSkill == 6)
 					{
 						if (m_iLastSkill != m_iSkill)
 						{
@@ -129,7 +127,7 @@ void CWargreymon::Update(_float fTimeDelta)
 				else if (m_bSkill3)
 				{
 					Skill3();
-					m_iDamage = Info.Damage * Info.DigimonSkill3Info.HitCount * 0.2f;
+					m_iDamage = static_cast<_int>(Info.Damage * Info.DigimonSkill3Info.HitCount * 1.2f);
 				}
 
 				if (m_bBackJump)

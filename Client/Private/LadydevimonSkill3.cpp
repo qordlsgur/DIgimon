@@ -19,19 +19,50 @@ HRESULT CLadydevimonSkill3::Initialize_Prototype()
 
 HRESULT CLadydevimonSkill3::Initialize(void* pArg)
 {
-    return E_NOTIMPL;
+	CGameObject::GAMEOBJECT_DESC	Desc{};
+	Desc.fRotationPerSec = XMConvertToRadians(180.0f);
+	Desc.fSpeedPerSec = 10.f;
+
+	if (FAILED(__super::Initialize(&Desc)))
+		return E_FAIL;
+
+
+	m_pInteraction_Manager = CInteraction_Manager::GetInstance();
+	m_pInteraction_Manager->Set_Attack_Digimon(this);
+
+
+	const POSITION* Pos = static_cast<const POSITION*>(pArg);
+
+	m_iDamage = Pos->iDamage;
+
+	m_vTarget_pos = Pos->m_vTargetPosition;
+
+	m_pTransformCom->Set_State(STATE::POSITION, m_vTarget_pos);
+
+	if (FAILED(Ready_PartObjects()))
+		return E_FAIL;
+
+	return S_OK;
 }
 
 void CLadydevimonSkill3::Priority_Update(_float fTimeDelta)
 {
+	__super::Priority_Update(fTimeDelta);
 }
 
 void CLadydevimonSkill3::Update(_float fTimeDelta)
 {
+	m_pTransformCom->Set_State((STATE::POSITION), m_vTarget_pos);
+
+	m_pColliderCom->Update(XMLoadFloat4x4(m_pTransformCom->Get_WorldMatrixPtr()));
+
+	__super::Update(fTimeDelta);
 }
 
 void CLadydevimonSkill3::Late_Update(_float fTimeDelta)
 {
+	m_pGameInstance->Add_RenderGroup(RENDER::NONBLEND, this);
+	__super::Late_Update(fTimeDelta);
 }
 
 HRESULT CLadydevimonSkill3::Render()

@@ -108,7 +108,7 @@ void COmegamon::Update(_float fTimeDelta)
 				{
 					Skill1();
 
-					m_iDamage = static_cast<_int>(Info.Damage * Info.DigimonSkill1Info.HitCount * 0.8f);
+					m_iDamage = static_cast<_int>(Info.Damage * Info.DigimonSkill1Info.HitCount * 0.2f);
 					m_iSkill = static_cast<_int>(m_pPart_Body->Get_TrackPosition());
 					switch (m_iSkill)
 					{
@@ -129,7 +129,7 @@ void COmegamon::Update(_float fTimeDelta)
 				else if (m_bSkill2)
 				{
 					Skill2();
-					m_iDamage = Info.Damage * Info.DigimonSkill2Info.HitCount * 1.f;
+					m_iDamage = static_cast<_int>(Info.Damage * Info.DigimonSkill2Info.HitCount * 1.f);
 					if (static_cast<int>(m_pPart_Body->Get_TrackPosition()) == 67)
 					{
 						Creat_Skill(2);

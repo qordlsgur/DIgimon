@@ -79,7 +79,7 @@ void CLadydevimon::Update(_float fTimeDelta)
 				if (m_bSkill1)
 				{
 					Skill1();
-					m_iDamage = static_cast<_int>(Info.Damage * Info.DigimonSkill1Info.HitCount * 0.42);
+					m_iDamage = static_cast<_int>(Info.Damage * Info.DigimonSkill1Info.HitCount * 0.2f);
 					m_iSkill = static_cast<_int>(m_pPart_Body->Get_TrackPosition());
 					switch (m_iSkill)
 					{
@@ -120,7 +120,6 @@ void CLadydevimon::Update(_float fTimeDelta)
 				else if (m_bSkill3)
 				{
 					Skill3();
-					m_iDamage = Info.Damage * Info.DigimonSkill3Info.HitCount * 0.2f;
 					m_iDamage = static_cast<_int>(Info.Damage * Info.DigimonSkill1Info.HitCount * 0.4f);
 					m_iSkill = static_cast<_int>(m_pPart_Body->Get_TrackPosition());
 					switch (m_iSkill)

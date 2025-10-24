@@ -33,17 +33,20 @@ HRESULT CAngewomonSkill2::Initialize(void* pArg)
 
 	m_iDamage = Pos->iDamage;
 	m_vPosition = Pos->m_vPosition;
+	m_vTarget_pos = Pos->m_vTargetPosition;
 
 	m_vPosition.m128_f32[1] += 10.f;
+	m_vTarget_pos.m128_f32[1] += 10.f;
 	if (Pos->Look == 0)
 	{
 		m_vPosition.m128_f32[2] -= 10.f;
+		m_vTarget_pos.m128_f32[2] -= 5.f;
 	}
 	else if(Pos->Look == 1)
 	{
 		m_vPosition.m128_f32[2] += 10.f;
+		m_vTarget_pos.m128_f32[2] += 5.f;
 	}
-	m_vTarget_pos = Pos->m_vTargetPosition;
 
 	m_pTransformCom->Set_State(STATE::POSITION, m_vPosition);
 

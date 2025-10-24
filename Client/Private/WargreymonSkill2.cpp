@@ -39,20 +39,22 @@ HRESULT CWargreymonSkill2::Initialize(void* pArg)
 
 	m_vTarget_pos = Pos->m_vTargetPosition;
 
-	m_vPosition.m128_f32[1] += 10.f;
+	m_vPosition.m128_f32[1] += 4.f;
 
-	m_vPosition.m128_f32[1] += 10.f;
+	m_vPosition.m128_f32[1] += 4.f;
 	if (Pos->Look == 0)
 	{
-		m_vPosition.m128_f32[2] -= 20.f;
+		m_vPosition.m128_f32[0] -= 4.f;
+		m_vPosition.m128_f32[2] -= 10.f;
 	}
 	else if (Pos->Look == 1)
 	{
-		m_vPosition.m128_f32[2] += 20.f;
+		m_vPosition.m128_f32[0] += 4.f;
+		m_vPosition.m128_f32[2] += 10.f;
 	}
 
 	m_vFirst = Pos->m_vPosition;
-	m_vFirst.m128_f32[1] += 50.f;
+	m_vFirst.m128_f32[1] += 40.f;
 
 	m_pTransformCom->Set_State(STATE::POSITION, m_vPosition);
 
@@ -71,10 +73,15 @@ void CWargreymonSkill2::Update(_float fTimeDelta)
 {
 	if (m_bHit)
 	{
-
+		
 	}
 	m_vCurrent_pos = m_pTransformCom->Get_State(STATE::POSITION);
-	if (m_bFirst == false)
+
+	m_fTime += fTimeDelta;
+	if (m_fTime > 0.6f)
+		m_bStart = true;
+
+	if (m_bStart == true && m_bFirst == false)
 	{
 		_vector direction = XMVectorSubtract(m_vFirst, m_vCurrent_pos);  // 
 		float distance = XMVectorGetX(XMVector3Length(direction));
@@ -83,7 +90,7 @@ void CWargreymonSkill2::Update(_float fTimeDelta)
 			return;
 
 		_vector dirNormalized = XMVector3Normalize(direction);
-		_vector move = XMVectorScale(dirNormalized, m_fSpeed * fTimeDelta);
+		_vector move = XMVectorScale(dirNormalized, m_fSpeed * fTimeDelta*2.f);
 
 		if (XMVectorGetX(XMVector3Length(move)) > distance)
 		{
@@ -96,9 +103,9 @@ void CWargreymonSkill2::Update(_float fTimeDelta)
 
 	else if (m_bFirst && !m_bSize)
 	{
-		m_pTransformCom->SizeUp(0.023f, 0.023f, 0.023f);
+		m_pTransformCom->SizeUp(0.15f, 0.15f, 0.15f);
 
-		if (m_pTransformCom->Get_Scale().x >= 3.f)
+		if (m_pTransformCom->Get_Scale().x >= 12.f)
 			m_bSize = true;
 	}
 
@@ -155,7 +162,7 @@ HRESULT CWargreymonSkill2::Ready_PartObjects()
 {
 	/* Com_Sphere*/
 	CBounding_Sphere::BOUNDING_SPHERE_DESC SphereDesc{};
-	SphereDesc.fRadius = 5.f;
+	SphereDesc.fRadius = 3.f;
 	SphereDesc.vCenter = _float3(0.f, SphereDesc.fRadius, 0.f);
 
 	if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Collider_Sphere"),

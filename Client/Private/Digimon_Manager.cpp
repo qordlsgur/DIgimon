@@ -222,7 +222,7 @@ void CDigimon_Manager::LedyDevimon()
 	Info.DigimonSkill3Info.SkillName = TEXT("다크니스 웨이브");
 	Info.DigimonSkill3Info.Sp = 250;
 	Info.DigimonSkill3Info.HitCount = 4;
-	Info.DigimonSkill3Info.DamageInfo = TEXT("기본 데미지 x 공격 횟수 x 20%");
+	Info.DigimonSkill3Info.DamageInfo = TEXT("기본 데미지 x 공격 횟수 x 40%");
 	Info.DigimonSkill3Info.Target = SKILL_TARGET::ENEMY;
 	Info.DigimonSkill3Info.Range = SKILL_RANGE::ALL;
 	Info.DigimonSkill3Info.SkillInfo = TEXT("박쥐와 같은 물체을 발사해 \n피해를 입힙니다.");

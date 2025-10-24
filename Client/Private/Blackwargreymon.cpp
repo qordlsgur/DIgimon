@@ -71,6 +71,23 @@ void CBlackwargreymon::Update(_float fTimeDelta)
 			}
 			if (!m_bMove)
 				m_pFsm->Enter(DIGIMONSTATE::STAND, m_pPart_Body);
+			//if (m_pGameInstance->Key_Down(DIK_1))
+			//{
+			//	m_pFsm->Enter(DIGIMONSTATE::SKILL3, m_pPart_Body, false, false);
+
+
+			//	m_bMove = true;
+			//}
+			//m_iSkill = static_cast<_int>(m_pPart_Body->Get_TrackPosition());
+			//if (m_iSkill == 13)
+			//	Creat_Skill(3);
+			//m_bMonster = true;
+			//if (m_bMove && m_pPart_Body->Get_AnimFinish())
+			//{
+			//	m_bMove = false;
+			//}
+			//if (!m_bMove)
+			//	m_pFsm->Enter(DIGIMONSTATE::STAND, m_pPart_Body);
 		}
 		else
 		{
@@ -127,7 +144,7 @@ void CBlackwargreymon::Update(_float fTimeDelta)
 
 					m_iDamage = static_cast<_int>(Info.Damage * Info.DigimonSkill2Info.HitCount * 1.2f);
 					m_iSkill = static_cast<_int>(m_pPart_Body->Get_TrackPosition());
-					if (m_iSkill == 17)
+					if (m_iSkill == 13)
 					{
 						if (m_iLastSkill != m_iSkill)
 						{
@@ -217,8 +234,8 @@ HRESULT CBlackwargreymon::Render()
 		m_pColliderCom->Render();
 #endif
 
-		return S_OK;
 	}
+		return S_OK;
 }
 
 _int CBlackwargreymon::Intersect(CCollider* pPlayer_Collider)

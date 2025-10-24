@@ -26,17 +26,17 @@ HRESULT CSkillObject::Initialize(void* pArg)
 
 void CSkillObject::Priority_Update(_float fTimeDelta)
 {
-
+    __super::Priority_Update(fTimeDelta);
 }
 
 void CSkillObject::Update(_float fTimeDelta)
 {
-
+    __super::Update(fTimeDelta);
 }
 
 void CSkillObject::Late_Update(_float fTimeDelta)
 {
-
+    __super::Late_Update(fTimeDelta);
 }
 
 HRESULT CSkillObject::Render()
