@@ -46,7 +46,7 @@ public:
 	void Release_Digimon(_int ID);
 
 	void Set_Digivice_Slot(_int SlotID, _bool Has, DIGIMON_INFO* Info);
-	void Set_Current_Digimon_Info(DIGIMON_INFO* Info);
+	void Set_Current_Digimon_Info(DIGIMON_INFO Info);
 	DIGIMON_INFO* Get_Current_Digimon_Info(_int Num);
 
 	void Set_Digimon_Update(_int InfoNum, DIGIMON_STATE eState, _int Add);
@@ -63,6 +63,7 @@ public:
 	HRESULT Digimon_Add(_int Digimon_ID,DIGIMON_INFO Info);
 
 	DIGIMON_INFO* Search_Digimon(_int ID);
+	DIGIMON_INFO Copy_Digimon(_int ID);
 
 	const _wstring& Get_Model_ID(_int ID);
 	const _wstring& Get_Prototype_ID(_int ID);
@@ -76,7 +77,7 @@ private:
 
 	vector<_bool> m_vDigivice_Battle_Slot;
 
-	vector<DIGIMON_INFO*> m_CurrentDigimon;
+	vector<DIGIMON_INFO> m_CurrentDigimon;
 
 	_uint m_iDigivice_Number{};
 	wstring	 Not_found;

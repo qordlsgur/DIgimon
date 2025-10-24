@@ -85,34 +85,59 @@ void CBlackwargreymon::Update(_float fTimeDelta)
 				if (m_bSkill1)
 				{
 					Skill1();
-					m_iDamage = Info.DigimonSkill1Info.Damage / Info.DigimonSkill1Info.HitCount;
-
-					if (static_cast<int>(m_pPart_Body->Get_TrackPosition()) == 23)
+					m_iDamage = static_cast<_int>(Info.Damage * Info.DigimonSkill1Info.HitCount * 0.4f);
+					m_iSkill = static_cast<_int>(m_pPart_Body->Get_TrackPosition());
+					switch (m_iSkill)
 					{
-						Creat_Skill(1);
-					}
-					if (static_cast<int>(m_pPart_Body->Get_TrackPosition()) == 38)
-					{
-						Creat_Skill(1);
+					case 23:
+					case 38:
+						if (m_iSkill != m_iLastSkill) // 이전과 다를 때만 실행
+						{
+							Creat_Skill(1);
+							m_iLastSkill = m_iSkill;
+						}
+						break;
+					default:
+						m_iLastSkill = -1;
+						break;
 					}
 				}
 				else if (m_bSkill2)
 				{
 					Skill2();
-					m_iDamage = Info.DigimonSkill2Info.Damage / Info.DigimonSkill2Info.HitCount;
-					if (static_cast<int>(m_pPart_Body->Get_TrackPosition()) == 54.f)
+					m_iDamage = static_cast<_int>(Info.Damage * Info.DigimonSkill2Info.HitCount * 1.f);
+					m_iSkill = static_cast<_int>(m_pPart_Body->Get_TrackPosition());
+					if (m_iSkill == 54)
 					{
-						Creat_Skill(2);
+						if (m_iLastSkill != m_iSkill)
+						{
+							Creat_Skill(2);
+							m_iLastSkill = m_iSkill; // 마지막으로 실행한 트랙 위치 저장
+						}
+					}
+					else
+					{
+						m_iLastSkill = -1; // 다른 트랙 위치면 초기화
 					}
 				}
 
 				else if (m_bSkill3)
 				{
 					Skill3();
-					m_iDamage = Info.DigimonSkill3Info.Damage / Info.DigimonSkill3Info.HitCount;
-					if (static_cast<int>(m_pPart_Body->Get_TrackPosition()) == 17.f)
+
+					m_iDamage = static_cast<_int>(Info.Damage * Info.DigimonSkill2Info.HitCount * 1.2f);
+					m_iSkill = static_cast<_int>(m_pPart_Body->Get_TrackPosition());
+					if (m_iSkill == 17)
 					{
-						Creat_Skill(3);
+						if (m_iLastSkill != m_iSkill)
+						{
+							Creat_Skill(3);
+							m_iLastSkill = m_iSkill; // 마지막으로 실행한 트랙 위치 저장
+						}
+					}
+					else
+					{
+						m_iLastSkill = -1; // 다른 트랙 위치면 초기화
 					}
 				}
 

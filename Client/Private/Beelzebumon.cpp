@@ -40,7 +40,7 @@ HRESULT CBeelzebumon::Initialize(void* pArg)
 	m_pFsm->Enter(DIGIMONSTATE::STAND, m_pPart_Body, false, false);
 	m_pTransformCom->Set_State(STATE::POSITION, XMVectorSet(10.f, 0.f, 190.f, 1.f));
 
-	__super::Set_Digimon_Info(m_pDigimon_Manager->Search_Digimon(9));
+	//__super::Set_Digimon_Info(m_pDigimon_Manager->Search_Digimon(9));
 
 	return S_OK;
 }
@@ -86,70 +86,70 @@ void CBeelzebumon::Update(_float fTimeDelta)
 				if (m_bSkill1)
 				{
 					Skill1();
-					m_iDamage = Info.DigimonSkill1Info.Damage / Info.DigimonSkill1Info.HitCount;
+					m_iDamage = static_cast<_int>(Info.Damage * Info.DigimonSkill1Info.HitCount * 0.04f);
+					m_iSkill = static_cast<_int>(m_pPart_Body->Get_TrackPosition());
 
-					if (static_cast<int>(m_pPart_Body->Get_TrackPosition()) == 37)
+					switch (m_iSkill)
 					{
-						Creat_Skill(1);
-					}
-					if (static_cast<int>(m_pPart_Body->Get_TrackPosition()) == 43)
-					{
-						Creat_Skill(1);
-					}
-					if (static_cast<int>(m_pPart_Body->Get_TrackPosition()) == 50)
-					{
-						Creat_Skill(1);
-					}
-					if (static_cast<int>(m_pPart_Body->Get_TrackPosition()) == 56)
-					{
-						Creat_Skill(1);
-					}
-					if (static_cast<int>(m_pPart_Body->Get_TrackPosition()) == 68)
-					{
-						Creat_Skill(1);
+					case 37:
+					case 43:
+					case 50:
+					case 56:
+					case 68:
+						if (m_iSkill != m_iLastSkill) // 이전과 다를 때만 실행
+						{
+							Creat_Skill(1);
+							m_iLastSkill = m_iSkill;
+						}
+						break;
+					default:
+						m_iLastSkill = -1;
+						break;
 					}
 				}
 				else if (m_bSkill2)
 				{
 					Skill2();
-					m_iDamage = Info.DigimonSkill2Info.Damage / Info.DigimonSkill2Info.HitCount;
-					if (static_cast<int>(m_pPart_Body->Get_TrackPosition()) == 38)
+					m_iDamage = static_cast<_int>(Info.Damage * Info.DigimonSkill2Info.HitCount * 0.03f);
+					m_iSkill = static_cast<_int>(m_pPart_Body->Get_TrackPosition());
+
+					switch (m_iSkill)
 					{
-						Creat_Skill(2);
-					}
-					if (static_cast<int>(m_pPart_Body->Get_TrackPosition()) == 54)
-					{
-						Creat_Skill(2);
-					}
-					if (static_cast<int>(m_pPart_Body->Get_TrackPosition()) == 70)
-					{
-						Creat_Skill(2);
-					}
-					if (static_cast<int>(m_pPart_Body->Get_TrackPosition()) == 84)
-					{
-						Creat_Skill(2);
-					}
-					if (static_cast<int>(m_pPart_Body->Get_TrackPosition()) == 100)
-					{
-						Creat_Skill(2);
-					}
-					if (static_cast<int>(m_pPart_Body->Get_TrackPosition()) == 118)
-					{
-						Creat_Skill(2);
-					}
-					if (static_cast<int>(m_pPart_Body->Get_TrackPosition()) == 143)
-					{
-						Creat_Skill(2);
+					case 38:
+					case 54:
+					case 70:
+					case 84:
+					case 100:
+					case 118:
+					case 143:
+						if (m_iSkill != m_iLastSkill) // 이전과 다를 때만 실행
+						{
+							Creat_Skill(2);
+							m_iLastSkill = m_iSkill;
+						}
+						break;
+					default:
+						m_iLastSkill = -1;
+						break;
 					}
 				}
 				else if (m_bSkill3)
 				{
 					Skill3();
-					m_iDamage = Info.DigimonSkill3Info.Damage / Info.DigimonSkill3Info.HitCount;
-					if (static_cast<int>(m_pPart_Body->Get_TrackPosition()) == 62)
+					m_iDamage = static_cast<_int>(Info.Damage * Info.DigimonSkill3Info.HitCount * 0.5f);
+					m_iSkill = static_cast<_int>(m_pPart_Body->Get_TrackPosition());
+					if (m_iSkill == 62)
 					{
-						Creat_Skill(3);
-					}	
+						if (m_iLastSkill != m_iSkill)
+						{
+							Creat_Skill(3);
+							m_iLastSkill = m_iSkill; // 마지막으로 실행한 트랙 위치 저장
+						}
+					}
+					else
+					{
+						m_iLastSkill = -1; // 다른 트랙 위치면 초기화
+					}
 				}
 
 				if (m_bBackJump)

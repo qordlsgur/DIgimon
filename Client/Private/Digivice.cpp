@@ -61,9 +61,9 @@ HRESULT CDigivice::Initialize(void* pArg)
 
 	m_Digimon_ID.resize(8, -1);
 
-	Acquire_Digimon(4);
-	Acquire_Digimon(4);
-	Acquire_Digimon(4);
+	Acquire_Digimon(9);
+	Acquire_Digimon(9);
+	Acquire_Digimon(9);
 	m_strDigimon_Stage[0] = L"유아기";
 	m_strDigimon_Stage[1] = L"성장기";
 	m_strDigimon_Stage[2] = L"성숙기";
@@ -232,8 +232,8 @@ void CDigivice::Acquire_Digimon(_int ID)
 	{
 		if (false == m_pBattle_Mask[i]->Get_HasDigimon())
 		{
-			Set_Info(ID);
-			m_pDigimon_Manager->Set_Digivice_Slot(i, true, Info);
+			DIGIMON_INFO Info = Set_Info(ID);
+			m_pDigimon_Manager->Set_Digivice_Slot(i, true, &Info);
 			m_pBattle_Mask[i]->Set_Digimon_ID(m_pDigimon_Manager->Get_Current_Digimon_Info(i)->DigimonId);
 			m_pBattle_Mask[i]->Set_HasDigimon(true);
 			m_pBattle_Slot[i]->Set_Info(*m_pDigimon_Manager->Get_Current_Digimon_Info(i));
@@ -306,31 +306,31 @@ void CDigivice::OnHover()
 
 void CDigivice::Update_Digimopn()
 {
-	m_pBattle_Manager->Current_Digimon(m_pDigimon_Manager->Get_Current_Digimon_Info(0), m_pDigimon_Manager->Get_Current_Digimon_Info(1), m_pDigimon_Manager->Get_Current_Digimon_Info(2));
+	//m_pBattle_Manager->Current_Digimon(m_pDigimon_Manager->Get_Current_Digimon_Info(0), m_pDigimon_Manager->Get_Current_Digimon_Info(1), m_pDigimon_Manager->Get_Current_Digimon_Info(2));
 }
 
-DIGIMON_INFO* CDigivice::Set_Info(_int ID)
+DIGIMON_INFO CDigivice::Set_Info(_int ID)
 {
-	Info = m_pDigimon_Manager->Search_Digimon(ID);
+	DIGIMON_INFO Info = m_pDigimon_Manager->Copy_Digimon(ID);
 
-	Info->Hp += m_pGameInstance->intRandom(500, 1000);
-	Info->CurrentHp = Info->Hp;
-	Info->Sp += m_pGameInstance->intRandom(250, 500);
-	Info->CurrentSp = Info->Sp;
-	Info->Damage += m_pGameInstance->intRandom(500, 1000);
-	Info->AttackSpeed += m_pGameInstance->intRandom(1, 20);
-	Info->ExpReward += m_pGameInstance->intRandom(500, 1000);
-	Info->CurrentExp = 0;
+	Info.Hp += m_pGameInstance->intRandom(500, 1000);
+	Info.CurrentHp = Info.Hp;
+	Info.Sp += m_pGameInstance->intRandom(250, 500);
+	Info.CurrentSp = Info.Sp;
+	Info.Damage += m_pGameInstance->intRandom(1, 200);
+	Info.AttackSpeed += m_pGameInstance->intRandom(1, 20);
+	Info.ExpReward += m_pGameInstance->intRandom(500, 1000);
+	Info.CurrentExp = 0;
 	//pInfo->AttackSpeed += 40;
 
-	if (Info->Stage == DIGIMON_STAGE::MEGA)
-		Info->Lv += 5;
-	else if (Info->Stage == DIGIMON_STAGE::ULTIMATE)
-		Info->Lv += m_pGameInstance->intRandom(1, 44);
-	else if (Info->Stage == DIGIMON_STAGE::CHAMPION)
-		Info->Lv += m_pGameInstance->intRandom(1, 29);
+	if (Info.Stage == DIGIMON_STAGE::MEGA)
+		Info.Lv += 5;
+	else if (Info.Stage == DIGIMON_STAGE::ULTIMATE)
+		Info.Lv += m_pGameInstance->intRandom(1, 44);
+	else if (Info.Stage == DIGIMON_STAGE::CHAMPION)
+		Info.Lv += m_pGameInstance->intRandom(1, 29);
 	else
-		Info->Lv += m_pGameInstance->intRandom(1, 14);
+		Info.Lv += m_pGameInstance->intRandom(1, 14);
 
 	m_pDigimon_Manager->Set_Current_Digimon_Info(Info);
 

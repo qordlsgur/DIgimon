@@ -37,7 +37,7 @@ public:
 
 	void Update_Digimopn();
 
-	DIGIMON_INFO* Set_Info(_int ID);
+	DIGIMON_INFO Set_Info(_int ID);
 
 private:
 	void Set_State(DIGIMON_INFO ID);
@@ -68,7 +68,7 @@ private:
 	map<int, vector<class CDigivice_Skill*>> m_pSkills;
 	_int m_iSkillCount{};
 
-	vector<DIGIMON_INFO*> m_pDigimon_Info;
+	vector<DIGIMON_INFO> m_pDigimon_Info;
 	vector<_int> m_Digimon_ID;
 
 	wstring	m_strDigimon_Stage[5] = {};

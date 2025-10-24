@@ -107,24 +107,29 @@ void COmegamon::Update(_float fTimeDelta)
 				if (m_bSkill1)
 				{
 					Skill1();
-					m_iDamage = Info.DigimonSkill1Info.Damage / Info.DigimonSkill1Info.HitCount;
-					if (static_cast<int>(m_pPart_Body->Get_TrackPosition()) == 10)
+
+					m_iDamage = static_cast<_int>(Info.Damage * Info.DigimonSkill1Info.HitCount * 0.8f);
+					m_iSkill = static_cast<_int>(m_pPart_Body->Get_TrackPosition());
+					switch (m_iSkill)
 					{
-						Creat_Skill(1);
-					}
-					if (static_cast<int>(m_pPart_Body->Get_TrackPosition()) == 22)
-					{
-						Creat_Skill(1);
-					}
-					if (static_cast<int>(m_pPart_Body->Get_TrackPosition()) == 42)
-					{
-						Creat_Skill(1);
+					case 10:
+					case 22:
+					case 42:
+						if (m_iSkill != m_iLastSkill) // 이전과 다를 때만 실행
+						{
+							Creat_Skill(1);
+							m_iLastSkill = m_iSkill;
+						}
+						break;
+					default:
+						m_iLastSkill = -1;
+						break;
 					}
 				}
 				else if (m_bSkill2)
 				{
 					Skill2();
-					m_iDamage = Info.DigimonSkill2Info.Damage / Info.DigimonSkill2Info.HitCount;
+					m_iDamage = Info.Damage * Info.DigimonSkill2Info.HitCount * 1.f;
 					if (static_cast<int>(m_pPart_Body->Get_TrackPosition()) == 67)
 					{
 						Creat_Skill(2);
@@ -133,18 +138,23 @@ void COmegamon::Update(_float fTimeDelta)
 				else if (m_bSkill3)
 				{
 					Skill3();
-					m_iDamage = Info.DigimonSkill3Info.Damage / Info.DigimonSkill3Info.HitCount;
-					if (static_cast<int>(m_pPart_Body->Get_TrackPosition()) == 70)
+
+					m_iDamage = static_cast<_int>(Info.Damage * Info.DigimonSkill1Info.HitCount * 0.4f);
+					m_iSkill = static_cast<_int>(m_pPart_Body->Get_TrackPosition());
+					switch (m_iSkill)
 					{
-						Creat_Skill(3);
-					}
-					if (static_cast<int>(m_pPart_Body->Get_TrackPosition()) == 80)
-					{
-						Creat_Skill(3);
-					}
-					if (static_cast<int>(m_pPart_Body->Get_TrackPosition()) == 90)
-					{
-						Creat_Skill(3);
+					case 70:
+					case 80:
+					case 90:
+						if (m_iSkill != m_iLastSkill) // 이전과 다를 때만 실행
+						{
+							Creat_Skill(3);
+							m_iLastSkill = m_iSkill;
+						}
+						break;
+					default:
+						m_iLastSkill = -1;
+						break;
 					}
 				}
 

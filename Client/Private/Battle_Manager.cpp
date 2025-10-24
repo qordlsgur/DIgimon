@@ -526,7 +526,8 @@ void CBattle_Manager::Battle_System()
 {
 	m_pBattle_UI_Manager->Set_Battle(true);
 	// 우선 플레이어 디지몬을 생성 해준다.
-	static_cast<CDigivice*>(m_pDigivice)->Update_Digimopn();
+	//static_cast<CDigivice*>(m_pDigivice)->Update_Digimopn();
+	Current_Digimon();
 	// UI에 타임라인을 만들어 준다 이전에 적 몬스터를 다 만들어 놨고 아군 디지몬도 다 생성을 해서 그 갯수만큼 정보를 가지고 타임라인을 만든다.
 	m_pBattle_UI_Manager->Create_TimeLine(m_iPlayerDigimonCount, m_iEnemyDigimonCount);
 	// 이제 플레이어의 위치를 옮겨주고
@@ -648,27 +649,32 @@ void CBattle_Manager::Player_Digimon_Position()
 	}
 }
 
-void CBattle_Manager::Current_Digimon(DIGIMON_INFO* Digimon_Info_1, DIGIMON_INFO* Digimon_Info_2, DIGIMON_INFO* Digimon_Info_3)
+void CBattle_Manager::Current_Digimon(/*DIGIMON_INFO* Digimon_Info_1, DIGIMON_INFO* Digimon_Info_2, DIGIMON_INFO* Digimon_Info_3*/)
 {
 	// 전투가 시작이 되면 내 디지몬들을 최대 3마리 까지 만들고 m_pMyDigimon에 저장을 함
 	// 전투가 끝나면 이 디지몬들을 세팅 해준다.
 	m_iPlayerDigimonCount = 1;
 	m_pFirst_Digimon = static_cast<CPlayer*>(m_pPlayer)->First_Digimon();
 	m_pMyDigimon.push_back(static_cast<CPlayer*>(m_pPlayer)->First_Digimon());
+	m_pMyDigimon[0]->Set_Digimon_Info(m_pDigimon_Manager->Get_Current_Digimon_Info(0));
 	m_pBattle_UI_Manager->Set_MyDigimon(m_pMyDigimon[0]);
 	m_pMyDigimon_Infos.push_back(&m_pMyDigimon[0]->CurrentInfo());
-	if (Digimon_Info_2 != nullptr && Digimon_Info_2->Hp != 0)
+	if (m_pDigimon_Manager->Get_Current_Digimon_Info(1) != nullptr && m_pDigimon_Manager->Get_Current_Digimon_Info(1)->Hp != 0)
 	{
+		DIGIMON_INFO* Info = m_pDigimon_Manager->Get_Current_Digimon_Info(1);
 		m_iPlayerDigimonCount++;
-		m_pMyDigimon.push_back(Digimon_Create(Digimon_Info_2->DigimonId));
+		m_pMyDigimon.push_back(Digimon_Create(Info->DigimonId));
+		m_pMyDigimon[1]->Set_Digimon_Info(Info);
 		m_pBattle_UI_Manager->Set_MyDigimon(m_pMyDigimon[1]);
 		m_pMyDigimon_Infos.push_back(&m_pMyDigimon[1]->CurrentInfo());
 	}
 
-	if (Digimon_Info_3 != nullptr && Digimon_Info_3->Hp != 0)
+	if (m_pDigimon_Manager->Get_Current_Digimon_Info(2) != nullptr && m_pDigimon_Manager->Get_Current_Digimon_Info(1)->Hp != 0)
 	{
+		DIGIMON_INFO* Info = m_pDigimon_Manager->Get_Current_Digimon_Info(2);
 		m_iPlayerDigimonCount++;
-		m_pMyDigimon.push_back(Digimon_Create(Digimon_Info_3->DigimonId));
+		m_pMyDigimon.push_back(Digimon_Create(Info->DigimonId));
+		m_pMyDigimon[2]->Set_Digimon_Info(Info);
 		m_pBattle_UI_Manager->Set_MyDigimon(m_pMyDigimon[2]);
 		m_pMyDigimon_Infos.push_back(&m_pMyDigimon[2]->CurrentInfo());
 	}

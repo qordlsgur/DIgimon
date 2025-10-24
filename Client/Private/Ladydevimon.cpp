@@ -4,7 +4,7 @@
 #include "PartObject.h"
 #include "StateMachine.h"
 #include "Digimon_Manager.h"
-
+#include "SkillObject.h"
 CLadydevimon::CLadydevimon(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CContainerObject{ pDevice, pContext }
 {
@@ -79,18 +79,66 @@ void CLadydevimon::Update(_float fTimeDelta)
 				if (m_bSkill1)
 				{
 					Skill1();
-					m_iDamage = Info.DigimonSkill1Info.Damage;
+					m_iDamage = static_cast<_int>(Info.Damage * Info.DigimonSkill1Info.HitCount * 0.42);
+					m_iSkill = static_cast<_int>(m_pPart_Body->Get_TrackPosition());
+					switch (m_iSkill)
+					{
+					case 16:
+					case 27:
+					case 35:
+						if (m_iSkill != m_iLastSkill) // 이전과 다를 때만 실행
+						{
+							Creat_Skill(1);
+							m_iLastSkill = m_iSkill;
+						}
+						break;
+					default:
+						m_iLastSkill = -1;
+						break;
+					}
 				}
 				else if (m_bSkill2)
 				{
 					Skill2();
-					m_iDamage = Info.DigimonSkill2Info.Damage;
-
+					m_iDamage = static_cast<_int>(Info.Damage * Info.DigimonSkill1Info.HitCount * 0.5f);
+					m_iSkill = static_cast<_int>(m_pPart_Body->Get_TrackPosition());
+					switch (m_iSkill)
+					{
+					case 16:
+					case 30:
+						if (m_iSkill != m_iLastSkill) // 이전과 다를 때만 실행
+						{
+							Creat_Skill(2);
+							m_iLastSkill = m_iSkill;
+						}
+						break;
+					default:
+						m_iLastSkill = -1;
+						break;
+					}
 				}
 				else if (m_bSkill3)
 				{
 					Skill3();
-					m_iDamage = Info.DigimonSkill3Info.Damage;
+					m_iDamage = Info.Damage * Info.DigimonSkill3Info.HitCount * 0.2f;
+					m_iDamage = static_cast<_int>(Info.Damage * Info.DigimonSkill1Info.HitCount * 0.4f);
+					m_iSkill = static_cast<_int>(m_pPart_Body->Get_TrackPosition());
+					switch (m_iSkill)
+					{
+					case 42:
+					case 51:
+					case 59:
+					case 68:
+						if (m_iSkill != m_iLastSkill) // 이전과 다를 때만 실행
+						{
+							Creat_Skill(3);
+							m_iLastSkill = m_iSkill;
+						}
+						break;
+					default:
+						m_iLastSkill = -1;
+						break;
+					}
 				}
 
 				if (m_bBackJump)
@@ -219,6 +267,36 @@ void CLadydevimon::Skill3()
 	{
 		m_bSkill = false;
 		m_bSkill3 = false;
+	}
+}
+
+void CLadydevimon::Creat_Skill(_int SkillNum)
+{
+	CSkillObject::POSITION Desc;
+	Desc.m_vPosition = m_pTransformCom->Get_State(STATE::POSITION);
+	Desc.m_vTargetPosition = m_vTarget_Position;
+	Desc.Look = m_bMonster;
+	switch (SkillNum)
+	{
+	case 1:
+		Desc.iDamage = m_iDamage;
+		m_pGameInstance->Add_GameObject_ToLayer(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_LadydevimonSkill1"),
+			ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Layer_LadydevimonSkill1"), &Desc);
+		break;
+
+	case 2:
+		Desc.iDamage = m_iDamage;
+		m_pGameInstance->Add_GameObject_ToLayer(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_LadydevimonSkill2"),
+			ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Layer_LadydevimonSkill2"), &Desc);
+
+		break;
+
+	case 3:
+		Desc.iDamage = m_iDamage;
+		m_pGameInstance->Add_GameObject_ToLayer(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_LadydevimonSkill3"),
+			ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Layer_LadydevimonSkill3"), &Desc);
+
+		break;
 	}
 }
 

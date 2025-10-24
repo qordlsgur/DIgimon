@@ -4,6 +4,7 @@
 #include "PartObject.h"
 #include "StateMachine.h"
 #include "Digimon_Manager.h"
+#include "SkillObject.h"
 
 CMetalgreymon::CMetalgreymon(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CContainerObject{ pDevice, pContext }
@@ -84,18 +85,59 @@ void CMetalgreymon::Update(_float fTimeDelta)
 				if (m_bSkill1)
 				{
 					Skill1();
-					m_iDamage = Info.DigimonSkill1Info.Damage;
+					m_iDamage = static_cast<_int>(Info.Damage * Info.DigimonSkill2Info.HitCount * 0.5f);
+					m_iSkill = static_cast<_int>(m_pPart_Body->Get_TrackPosition());
+
+					if (m_iSkill == 14)
+					{
+						if (m_iLastSkill != m_iSkill)
+						{
+							Creat_Skill(1);
+							m_iLastSkill = m_iSkill; // 마지막으로 실행한 트랙 위치 저장
+						}
+					}
+					else
+					{
+						m_iLastSkill = -1; // 다른 트랙 위치면 초기화
+					}
 				}
 				else if (m_bSkill2)
 				{
 					Skill2();
-					m_iDamage = Info.DigimonSkill2Info.Damage;
+					m_iDamage = static_cast<_int>(Info.Damage * Info.DigimonSkill2Info.HitCount * 1.f);
+					m_iSkill = static_cast<_int>(m_pPart_Body->Get_TrackPosition());
 
+					if (m_iSkill == 23)
+					{
+						if (m_iLastSkill != m_iSkill)
+						{
+							Creat_Skill(2);
+							m_iLastSkill = m_iSkill; // 마지막으로 실행한 트랙 위치 저장
+						}
+					}
+					else
+					{
+						m_iLastSkill = -1; // 다른 트랙 위치면 초기화
+					}
 				}
 				else if (m_bSkill3)
 				{
 					Skill3();
-					m_iDamage = Info.DigimonSkill3Info.Damage;
+					m_iDamage = static_cast<_int>(Info.Damage * Info.DigimonSkill2Info.HitCount * 1.2f);
+					m_iSkill = static_cast<_int>(m_pPart_Body->Get_TrackPosition());
+
+					if (m_iSkill == 23)
+					{
+						if (m_iLastSkill != m_iSkill)
+						{
+							Creat_Skill(3);
+							m_iLastSkill = m_iSkill; // 마지막으로 실행한 트랙 위치 저장
+						}
+					}
+					else
+					{
+						m_iLastSkill = -1; // 다른 트랙 위치면 초기화
+					}
 				}
 
 				if (m_bBackJump)
@@ -219,6 +261,36 @@ void CMetalgreymon::Skill3()
 	{
 		m_bSkill = false;
 		m_bSkill3 = false;
+	}
+}
+
+void CMetalgreymon::Creat_Skill(_int SkillNum)
+{
+	CSkillObject::POSITION Desc;
+	Desc.m_vPosition = m_pTransformCom->Get_State(STATE::POSITION);
+	Desc.m_vTargetPosition = m_vTarget_Position;
+	Desc.Look = m_bMonster;
+	switch (SkillNum)
+	{
+	case 1:
+		Desc.iDamage = m_iDamage;
+		m_pGameInstance->Add_GameObject_ToLayer(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_MetalgreymonSkill1"),
+			ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Layer_MetalgreymonSkill1"), &Desc);
+		break;
+
+	case 2:
+		Desc.iDamage = m_iDamage;
+		m_pGameInstance->Add_GameObject_ToLayer(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_MetalgreymonSkill2"),
+			ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Layer_MetalgreymonSkill2"), &Desc);
+
+		break;
+
+	case 3:
+		Desc.iDamage = m_iDamage;
+		m_pGameInstance->Add_GameObject_ToLayer(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_MetalgreymonSkill3"),
+			ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Layer_MetalgreymonSkill3"), &Desc);
+
+		break;
 	}
 }
 

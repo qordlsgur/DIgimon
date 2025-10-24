@@ -23,11 +23,11 @@ void CInteraction_Manager::Update()
 {
 	if (m_pAttackDigimon != nullptr)
 	{
-		if (!m_pAttackDigimon->Get_Hit())
+		for (auto it : m_pBattle_Digimon_Collider)
 		{
-			for (auto it : m_pBattle_Digimon_Collider)
+			if (it->Intersect(m_pSkill_Collider) != -1)
 			{
-				if (it->Intersect(m_pSkill_Collider) != -1)
+				if (!m_pAttackDigimon->Get_Hit())
 				{
 					it->Set_HitDamage(m_pAttackDigimon->Get_Damage());
 					m_pAttackDigimon->Set_Hit(true);

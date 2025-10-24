@@ -31,6 +31,7 @@ public:
 	virtual void Skill1() override;
 	virtual void Skill2() override;
 	virtual void Skill3() override;
+	virtual void Creat_Skill(_int SkillNum) override;
 
 public:
 	virtual _int Intersect(class CCollider* pPlayer_Collider) override;

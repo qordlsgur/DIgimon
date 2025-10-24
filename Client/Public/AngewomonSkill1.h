@@ -30,7 +30,6 @@ public:
 
 private:
 	CCollider* m_pColliderCom = { nullptr };
-	CContainerObject* m_pPlayer = { nullptr };
 	class CInteraction_Manager* m_pInteraction_Manager = { nullptr };
 
 private:

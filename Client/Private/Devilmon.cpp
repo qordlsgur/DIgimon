@@ -4,6 +4,7 @@
 #include "PartObject.h"
 #include "StateMachine.h"
 #include "Digimon_Manager.h"
+#include "SkillObject.h"
 
 CDevilmon::CDevilmon(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
     : CContainerObject{ pDevice, pContext }
@@ -82,18 +83,65 @@ void CDevilmon::Update(_float fTimeDelta)
 			if (m_bSkill1)
 			{
 				Skill1();
-				m_iDamage = Info.DigimonSkill1Info.Damage;
+				m_iDamage = static_cast<_int>(Info.Damage * Info.DigimonSkill1Info.HitCount * 0.4);
+				m_iSkill = static_cast<_int>(m_pPart_Body->Get_TrackPosition());
+
+				if (m_iSkill == 20)
+				{
+					if (m_iLastSkill != m_iSkill)
+					{
+						Creat_Skill(1);
+						m_iLastSkill = m_iSkill; // 마지막으로 실행한 트랙 위치 저장
+					}
+				}
+				else
+				{
+					m_iLastSkill = -1; // 다른 트랙 위치면 초기화
+				}
 			}
 			else if (m_bSkill2)
 			{
 				Skill2();
-				m_iDamage = Info.DigimonSkill2Info.Damage;
+				m_iDamage = static_cast<_int>(Info.Damage * Info.DigimonSkill1Info.HitCount * 0.1);
+				m_iSkill = static_cast<_int>(m_pPart_Body->Get_TrackPosition());
 
+				switch (m_iSkill)
+				{
+				case 30:
+				case 33:
+				case 35:
+				case 38:
+				case 43:
+				case 45:
+					if (m_iSkill != m_iLastSkill) // 이전과 다를 때만 실행
+					{
+						Creat_Skill(2);
+						m_iLastSkill = m_iSkill;
+					}
+					break;
+				default:
+					m_iLastSkill = -1;
+					break;
+				}
 			}
 			else if (m_bSkill3)
 			{
 				Skill3();
-				m_iDamage = Info.DigimonSkill3Info.Damage;
+				m_iDamage = static_cast<_int>(Info.Damage * Info.DigimonSkill1Info.HitCount * 1.F);
+				m_iSkill = static_cast<_int>(m_pPart_Body->Get_TrackPosition());
+
+				if (m_iSkill == 111)
+				{
+					if (m_iLastSkill != m_iSkill)
+					{
+						Creat_Skill(1);
+						m_iLastSkill = m_iSkill; // 마지막으로 실행한 트랙 위치 저장
+					}
+				}
+				else
+				{
+					m_iLastSkill = -1; // 다른 트랙 위치면 초기화
+				}
 			}
 
 			if (m_bBackJump)
@@ -209,6 +257,36 @@ void CDevilmon::Skill3()
 	{
 		m_bSkill = false;
 		m_bSkill3 = false;
+	}
+}
+
+void CDevilmon::Creat_Skill(_int SkillNum)
+{
+	CSkillObject::POSITION Desc;
+	Desc.m_vPosition = m_pTransformCom->Get_State(STATE::POSITION);
+	Desc.m_vTargetPosition = m_vTarget_Position;
+	Desc.Look = m_bMonster;
+	switch (SkillNum)
+	{
+	case 1:
+		Desc.iDamage = m_iDamage;
+		m_pGameInstance->Add_GameObject_ToLayer(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_DevilmonSkill1"),
+			ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Layer_DevilmonSkill1"), &Desc);
+		break;
+
+	case 2:
+		Desc.iDamage = m_iDamage;
+		m_pGameInstance->Add_GameObject_ToLayer(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_DevilmonSkill2"),
+			ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Layer_DevilmonSkill2"), &Desc);
+
+		break;
+
+	case 3:
+		Desc.iDamage = m_iDamage;
+		m_pGameInstance->Add_GameObject_ToLayer(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_DevilmonSkill3"),
+			ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Layer_DevilmonSkill3"), &Desc);
+
+		break;
 	}
 }
 

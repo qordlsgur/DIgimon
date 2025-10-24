@@ -57,7 +57,6 @@ void CDigimon_Manager::Angewomon()
 	Info.DigimonSkill1Info.Sp = 0;
 	Info.DigimonSkill1Info.HitCount = 1;
 	Info.DigimonSkill1Info.DamageInfo = TEXT("기본 데미지 x 공격 횟수 x 80%");
-	Info.DigimonSkill1Info.Damage = static_cast<_int>(Info.Damage * Info.DigimonSkill1Info.HitCount * 0.8f);
 	Info.DigimonSkill1Info.Target = SKILL_TARGET::ENEMY;
 	Info.DigimonSkill1Info.Range = SKILL_RANGE::SINGLE;
 	Info.DigimonSkill1Info.SkillInfo = TEXT("상대방의 뺨을 때려 피해를 입힙니다.");
@@ -66,7 +65,6 @@ void CDigimon_Manager::Angewomon()
 	Info.DigimonSkill2Info.Sp = 130;
 	Info.DigimonSkill2Info.HitCount = 1;
 	Info.DigimonSkill2Info.DamageInfo = TEXT("기본 데미지 x 공격 횟수 x 100%");
-	Info.DigimonSkill2Info.Damage = static_cast<_int>(Info.Damage * Info.DigimonSkill2Info.HitCount * 1.f);
 	Info.DigimonSkill2Info.Target = SKILL_TARGET::ENEMY;
 	Info.DigimonSkill2Info.Range = SKILL_RANGE::SINGLE;
 	Info.DigimonSkill2Info.SkillInfo = TEXT("아름다운 광선을 발사해\n피해를 입힙니다.");
@@ -75,7 +73,6 @@ void CDigimon_Manager::Angewomon()
 	Info.DigimonSkill3Info.Sp = 200;
 	Info.DigimonSkill3Info.HitCount = 1;
 	Info.DigimonSkill3Info.DamageInfo = TEXT("기본 데미지 x 공격 횟수 x 130%");
-	Info.DigimonSkill3Info.Damage = static_cast<_int>(Info.Damage * Info.DigimonSkill3Info.HitCount * 1.3f);
 	Info.DigimonSkill3Info.Target = SKILL_TARGET::ENEMY;
 	Info.DigimonSkill3Info.Range = SKILL_RANGE::SINGLE;
 	Info.DigimonSkill3Info.SkillInfo = TEXT("뇌격의 화살을 발사해\n피해를 입힙니다.");
@@ -110,7 +107,6 @@ void CDigimon_Manager::Blackwargreymon()
 	Info.DigimonSkill1Info.Sp = 0;
 	Info.DigimonSkill1Info.HitCount = 2;
 	Info.DigimonSkill1Info.DamageInfo = TEXT("기본 데미지 x 공격 횟수 x 40%");
-	Info.DigimonSkill1Info.Damage = static_cast<_int>(Info.Damage * Info.DigimonSkill1Info.HitCount * 0.4f);
 	Info.DigimonSkill1Info.Target = SKILL_TARGET::ENEMY;
 	Info.DigimonSkill1Info.Range = SKILL_RANGE::SINGLE;
 	Info.DigimonSkill1Info.SkillInfo = TEXT("드라몬 킬러로 찔러\n피해를 입힙니다.");
@@ -119,7 +115,6 @@ void CDigimon_Manager::Blackwargreymon()
 	Info.DigimonSkill2Info.Sp = 175;
 	Info.DigimonSkill2Info.HitCount = 1;
 	Info.DigimonSkill2Info.DamageInfo = TEXT("기본 데미지 x 공격 횟수 x 100%");
-	Info.DigimonSkill2Info.Damage = static_cast<_int>(Info.Damage * Info.DigimonSkill2Info.HitCount * 1.f);
 	Info.DigimonSkill2Info.Target = SKILL_TARGET::ENEMY;
 	Info.DigimonSkill2Info.Range = SKILL_RANGE::SINGLE;
 	Info.DigimonSkill2Info.SkillInfo = TEXT("몸을 빠르게 회전시켜 돌격해\n피해를 입힙니다.");
@@ -128,7 +123,6 @@ void CDigimon_Manager::Blackwargreymon()
 	Info.DigimonSkill3Info.Sp = 250;
 	Info.DigimonSkill3Info.HitCount = 1;
 	Info.DigimonSkill3Info.DamageInfo = TEXT("기본 데미지 x 공격 횟수 x 120%");
-	Info.DigimonSkill3Info.Damage = static_cast<_int>(Info.Damage * Info.DigimonSkill3Info.HitCount * 1.2f);
 	Info.DigimonSkill3Info.Target = SKILL_TARGET::ENEMY;
 	Info.DigimonSkill3Info.Range = SKILL_RANGE::SINGLE;
 	Info.DigimonSkill3Info.SkillInfo = TEXT("부정적인 사념을 모아 압축하여 던져\n피해를 입힙니다.");
@@ -162,17 +156,15 @@ void CDigimon_Manager::Devilmon()
 	Info.DigimonSkill1Info.SkillName = TEXT("펀치");
 	Info.DigimonSkill1Info.Sp = 0;
 	Info.DigimonSkill1Info.HitCount = 1;
-	Info.DigimonSkill1Info.DamageInfo = TEXT("기본 데미지 x 공격 횟수 x 50%");
-	Info.DigimonSkill1Info.Damage = static_cast<_int>(Info.Damage * Info.DigimonSkill1Info.HitCount * 0.5f);
+	Info.DigimonSkill1Info.DamageInfo = TEXT("기본 데미지 x 공격 횟수 x 40%");
 	Info.DigimonSkill1Info.Target = SKILL_TARGET::ENEMY;
 	Info.DigimonSkill1Info.Range = SKILL_RANGE::SINGLE;
 	Info.DigimonSkill1Info.SkillInfo = TEXT("주먹을 이용해 피해를 입힙니다.");
 
 	Info.DigimonSkill2Info.SkillName = TEXT("데스 클로");
 	Info.DigimonSkill2Info.Sp = 100;
-	Info.DigimonSkill2Info.HitCount = 1;
-	Info.DigimonSkill2Info.DamageInfo = TEXT("기본 데미지 x 공격 횟수 x 0.7%");
-	Info.DigimonSkill2Info.Damage = static_cast<_int>(Info.Damage * Info.DigimonSkill2Info.HitCount * 0.7f);
+	Info.DigimonSkill2Info.HitCount = 6;
+	Info.DigimonSkill2Info.DamageInfo = TEXT("기본 데미지 x 공격 횟수 x 10%");
 	Info.DigimonSkill2Info.Target = SKILL_TARGET::ENEMY;
 	Info.DigimonSkill2Info.Range = SKILL_RANGE::SINGLE;
 	Info.DigimonSkill2Info.SkillInfo = TEXT("죽음의 손톱으로 피해를 입힙니다.");
@@ -181,7 +173,6 @@ void CDigimon_Manager::Devilmon()
 	Info.DigimonSkill3Info.Sp = 250;
 	Info.DigimonSkill3Info.HitCount = 1;
 	Info.DigimonSkill3Info.DamageInfo = TEXT("기본 데미지 x 공격 횟수 x 100%");
-	Info.DigimonSkill3Info.Damage = static_cast<_int>(Info.Damage * Info.DigimonSkill3Info.HitCount * 1.f);
 	Info.DigimonSkill3Info.Target = SKILL_TARGET::ENEMY;
 	Info.DigimonSkill3Info.Range = SKILL_RANGE::ALL;
 	Info.DigimonSkill3Info.SkillInfo = TEXT("저주의 말을 퍼부어 피해를 입힙니다.");
@@ -216,7 +207,6 @@ void CDigimon_Manager::LedyDevimon()
 	Info.DigimonSkill1Info.Sp = 0;
 	Info.DigimonSkill1Info.HitCount = 3;
 	Info.DigimonSkill1Info.DamageInfo = TEXT("기본 데미지 x 공격 횟수 x 20%");
-	Info.DigimonSkill1Info.Damage = static_cast<_int>(Info.Damage * Info.DigimonSkill1Info.HitCount * 0.2f);
 	Info.DigimonSkill1Info.Target = SKILL_TARGET::ENEMY;
 	Info.DigimonSkill1Info.Range = SKILL_RANGE::SINGLE;
 	Info.DigimonSkill1Info.SkillInfo = TEXT("어둠의 힘이 담긴 연속 공격으로\n피해를 입힙니다.");
@@ -225,7 +215,6 @@ void CDigimon_Manager::LedyDevimon()
 	Info.DigimonSkill2Info.Sp = 150;
 	Info.DigimonSkill2Info.HitCount = 2;
 	Info.DigimonSkill2Info.DamageInfo = TEXT("기본 데미지 x 공격 횟수 x 50%");
-	Info.DigimonSkill2Info.Damage = static_cast<_int>(Info.Damage * Info.DigimonSkill2Info.HitCount * 0.5f);
 	Info.DigimonSkill2Info.Target = SKILL_TARGET::ENEMY;
 	Info.DigimonSkill2Info.Range = SKILL_RANGE::SINGLE;
 	Info.DigimonSkill2Info.SkillInfo = TEXT("상대방의 뺨을 때려 피해를 입힙니다.");
@@ -234,7 +223,6 @@ void CDigimon_Manager::LedyDevimon()
 	Info.DigimonSkill3Info.Sp = 250;
 	Info.DigimonSkill3Info.HitCount = 4;
 	Info.DigimonSkill3Info.DamageInfo = TEXT("기본 데미지 x 공격 횟수 x 20%");
-	Info.DigimonSkill3Info.Damage = static_cast<_int>(Info.Damage * Info.DigimonSkill3Info.HitCount * 0.2f);
 	Info.DigimonSkill3Info.Target = SKILL_TARGET::ENEMY;
 	Info.DigimonSkill3Info.Range = SKILL_RANGE::ALL;
 	Info.DigimonSkill3Info.SkillInfo = TEXT("박쥐와 같은 물체을 발사해 \n피해를 입힙니다.");
@@ -269,7 +257,6 @@ void CDigimon_Manager::Leomon()
 	Info.DigimonSkill1Info.Sp = 0;
 	Info.DigimonSkill1Info.HitCount = 2;
 	Info.DigimonSkill1Info.DamageInfo = TEXT("기본 데미지 x 공격 횟수 x 20%");
-	Info.DigimonSkill1Info.Damage = static_cast<_int>(Info.Damage * Info.DigimonSkill1Info.HitCount * 0.2f);
 	Info.DigimonSkill1Info.Target = SKILL_TARGET::ENEMY;
 	Info.DigimonSkill1Info.Range = SKILL_RANGE::SINGLE;
 	Info.DigimonSkill1Info.SkillInfo = TEXT("검을 휘둘러 피해를 입힙니다.");
@@ -278,7 +265,6 @@ void CDigimon_Manager::Leomon()
 	Info.DigimonSkill2Info.Sp = 150;
 	Info.DigimonSkill2Info.HitCount = 1;
 	Info.DigimonSkill2Info.DamageInfo = TEXT("기본 데미지 x 공격 횟수 x 60%");
-	Info.DigimonSkill2Info.Damage = static_cast<_int>(Info.Damage * Info.DigimonSkill2Info.HitCount * 0.6f);
 	Info.DigimonSkill2Info.Target = SKILL_TARGET::ENEMY;
 	Info.DigimonSkill2Info.Range = SKILL_RANGE::SINGLE;
 	Info.DigimonSkill2Info.SkillInfo = TEXT("사자의 에너지를 발사해\n피해를 입힙니다.");
@@ -286,8 +272,7 @@ void CDigimon_Manager::Leomon()
 	Info.DigimonSkill3Info.SkillName = TEXT("수왕파");
 	Info.DigimonSkill3Info.Sp = 200;
 	Info.DigimonSkill3Info.HitCount = 1;
-	Info.DigimonSkill3Info.DamageInfo = TEXT("기본 데미지 x 공격 횟수 x 80%%");
-	Info.DigimonSkill3Info.Damage = static_cast<_int>(Info.Damage * Info.DigimonSkill3Info.HitCount * 0.8f);
+	Info.DigimonSkill3Info.DamageInfo = TEXT("기본 데미지 x 공격 횟수 x 80%");
 	Info.DigimonSkill3Info.Target = SKILL_TARGET::ENEMY;
 	Info.DigimonSkill3Info.Range = SKILL_RANGE::SINGLE;
 	Info.DigimonSkill3Info.SkillInfo = TEXT("지면을 뒤틀어 피해를 입힙니다.");
@@ -322,7 +307,6 @@ void CDigimon_Manager::Metalgarumon()
 	Info.DigimonSkill1Info.Sp = 0;
 	Info.DigimonSkill1Info.HitCount = 1;
 	Info.DigimonSkill1Info.DamageInfo = TEXT("기본 데미지 x 공격 횟수 x 50%");
-	Info.DigimonSkill1Info.Damage = static_cast<_int>(Info.Damage * Info.DigimonSkill1Info.HitCount * 0.5f);
 	Info.DigimonSkill1Info.Target = SKILL_TARGET::ENEMY;
 	Info.DigimonSkill1Info.Range = SKILL_RANGE::SINGLE;
 	Info.DigimonSkill1Info.SkillInfo = TEXT("앞 발로 할퀴어 피해를 입힙니다.");
@@ -331,7 +315,6 @@ void CDigimon_Manager::Metalgarumon()
 	Info.DigimonSkill2Info.Sp = 150;
 	Info.DigimonSkill2Info.HitCount = 1;
 	Info.DigimonSkill2Info.DamageInfo = TEXT("기본 데미지 x 공격 횟수 x 100%");
-	Info.DigimonSkill2Info.Damage = static_cast<_int>(Info.Damage * Info.DigimonSkill2Info.HitCount * 1.f);
 	Info.DigimonSkill2Info.Target = SKILL_TARGET::ENEMY;
 	Info.DigimonSkill2Info.Range = SKILL_RANGE::SINGLE;
 	Info.DigimonSkill2Info.SkillInfo = TEXT("가슴에서 미사일을 발사해\n피해를 입힙니다.");
@@ -340,7 +323,6 @@ void CDigimon_Manager::Metalgarumon()
 	Info.DigimonSkill3Info.Sp = 200;
 	Info.DigimonSkill3Info.HitCount = 3;
 	Info.DigimonSkill3Info.DamageInfo = TEXT("기본 데미지 x 공격 횟수 x 40%");
-	Info.DigimonSkill3Info.Damage = static_cast<_int>(Info.Damage * Info.DigimonSkill3Info.HitCount * 0.4f);
 	Info.DigimonSkill3Info.Target = SKILL_TARGET::ENEMY;
 	Info.DigimonSkill3Info.Range = SKILL_RANGE::SINGLE;
 	Info.DigimonSkill3Info.SkillInfo = TEXT("입에서 냉기의 브레스를 발사해\n피해를 입힙니다.");
@@ -375,7 +357,6 @@ void CDigimon_Manager::Metalgeymon()
 	Info.DigimonSkill1Info.Sp = 0;
 	Info.DigimonSkill1Info.HitCount = 1;
 	Info.DigimonSkill1Info.DamageInfo = TEXT("기본 데미지 x 공격 횟수 x 50%");
-	Info.DigimonSkill1Info.Damage = static_cast<_int>(Info.Damage * Info.DigimonSkill1Info.HitCount * 0.5f);
 	Info.DigimonSkill1Info.Target = SKILL_TARGET::ENEMY;
 	Info.DigimonSkill1Info.Range = SKILL_RANGE::SINGLE;
 	Info.DigimonSkill1Info.SkillInfo = TEXT("상대를 깨물어 피해를 입힙니다.");
@@ -384,7 +365,6 @@ void CDigimon_Manager::Metalgeymon()
 	Info.DigimonSkill2Info.Sp = 150;
 	Info.DigimonSkill2Info.HitCount = 1;
 	Info.DigimonSkill2Info.DamageInfo = TEXT("기본 데미지 x 공격 횟수 x 100%");
-	Info.DigimonSkill2Info.Damage = static_cast<_int>(Info.Damage * Info.DigimonSkill2Info.HitCount * 1.f);
 	Info.DigimonSkill2Info.Target = SKILL_TARGET::ENEMY;
 	Info.DigimonSkill2Info.Range = SKILL_RANGE::SINGLE;
 	Info.DigimonSkill2Info.SkillInfo = TEXT("미사일을 발사하여 피해를 입힙니다.");
@@ -393,7 +373,6 @@ void CDigimon_Manager::Metalgeymon()
 	Info.DigimonSkill3Info.Sp = 200;
 	Info.DigimonSkill3Info.HitCount = 1;
 	Info.DigimonSkill3Info.DamageInfo = TEXT("기본 데미지 x 공격 횟수 x 120%");
-	Info.DigimonSkill3Info.Damage = static_cast<_int>(Info.Damage * Info.DigimonSkill3Info.HitCount * 1.2f);
 	Info.DigimonSkill3Info.Target = SKILL_TARGET::ENEMY;
 	Info.DigimonSkill3Info.Range = SKILL_RANGE::SINGLE;
 	Info.DigimonSkill3Info.SkillInfo = TEXT("고혈 에너지를 발사해\n피해를 입힙니다.");
@@ -428,7 +407,6 @@ void CDigimon_Manager::Omegamoon()
 	Info.DigimonSkill1Info.Sp = 0;
 	Info.DigimonSkill1Info.HitCount = 3;
 	Info.DigimonSkill1Info.DamageInfo = TEXT("기본 데미지 x 공격 횟수 x 40%");
-	Info.DigimonSkill1Info.Damage = static_cast<_int>(Info.Damage * Info.DigimonSkill1Info.HitCount * 0.4f);
 	Info.DigimonSkill1Info.Target = SKILL_TARGET::ENEMY;
 	Info.DigimonSkill1Info.Range = SKILL_RANGE::SINGLE;
 	Info.DigimonSkill1Info.SkillInfo = TEXT("왼 손의 그레이 소드로 공격해\n피해를 입힙니다.");
@@ -437,7 +415,6 @@ void CDigimon_Manager::Omegamoon()
 	Info.DigimonSkill2Info.Sp = 130;
 	Info.DigimonSkill2Info.HitCount = 1;
 	Info.DigimonSkill2Info.DamageInfo = TEXT("기본 데미지 x 공격 횟수 x 120%");
-	Info.DigimonSkill2Info.Damage = static_cast<_int>(Info.Damage * Info.DigimonSkill2Info.HitCount * 1.2f);
 	Info.DigimonSkill2Info.Target = SKILL_TARGET::ENEMY;
 	Info.DigimonSkill2Info.Range = SKILL_RANGE::SINGLE;
 	Info.DigimonSkill2Info.SkillInfo = TEXT("그레이 소드로 적에게 폭발적인\n피해를 입힙니다.");
@@ -446,7 +423,6 @@ void CDigimon_Manager::Omegamoon()
 	Info.DigimonSkill3Info.Sp = 250;
 	Info.DigimonSkill3Info.HitCount = 3;
 	Info.DigimonSkill3Info.DamageInfo = TEXT("기본 데미지 x 공격 횟수 x 40%");
-	Info.DigimonSkill3Info.Damage = static_cast<_int>(Info.Damage * Info.DigimonSkill3Info.HitCount * 0.5f);
 	Info.DigimonSkill3Info.Target = SKILL_TARGET::ENEMY;
 	Info.DigimonSkill3Info.Range = SKILL_RANGE::SINGLE;
 	Info.DigimonSkill3Info.SkillInfo = TEXT("가루루 캐논으로 공격을 날려\n피해를 입힙니다.");
@@ -480,8 +456,7 @@ void CDigimon_Manager::Wargreymon()
 	Info.DigimonSkill1Info.SkillName = TEXT("강철 발톱");
 	Info.DigimonSkill1Info.Sp = 0;
 	Info.DigimonSkill1Info.HitCount = 2;
-	Info.DigimonSkill1Info.DamageInfo = TEXT("기본 데미지 x 공격 횟수 x 50%");
-	Info.DigimonSkill1Info.Damage = static_cast<_int>(Info.Damage * Info.DigimonSkill1Info.HitCount * 0.5f);
+	Info.DigimonSkill1Info.DamageInfo = TEXT("기본 데미지 x 공격 횟수 x 40%");
 	Info.DigimonSkill1Info.Target = SKILL_TARGET::ENEMY;
 	Info.DigimonSkill1Info.Range = SKILL_RANGE::SINGLE;
 	Info.DigimonSkill1Info.SkillInfo = TEXT("양 팔의 드라몬 킬러로\n피해를 입힙니다.");
@@ -489,8 +464,7 @@ void CDigimon_Manager::Wargreymon()
 	Info.DigimonSkill2Info.SkillName = TEXT("테라 광선");
 	Info.DigimonSkill2Info.Sp = 175;
 	Info.DigimonSkill2Info.HitCount = 1;
-	Info.DigimonSkill2Info.DamageInfo = TEXT("기본 데미지 x 공격 횟수 x 100%");
-	Info.DigimonSkill2Info.Damage = static_cast<_int>(Info.Damage * Info.DigimonSkill2Info.HitCount * 1.f);
+	Info.DigimonSkill2Info.DamageInfo = TEXT("기본 데미지 x 공격 횟수 x 120%");
 	Info.DigimonSkill2Info.Target = SKILL_TARGET::ENEMY;
 	Info.DigimonSkill2Info.Range = SKILL_RANGE::SINGLE;
 	Info.DigimonSkill2Info.SkillInfo = TEXT("대기의 기운을 모아 압축하여 던져\n피해를 입힙니다.");
@@ -532,8 +506,7 @@ void CDigimon_Manager::Beelzebumon()
 	Info.DigimonSkill1Info.SkillName = TEXT("다크니스 클로");
 	Info.DigimonSkill1Info.Sp = 0;
 	Info.DigimonSkill1Info.HitCount = 5;
-	Info.DigimonSkill1Info.DamageInfo = TEXT("기본 데미지 x 공격 횟수 x 10%");
-	Info.DigimonSkill1Info.Damage = static_cast<_int>(Info.Damage * Info.DigimonSkill1Info.HitCount * 0.1f);
+	Info.DigimonSkill1Info.DamageInfo = TEXT("기본 데미지 x 공격 횟수 x 4%");
 	Info.DigimonSkill1Info.Target = SKILL_TARGET::ENEMY;
 	Info.DigimonSkill1Info.Range = SKILL_RANGE::SINGLE;
 	Info.DigimonSkill1Info.SkillInfo = TEXT("날카로운 손톱으로 적을 공격해\n피해를 입힙니다.");
@@ -541,8 +514,7 @@ void CDigimon_Manager::Beelzebumon()
 	Info.DigimonSkill2Info.SkillName = TEXT("더블 임팩트");
 	Info.DigimonSkill2Info.Sp = 200;
 	Info.DigimonSkill2Info.HitCount = 7;
-	Info.DigimonSkill2Info.DamageInfo = TEXT("기본 데미지 x 공격 횟수 x 15%");
-	Info.DigimonSkill2Info.Damage = static_cast<_int>(Info.Damage * Info.DigimonSkill2Info.HitCount * 0.15f);
+	Info.DigimonSkill2Info.DamageInfo = TEXT("기본 데미지 x 공격 횟수 x 3%");
 	Info.DigimonSkill2Info.Target = SKILL_TARGET::ENEMY;
 	Info.DigimonSkill2Info.Range = SKILL_RANGE::SINGLE;
 	Info.DigimonSkill2Info.SkillInfo = TEXT("베렌헤나를 빠르게 연사해\n피해를 입힙니다.");
@@ -551,7 +523,6 @@ void CDigimon_Manager::Beelzebumon()
 	Info.DigimonSkill3Info.Sp = 250;
 	Info.DigimonSkill3Info.HitCount = 2;
 	Info.DigimonSkill3Info.DamageInfo = TEXT("기본 데미지 x 공격 횟수 x 50%");
-	Info.DigimonSkill3Info.Damage = static_cast<_int>(Info.Damage * Info.DigimonSkill3Info.HitCount * 0.5f);
 	Info.DigimonSkill3Info.Target = SKILL_TARGET::ENEMY;
 	Info.DigimonSkill3Info.Range = SKILL_RANGE::SINGLE;
 	Info.DigimonSkill3Info.SkillInfo = TEXT("베렌헤나로 적의 심장을 공격해\n피해를 입힙니다.");
@@ -601,6 +572,7 @@ void CDigimon_Manager::Set_Digivice_Slot(_int SlotID, _bool Has, DIGIMON_INFO* I
 	{
 		m_pFirst_Digimon = static_cast<CContainerObject*>(m_pGameInstance->Add_GameObject_ToLayer_ToCreate(ENUM_CLASS(LEVEL::GAMEPLAY), Get_Prototype_ID(Info->DigimonId), ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Layer_Digimon")));
 		static_cast<CPlayer*>(m_pPlayer)->First_Digimon(m_pFirst_Digimon);
+		m_pFirst_Digimon->Set_Digimon_Info(Get_Current_Digimon_Info(0));
 	}
 
 	if (SlotID <= 2)
@@ -609,7 +581,7 @@ void CDigimon_Manager::Set_Digivice_Slot(_int SlotID, _bool Has, DIGIMON_INFO* I
 	}
 }
 
-void CDigimon_Manager::Set_Current_Digimon_Info(DIGIMON_INFO* Info)
+void CDigimon_Manager::Set_Current_Digimon_Info(DIGIMON_INFO Info)
 {
 	m_CurrentDigimon.push_back(Info);
 }
@@ -619,7 +591,7 @@ DIGIMON_INFO* CDigimon_Manager::Get_Current_Digimon_Info(_int Num)
 	if (m_CurrentDigimon.size() <= Num)
 		return nullptr;
 
-	return m_CurrentDigimon[Num];
+	return &m_CurrentDigimon[Num];
 }
 
 void CDigimon_Manager::Set_Digimon_Update(_int InfoNum, DIGIMON_STATE eState, _int Add)
@@ -629,31 +601,31 @@ void CDigimon_Manager::Set_Digimon_Update(_int InfoNum, DIGIMON_STATE eState, _i
 	switch (eState)
 	{
 	case DIGIMON_STATE::HP:
-		Digimon->CurrentHp += Add;
-		if (Digimon->CurrentHp > Digimon->Hp)
-			Digimon->CurrentHp = Digimon->Hp;
+		Digimon.CurrentHp += Add;
+		if (Digimon.CurrentHp > Digimon.Hp)
+			Digimon.CurrentHp = Digimon.Hp;
 
-		if (Digimon->CurrentSp < 0)
-			Digimon->CurrentSp = 0;
+		if (Digimon.CurrentSp < 0)
+			Digimon.CurrentSp = 0;
 		break;
 
 	case DIGIMON_STATE::SP:
-		Digimon->CurrentSp += Add;
-		if (Digimon->CurrentSp > Digimon->Sp)
-			Digimon->CurrentSp = Digimon->Sp;
+		Digimon.CurrentSp += Add;
+		if (Digimon.CurrentSp > Digimon.Sp)
+			Digimon.CurrentSp = Digimon.Sp;
 
-		if (Digimon->CurrentSp < 0)
-			Digimon->CurrentSp = 0;
+		if (Digimon.CurrentSp < 0)
+			Digimon.CurrentSp = 0;
 		break;
 
 	case DIGIMON_STATE::EXP:
-		Digimon->CurrentExp += Add;
-		if (Digimon->CurrentExp >= Digimon->Exp)
+		Digimon.CurrentExp += Add;
+		if (Digimon.CurrentExp >= Digimon.Exp)
 		{
-			while (Digimon->CurrentExp >= Digimon->Exp)
+			while (Digimon.CurrentExp >= Digimon.Exp)
 			{
-				Digimon->CurrentExp -= Digimon->Exp;
-				Digimon->Lv++;
+				Digimon.CurrentExp -= Digimon.Exp;
+				Digimon.Lv++;
 			}
 		}
 		break;
@@ -668,6 +640,16 @@ DIGIMON_INFO* CDigimon_Manager::Search_Digimon(_int ID)
 		return nullptr;
 
 	return iter;
+}
+
+DIGIMON_INFO CDigimon_Manager::Copy_Digimon(_int ID)
+{
+	DIGIMON_INFO* pInfo = Find_Digimon(ID);
+
+	if (nullptr == pInfo)
+		return DIGIMON_INFO{};
+
+	return *pInfo;
 }
 
 const _wstring& CDigimon_Manager::Get_Model_ID(_int ID)

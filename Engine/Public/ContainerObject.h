@@ -130,6 +130,9 @@ protected:
 	_vector m_vTarget_Position{};
 	_float m_vLook{};
 
+	_int m_iSkill{};
+	_int m_iLastSkill{};
+
 	queue<DIGIMONSTATE> m_eSkill_State;
 
 protected:

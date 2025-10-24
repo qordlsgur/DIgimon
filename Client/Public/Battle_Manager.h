@@ -62,7 +62,7 @@ public:
 
 	void Enemy_Position();
 	void Player_Digimon_Position();
-	void Current_Digimon(DIGIMON_INFO* Digimon_Info_1, DIGIMON_INFO* Digimon_Info_2, DIGIMON_INFO* Digimon_Info_3);
+	void Current_Digimon(/*DIGIMON_INFO* Digimon_Info_1, DIGIMON_INFO* Digimon_Info_2, DIGIMON_INFO* Digimon_Info_3*/);
 
 	void Digimon1_Skill();
 	void Digimon2_Skill();
