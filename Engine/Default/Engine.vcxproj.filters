@@ -202,6 +202,12 @@
     <ClInclude Include="..\public\VIBuffer_Instance.h">
       <Filter>01.Utility\03.Components\VIBuffer\Instance</Filter>
     </ClInclude>
+    <ClInclude Include="..\public\Shadow.h">
+      <Filter>01.Utility\12.Shadow</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\BlendObject.h">
+      <Filter>01.Utility\02.GameObjects\BlendObject</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Private\Base.cpp">
@@ -362,6 +368,12 @@
     </ClCompile>
     <ClCompile Include="..\private\VIBuffer_Instance.cpp">
       <Filter>01.Utility\03.Components\VIBuffer\Instance</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\Shadow.cpp">
+      <Filter>01.Utility\12.Shadow</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\BlendObject.cpp">
+      <Filter>01.Utility\02.GameObjects\BlendObject</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -544,6 +556,12 @@
     </Filter>
     <Filter Include="01.Utility\03.Components\VIBuffer\Instance\Rect">
       <UniqueIdentifier>{1696a38a-b01c-4aa4-bf4f-f415b6dae379}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Utility\12.Shadow">
+      <UniqueIdentifier>{8229c61c-8681-473b-be37-2f84dc40141b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Utility\02.GameObjects\BlendObject">
+      <UniqueIdentifier>{befb5919-305c-4a6c-bb36-f1cbbd2ae236}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

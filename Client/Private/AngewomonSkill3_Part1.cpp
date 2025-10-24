@@ -49,6 +49,7 @@ void CAngewomonSkill3_Part1::Update(_float fTimeDelta)
 void CAngewomonSkill3_Part1::Late_Update(_float fTimeDelta)
 {
 	m_pGameInstance->Add_RenderGroup(RENDER::UI, this);
+	m_pGameInstance->Add_RenderGroup(RENDER::BLUR, this);
 }
 
 HRESULT CAngewomonSkill3_Part1::Render()

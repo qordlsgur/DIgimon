@@ -3,11 +3,26 @@ vector g_vMtrlDiffuse = 1.f;
 vector g_vMtrlAmbient = 1.f;
 vector g_vMtrlSpecular = 1.f;
 
+
+sampler ClampSampler = sampler_state
+{
+    Filter = MIN_MAG_MIP_POINT;
+    AddressU = clamp;
+    AddressV = clamp;
+};
+
 sampler DefaultSampler = sampler_state
 {
     Filter = MIN_MAG_MIP_LINEAR;
     AddressU = wrap;
     AddressV = wrap;
+};
+
+sampler MirrorSampler = sampler_state
+{
+    Filter = MIN_MAG_MIP_LINEAR;
+    AddressU = mirror;
+    AddressV = mirror;
 };
 
 RasterizerState RS_Default
@@ -23,14 +38,7 @@ RasterizerState RS_Wireframe
 
 RasterizerState RS_Cull_Front
 {
-    FillMode = Solid;
     CullMode = Front;
-};
-
-RasterizerState RS_Cull_Default
-{
-    FillMode = Solid;
-    CullMode = None;
 };
 
 DepthStencilState DSS_Default

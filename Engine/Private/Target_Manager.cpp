@@ -46,7 +46,7 @@ HRESULT CTarget_Manager::Add_MRT(const _wstring& strMRTTag, const _wstring& strT
 }
 
 /* 내가 원하는 그룹에 속해있는 렌더타겟들을 모두 다 장치에 바인딩한다. */
-HRESULT CTarget_Manager::Begin_MRT(const _wstring& strMRTTag)
+HRESULT CTarget_Manager::Begin_MRT(const _wstring& strMRTTag, ID3D11DepthStencilView* pDSV)
 {
     m_pContext->OMGetRenderTargets(1, &m_pBackBufferRTV, &m_pOriginalDSV);
 
@@ -64,7 +64,12 @@ HRESULT CTarget_Manager::Begin_MRT(const _wstring& strMRTTag)
         pRenderTargets[iNumRenderTargets++] = pRenderTarget->Get_RTV();
     }
 
-    m_pContext->OMSetRenderTargets(iNumRenderTargets, pRenderTargets, m_pOriginalDSV);
+
+    if (nullptr != pDSV)
+        m_pContext->ClearDepthStencilView(pDSV, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.f, 0);
+
+
+    m_pContext->OMSetRenderTargets(iNumRenderTargets, pRenderTargets, nullptr == pDSV ? m_pOriginalDSV : pDSV);
 
     return S_OK;
 }

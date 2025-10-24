@@ -14,6 +14,7 @@
 #include "Renderer.h"
 #include "PipeLine.h"
 #include "Picking.h"
+#include "Shadow.h"
 
 IMPLEMENT_SINGLETON(CGameInstance)
 
@@ -76,6 +77,9 @@ HRESULT CGameInstance::Initialize_Engine(const ENGINE_DESC& EngineDesc, ID3D11De
 	if (nullptr == m_pFont_Manager)
 		return E_FAIL;
 
+	m_pShadow = CShadow::Create();
+	if (nullptr == m_pShadow)
+		return E_FAIL;
 
 
 	return S_OK;
@@ -394,9 +398,9 @@ HRESULT CGameInstance::Add_MRT(const _wstring& strMRTTag, const _wstring& strTar
 	return m_pTarget_Manager->Add_MRT(strMRTTag, strTargetTag);
 }
 
-HRESULT CGameInstance::Begin_MRT(const _wstring& strMRTTag)
+HRESULT CGameInstance::Begin_MRT(const _wstring& strMRTTag, ID3D11DepthStencilView* pDSV)
 {
-	return m_pTarget_Manager->Begin_MRT(strMRTTag);
+	return m_pTarget_Manager->Begin_MRT(strMRTTag, pDSV);
 }
 
 HRESULT CGameInstance::End_MRT()
@@ -422,6 +426,16 @@ HRESULT CGameInstance::Render_RT_Debug(const _wstring& strMRTTag, CShader* pShad
 	return m_pTarget_Manager->Render_Debug(strMRTTag, pShader, pVIBuffer);
 }
 
+HRESULT CGameInstance::Ready_Shadow_Light(const SHADOW_LIGHT_DESC& Desc)
+{
+	return m_pShadow->Ready_Shadow_Light(Desc);
+}
+
+HRESULT CGameInstance::Bind_Shadow_Resource(CShader* pShader, const _char* pConstantName, D3DTS eType)
+{
+	return m_pShadow->Bind_Shader_Resource(pShader, pConstantName, eType);
+}
+
 #endif
 
 #pragma endregion
@@ -430,6 +444,7 @@ void CGameInstance::Release_Engine()
 {
 	DestroyInstance();
 
+	Safe_Release(m_pShadow);
 	Safe_Release(m_pTarget_Manager);
 	Safe_Release(m_pFont_Manager);
 	Safe_Release(m_pLight_Manager);

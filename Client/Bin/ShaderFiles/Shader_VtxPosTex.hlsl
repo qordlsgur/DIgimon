@@ -14,6 +14,7 @@
 matrix g_WorldMatrix, g_ViewMatrix, g_ProjMatrix;
 
 texture2D g_Texture;
+texture2D g_DepthTexture;
 
 
 
@@ -68,7 +69,31 @@ struct PS_OUT
     float4 vColor : SV_TARGET0;
 };
 
+struct VS_OUT_SOFTEFFECT
+{
+    float4 vPosition : SV_POSITION;
+    float2 vTexcoord : TEXCOORD0;
+    float4 vProjPos : TEXCOORD1;
+};
 
+VS_OUT_SOFTEFFECT VS_MAIN_SOFTEFFECT(VS_IN In)
+{
+    VS_OUT_SOFTEFFECT Out;
+    
+    matrix matWV, matWVP;
+    
+    matWV = mul(g_WorldMatrix, g_ViewMatrix);
+    matWVP = mul(matWV, g_ProjMatrix);
+    
+    Out.vPosition = mul(vector(In.vPosition, 1.f), matWVP);
+    
+    /* Out.vPosition.xy => 시야각에 있는 점들을 90에 맞춰준다 */ 
+    /* Out.vPosition.z => n~f사이에 있는 점들의 z를 0 ~ f로 바꿔준다. */     
+    Out.vTexcoord = In.vTexcoord;
+    Out.vProjPos = Out.vPosition;
+
+    return Out;
+}
 
 /* 픽셀 쉐이더 : 픽셀의 최종적인 색을 결정하낟. */
 PS_OUT PS_MAIN(PS_IN In)
@@ -77,7 +102,42 @@ PS_OUT PS_MAIN(PS_IN In)
     
     
     
-    Out.vColor = g_Texture.Sample(DefaultSampler, In.vTexcoord * 2.f);
+    Out.vColor = g_Texture.Sample(DefaultSampler, In.vTexcoord);
+    if (Out.vColor.a == 0.f)
+        discard;
+    return Out;
+}
+
+struct PS_IN_SOFTEFFECT
+{
+    float4 vPosition : SV_POSITION;
+    float2 vTexcoord : TEXCOORD0;
+    float4 vProjPos : TEXCOORD1;
+};
+
+PS_OUT PS_MAIN_SOFTEFFECT(PS_IN_SOFTEFFECT In)
+{
+    PS_OUT Out;
+    
+    float4 vColor = g_Texture.Sample(DefaultSampler, In.vTexcoord);
+    
+    if (vColor.a == 0.f)
+        discard;
+    
+    float2 vTexcoord;
+    
+    vTexcoord.x = In.vProjPos.x / In.vProjPos.w * 0.5f + 0.5f;
+    vTexcoord.y = In.vProjPos.y / In.vProjPos.w * -0.5f + 0.5f;
+    
+    float4 vDepthDesc = g_DepthTexture.Sample(DefaultSampler, vTexcoord);
+    
+    float fOldViewZ = vDepthDesc.y * 500.f;
+    
+    float fDistance = fOldViewZ - In.vProjPos.w;
+    
+    vColor.a = vColor.a * saturate(fDistance);
+    
+    Out.vColor = vColor;
     
     return Out;
 }
@@ -92,4 +152,24 @@ technique11 DefaultTechnique
         VertexShader = compile vs_5_0 VS_MAIN();
         PixelShader = compile ps_5_0 PS_MAIN();
     } 
+
+    pass SoftEffect
+    {
+        SetRasterizerState(RS_Default);
+        SetDepthStencilState(DSS_Default, 0);
+        SetBlendState(BS_AlphaBlend, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
+        VertexShader = compile vs_5_0 VS_MAIN_SOFTEFFECT();
+        GeometryShader = NULL;
+        PixelShader = compile ps_5_0 PS_MAIN_SOFTEFFECT();
+    }
+
+    pass Blur
+    {
+        SetRasterizerState(RS_Default);
+        SetDepthStencilState(DSS_Default, 0);
+        SetBlendState(BS_None, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
+        VertexShader = compile vs_5_0 VS_MAIN();
+        GeometryShader = NULL;
+        PixelShader = compile ps_5_0 PS_MAIN();
+    }
 }

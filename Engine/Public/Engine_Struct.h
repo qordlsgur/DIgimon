@@ -24,6 +24,12 @@ namespace Engine
 		float			fRange;
 	}LIGHT_DESC;
 
+	typedef struct tagShadowLight
+	{
+		XMFLOAT4		vEye, vAt;
+		float			fNear, fFar, fFovy, fAspect;
+	}SHADOW_LIGHT_DESC;
+
 	typedef struct tagVertexPosition
 	{
 		XMFLOAT3			vPosition;
@@ -115,6 +121,15 @@ namespace Engine
 			{ "BLENDWEIGHT", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 60, D3D11_INPUT_PER_VERTEX_DATA, 0 }
 		};
 	}VTXANIMMESH;
+
+	typedef struct tagVertexInstance_Model
+	{
+		XMFLOAT4			vRight;
+		XMFLOAT4			vUp;
+		XMFLOAT4			vLook;
+		XMFLOAT4			vTranslation;
+
+	}VTX_INSTANCE_MODEL;
 
 	typedef struct tagVertexInstance_Particle
 	{

@@ -30,6 +30,7 @@ private:
 	class CGameInstance* m_pGameInstance = { nullptr };
 	list<class CGameObject*>			m_RenderObjects[ENUM_CLASS(RENDER::END)];
 
+	ID3D11DepthStencilView* m_pShadowDSV = { nullptr };
 #ifdef _DEBUG
 private:
 	list<class CComponent*>				m_DebugComponents;
@@ -45,13 +46,18 @@ private:
 
 private:
 	void Render_Priority();
+	void Render_Shadow();
 	void Render_NonBlend();
 	void Render_LightAcc();
 	void Render_Combined();
 	void Render_NonLight();
+	void Render_Blur();
 	void Render_Blend();
 	void Render_UI();
 	void Render_BlendUI();
+
+private:
+	HRESULT Ready_DepthStencilView(_uint iSizeX, _uint iSizeY);
 
 public:
 	static CRenderer* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
