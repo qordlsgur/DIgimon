@@ -40,10 +40,21 @@ HRESULT CAngewomonSkill3::Initialize(void* pArg)
 	m_vFirstPosigion = Pos->m_vPosition;
 	m_iDamage = Pos->iDamage;
 	m_vTarget_pos = Pos->m_vTargetPosition;
+
 	m_vTarget_pos.m128_f32[1] += 10.f;
 
-	m_vFirstPosigion.m128_f32[1] += 13.f;
-	m_vPosition.m128_f32[1] += 13.f;
+	m_vFirstPosigion.m128_f32[1] += 12.f;
+	m_vPosition.m128_f32[1] += 10.f;
+
+	if (Pos->Look == 0)
+	{
+		m_vFirstPosigion.m128_f32[0] -= 1.f;
+		m_vFirstPosigion.m128_f32[2] += 3.f;
+	}
+	else
+	{
+		m_vFirstPosigion.m128_f32[0] += 1.f;
+	}
 
 	m_pTransformCom->Set_State(STATE::POSITION, m_vPosition);
 	m_pTransformCom->Update_WoldMatrix();
@@ -67,17 +78,8 @@ void CAngewomonSkill3::Update(_float fTimeDelta)
 {
 	_fTime += fTimeDelta;
 
-	_vector dir = m_vTarget_pos - m_vPosition;
+	m_pTransformCom->TargetLook(m_vTarget_pos);
 
-	dir.m128_f32[1] = 0.f;
-
-	if (XMVector3LengthSq(dir).m128_f32[0] > 0.0001f)
-	{
-		dir = XMVector3Normalize(dir);
-		_float yaw = atan2f(XMVectorGetX(dir), XMVectorGetZ(dir));
-		
-		m_pTransformCom->Rotation(0.f, yaw, 0.f);
-	}
 	if (_fTime >= 1.4f)
 		m_pTransformCom->Target_Pos_Move(m_vTarget_pos, fTimeDelta);
 	else

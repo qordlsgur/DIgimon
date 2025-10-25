@@ -199,7 +199,6 @@ void CPlayer::Late_Update(_float fTimeDelta)
 HRESULT CPlayer::Render()
 {
 #ifdef _DEBUG
-	m_pNavigationCom->Render();
 	m_pColliderCom->Render();
 #endif
 

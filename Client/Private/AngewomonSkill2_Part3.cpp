@@ -46,7 +46,7 @@ void CAngewomonSkill2_Part3::Update(_float fTimeDelta)
 
 void CAngewomonSkill2_Part3::Late_Update(_float fTimeDelta)
 {
-	m_pGameInstance->Add_RenderGroup(RENDER::UI, this);
+	m_pGameInstance->Add_RenderGroup(RENDER::BLEND, this);
 	m_pGameInstance->Add_RenderGroup(RENDER::BLUR, this);
 }
 
@@ -79,6 +79,11 @@ HRESULT CAngewomonSkill2_Part3::Ready_Components()
 		TEXT("Com_Texture"), reinterpret_cast<CComponent**>(&m_pTextureCom))))
 		return E_FAIL;
 
+	/* Com_DissloveTexture */
+	if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Noise"),
+		TEXT("Com_DissloveTexture"), reinterpret_cast<CComponent**>(&m_pDIssolveTextureCom))))
+		return E_FAIL;
+
 	/* Com_Shader */
 	if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Shader_VtxSkillMesh"),
 		TEXT("Com_Shader"), reinterpret_cast<CComponent**>(&m_pShaderCom))))
@@ -97,6 +102,9 @@ HRESULT CAngewomonSkill2_Part3::Bind_ShaderResources()
 		return E_FAIL;
 
 	if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_DiffuseTexture", 1)))
+		return E_FAIL;
+
+	if (FAILED(m_pDIssolveTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Dissolve", 10)))
 		return E_FAIL;
 
 	return S_OK;
@@ -133,6 +141,7 @@ void CAngewomonSkill2_Part3::Free()
 	__super::Free();
 
 	Safe_Release(m_pModelCom);
+	Safe_Release(m_pDIssolveTextureCom);
 	Safe_Release(m_pTextureCom);
 	Safe_Release(m_pShaderCom);
 }

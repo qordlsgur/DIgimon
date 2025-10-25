@@ -400,21 +400,21 @@ void CBattle_Manager::Enemy_Attack(_float fTimeDelta)
 			m_iLook_Target_position = 2;
 			m_iEnemyAttackSelect = 2;
 			m_pHitCurrentDigimon = m_pMyDigimon[1];
-			m_pCurrentDigimon->TargetPos(m_vPlayerDigimonPos[0]);
+			m_pCurrentDigimon->TargetPos(m_vPlayerDigimonPos[2]);
 		}
 		else
 		{
 			m_iLook_Target_position = 4;
 			m_iEnemyAttackSelect = 3;
 			m_pHitCurrentDigimon = m_pMyDigimon[2];
-			m_pCurrentDigimon->TargetPos(m_vPlayerDigimonPos[0]);
+			m_pCurrentDigimon->TargetPos(m_vPlayerDigimonPos[4]);
 		}
 	}
 
 
 	if (!m_bSkill)
 	{
-		m_pCurrentDigimon->UseSkill(/*Enemy_Skill()*/1);
+		m_pCurrentDigimon->UseSkill(/*Enemy_Skill()*/3);
 		m_pCurrentDigimon->LookAt(m_vPlayerDigimonPos[m_iLook_Target_position]);
 		m_pInteraction_Manager->Set_Hit_Digimon(m_pHitCurrentDigimon);
 		m_bSkill = true;
@@ -1040,7 +1040,8 @@ void CBattle_Manager::Digimon_Dead()
 		{
 			if (m_pHitCurrentDigimon == m_pMyDigimon[i])
 			{
-				m_pMyDigimon_Infos[i]->CurrentHp = 0;
+				//if(m_pMyDigimon)
+				//m_pMyDigimon_Infos[i]->CurrentHp = 0;
 				m_iAlivePlayer--;
 				m_pBattle_UI_Manager->Update_MyDigimon_Skill(m_pHitCurrentDigimon);
 			}

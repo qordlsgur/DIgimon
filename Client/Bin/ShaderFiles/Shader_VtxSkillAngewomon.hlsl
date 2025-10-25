@@ -118,7 +118,10 @@ PS_OUT PS_Cross(PS_IN In)
     float3 Color = float3(250, 142, 229) / 255.0f;
     float4 Disslove = g_Dissolve.Sample(DefaultSampler, In.vTexcoord);
     
-    if (vMtrlDiffuse.r <= 0.4f)
+    float alpha = vMtrlDiffuse.a;
+   
+    
+    if (vMtrlDiffuse.r <= 0.2f)
         discard;
     
     if (Time > Disslove.r)
@@ -133,6 +136,79 @@ PS_OUT PS_Cross(PS_IN In)
     Out.vDepth = float4(In.vProjPos.z / In.vProjPos.w, In.vProjPos.w / 500.0f, 0.0f, 0.0f);
     return Out;
 }
+
+struct VS_OUT_SKILL1EFFECT
+{
+    float4 vPosition : SV_POSITION;
+    float2 vTexcoord : TEXCOORD0;
+    float4 vProjPos : TEXCOORD1;
+};
+
+VS_OUT_SKILL1EFFECT VS_MAIN_SKILL1EFFECT(VS_IN In)
+{
+    VS_OUT_SKILL1EFFECT Out;
+    
+    matrix matWV, matWVP;
+    
+    matWV = mul(g_WorldMatrix, g_ViewMatrix);
+    matWVP = mul(matWV, g_ProjMatrix);
+    
+    Out.vPosition = mul(vector(In.vPosition, 1.f), matWVP);
+    
+    /* Out.vPosition.xy => 시야각에 있는 점들을 90에 맞춰준다 */ 
+    /* Out.vPosition.z => n~f사이에 있는 점들의 z를 0 ~ f로 바꿔준다. */     
+    Out.vTexcoord = In.vTexcoord;
+    Out.vProjPos = Out.vPosition;
+
+    return Out;
+}
+
+struct PS_IN_SKILL1EFFECT
+{
+    float4 vPosition : SV_POSITION;
+    float2 vTexcoord : TEXCOORD0;
+    float4 vProjPos : TEXCOORD1;
+};
+
+struct PS_OUT_SKILL1EFFECT
+{
+    float4 vColor : SV_TARGET0;
+};
+
+PS_OUT_SKILL1EFFECT PS_MAIN_SKILL1EFFECT(PS_IN_SKILL1EFFECT In)
+{
+    PS_OUT_SKILL1EFFECT Out;
+    
+    float4 vColor = g_Texture.Sample(DefaultSampler, In.vTexcoord);
+    float4 Mask = g_Mask.Sample(DefaultSampler, In.vTexcoord);
+    float2 vTexcoord;
+    
+    
+    vTexcoord.x = In.vProjPos.x / In.vProjPos.w * 0.5f + 0.5f;
+    vTexcoord.y = In.vProjPos.y / In.vProjPos.w * -0.5f + 0.5f;
+    
+    float4 vDepthDesc = g_DepthTexture.Sample(DefaultSampler, vTexcoord);
+    
+    float fOldViewZ = vDepthDesc.y * 500.f;
+    
+    float fDistance = fOldViewZ - In.vProjPos.w;
+    
+    Mask.a = Mask.a * saturate(fDistance);
+    
+    if (Mask.r <= 0.4f)
+        discard;
+    
+    float4 Color = float4(250 / 255.0f, 142 / 255.0f, 229 / 255.0f, Mask.a);
+    
+    Mask *= Color;
+    
+    //vColor *= Mask;
+    
+    Out.vColor = Mask;
+    
+    return Out;
+}
+
 
 //struct VS_OUT_CROSS_EFFECT
 //{
@@ -152,7 +228,7 @@ PS_OUT PS_Cross(PS_IN In)
     
 //    Out.vPosition = mul(vector(In.vPosition, 1.f), matWVP);
     
-//    /* Out.vPosition.xy => 시야각에 있는 점들을 90에 맞춰준다 */ 
+//    /* Out.vPosition.xy => 시야각에 있는 점들을 90에 맞춰준다  
 //    /* Out.vPosition.z => n~f사이에 있는 점들의 z를 0 ~ f로 바꿔준다. */     
 //    Out.vTexcoord = In.vTexcoord;
 //    Out.vProjPos = Out.vPosition;
@@ -229,9 +305,19 @@ technique11 DefaultTechnique
     {
         SetRasterizerState(RS_Cull_None);
         SetDepthStencilState(DSS_Default, 0);
-        SetBlendState(BS_Blend, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
+        SetBlendState(BS_AlphaBlend, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
         VertexShader = compile vs_5_0 VS_MAIN();
         GeometryShader = NULL;
         PixelShader = compile ps_5_0 PS_Cross();
+    }
+
+    pass AngewomonSkill1Effect
+    {
+        SetRasterizerState(RS_Cull_None);
+        SetDepthStencilState(DSS_Default, 0);
+        SetBlendState(BS_Blend, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
+        VertexShader = compile vs_5_0 VS_MAIN_SKILL1EFFECT();
+        GeometryShader = NULL;
+        PixelShader = compile ps_5_0 PS_MAIN_SKILL1EFFECT();
     }
 }

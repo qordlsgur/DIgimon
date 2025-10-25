@@ -2,6 +2,10 @@
 
 matrix g_WorldMatrix, g_ViewMatrix, g_ProjMatrix;
 texture2D g_DiffuseTexture;
+texture2D g_DiffuseTexture1;
+texture2D g_DiffuseTexture2;
+texture2D g_DiffuseTexture3;
+texture2D g_DiffuseTexture4;
 
 texture2D g_Texture;
 texture2D g_DepthTexture;
@@ -135,8 +139,8 @@ PS_OUT PS_Cross(PS_IN In)
     float3 Color = float3(250, 142, 229) / 255.0f;
     float4 Disslove = g_Dissolve.Sample(DefaultSampler, In.vTexcoord);
     
-    if (vMtrlDiffuse.r <= 0.4f)
-        discard;
+    //if (vMtrlDiffuse.r <= 0.f)
+    //    discard;
     
     if (Time > Disslove.r)
         discard;

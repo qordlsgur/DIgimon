@@ -81,9 +81,6 @@ HRESULT CTerrain::Render()
 		if (FAILED(m_pVIBufferCom->Render()))
 			return E_FAIL;
 
-#ifdef _DEBUG
-		m_pNavigationCom->Render();
-#endif
 		for (size_t i = 0; i < m_vObjects.size(); ++i)
 		{
 			m_vObjects[i]->Render();

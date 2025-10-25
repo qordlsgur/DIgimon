@@ -290,6 +290,23 @@ void CTransform::SizeUp(_float fX, _float fY, _float fZ)
 	Set_State(STATE::LOOK, XMVectorSet(0.f, 0.f, 1.f, 0.f) * vScale.z);
 }
 
+void CTransform::TargetLook(_fvector Rarget)
+{
+	_vector Pos = Get_State(STATE::POSITION);
+
+	_vector dir = Rarget - Pos;
+
+	dir.m128_f32[1] = 0.f;
+
+	if (XMVector3LengthSq(dir).m128_f32[0] > 0.0001f)
+	{
+		dir = XMVector3Normalize(dir);
+		_float yaw = atan2f(XMVectorGetX(dir), XMVectorGetZ(dir));
+
+		Rotation(0.f, yaw, 0.f);
+	}
+}
+
 void CTransform::Jump(_float fHight)
 {
 	_vector		vPosition = Get_State(STATE::POSITION);

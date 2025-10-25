@@ -84,7 +84,7 @@ HRESULT CAngewomonSkill1_Part1::Ready_Components()
         return E_FAIL;
 
     /* Com_Battle_Mask*/
-    if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Circle"),
+    if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_CircleEffect"),
         TEXT("Com_Battle_Mask"), reinterpret_cast<CComponent**>(&m_pMaskTextureCom))))
         return E_FAIL;
 
@@ -108,9 +108,9 @@ HRESULT CAngewomonSkill1_Part1::Bind_ShaderResources()
         return E_FAIL;
     if (FAILED(m_pShaderCom->Bind_State("Time", m_fTime)))
         return E_FAIL;
-    if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture", 2)))
+    if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture", 1)))
         return E_FAIL;
-    if (FAILED(m_pMaskTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Mask", 0)))
+    if (FAILED(m_pMaskTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Mask", 1)))
         return E_FAIL;
     return S_OK;
 }

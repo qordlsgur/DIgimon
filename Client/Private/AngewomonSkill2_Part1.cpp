@@ -49,7 +49,7 @@ void CAngewomonSkill2_Part1::Update(_float fTimeDelta)
 
 void CAngewomonSkill2_Part1::Late_Update(_float fTimeDelta)
 {
-	m_pGameInstance->Add_RenderGroup(RENDER::UI, this);
+	m_pGameInstance->Add_RenderGroup(RENDER::BLEND, this);
 	m_pGameInstance->Add_RenderGroup(RENDER::BLUR, this);
 }
 
@@ -61,19 +61,7 @@ HRESULT CAngewomonSkill2_Part1::Render()
 	if (FAILED(m_pShaderCom->Begin(2)))
 		return E_FAIL;
 
-	if (FAILED(Bind_ShaderResources()))
-		return E_FAIL;
-
-	if (FAILED(m_pShaderCom->Begin(2)))
-		return E_FAIL;
-
-	if (FAILED(m_pModel1Com->Render(0)))
-		return E_FAIL;
-
-	if (FAILED(m_pModel2Com->Render(0)))
-		return E_FAIL;
-
-	if (FAILED(m_pModel3Com->Render(0)))
+	if (FAILED(m_pModelCom->Render(0)))
 		return E_FAIL;
 
 	return S_OK;
@@ -81,49 +69,19 @@ HRESULT CAngewomonSkill2_Part1::Render()
 
 HRESULT CAngewomonSkill2_Part1::Ready_Components()
 {
-	/* Com_Mode1 */
+	/* Com_Mode */
 	if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Model_Angewomon_Skill2_1"),
-		TEXT("Com_Model1"), reinterpret_cast<CComponent**>(&m_pModel1Com))))
+		TEXT("Com_Model"), reinterpret_cast<CComponent**>(&m_pModelCom))))
 		return E_FAIL;
 
-	/* Com_Model2 */
-	if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Model_Angewomon_Skill2_2"),
-		TEXT("Com_Model2"), reinterpret_cast<CComponent**>(&m_pModel2Com))))
-		return E_FAIL;
-
-	/* Com_Model3 */
-	if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Model_Angewomon_Skill2_3"),
-		TEXT("Com_Model3"), reinterpret_cast<CComponent**>(&m_pModel3Com))))
-		return E_FAIL;
-
-	/* Com_Model4 */
-	if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Model_Angewomon_Skill2_4"),
-		TEXT("Com_Model4"), reinterpret_cast<CComponent**>(&m_pModel4Com))))
-		return E_FAIL;
-
-	/* Com_Texture1 */
+	/* Com_Texture */
 	if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_AngewomonSkill2_Image"),
-		TEXT("Com_Texture1"), reinterpret_cast<CComponent**>(&m_pTexture1Com))))
+		TEXT("Com_Texture"), reinterpret_cast<CComponent**>(&m_pTextureCom))))
 		return E_FAIL;
 
-	/* Com_Texture2 */
-	if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_AngewomonSkill2_Image"),
-		TEXT("Com_Texture2"), reinterpret_cast<CComponent**>(&m_pTexture2Com))))
-		return E_FAIL;
-
-	/* Com_Texture3 */
-	if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_AngewomonSkill2_Image"),
-		TEXT("Com_Texture3"), reinterpret_cast<CComponent**>(&m_pTexture3Com))))
-		return E_FAIL;
-
-	/* Com_Texture4 */
-	if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_AngewomonSkill2_Image"),
-		TEXT("Com_Texture4"), reinterpret_cast<CComponent**>(&m_pTexture4Com))))
-		return E_FAIL;
-
-	/* Com_mTexture5 */
+	/* Com_DissloveTexture */
 	if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Noise"),
-		TEXT("Com_mTexture5"), reinterpret_cast<CComponent**>(&m_pTexture5Com))))
+		TEXT("Com_DissloveTexture"), reinterpret_cast<CComponent**>(&m_pDIssolveTextureCom))))
 		return E_FAIL;
 
 	/* Com_Shader */
@@ -143,19 +101,10 @@ HRESULT CAngewomonSkill2_Part1::Bind_ShaderResources()
 	if (FAILED(m_pShaderCom->Bind_Matrix("g_ProjMatrix", m_pGameInstance->Get_Transform_Float4x4(D3DTS::PROJ))))
 		return E_FAIL;
 
-	if (FAILED(m_pTexture1Com->Bind_ShaderResource(m_pShaderCom, "g_DiffuseTexture", 0)))
+	if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_DiffuseTexture", 0)))
 		return E_FAIL;
 
-	if (FAILED(m_pTexture2Com->Bind_ShaderResource(m_pShaderCom, "g_DiffuseTexture", 0)))
-		return E_FAIL;
-
-	if (FAILED(m_pTexture3Com->Bind_ShaderResource(m_pShaderCom, "g_DiffuseTexture", 1)))
-		return E_FAIL;
-
-	if (FAILED(m_pTexture4Com->Bind_ShaderResource(m_pShaderCom, "g_DiffuseTexture", 2)))
-		return E_FAIL;
-
-	if (FAILED(m_pTexture5Com->Bind_ShaderResource(m_pShaderCom, "g_Dissolve", 10)))
+	if (FAILED(m_pDIssolveTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Dissolve", 10)))
 		return E_FAIL;
 
 	return S_OK;
@@ -193,6 +142,7 @@ void CAngewomonSkill2_Part1::Free()
 	__super::Free();
 
 	Safe_Release(m_pModelCom);
+	Safe_Release(m_pDIssolveTextureCom);
 	Safe_Release(m_pTextureCom);
 	Safe_Release(m_pShaderCom);
 }

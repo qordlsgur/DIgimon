@@ -79,6 +79,11 @@ HRESULT CAngewomonSkill2_Part4::Ready_Components()
 		TEXT("Com_Texture"), reinterpret_cast<CComponent**>(&m_pTextureCom))))
 		return E_FAIL;
 
+	/* Com_DissloveTexture */
+	if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Noise"),
+		TEXT("Com_DissloveTexture"), reinterpret_cast<CComponent**>(&m_pDIssolveTextureCom))))
+		return E_FAIL;
+
 	/* Com_Shader */
 	if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Shader_VtxSkillMesh"),
 		TEXT("Com_Shader"), reinterpret_cast<CComponent**>(&m_pShaderCom))))
@@ -97,6 +102,10 @@ HRESULT CAngewomonSkill2_Part4::Bind_ShaderResources()
 		return E_FAIL;
 
 	if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_DiffuseTexture", 2)))
+		return E_FAIL;
+
+
+	if (FAILED(m_pDIssolveTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Dissolve", 10)))
 		return E_FAIL;
 
 	return S_OK;
@@ -133,6 +142,7 @@ void CAngewomonSkill2_Part4::Free()
 	__super::Free();
 
 	Safe_Release(m_pModelCom);
+	Safe_Release(m_pDIssolveTextureCom);
 	Safe_Release(m_pTextureCom);
 	Safe_Release(m_pShaderCom);
 }

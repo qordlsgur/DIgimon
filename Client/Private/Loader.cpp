@@ -897,7 +897,7 @@ HRESULT CLoader::Loading_For_GamePlay()
 
 	/* For.Prototype_Component_Shader_VtxSkillAngewomon*/
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Shader_VtxSkillAngewomon"),
-		CShader::Create(m_pDevice, m_pContext, TEXT("../Bin/ShaderFiles/Shader_VtxSkillAngewomon.hlsl"), VTXPOSTEX::Elements, VTXPOSTEX::iNumElements))))
+		CShader::Create(m_pDevice, m_pContext, TEXT("../Bin/ShaderFiles/Shader_VtxSkillAngewomon.hlsl"), VTXANIMMESH::Elements, VTXANIMMESH::iNumElements))))
 		return E_FAIL;
 
 	/* For.Prototype_Component_Model_Angewomon*/
@@ -936,22 +936,22 @@ HRESULT CLoader::Loading_For_GamePlay()
 		CAngewomonSkill2::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 	/* For.Prototype_Component_Model_Angewomon_Skill2_1*/
-	PreTransformMatrix = XMMatrixScaling(0.1f, 0.1f, 0.1f);
+	PreTransformMatrix = XMMatrixScaling(0.1f, 0.1f, 0.1f) * XMMatrixRotationY(XMConvertToRadians(180.0f));
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Model_Angewomon_Skill2_1"),
 		CModel::Create(m_pDevice, m_pContext, MODEL::NONANIM, "../Bin/Resources/Models/Angewomon/Angewomon2_1.bin", PreTransformMatrix))))
 		return E_FAIL;
 	/* For.Prototype_Component_Model_Angewomon_Skill2_2*/
-	PreTransformMatrix = XMMatrixScaling(0.1f, 0.1f, 0.1f);
+	PreTransformMatrix = XMMatrixScaling(0.1f, 0.1f, 0.1f) * XMMatrixRotationY(XMConvertToRadians(180.0f));
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Model_Angewomon_Skill2_2"),
 		CModel::Create(m_pDevice, m_pContext, MODEL::NONANIM, "../Bin/Resources/Models/Angewomon/Angewomon2_2.bin", PreTransformMatrix))))
 		return E_FAIL;
 	/* For.Prototype_Component_Model_Angewomon_Skill2_3*/
-	PreTransformMatrix = XMMatrixScaling(0.1f, 0.1f, 0.1f);
+	PreTransformMatrix = XMMatrixScaling(0.1f, 0.1f, 0.1f) * XMMatrixRotationY(XMConvertToRadians(180.0f));
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Model_Angewomon_Skill2_3"),
 		CModel::Create(m_pDevice, m_pContext, MODEL::NONANIM, "../Bin/Resources/Models/Angewomon/Angewomon2_3.bin", PreTransformMatrix))))
 		return E_FAIL;
 	/* For.Prototype_Component_Model_Angewomon_Skill2_4*/
-	PreTransformMatrix = XMMatrixScaling(0.1f, 0.1f, 0.1f);
+	PreTransformMatrix = XMMatrixScaling(0.1f, 0.1f, 0.1f) * XMMatrixRotationY(XMConvertToRadians(180.0f));
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Model_Angewomon_Skill2_4"),
 		CModel::Create(m_pDevice, m_pContext, MODEL::NONANIM, "../Bin/Resources/Models/Angewomon/Angewomon2_4.bin", PreTransformMatrix))))
 		return E_FAIL;

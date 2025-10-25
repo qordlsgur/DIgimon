@@ -35,6 +35,7 @@ private:
 
 private:
 	HRESULT Ready_PartObjects();
+	HRESULT Ready_SkillObjects();
 
 public:
 	static CAngewomonSkill2* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);

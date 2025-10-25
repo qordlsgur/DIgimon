@@ -85,6 +85,8 @@ public:
 
 	void SizeUp(_float fX, _float fY, _float fZ);
 
+	void TargetLook(_fvector Rarget);
+
 public:
 	void Jump(_float fHight);
 	void Set_Y(_float y);

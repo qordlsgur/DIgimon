@@ -37,6 +37,7 @@ public:
 private:
 	CModel* m_pModelCom = { nullptr };
 	CTexture* m_pTextureCom = { nullptr };
+	CTexture* m_pDIssolveTextureCom = { nullptr };
 	CShader* m_pShaderCom = { nullptr };
 
 	_matrix RootBone{};

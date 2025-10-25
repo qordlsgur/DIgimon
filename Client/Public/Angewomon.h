@@ -41,6 +41,7 @@ private:
 	CCollider* m_pColliderCom = { nullptr };
 	CPartObject* m_pPart_Body = { nullptr };
 	class CSkillObject *m_pSkill1 = { nullptr };
+	class CSkillObject *m_pSkill2 = { nullptr };
 
 	class CDigimon_Manager* m_pDigimon_Manager = { nullptr };
 	class CStateMachine* m_pFsm = { nullptr };

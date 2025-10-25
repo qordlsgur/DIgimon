@@ -44,13 +44,13 @@ void CSkill_Model::Update(_float fTimeDelta)
 	//if(a >= 5.f)
 	//	m_pTransformCom->Set_Scale(1.f, 1.f, 1.f);
 
-	if (m_pGameInstance->Key_Down(DIK_3))
-		m_bOn = !m_bOn;
+	//if (m_pGameInstance->Key_Down(DIK_3))
+	//	m_bOn = !m_bOn;
 
-	if (m_bOn)
-		m_fTime += fTimeDelta;
-	else
-		m_fTime = 0.f;
+	//if (m_bOn)
+	//	m_fTime += fTimeDelta;
+	//else
+	//	m_fTime = 0.f;
 
 	if (m_pGameInstance->Key_Down(DIK_L))
 		a++;
@@ -166,13 +166,13 @@ HRESULT CSkill_Model::Bind_ShaderResources()
 	if (FAILED(m_pTexture1Com->Bind_ShaderResource(m_pShaderCom, "g_DiffuseTexture", 0)))
 		return E_FAIL;
 
-	if (FAILED(m_pTexture2Com->Bind_ShaderResource(m_pShaderCom, "g_DiffuseTexture", 0)))
+	if (FAILED(m_pTexture2Com->Bind_ShaderResource(m_pShaderCom, "g_DiffuseTexture1", 0)))
 		return E_FAIL;
 
-	if (FAILED(m_pTexture3Com->Bind_ShaderResource(m_pShaderCom, "g_DiffuseTexture", 1)))
+	if (FAILED(m_pTexture3Com->Bind_ShaderResource(m_pShaderCom, "g_DiffuseTexture2", 1)))
 		return E_FAIL;
 
-	if (FAILED(m_pTexture4Com->Bind_ShaderResource(m_pShaderCom, "g_DiffuseTexture", 2)))
+	if (FAILED(m_pTexture4Com->Bind_ShaderResource(m_pShaderCom, "g_DiffuseTexture3", 2)))
 		return E_FAIL;
 
 	if (FAILED(m_pTexture5Com->Bind_ShaderResource(m_pShaderCom, "g_Dissolve", 7)))
