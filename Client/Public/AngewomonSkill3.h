@@ -32,12 +32,13 @@ public:
 private:
 	CPartObject* m_pSkillModel1 = { nullptr };
 	CPartObject* m_pSkillModel2 = { nullptr };
-	CPartObject* m_pPart_Body = { nullptr };
 	CCollider* m_pColliderCom = { nullptr };
 	CContainerObject* m_pPlayer = { nullptr };
 	class CInteraction_Manager* m_pInteraction_Manager = { nullptr };
 
 	_float _fTime{};
+	_vector m_vFirstPosigion{};
+
 private:
 	HRESULT Ready_PartObjects();
 	HRESULT Ready_SkillObjects();

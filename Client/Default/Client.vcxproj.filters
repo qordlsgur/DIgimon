@@ -391,6 +391,21 @@
     <Filter Include="02.GameObjects\Digimon\00.Angewomon\Skill3\Parts">
       <UniqueIdentifier>{cd9c71fe-ea89-4115-838b-0acf2a127cdb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.GameObjects\SkillEffect">
+      <UniqueIdentifier>{1aa1f4c7-fb30-496a-9444-f95beb4e8d0f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\SkillEffect\ApplyGatherEffect">
+      <UniqueIdentifier>{196fd99a-5adc-4795-8093-c207bc91692a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\SkillEffect\ApplySpreadEffect">
+      <UniqueIdentifier>{a2cd9be6-ba9c-40db-afd3-9a4efb4d870d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Digimon\00.Angewomon\Skill2\Parts">
+      <UniqueIdentifier>{4b09e53b-884a-4ea6-baa5-f4e8efc92a3c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Digimon\00.Angewomon\Skill1\Parts">
+      <UniqueIdentifier>{cdb288d3-eead-41e6-b37d-b72c0e2b64cb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -770,6 +785,30 @@
     </ClInclude>
     <ClInclude Include="..\public\AngewomonSkill3_Part1.h">
       <Filter>02.GameObjects\Digimon\00.Angewomon\Skill3\Parts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\ApplyGatherEffect.h">
+      <Filter>02.GameObjects\SkillEffect\ApplyGatherEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\ApplySpreadEffect.h">
+      <Filter>02.GameObjects\SkillEffect\ApplySpreadEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\AngewomonSkill1_Part1.h">
+      <Filter>02.GameObjects\Digimon\00.Angewomon\Skill1\Parts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\AngewomonSkill1_Part2.h">
+      <Filter>02.GameObjects\Digimon\00.Angewomon\Skill1\Parts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\AngewomonSkill2_Part1.h">
+      <Filter>02.GameObjects\Digimon\00.Angewomon\Skill2\Parts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\AngewomonSkill2_Part2.h">
+      <Filter>02.GameObjects\Digimon\00.Angewomon\Skill2\Parts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\AngewomonSkill2_Part3.h">
+      <Filter>02.GameObjects\Digimon\00.Angewomon\Skill2\Parts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\AngewomonSkill2_Part4.h">
+      <Filter>02.GameObjects\Digimon\00.Angewomon\Skill2\Parts</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1152,6 +1191,30 @@
     <ClCompile Include="..\private\AngewomonSkill3_Part1.cpp">
       <Filter>02.GameObjects\Digimon\00.Angewomon\Skill3\Parts</Filter>
     </ClCompile>
+    <ClCompile Include="..\private\ApplyGatherEffect.cpp">
+      <Filter>02.GameObjects\SkillEffect\ApplyGatherEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\ApplySpreadEffect.cpp">
+      <Filter>02.GameObjects\SkillEffect\ApplySpreadEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\AngewomonSkill1_Part1.cpp">
+      <Filter>02.GameObjects\Digimon\00.Angewomon\Skill1\Parts</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\AngewomonSkill1_Part2.cpp">
+      <Filter>02.GameObjects\Digimon\00.Angewomon\Skill1\Parts</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\AngewomonSkill2_Part1.cpp">
+      <Filter>02.GameObjects\Digimon\00.Angewomon\Skill2\Parts</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\AngewomonSkill2_Part2.cpp">
+      <Filter>02.GameObjects\Digimon\00.Angewomon\Skill2\Parts</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\AngewomonSkill2_Part3.cpp">
+      <Filter>02.GameObjects\Digimon\00.Angewomon\Skill2\Parts</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\AngewomonSkill2_Part4.cpp">
+      <Filter>02.GameObjects\Digimon\00.Angewomon\Skill2\Parts</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxPosTex.hlsl">
@@ -1208,5 +1271,13 @@
     <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxSkillMesh.hlsl">
       <Filter>97.ShaderFiles</Filter>
     </FxCompile>
+    <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxSkillAngewomon.hlsl">
+      <Filter>97.ShaderFiles</Filter>
+    </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Bin\ShaderFiles\Effect.hlsli">
+      <Filter>97.ShaderFiles</Filter>
+    </None>
   </ItemGroup>
 </Project>

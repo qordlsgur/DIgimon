@@ -11,7 +11,7 @@ NS_END
 
 NS_BEGIN(Client)
 
-class CAngewomonSkill3_Part1 : public CPartObject
+class CAngewomonSkill3_Part1 final : public CPartObject
 {
 public:
 	typedef struct tagBody_Player_Desc : public CPartObject::PARTOBJECT_DESC

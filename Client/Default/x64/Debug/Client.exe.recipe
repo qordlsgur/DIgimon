@@ -2,63 +2,66 @@
 <Project>
   <ProjectOutputs>
     <ProjectOutput>
-      <FullPath>C:\Users\hyen6\Desktop\DIgimon\Client\Bin\Client.exe</FullPath>
+      <FullPath>C:\Users\hyen6\Desktop\Framework\Digimon\Client\Bin\Client.exe</FullPath>
     </ProjectOutput>
   </ProjectOutputs>
   <ContentFiles>
     <ContentFile>
-      <FullPath>C:\Users\hyen6\Desktop\DIgimon\Client\Bin\Shader_Battle_Enemy_Hp.cso</FullPath>
+      <FullPath>C:\Users\hyen6\Desktop\Framework\Digimon\Client\Bin\Shader_Battle_Enemy_Hp.cso</FullPath>
     </ContentFile>
     <ContentFile>
-      <FullPath>C:\Users\hyen6\Desktop\DIgimon\Client\Bin\Shader_Battle_Timeline.cso</FullPath>
+      <FullPath>C:\Users\hyen6\Desktop\Framework\Digimon\Client\Bin\Shader_Battle_Timeline.cso</FullPath>
     </ContentFile>
     <ContentFile>
-      <FullPath>C:\Users\hyen6\Desktop\DIgimon\Client\Bin\Shader_Digivice.cso</FullPath>
+      <FullPath>C:\Users\hyen6\Desktop\Framework\Digimon\Client\Bin\Shader_Digivice.cso</FullPath>
     </ContentFile>
     <ContentFile>
-      <FullPath>C:\Users\hyen6\Desktop\DIgimon\Client\Bin\Shader_Digivice_Mask.cso</FullPath>
+      <FullPath>C:\Users\hyen6\Desktop\Framework\Digimon\Client\Bin\Shader_Digivice_Mask.cso</FullPath>
     </ContentFile>
     <ContentFile>
-      <FullPath>C:\Users\hyen6\Desktop\DIgimon\Client\Bin\Shader_Digivice_State.cso</FullPath>
+      <FullPath>C:\Users\hyen6\Desktop\Framework\Digimon\Client\Bin\Shader_Digivice_State.cso</FullPath>
     </ContentFile>
     <ContentFile>
-      <FullPath>C:\Users\hyen6\Desktop\DIgimon\Client\Bin\Shader_Digivice_Target.cso</FullPath>
+      <FullPath>C:\Users\hyen6\Desktop\Framework\Digimon\Client\Bin\Shader_Digivice_Target.cso</FullPath>
     </ContentFile>
     <ContentFile>
-      <FullPath>C:\Users\hyen6\Desktop\DIgimon\Client\Bin\Shader_Hover.cso</FullPath>
+      <FullPath>C:\Users\hyen6\Desktop\Framework\Digimon\Client\Bin\Shader_Hover.cso</FullPath>
     </ContentFile>
     <ContentFile>
-      <FullPath>C:\Users\hyen6\Desktop\DIgimon\Client\Bin\Shader_Image_effect.cso</FullPath>
+      <FullPath>C:\Users\hyen6\Desktop\Framework\Digimon\Client\Bin\Shader_Image_effect.cso</FullPath>
     </ContentFile>
     <ContentFile>
-      <FullPath>C:\Users\hyen6\Desktop\DIgimon\Client\Bin\Shader_Inventory.cso</FullPath>
+      <FullPath>C:\Users\hyen6\Desktop\Framework\Digimon\Client\Bin\Shader_Inventory.cso</FullPath>
     </ContentFile>
     <ContentFile>
-      <FullPath>C:\Users\hyen6\Desktop\DIgimon\Client\Bin\Shader_Skill_Hover.cso</FullPath>
+      <FullPath>C:\Users\hyen6\Desktop\Framework\Digimon\Client\Bin\Shader_Skill_Hover.cso</FullPath>
     </ContentFile>
     <ContentFile>
-      <FullPath>C:\Users\hyen6\Desktop\DIgimon\Client\Bin\Shader_Skill_Image.cso</FullPath>
+      <FullPath>C:\Users\hyen6\Desktop\Framework\Digimon\Client\Bin\Shader_Skill_Image.cso</FullPath>
     </ContentFile>
     <ContentFile>
-      <FullPath>C:\Users\hyen6\Desktop\DIgimon\Client\Bin\Shader_UHD.cso</FullPath>
+      <FullPath>C:\Users\hyen6\Desktop\Framework\Digimon\Client\Bin\Shader_UHD.cso</FullPath>
     </ContentFile>
     <ContentFile>
-      <FullPath>C:\Users\hyen6\Desktop\DIgimon\Client\Bin\Shader_VtxAnimMesh.cso</FullPath>
+      <FullPath>C:\Users\hyen6\Desktop\Framework\Digimon\Client\Bin\Shader_VtxAnimMesh.cso</FullPath>
     </ContentFile>
     <ContentFile>
-      <FullPath>C:\Users\hyen6\Desktop\DIgimon\Client\Bin\Shader_VtxCube.cso</FullPath>
+      <FullPath>C:\Users\hyen6\Desktop\Framework\Digimon\Client\Bin\Shader_VtxCube.cso</FullPath>
     </ContentFile>
     <ContentFile>
-      <FullPath>C:\Users\hyen6\Desktop\DIgimon\Client\Bin\Shader_VtxMesh.cso</FullPath>
+      <FullPath>C:\Users\hyen6\Desktop\Framework\Digimon\Client\Bin\Shader_VtxMesh.cso</FullPath>
     </ContentFile>
     <ContentFile>
-      <FullPath>C:\Users\hyen6\Desktop\DIgimon\Client\Bin\Shader_VtxNorTex.cso</FullPath>
+      <FullPath>C:\Users\hyen6\Desktop\Framework\Digimon\Client\Bin\Shader_VtxNorTex.cso</FullPath>
     </ContentFile>
     <ContentFile>
-      <FullPath>C:\Users\hyen6\Desktop\DIgimon\Client\Bin\Shader_VtxPosTex.cso</FullPath>
+      <FullPath>C:\Users\hyen6\Desktop\Framework\Digimon\Client\Bin\Shader_VtxPosTex.cso</FullPath>
     </ContentFile>
     <ContentFile>
-      <FullPath>C:\Users\hyen6\Desktop\DIgimon\Client\Bin\Shader_VtxSkillMesh.cso</FullPath>
+      <FullPath>C:\Users\hyen6\Desktop\Framework\Digimon\Client\Bin\Shader_VtxSkillAngewomon.cso</FullPath>
+    </ContentFile>
+    <ContentFile>
+      <FullPath>C:\Users\hyen6\Desktop\Framework\Digimon\Client\Bin\Shader_VtxSkillMesh.cso</FullPath>
     </ContentFile>
   </ContentFiles>
   <SatelliteDlls />

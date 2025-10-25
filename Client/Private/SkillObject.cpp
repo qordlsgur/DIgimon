@@ -44,6 +44,11 @@ HRESULT CSkillObject::Render()
     return S_OK;
 }
 
+void CSkillObject::Update_Position(_fvector Position)
+{
+    m_pTransformCom->Set_State(STATE::POSITION, Position);
+}
+
 void CSkillObject::Set_Move(_vector Position)
 {
 }

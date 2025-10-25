@@ -178,13 +178,13 @@ void CPlayer::Update(_float fTimeDelta)
 		}
 	}
 
-	if (m_pBattle_Manager->Get_Battle())
-	{
-		if (m_pGameInstance->Key_Down(DIK_G))
-		{
-			m_pBattle_Manager->Set_End(true);
-		}
-	}
+	//if (m_pBattle_Manager->Get_Battle())
+	//{
+	//	if (m_pGameInstance->Key_Down(DIK_G))
+	//	{
+	//		m_pBattle_Manager->Set_End(true);
+	//	}
+	//}
 	__super::Update(fTimeDelta);
 }
 

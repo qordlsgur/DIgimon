@@ -157,10 +157,18 @@
   <ItemGroup>
     <ClInclude Include="..\public\Angewomon.h" />
     <ClInclude Include="..\public\AngewomonSkill1.h" />
+    <ClInclude Include="..\public\AngewomonSkill1_Part1.h" />
     <ClInclude Include="..\public\AngewomonSkill2.h" />
+    <ClInclude Include="..\public\AngewomonSkill2_Part1.h" />
+    <ClInclude Include="..\public\AngewomonSkill2_Part2.h" />
+    <ClInclude Include="..\public\AngewomonSkill2_Part3.h" />
+    <ClInclude Include="..\public\AngewomonSkill2_Part4.h" />
     <ClInclude Include="..\public\AngewomonSkill3.h" />
     <ClInclude Include="..\public\AngewomonSkill3_Part2.h" />
     <ClInclude Include="..\public\AngewomonSkill3_Part1.h" />
+    <ClInclude Include="..\public\AngewomonSkill1_Part2.h" />
+    <ClInclude Include="..\public\ApplyGatherEffect.h" />
+    <ClInclude Include="..\public\ApplySpreadEffect.h" />
     <ClInclude Include="..\Public\BackGround.h" />
     <ClInclude Include="..\public\Battle.h" />
     <ClInclude Include="..\Public\BattleBack.h" />
@@ -285,10 +293,18 @@
   <ItemGroup>
     <ClCompile Include="..\private\Angewomon.cpp" />
     <ClCompile Include="..\private\AngewomonSkill1.cpp" />
+    <ClCompile Include="..\private\AngewomonSkill1_Part1.cpp" />
     <ClCompile Include="..\private\AngewomonSkill2.cpp" />
+    <ClCompile Include="..\private\AngewomonSkill2_Part1.cpp" />
+    <ClCompile Include="..\private\AngewomonSkill2_Part2.cpp" />
+    <ClCompile Include="..\private\AngewomonSkill2_Part3.cpp" />
+    <ClCompile Include="..\private\AngewomonSkill2_Part4.cpp" />
     <ClCompile Include="..\private\AngewomonSkill3.cpp" />
     <ClCompile Include="..\private\AngewomonSkill3_Part2.cpp" />
     <ClCompile Include="..\private\AngewomonSkill3_Part1.cpp" />
+    <ClCompile Include="..\private\AngewomonSkill1_Part2.cpp" />
+    <ClCompile Include="..\private\ApplyGatherEffect.cpp" />
+    <ClCompile Include="..\private\ApplySpreadEffect.cpp" />
     <ClCompile Include="..\Private\BackGround.cpp" />
     <ClCompile Include="..\private\Battle.cpp" />
     <ClCompile Include="..\Private\BattleBack.cpp" />
@@ -431,7 +447,11 @@
     <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxMesh.hlsl" />
     <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxNorTex.hlsl" />
     <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxPosTex.hlsl" />
+    <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxSkillAngewomon.hlsl" />
     <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxSkillMesh.hlsl" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Bin\ShaderFiles\Effect.hlsli" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

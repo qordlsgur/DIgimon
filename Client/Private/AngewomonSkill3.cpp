@@ -37,19 +37,14 @@ HRESULT CAngewomonSkill3::Initialize(void* pArg)
 	m_iDamage = Pos->iDamage;
 
 	m_vPosition = Pos->m_vPosition;
-
+	m_vFirstPosigion = Pos->m_vPosition;
 	m_iDamage = Pos->iDamage;
 	m_vTarget_pos = Pos->m_vTargetPosition;
 	m_vTarget_pos.m128_f32[1] += 10.f;
-	if (Pos->Look == 0)
-	{
-		m_vPosition.m128_f32[2] -= 10.f;
-	}
-	else if (Pos->Look == 1)
-	{
-		m_vPosition.m128_f32[2] += 10.f;
-	}
-	//m_vTarget_pos = XMVectorSet(10.f, 10.f, 400.f, 1.f);
+
+	m_vFirstPosigion.m128_f32[1] += 13.f;
+	m_vPosition.m128_f32[1] += 13.f;
+
 	m_pTransformCom->Set_State(STATE::POSITION, m_vPosition);
 	m_pTransformCom->Update_WoldMatrix();
 	if (FAILED(Ready_PartObjects()))
@@ -71,24 +66,22 @@ void CAngewomonSkill3::Priority_Update(_float fTimeDelta)
 void CAngewomonSkill3::Update(_float fTimeDelta)
 {
 	_fTime += fTimeDelta;
-	if (_fTime >= 3.f)
+
+	_vector dir = m_vTarget_pos - m_vPosition;
+
+	dir.m128_f32[1] = 0.f;
+
+	if (XMVector3LengthSq(dir).m128_f32[0] > 0.0001f)
 	{
-		_vector dir = m_vTarget_pos - m_vPosition;
-
-		dir.m128_f32[1] = 0.f;
-
-		if (XMVector3LengthSq(dir).m128_f32[0] > 0.0001f)
-		{
-			dir = XMVector3Normalize(dir);
-			_float yaw = atan2f(XMVectorGetX(dir), XMVectorGetZ(dir));
-			m_pTransformCom->Rotation(0.f, yaw, 0.f);
-		}
+		dir = XMVector3Normalize(dir);
+		_float yaw = atan2f(XMVectorGetX(dir), XMVectorGetZ(dir));
+		
+		m_pTransformCom->Rotation(0.f, yaw, 0.f);
+	}
+	if (_fTime >= 1.4f)
 		m_pTransformCom->Target_Pos_Move(m_vTarget_pos, fTimeDelta);
-	}
 	else
-	{
-		m_pTransformCom->Set_State(STATE::POSITION, m_vPosition);
-	}
+		m_pTransformCom->Set_State(STATE::POSITION, m_vFirstPosigion);
 
 	m_pColliderCom->Update(XMLoadFloat4x4(m_pTransformCom->Get_WorldMatrixPtr()));
 

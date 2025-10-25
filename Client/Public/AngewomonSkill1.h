@@ -29,11 +29,15 @@ public:
 	virtual _int Get_Damage() override;
 
 private:
+	CPartObject* m_pSkillModel1 = { nullptr };
 	CCollider* m_pColliderCom = { nullptr };
 	class CInteraction_Manager* m_pInteraction_Manager = { nullptr };
 
+
 private:
 	HRESULT Ready_PartObjects();
+	HRESULT Ready_SkillObjects();
+	HRESULT Ready_SkillObjects2();
 
 public:
 	static CAngewomonSkill1* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);

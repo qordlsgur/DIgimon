@@ -26,12 +26,21 @@ public:
 	virtual HRESULT Render() override;
 
 private:
-	CModel* m_pModelCom = { nullptr };
-	CTexture* m_pTextureCom = { nullptr };
+	CModel* m_pModel1Com = { nullptr };
+	CModel* m_pModel2Com = { nullptr };
+	CModel* m_pModel3Com = { nullptr };
+	CModel* m_pModel4Com = { nullptr };
+	CTexture* m_pTexture1Com = { nullptr };
+	CTexture* m_pTexture2Com = { nullptr };
+	CTexture* m_pTexture3Com = { nullptr };
+	CTexture* m_pTexture4Com = { nullptr };
+	CTexture* m_pTexture5Com = { nullptr };
 	CShader* m_pShaderCom = { nullptr };
 
 	_float m_fTime{};
 
+	_bool m_bOn = { false };
+	_int a{};
 private:
 	HRESULT Ready_Components();
 	HRESULT Bind_ShaderResources();

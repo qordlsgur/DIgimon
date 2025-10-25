@@ -1,6 +1,8 @@
 #include "AngewomonSkill1.h"
 #include "GameInstance.h"
 #include "Interaction_Manager.h"
+#include "AngewomonSkill1_Part1.h"
+#include "AngewomonSkill1_Part2.h"
 
 CAngewomonSkill1::CAngewomonSkill1(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CSkillObject{ pDevice, pContext }
@@ -34,12 +36,16 @@ HRESULT CAngewomonSkill1::Initialize(void* pArg)
 	const POSITION* Pos = static_cast<const POSITION*>(pArg);
 
 	m_iDamage = Pos->iDamage;
-
+	m_vPosition = Pos->m_vPosition;
 	m_vTarget_pos = Pos->m_vTargetPosition;
+	m_pTransformCom->Set_State(STATE::POSITION, m_vPosition);
 
-	m_pTransformCom->Set_State(STATE::POSITION, m_vTarget_pos);
+	m_pTransformCom->Update_WoldMatrix();
 
 	if (FAILED(Ready_PartObjects()))
+		return E_FAIL;
+
+	if (FAILED(Ready_SkillObjects()))
 		return E_FAIL;
 
 	return S_OK;
@@ -53,7 +59,12 @@ void CAngewomonSkill1::Priority_Update(_float fTimeDelta)
 
 void CAngewomonSkill1::Update(_float fTimeDelta)
 {
-	m_pTransformCom->Set_State((STATE::POSITION), m_vTarget_pos);
+	if (m_bMove)
+	{
+		m_pTransformCom->Set_State((STATE::POSITION), m_vTarget_pos);
+		Ready_SkillObjects2();
+		m_bMonster = false;
+	}
 
 	m_pColliderCom->Update(XMLoadFloat4x4(m_pTransformCom->Get_WorldMatrixPtr()));
 
@@ -95,6 +106,38 @@ HRESULT CAngewomonSkill1::Ready_PartObjects()
 	m_pColliderCom->Set_Matrix(XMLoadFloat4x4(m_pTransformCom->Get_WorldMatrixPtr()));
 
 	return S_OK;;
+}
+
+HRESULT CAngewomonSkill1::Ready_SkillObjects()
+{
+	CAngewomonSkill1_Part1::BODY_PLAYER_DESC Skill1{};
+
+	Skill1.vPosition = m_pTransformCom->Get_State(STATE::POSITION);
+
+	/* Part_Skill1 */
+	if (FAILED(__super::Add_PartObject(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_AngewomonSkill1_Part1"),
+		TEXT("Part_Skill1"), &Skill1)))
+		return E_FAIL;
+
+	m_pSkillModel1 = dynamic_cast<CAngewomonSkill1_Part1*>(Find_PartObject(TEXT("Part_Skill1")));
+
+	return S_OK;
+}
+
+HRESULT CAngewomonSkill1::Ready_SkillObjects2()
+{
+	CAngewomonSkill1_Part2::BODY_PLAYER_DESC Skill1{};
+
+	Skill1.vPosition = m_pTransformCom->Get_State(STATE::POSITION);
+
+	/* Part_Skill1 */
+	if (FAILED(__super::Add_PartObject(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_AngewomonSkill1_Part2"),
+		TEXT("Part_Skill2"), &Skill1)))
+		return E_FAIL;
+
+	m_pSkillModel1 = dynamic_cast<CAngewomonSkill1_Part1*>(Find_PartObject(TEXT("Part_Skill2")));
+
+	return S_OK;
 }
 
 CAngewomonSkill1* CAngewomonSkill1::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)

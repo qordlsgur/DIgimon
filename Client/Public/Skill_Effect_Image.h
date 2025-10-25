@@ -30,8 +30,12 @@ public:
 private:
 	CVIBuffer_Rect* m_pVIBufferCom = { nullptr };
 	CTexture* m_pTextureCom = { nullptr };
+	CTexture* m_pDissolveTextureCom = { nullptr };
+	CTexture* m_pMaskTextureCom = { nullptr };
 	CShader* m_pShaderCom = { nullptr };
 
+	_float m_fTime{};
+	_int a{};
 private:
 	HRESULT Ready_Components();
 	HRESULT Bind_ShaderResources();

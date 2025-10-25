@@ -32,7 +32,13 @@
 
 #pragma region Skill
 #include "AngewomonSkill1.h"
+#include "AngewomonSkill1_Part1.h"
+#include "AngewomonSkill1_Part2.h"
 #include "AngewomonSkill2.h"
+#include "AngewomonSkill2_Part1.h"
+#include "AngewomonSkill2_Part2.h"
+#include "AngewomonSkill2_Part3.h"
+#include "AngewomonSkill2_Part4.h"
 #include "AngewomonSkill3.h"
 #include "AngewomonSkill3_Part1.h"
 #include "AngewomonSkill3_Part2.h"
@@ -400,13 +406,6 @@ HRESULT CLoader::Loading_For_GamePlay()
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/KeyBord/Key%d.png"), 10))))
 		return E_FAIL;
 
-	//Noise-------------------------------------------------------------------------------------------------------------------------------------------
-
-		/* For.Prototype_Component_Texture_Noise*/
-	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Noise"),
-		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/Noise/Noise%d.png"), 9))))
-		return E_FAIL;
-
 	//디지몬UI이미지-------------------------------------------------------------------------------------------------------------------------------------------
 
 
@@ -510,6 +509,38 @@ HRESULT CLoader::Loading_For_GamePlay()
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Whirlwind"),
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/Effect/Whirlwind%d.png"), 2))))
 		return E_FAIL;
+
+	/* For.Prototype_Component_Texture_Noise*/
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Noise"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/Noise/Noise%d.png"), 11))))
+		return E_FAIL;
+
+	/* For.Prototype_Component_Texture_Light*/
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Light"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/Effect/LightEffect%d.png"), 3))))
+		return E_FAIL;
+
+	/* For.Prototype_Component_Texture_CircleEffect*/
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_CircleEffect"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/Effect/CircleEffect%d.png"), 2))))
+		return E_FAIL;	
+	
+	/* For.Prototype_Component_Texture_Circle*/
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Circle"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/Effect/Circle%d.png"), 2))))
+		return E_FAIL;
+
+	/* For.Prototype_Component_Texture_Wave*/
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Wave"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/Effect/Wave%d.png"), 2))))
+		return E_FAIL;
+
+	/* For.Prototype_Component_Texture_Space*/
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Space"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/Effect/Space%d.png"), 5))))
+		return E_FAIL;
+
+
 
 #pragma endregion
 
@@ -864,6 +895,11 @@ HRESULT CLoader::Loading_For_GamePlay()
 
 #pragma region Angewomon
 
+	/* For.Prototype_Component_Shader_VtxSkillAngewomon*/
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Shader_VtxSkillAngewomon"),
+		CShader::Create(m_pDevice, m_pContext, TEXT("../Bin/ShaderFiles/Shader_VtxSkillAngewomon.hlsl"), VTXPOSTEX::Elements, VTXPOSTEX::iNumElements))))
+		return E_FAIL;
+
 	/* For.Prototype_Component_Model_Angewomon*/
 	PreTransformMatrix = XMMatrixScaling(0.1f, 0.1f, 0.1f) * XMMatrixRotationY(XMConvertToRadians(180.0f));
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Model_Angewomon"),
@@ -885,28 +921,37 @@ HRESULT CLoader::Loading_For_GamePlay()
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_AngewomonSkill1"),
 		CAngewomonSkill1::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
+	/* For.Prototype_GameObject_AngewomonSkill1_Part1*/
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_AngewomonSkill1_Part1"),
+		CAngewomonSkill1_Part1::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+	/* For.Prototype_GameObject_AngewomonSkill1_Part2*/
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_AngewomonSkill1_Part2"),
+		CAngewomonSkill1_Part2::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
 
+	
 	/* For.Prototype_GameObject_AngewomonSkill2*/
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_AngewomonSkill2"),
 		CAngewomonSkill2::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 	/* For.Prototype_Component_Model_Angewomon_Skill2_1*/
-	PreTransformMatrix = XMMatrixScaling(0.2f, 0.2f, 0.2f);
+	PreTransformMatrix = XMMatrixScaling(0.1f, 0.1f, 0.1f);
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Model_Angewomon_Skill2_1"),
 		CModel::Create(m_pDevice, m_pContext, MODEL::NONANIM, "../Bin/Resources/Models/Angewomon/Angewomon2_1.bin", PreTransformMatrix))))
 		return E_FAIL;
 	/* For.Prototype_Component_Model_Angewomon_Skill2_2*/
-	PreTransformMatrix = XMMatrixScaling(0.2f, 0.2f, 0.2f);
+	PreTransformMatrix = XMMatrixScaling(0.1f, 0.1f, 0.1f);
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Model_Angewomon_Skill2_2"),
 		CModel::Create(m_pDevice, m_pContext, MODEL::NONANIM, "../Bin/Resources/Models/Angewomon/Angewomon2_2.bin", PreTransformMatrix))))
 		return E_FAIL;
 	/* For.Prototype_Component_Model_Angewomon_Skill2_3*/
-	PreTransformMatrix = XMMatrixScaling(0.2f, 0.2f, 0.2f);
+	PreTransformMatrix = XMMatrixScaling(0.1f, 0.1f, 0.1f);
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Model_Angewomon_Skill2_3"),
 		CModel::Create(m_pDevice, m_pContext, MODEL::NONANIM, "../Bin/Resources/Models/Angewomon/Angewomon2_3.bin", PreTransformMatrix))))
 		return E_FAIL;
 	/* For.Prototype_Component_Model_Angewomon_Skill2_4*/
-	PreTransformMatrix = XMMatrixScaling(0.2f, 0.2f, 0.2f);
+	PreTransformMatrix = XMMatrixScaling(0.1f, 0.1f, 0.1f);
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Model_Angewomon_Skill2_4"),
 		CModel::Create(m_pDevice, m_pContext, MODEL::NONANIM, "../Bin/Resources/Models/Angewomon/Angewomon2_4.bin", PreTransformMatrix))))
 		return E_FAIL;
@@ -914,6 +959,23 @@ HRESULT CLoader::Loading_For_GamePlay()
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_AngewomonSkill2_Image"),
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Models/Angewomon/AngewomonSkill2_%d.png"), 3))))
 		return E_FAIL;
+	/* For.Prototype_GameObject_AngewomonSkill2_Part1*/
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_AngewomonSkill2_Part1"),
+		CAngewomonSkill2_Part1::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+	/* For.Prototype_GameObject_AngewomonSkill2_Part2*/
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_AngewomonSkill2_Part2"),
+		CAngewomonSkill2_Part2::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+	/* For.Prototype_GameObject_AngewomonSkill2_Part3*/
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_AngewomonSkill2_Part3"),
+		CAngewomonSkill2_Part3::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+	/* For.Prototype_GameObject_AngewomonSkill2_Part4*/
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_AngewomonSkill2_Part4"),
+		CAngewomonSkill2_Part4::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
 
 	/* For.Prototype_GameObject_AngewomonSkill3*/
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_AngewomonSkill3"),
@@ -925,7 +987,7 @@ HRESULT CLoader::Loading_For_GamePlay()
 		CAngewomonSkill3_Part1::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 	/* For.Prototype_Component_Model_Angewomon_Skill3_1*/
-	PreTransformMatrix = XMMatrixScaling(0.2f, 0.2f, 0.2f);
+	PreTransformMatrix = XMMatrixScaling(0.2f, 0.2f, 0.2f) * XMMatrixTranslation(0.f,5.f,-5.f);
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Model_Angewomon_Skill3_1"),
 		CModel::Create(m_pDevice, m_pContext, MODEL::NONANIM, "../Bin/Resources/Models/Angewomon/Angewomon3_0.bin", PreTransformMatrix))))
 		return E_FAIL;
@@ -1225,6 +1287,16 @@ HRESULT CLoader::Loading_For_GamePlay()
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_WargreymonSkill2"),
 		CWargreymonSkill2::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
+	/* For.Prototype_Component_Model_WargreymonSkill2_1*/
+	PreTransformMatrix = XMMatrixScaling(0.01f, 0.01f, 0.01f) * XMMatrixRotationY(XMConvertToRadians(-180.0f));
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Model_WargreymonSkill2_1"),
+		CModel::Create(m_pDevice, m_pContext, MODEL::NONANIM, "../Bin/Resources/Models/Wargreymon/Wargreymon2_1.Bin", PreTransformMatrix))))
+		return E_FAIL;
+	/* For.Prototype_Component_Texture_WargreymonSkill2_Image*/
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_WargreymonSkill2_Image"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Models/Wargreymon/WargreymonSkill2_%d.png"), 1))))
+		return E_FAIL;
+
 
 	/* For.Prototype_GameObject_WargreymonSkill3*/
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_WargreymonSkill3"),

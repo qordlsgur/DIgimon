@@ -10,6 +10,8 @@ public:
 	typedef struct tagPartObjectDesc
 	{
 		class CTransform* pParentTransform = { nullptr };
+		_vector vPosition;
+
 	}PARTOBJECT_DESC;
 
 protected:
@@ -33,8 +35,11 @@ public:
 
 	virtual _float Get_TrackPosition() { return m_fTrackPosition; }
 	virtual void Set_Dissolve(_bool Dissolve) { m_bDissolve = Dissolve; }
+
+	void Compute_Depth();
 protected:
-	class CTransform* m_pParentTransformCom = { nullptr };
+	class CTransform*	m_pParentTransformCom = { nullptr };
+	_vector				m_vPosition{};
 
 	_float4x4			m_CombinedWorldMatrix = {};
 	_bool				m_isAnimFinish = { false };
@@ -42,6 +47,8 @@ protected:
 	_float m_fTrackPosition{};
 	_bool m_bDissolve = { false };
 	_float m_fTime{};
+
+	_float				m_fDepth = {};
 
 public:
 	virtual CGameObject* Clone(void* pArg) = 0;

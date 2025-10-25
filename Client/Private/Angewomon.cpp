@@ -5,6 +5,7 @@
 #include "StateMachine.h"
 #include "Digimon_Manager.h"
 #include "SkillObject.h"
+#include "AngewomonSkill1.h"
 
 CAngewomon::CAngewomon(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CContainerObject{ pDevice, pContext }
@@ -75,21 +76,21 @@ void CAngewomon::Update(_float fTimeDelta)
 			if (!m_bMove)
 				m_pFsm->Enter(DIGIMONSTATE::STAND, m_pPart_Body);
 
-				//if (m_pGameInstance->Key_Down(DIK_1))
-				//{
-				//	m_pFsm->Enter(DIGIMONSTATE::SKILL3, m_pPart_Body, false, false);
-				//	m_bMove = true;
-				//}
-				//m_iSkill = static_cast<_int>(m_pPart_Body->Get_TrackPosition());
-				//if (m_iSkill == 68)
-				//	Creat_Skill(3);
-				//m_bMonster = true;
-				//if (m_bMove && m_pPart_Body->Get_AnimFinish())
-				//{
-				//	m_bMove = false;
-				//}
-				//if (!m_bMove)
-				//	m_pFsm->Enter(DIGIMONSTATE::STAND, m_pPart_Body);
+			//if (m_pGameInstance->Key_Down(DIK_1))
+			//{
+			//	m_pFsm->Enter(DIGIMONSTATE::SKILL3, m_pPart_Body, false, false);
+			//	m_bMove = true;
+			//}
+			//m_iSkill = static_cast<_int>(m_pPart_Body->Get_TrackPosition());
+			//if (m_iSkill == 68)
+			//	Creat_Skill(3);
+			//m_bMonster = true;
+			//if (m_bMove && m_pPart_Body->Get_AnimFinish())
+			//{
+			//	m_bMove = false;
+			//}
+			//if (!m_bMove)
+			//	m_pFsm->Enter(DIGIMONSTATE::STAND, m_pPart_Body);
 		}
 		else
 		{
@@ -107,17 +108,26 @@ void CAngewomon::Update(_float fTimeDelta)
 					m_iDamage = static_cast<_int>(Info.Damage * Info.DigimonSkill1Info.HitCount * 0.8f);
 					m_iSkill = static_cast<_int>(m_pPart_Body->Get_TrackPosition());
 
-					if (m_iSkill == 29)
+					switch (m_iSkill)
 					{
-						if (m_iLastSkill != m_iSkill)
+					case 17:
+						if (m_iSkill != m_iLastSkill)
 						{
+							m_mHandParts = XMLoadFloat4x4(static_cast<CBody_Angewomon*>(m_pPart_Body)->Get_BoneMatrixPtr("Bip001-L-Finger2"));
 							Creat_Skill(1);
-							m_iLastSkill = m_iSkill; // 마지막으로 실행한 트랙 위치 저장
+							m_iLastSkill = m_iSkill;
 						}
-					}
-					else
-					{
-						m_iLastSkill = -1; // 다른 트랙 위치면 초기화
+						break;
+					case 29:
+						if (m_iSkill != m_iLastSkill)
+						{
+							m_pSkill1->Set_Move(true);
+							m_iLastSkill = m_iSkill;
+						}
+						break;
+					default:
+						m_iLastSkill = -1;
+						break;
 					}
 				}
 				else if (m_bSkill2)
@@ -285,8 +295,8 @@ void CAngewomon::Creat_Skill(_int SkillNum)
 	{
 	case 1:
 		Desc.iDamage = m_iDamage;
-		m_pGameInstance->Add_GameObject_ToLayer(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_AngewomonSkill1"),
-			ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Layer_Angewomon1"), &Desc);
+		m_pSkill1 = static_cast<CAngewomonSkill1*>(m_pGameInstance->Add_GameObject_ToLayer_ToCreate(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_AngewomonSkill1"),
+			ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Layer_Angewomon1"), &Desc));
 		break;
 
 	case 2:

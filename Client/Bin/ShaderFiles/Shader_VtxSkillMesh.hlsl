@@ -3,7 +3,10 @@
 matrix g_WorldMatrix, g_ViewMatrix, g_ProjMatrix;
 texture2D g_DiffuseTexture;
 
-//texture2D g_
+texture2D g_Texture;
+texture2D g_DepthTexture;
+texture2D g_Dissolve;
+texture2D g_Mask;
 
 float Time;
 
@@ -84,7 +87,7 @@ PS_OUT PS_MAIN(PS_IN In)
     if (vMtrlDiffuse.r != 0.f)
         vMtrlDiffuse.rgb += Color;
     
-       Out.vDiffuse = vMtrlDiffuse;
+    Out.vDiffuse = vMtrlDiffuse;
     Out.vNormal = float4(In.vNormal.xyz * 0.5f + 0.5f, 0.f);
     Out.vDepth = float4(In.vProjPos.z / In.vProjPos.w, In.vProjPos.w / 500.0f, 0.0f, 0.0f);
     return Out;
@@ -106,6 +109,48 @@ PS_OUT PS_Arrow(PS_IN In)
     return Out;
 }
 
+/* «»ºø Ω¶¿Ã¥ı : «»ºø¿« √÷¡æ¿˚¿Œ ªˆ¿ª ∞·¡§«œ≥Æ. */
+PS_OUT PS_Cross(PS_IN In)
+{
+    //PS_OUT Out;
+
+    //vector vMtrlDiffuse = g_DiffuseTexture.Sample(DefaultSampler, In.vTexcoord);
+    //float3 Color = float3(250, 142, 229) / 255.0f;
+    
+    
+    //if (vMtrlDiffuse.r <= 0.4f)
+    //    discard;
+    
+    //vMtrlDiffuse.rgb = vMtrlDiffuse.rgb * Color;
+    
+    //Out.vDiffuse = vMtrlDiffuse;
+    //Out.vNormal = float4(In.vNormal.xyz * 0.5f + 0.5f, 0.f);
+    //Out.vDepth = float4(In.vProjPos.z / In.vProjPos.w, In.vProjPos.w / 500.0f, 0.0f, 0.0f);
+    //return Out;
+    
+
+    PS_OUT Out;
+
+    vector vMtrlDiffuse = g_DiffuseTexture.Sample(DefaultSampler, In.vTexcoord);
+    float3 Color = float3(250, 142, 229) / 255.0f;
+    float4 Disslove = g_Dissolve.Sample(DefaultSampler, In.vTexcoord);
+    
+    if (vMtrlDiffuse.r <= 0.4f)
+        discard;
+    
+    if (Time > Disslove.r)
+        discard;
+    
+    vMtrlDiffuse.rgb = vMtrlDiffuse.rgb * Color;
+    
+    vMtrlDiffuse *= Disslove.a;
+    
+    Out.vDiffuse = vMtrlDiffuse;
+    Out.vNormal = float4(In.vNormal.xyz * 0.5f + 0.5f, 0.f);
+    Out.vDepth = float4(In.vProjPos.z / In.vProjPos.w, In.vProjPos.w / 500.0f, 0.0f, 0.0f);
+    return Out;
+}
+
 technique11 DefaultTechnique
 {
     pass AngewomonSkill3
@@ -120,11 +165,21 @@ technique11 DefaultTechnique
 
     pass AngewomonSkillArrow
     {
-        SetRasterizerState(RS_Default);
+        SetRasterizerState(RS_Cull_None);
         SetDepthStencilState(DSS_Default, 0);
-        SetBlendState(BS_AlphaBlend, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
+        SetBlendState(BS_Blend, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
         VertexShader = compile vs_5_0 VS_MAIN();
         GeometryShader = NULL;
         PixelShader = compile ps_5_0 PS_Arrow();
+    }
+
+    pass AngewomonSkillCross
+    {
+        SetRasterizerState(RS_Cull_None);
+        SetDepthStencilState(DSS_Default, 0);
+        SetBlendState(BS_Blend, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
+        VertexShader = compile vs_5_0 VS_MAIN();
+        GeometryShader = NULL;
+        PixelShader = compile ps_5_0 PS_Cross();
     }
 }

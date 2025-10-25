@@ -32,11 +32,15 @@ public:
 	void Set_TargetPos(_fvector Pos) { m_vTarget_pos = Pos; }
 	void Set_TrakPosition(_float TrakPosition) { m_fTrakPosition = TrakPosition; }
 
+	void Update_Position(_fvector Position);
+
 	virtual void Set_Move(_vector Position);
 	virtual void Move(_float fTimeDatel);
 	virtual void Set_Hit(_bool Hit) { m_bHit = Hit; }
 	virtual _bool Get_Hit() { return m_bHit; }
 	virtual _int Get_Damage() = 0;
+
+	virtual void Set_Move(_bool Move) { m_bMove = Move; }
 protected:
 	_vector		m_vPosition{};
 	_vector		m_vTarget_pos{};
@@ -52,6 +56,8 @@ protected:
 	_float		m_fY;
 
 	_bool		m_bHit = { false };
+
+	_bool		m_bMove = { false };
 public:
 	virtual CGameObject* Clone(void* pArg) = 0;
 	virtual void Free() override;

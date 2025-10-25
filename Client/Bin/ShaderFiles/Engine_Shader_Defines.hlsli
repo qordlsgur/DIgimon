@@ -41,6 +41,11 @@ RasterizerState RS_Cull_Front
     CullMode = Front;
 };
 
+RasterizerState RS_Cull_None
+{
+    CullMode = None;
+};
+
 DepthStencilState DSS_Default
 {
     DepthEnable = true;
