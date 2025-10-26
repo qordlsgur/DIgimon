@@ -48,7 +48,7 @@ private:
 
 	_matrix m_mHandParts{};
 	_bool m_bMove = false;
-
+	_vector m_vHandPosition{};
 	_bool m_bSkillOn = { false };
 
 private:

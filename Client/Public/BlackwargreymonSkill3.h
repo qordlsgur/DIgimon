@@ -30,6 +30,7 @@ public:
 	//virtual CCollider* Get_Collider() override;
 	virtual _int Get_Damage() override;
 private:
+	CPartObject* m_pSkillModel1 = { nullptr };
 	CCollider* m_pColliderCom = { nullptr };
 
 	class CInteraction_Manager* m_pInteraction_Manager = { nullptr };
@@ -41,7 +42,7 @@ private:
 	_bool m_bEnd = { false };
 private:
 	HRESULT Ready_PartObjects();
-
+	HRESULT Ready_SkillObjects();
 
 public:
 	static CBlackwargreymonSkill3* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);

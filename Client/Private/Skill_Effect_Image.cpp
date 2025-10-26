@@ -24,9 +24,9 @@ HRESULT CSkill_Effect_Image::Initialize(void* pArg)
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 
-	m_pTransformCom->Set_Scale(100.f, 100.f, 100.f);
+	m_pTransformCom->Set_Scale(10.f, 10.f, 10.f);
 
-	m_pTransformCom->Set_State(STATE::POSITION, XMVectorSet(100.f, 30.f, 500.f,1.f));
+	m_pTransformCom->Set_State(STATE::POSITION, XMVectorSet(100.f, 10.f, 500.f,1.f));
 	m_fTime = 50.f;
 
 	return S_OK;
@@ -40,10 +40,10 @@ void CSkill_Effect_Image::Update(_float fTimeDelta)
 {
 	m_fTime -= fTimeDelta * 50.f;
 
-	m_pTransformCom->Set_Scale(m_fTime,m_fTime, m_fTime);
+	//m_pTransformCom->Set_Scale(m_fTime,m_fTime, m_fTime);
 
-	if (m_fTime < 0.f)
-		m_fTime = 50.f;
+	//if (m_fTime < 0.f)
+	//	m_fTime = 50.f;
 
 	if (m_pGameInstance->Key_Down(DIK_L))
 		a++;
@@ -56,6 +56,10 @@ void CSkill_Effect_Image::Update(_float fTimeDelta)
 	
 	if (a > 4)
 		a = 0;
+
+
+	m_vPosition = XMVectorSet(m_pTransformCom->Get_Scale().x, m_pTransformCom->Get_Scale().y, m_pTransformCom->Get_Scale().z, 1.f);
+	m_vCamPosition = XMLoadFloat4(m_pGameInstance->Get_CamPosition());
 }
 
 void CSkill_Effect_Image::Late_Update(_float fTimeDelta)
@@ -117,6 +121,12 @@ HRESULT CSkill_Effect_Image::Ready_Components()
 HRESULT CSkill_Effect_Image::Bind_ShaderResources()
 {
 	if (FAILED(m_pTransformCom->Bind_ShaderResource(m_pShaderCom, "g_WorldMatrix")))
+		return E_FAIL;
+	if (FAILED(m_pShaderCom->Bind_Vector("g_Scale", &m_vPosition)))
+		return E_FAIL;	
+	//if (FAILED(m_pShaderCom->Bind_Vector("g_vCamPosition", &m_vCamPosition)))
+	//	return E_FAIL;
+	if (FAILED(m_pShaderCom->Bind_RawValue("g_vCamPosition", m_pGameInstance->Get_CamPosition(), sizeof(_float3))))
 		return E_FAIL;
 	if (FAILED(m_pShaderCom->Bind_Matrix("g_ViewMatrix", m_pGameInstance->Get_Transform_Float4x4(D3DTS::VIEW))))
 		return E_FAIL;

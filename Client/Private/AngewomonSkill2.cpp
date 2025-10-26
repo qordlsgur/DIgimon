@@ -53,6 +53,7 @@ HRESULT CAngewomonSkill2::Initialize(void* pArg)
 	}
 
 	m_pTransformCom->Set_State(STATE::POSITION, m_vPosition);
+	m_pTransformCom->Update_WoldMatrix();
 
 	if (FAILED(Ready_PartObjects()))
 		return E_FAIL;

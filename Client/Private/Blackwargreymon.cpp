@@ -5,6 +5,9 @@
 #include "StateMachine.h"
 #include "Digimon_Manager.h"
 #include "SkillObject.h"
+#include "BlackwargreymonSkill3.h"
+#include "SkillObject.h"
+#include "SkillObject.h"
 
 CBlackwargreymon::CBlackwargreymon(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CContainerObject{ pDevice, pContext }
@@ -71,23 +74,34 @@ void CBlackwargreymon::Update(_float fTimeDelta)
 			}
 			if (!m_bMove)
 				m_pFsm->Enter(DIGIMONSTATE::STAND, m_pPart_Body);
-			//if (m_pGameInstance->Key_Down(DIK_1))
-			//{
-			//	m_pFsm->Enter(DIGIMONSTATE::SKILL3, m_pPart_Body, false, false);
-
-
-			//	m_bMove = true;
-			//}
-			//m_iSkill = static_cast<_int>(m_pPart_Body->Get_TrackPosition());
-			//if (m_iSkill == 13)
-			//	Creat_Skill(3);
-			//m_bMonster = true;
-			//if (m_bMove && m_pPart_Body->Get_AnimFinish())
-			//{
-			//	m_bMove = false;
-			//}
-			//if (!m_bMove)
-			//	m_pFsm->Enter(DIGIMONSTATE::STAND, m_pPart_Body);
+			/*if (m_pGameInstance->Key_Down(DIK_1))
+			{
+				m_pFsm->Enter(DIGIMONSTATE::SKILL3, m_pPart_Body, false, false);
+				m_bMove = true;
+			}
+			m_iSkill = static_cast<_int>(m_pPart_Body->Get_TrackPosition());
+			switch (m_iSkill)
+			{
+			case 13:
+				if (m_iSkill != m_iLastSkill)
+				{
+					Creat_Skill(3);
+					m_iLastSkill = m_iSkill;
+				}
+				break;
+			case 109:
+				if (m_iSkill != m_iLastSkill)
+				{
+					m_pSkill1->Set_Move(true);
+					m_iLastSkill = m_iSkill;
+				}
+				break;
+			default:
+				m_iLastSkill = -1;
+				break;
+			}
+			if (!m_bMove)
+				m_pFsm->Enter(DIGIMONSTATE::STAND, m_pPart_Body);*/
 		}
 		else
 		{
@@ -141,20 +155,29 @@ void CBlackwargreymon::Update(_float fTimeDelta)
 				else if (m_bSkill3)
 				{
 					Skill3();
-
 					m_iDamage = static_cast<_int>(Info.Damage * Info.DigimonSkill2Info.HitCount * 1.2f);
 					m_iSkill = static_cast<_int>(m_pPart_Body->Get_TrackPosition());
-					if (m_iSkill == 13)
+					switch (m_iSkill)
 					{
-						if (m_iLastSkill != m_iSkill)
+					case 13:
+						if (m_iSkill != m_iLastSkill)
 						{
 							Creat_Skill(3);
-							m_iLastSkill = m_iSkill; // 마지막으로 실행한 트랙 위치 저장
+							m_iLastSkill = m_iSkill;
 						}
-					}
-					else
-					{
-						m_iLastSkill = -1; // 다른 트랙 위치면 초기화
+						break;
+					case 109:
+					case 110:
+					case 111:
+						if (m_iSkill != m_iLastSkill)
+						{
+							m_pSkill1->Set_Move(true);
+							m_iLastSkill = m_iSkill;
+						}
+						break;
+					default:
+						m_iLastSkill = -1;
+						break;
 					}
 				}
 
@@ -341,8 +364,8 @@ void CBlackwargreymon::Creat_Skill(_int SkillNum)
 
 	case 3:
 		Desc.iDamage = m_iDamage;
-		m_pGameInstance->Add_GameObject_ToLayer(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_BlackwargreymonSkill3"),
-			ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Layer_BlackwargreymonSkill3"), &Desc);
+		m_pSkill1 = static_cast<CBlackwargreymonSkill3*>(m_pGameInstance->Add_GameObject_ToLayer_ToCreate(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_BlackwargreymonSkill3"),
+			ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Layer_BlackwargreymonSkill3"), &Desc));
 
 		break;
 	}

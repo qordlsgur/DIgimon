@@ -27,8 +27,8 @@ HRESULT CAngewomonSkill1_Part2::Initialize(void* pArg)
     m_vPosition.m128_f32[1] += 10.f;
 
     m_pTransformCom->Set_State(STATE::POSITION, m_vPosition);
-    m_pTransformCom->Set_Scale(1000.f, 1000.f, 1000.f);
-    m_fTime = 50.f;
+    m_pTransformCom->Set_Scale(100.f, 100.f, 100.f);
+    m_fTime = 100.f;
 
     return S_OK;
 }

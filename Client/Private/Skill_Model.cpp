@@ -83,10 +83,10 @@ HRESULT CSkill_Model::Render()
 	if (FAILED(m_pModel1Com->Render(0)))
 		return E_FAIL;
 
-	if (FAILED(m_pModel2Com->Render(0)))
-		return E_FAIL;
+	//if (FAILED(m_pModel2Com->Render(0)))
+	//	return E_FAIL;
 
-	if (FAILED(m_pModel3Com->Render(0)))
+	//if (FAILED(m_pModel3Com->Render(0)))
 		return E_FAIL;
 
 	//if (FAILED(m_pModel4Com->Render(0)))
@@ -98,7 +98,7 @@ HRESULT CSkill_Model::Render()
 HRESULT CSkill_Model::Ready_Components()
 {
 	/* Com_Model1 */
-	if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Model_Angewomon_Skill2_1"),
+	if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Model_WargreymonSkill2_1"),
 		TEXT("Com_Model1"), reinterpret_cast<CComponent**>(&m_pModel1Com))))
 		return E_FAIL;
 
@@ -166,13 +166,13 @@ HRESULT CSkill_Model::Bind_ShaderResources()
 	if (FAILED(m_pTexture1Com->Bind_ShaderResource(m_pShaderCom, "g_DiffuseTexture", 0)))
 		return E_FAIL;
 
-	if (FAILED(m_pTexture2Com->Bind_ShaderResource(m_pShaderCom, "g_DiffuseTexture1", 0)))
-		return E_FAIL;
+	//if (FAILED(m_pTexture2Com->Bind_ShaderResource(m_pShaderCom, "g_DiffuseTexture1", 0)))
+	//	return E_FAIL;
 
-	if (FAILED(m_pTexture3Com->Bind_ShaderResource(m_pShaderCom, "g_DiffuseTexture2", 1)))
-		return E_FAIL;
+	//if (FAILED(m_pTexture3Com->Bind_ShaderResource(m_pShaderCom, "g_DiffuseTexture2", 1)))
+	//	return E_FAIL;
 
-	if (FAILED(m_pTexture4Com->Bind_ShaderResource(m_pShaderCom, "g_DiffuseTexture3", 2)))
+	//if (FAILED(m_pTexture4Com->Bind_ShaderResource(m_pShaderCom, "g_DiffuseTexture3", 2)))
 		return E_FAIL;
 
 	if (FAILED(m_pTexture5Com->Bind_ShaderResource(m_pShaderCom, "g_Dissolve", 7)))

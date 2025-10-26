@@ -118,10 +118,7 @@ PS_OUT PS_Cross(PS_IN In)
     float3 Color = float3(250, 142, 229) / 255.0f;
     float4 Disslove = g_Dissolve.Sample(DefaultSampler, In.vTexcoord);
     
-    float alpha = vMtrlDiffuse.a;
-   
-    
-    if (vMtrlDiffuse.r <= 0.2f)
+    if (vMtrlDiffuse.r <= 0.4f)
         discard;
     
     if (Time > Disslove.r)
@@ -130,6 +127,9 @@ PS_OUT PS_Cross(PS_IN In)
     vMtrlDiffuse.rgb = vMtrlDiffuse.rgb * Color;
     
     vMtrlDiffuse *= Disslove.a;
+    
+    if (vMtrlDiffuse.a <= 0.2f)
+        discard;
     
     Out.vDiffuse = vMtrlDiffuse;
     Out.vNormal = float4(In.vNormal.xyz * 0.5f + 0.5f, 0.f);
@@ -198,9 +198,9 @@ PS_OUT_SKILL1EFFECT PS_MAIN_SKILL1EFFECT(PS_IN_SKILL1EFFECT In)
     if (Mask.r <= 0.4f)
         discard;
     
-    float4 Color = float4(250 / 255.0f, 142 / 255.0f, 229 / 255.0f, Mask.a);
+    //float4 Color = float4(250 / 255.0f, 142 / 255.0f, 229 / 255.0f, Mask.a);
     
-    Mask *= Color;
+    //vColor.a = Mask.a;
     
     //vColor *= Mask;
     
@@ -305,7 +305,7 @@ technique11 DefaultTechnique
     {
         SetRasterizerState(RS_Cull_None);
         SetDepthStencilState(DSS_Default, 0);
-        SetBlendState(BS_AlphaBlend, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
+        SetBlendState(BS_Blend, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
         VertexShader = compile vs_5_0 VS_MAIN();
         GeometryShader = NULL;
         PixelShader = compile ps_5_0 PS_Cross();
@@ -315,7 +315,7 @@ technique11 DefaultTechnique
     {
         SetRasterizerState(RS_Cull_None);
         SetDepthStencilState(DSS_Default, 0);
-        SetBlendState(BS_Blend, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
+        SetBlendState(BS_None, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
         VertexShader = compile vs_5_0 VS_MAIN_SKILL1EFFECT();
         GeometryShader = NULL;
         PixelShader = compile ps_5_0 PS_MAIN_SKILL1EFFECT();

@@ -190,6 +190,7 @@
     <ClInclude Include="..\public\BlackwargreymonSkill1.h" />
     <ClInclude Include="..\public\BlackwargreymonSkill2.h" />
     <ClInclude Include="..\public\BlackwargreymonSkill3.h" />
+    <ClInclude Include="..\public\BlackwargreymonSkill3_Part1.h" />
     <ClInclude Include="..\Public\BldA.h" />
     <ClInclude Include="..\Public\BldB.h" />
     <ClInclude Include="..\Public\BldC.h" />
@@ -326,6 +327,7 @@
     <ClCompile Include="..\private\BlackwargreymonSkill1.cpp" />
     <ClCompile Include="..\private\BlackwargreymonSkill2.cpp" />
     <ClCompile Include="..\private\BlackwargreymonSkill3.cpp" />
+    <ClCompile Include="..\private\BlackwargreymonSkill3_Part1.cpp" />
     <ClCompile Include="..\Private\BldA.cpp" />
     <ClCompile Include="..\Private\BldB.cpp" />
     <ClCompile Include="..\Private\BldC.cpp" />

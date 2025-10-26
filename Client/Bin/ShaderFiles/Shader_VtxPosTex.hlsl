@@ -1,7 +1,8 @@
 #include "Engine_Shader_Defines.hlsli"
 #include "Effect.hlsli"
 matrix g_WorldMatrix, g_ViewMatrix, g_ProjMatrix;
-
+vector g_Scale;
+vector g_vCamPosition;
 texture2D g_Texture;
 texture2D g_DepthTexture;
 texture2D g_Dissolve;
@@ -147,10 +148,18 @@ VS_OUT_TEST VS_MAIN_TEST(VS_IN In)
     matWV = mul(g_WorldMatrix, g_ViewMatrix);
     matWVP = mul(matWV, g_ProjMatrix);
     
-    Out.vPosition = mul(vector(In.vPosition, 1.f), matWVP);
+    float2 Offset = In.vTexcoord - 0.5f; // (-0.5 ~ 0.5)
+
+    float3 vLook = normalize(g_vCamPosition - In.vPosition);
+    float3 rightDir = normalize(cross(float3(0.f, 1.f, 0.f), vLook));
+    float3 upDir = normalize(cross(vLook, rightDir));
+
+    float3 dirRight = rightDir * g_Scale.x * Offset.x;
+    float3 dirUp = upDir * g_Scale.y * Offset.y;
     
-    /* Out.vPosition.xy => 시야각에 있는 점들을 90에 맞춰준다 */ 
-    /* Out.vPosition.z => n~f사이에 있는 점들의 z를 0 ~ f로 바꿔준다. */     
+    float3 worldPos = In.vPosition + dirRight + dirUp ;
+
+    Out.vPosition = mul(float4(worldPos, 1.f), matWVP);
     Out.vTexcoord = In.vTexcoord;
     Out.vProjPos = Out.vPosition;
 
@@ -172,11 +181,13 @@ struct PS_OUT_TEST
 PS_OUT PS_MAIN_TEST(PS_IN_TEST In)
 {
     PS_OUT_TEST Out;
-    
+   
     float4 vColor = g_Texture.Sample(DefaultSampler, In.vTexcoord);
-    float4 Mask = g_Mask.Sample(DefaultSampler, In.vTexcoord);
-    float2 vTexcoord;
     
+    if (vColor.a == 0.f)
+        discard;
+    
+    float2 vTexcoord;
     
     vTexcoord.x = In.vProjPos.x / In.vProjPos.w * 0.5f + 0.5f;
     vTexcoord.y = In.vProjPos.y / In.vProjPos.w * -0.5f + 0.5f;
@@ -187,22 +198,40 @@ PS_OUT PS_MAIN_TEST(PS_IN_TEST In)
     
     float fDistance = fOldViewZ - In.vProjPos.w;
     
-    Mask.a = Mask.a * saturate(fDistance);
+    vColor.a = vColor.a * saturate(fDistance);
     
-    if (Mask.r <= 0.4f)
-        discard;
-    
-    float4 Color = float4(250 / 255.0f, 142 / 255.0f, 229 / 255.0f, Mask.a);
-    
-    Mask *= Color;
-    
-    //vColor *= Mask;
-    
-    Out.vColor = Mask;
+    Out.vColor = vColor;
     
     return Out;
+    
+     
+    //float4 vColor = g_Texture.Sample(DefaultSampler, In.vTexcoord);
+    //float4 Mask = g_Mask.Sample(DefaultSampler, In.vTexcoord);
+    //float2 vTexcoord;
+    
+    
+    //vTexcoord.x = In.vProjPos.x / In.vProjPos.w * 0.5f + 0.5f;
+    //vTexcoord.y = In.vProjPos.y / In.vProjPos.w * -0.5f + 0.5f;
+    
+    //float4 vDepthDesc = g_DepthTexture.Sample(DefaultSampler, vTexcoord);
+    
+    //float fOldViewZ = vDepthDesc.y * 500.f;
+    
+    //float fDistance = fOldViewZ - In.vProjPos.w;
+    
+    //Mask.a = Mask.a * saturate(fDistance);
+    
+    //if (Mask.r <= 0.4f)
+    //    discard;
+    
+    //float4 Color = float4(250 / 255.0f, 142 / 255.0f, 229 / 255.0f, Mask.a);
+    
+    //Mask *= Color;
+    
+    ////vColor *= Mask;
+    
+    //Out.vColor = vColor;
 }
-
 
 technique11 DefaultTechnique
 {
@@ -229,7 +258,7 @@ technique11 DefaultTechnique
     {
         SetRasterizerState(RS_Cull_None);
         SetDepthStencilState(DSS_Default, 0);
-        SetBlendState(BS_None, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
+        SetBlendState(BS_AlphaBlend, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
         VertexShader = compile vs_5_0 VS_MAIN();
         GeometryShader = NULL;
         PixelShader = compile ps_5_0 PS_MAIN();
@@ -237,7 +266,7 @@ technique11 DefaultTechnique
 
     pass Test
     {
-        SetRasterizerState(RS_Cull_None);
+        SetRasterizerState(RS_Default);
         SetDepthStencilState(DSS_Default, 0);
         SetBlendState(BS_Blend, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
         VertexShader = compile vs_5_0 VS_MAIN_TEST();

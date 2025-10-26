@@ -46,6 +46,7 @@
 #include "BlackwargreymonSkill1.h"
 #include "BlackwargreymonSkill2.h"
 #include "BlackwargreymonSkill3.h"
+#include "BlackwargreymonSkill3_Part1.h"
 
 #include "DevilmonSkill1.h"
 #include "DevilmonSkill2.h"
@@ -522,7 +523,7 @@ HRESULT CLoader::Loading_For_GamePlay()
 
 	/* For.Prototype_Component_Texture_CircleEffect*/
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_CircleEffect"),
-		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/Effect/CircleEffect%d.png"), 2))))
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/Effect/CircleEffect%d.png"), 3))))
 		return E_FAIL;	
 	
 	/* For.Prototype_Component_Texture_Circle*/
@@ -991,12 +992,11 @@ HRESULT CLoader::Loading_For_GamePlay()
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Model_Angewomon_Skill3_1"),
 		CModel::Create(m_pDevice, m_pContext, MODEL::NONANIM, "../Bin/Resources/Models/Angewomon/Angewomon3_0.bin", PreTransformMatrix))))
 		return E_FAIL;
-
-
 	/* For.Prototype_GameObject_AngewomonSkill3_Part2*/
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_AngewomonSkill3_Part2"),
 		CAngewomonSkill3_Part2::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
+
 	/* For.Prototype_Component_Model_Angewomon_Skill3_2*/
 	PreTransformMatrix = XMMatrixScaling(0.1f, 0.1f, 0.1f) * XMMatrixRotationX(XMConvertToRadians(-90.0f));
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Model_Angewomon_Skill3_2"),
@@ -1040,6 +1040,10 @@ HRESULT CLoader::Loading_For_GamePlay()
 	/* For.Prototype_GameObject_BlackwargreymonSkill3*/
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_BlackwargreymonSkill3"),
 		CBlackwargreymonSkill3::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+	/* For.Prototype_GameObject_BlackwargreymonSkill3_Part1*/
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_BlackwargreymonSkill3_Part1"),
+		CBlackwargreymonSkill3_Part1::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
 	/* For.Prototype_Component_Model_Blackwargreymon*/
@@ -1288,7 +1292,7 @@ HRESULT CLoader::Loading_For_GamePlay()
 		CWargreymonSkill2::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 	/* For.Prototype_Component_Model_WargreymonSkill2_1*/
-	PreTransformMatrix = XMMatrixScaling(0.01f, 0.01f, 0.01f) * XMMatrixRotationY(XMConvertToRadians(-180.0f));
+	PreTransformMatrix = XMMatrixScaling(0.01f, 0.01f, 0.01f)/* * XMMatrixRotationY(XMConvertToRadians(-180.0f))*/;
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Model_WargreymonSkill2_1"),
 		CModel::Create(m_pDevice, m_pContext, MODEL::NONANIM, "../Bin/Resources/Models/Wargreymon/Wargreymon2_1.Bin", PreTransformMatrix))))
 		return E_FAIL;

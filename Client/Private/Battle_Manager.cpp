@@ -414,7 +414,7 @@ void CBattle_Manager::Enemy_Attack(_float fTimeDelta)
 
 	if (!m_bSkill)
 	{
-		m_pCurrentDigimon->UseSkill(/*Enemy_Skill()*/3);
+		m_pCurrentDigimon->UseSkill(/*Enemy_Skill()*/2);
 		m_pCurrentDigimon->LookAt(m_vPlayerDigimonPos[m_iLook_Target_position]);
 		m_pInteraction_Manager->Set_Hit_Digimon(m_pHitCurrentDigimon);
 		m_bSkill = true;

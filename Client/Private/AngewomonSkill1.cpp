@@ -126,16 +126,16 @@ HRESULT CAngewomonSkill1::Ready_SkillObjects()
 
 HRESULT CAngewomonSkill1::Ready_SkillObjects2()
 {
-	CAngewomonSkill1_Part2::BODY_PLAYER_DESC Skill1{};
+	//CAngewomonSkill1_Part2::BODY_PLAYER_DESC Skill1{};
 
-	Skill1.vPosition = m_pTransformCom->Get_State(STATE::POSITION);
+	//Skill1.vPosition = m_pTransformCom->Get_State(STATE::POSITION);
 
-	/* Part_Skill1 */
-	if (FAILED(__super::Add_PartObject(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_AngewomonSkill1_Part2"),
-		TEXT("Part_Skill2"), &Skill1)))
-		return E_FAIL;
+	///* Part_Skill1 */
+	//if (FAILED(__super::Add_PartObject(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_AngewomonSkill1_Part2"),
+	//	TEXT("Part_Skill2"), &Skill1)))
+	//	return E_FAIL;
 
-	m_pSkillModel1 = dynamic_cast<CAngewomonSkill1_Part1*>(Find_PartObject(TEXT("Part_Skill2")));
+	//m_pSkillModel1 = dynamic_cast<CAngewomonSkill1_Part1*>(Find_PartObject(TEXT("Part_Skill2")));
 
 	return S_OK;
 }

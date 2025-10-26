@@ -484,6 +484,31 @@ void CTransform::Target_Pos_Move(_fvector Target_Pos, _float fTimeDelta)
 	Set_State(STATE::POSITION, vPos + Move);
 }
 
+_bool CTransform::Target_Pos_Move_Bool(_fvector Target_Pos, _float fTimeDelta)
+{
+	_vector vPos = Get_State(STATE::POSITION);
+
+	_vector toTarget = Target_Pos - vPos;
+	float distance = XMVectorGetX(XMVector3Length(toTarget));
+
+	const float Threshold = 0.1f;
+	if (distance <= Threshold)
+	{
+		Set_State(STATE::POSITION, Target_Pos);
+		return false; // 이동 완료
+	}
+
+	_vector dir = XMVector3Normalize(toTarget);
+	_vector move = dir * m_fSpeedPerSec * fTimeDelta;
+
+	// 이동량이 남은 거리보다 크면 목표 위치로 바로 이동
+	if (XMVectorGetX(XMVector3Length(move)) > distance)
+		move = toTarget;
+
+	Set_State(STATE::POSITION, vPos + move);
+	return true; // 이동 중
+}
+
 CTransform* CTransform::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 {
 	CTransform* pInstance = new CTransform(pDevice, pContext);

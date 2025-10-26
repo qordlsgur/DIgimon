@@ -38,6 +38,7 @@ void CPartObject::Priority_Update(_float fTimeDelta)
 
 void CPartObject::Update(_float fTimeDelta)
 {
+	__super::Update(fTimeDelta);
 }
 
 void CPartObject::Late_Update(_float fTimeDelta)

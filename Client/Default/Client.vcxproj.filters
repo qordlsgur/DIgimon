@@ -406,6 +406,9 @@
     <Filter Include="02.GameObjects\Digimon\00.Angewomon\Skill1\Parts">
       <UniqueIdentifier>{cdb288d3-eead-41e6-b37d-b72c0e2b64cb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.GameObjects\Digimon\01.Blackwargreymon\Skill3\Part">
+      <UniqueIdentifier>{165133a8-12d5-4885-958c-def3d41647a5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -809,6 +812,9 @@
     </ClInclude>
     <ClInclude Include="..\public\AngewomonSkill2_Part4.h">
       <Filter>02.GameObjects\Digimon\00.Angewomon\Skill2\Parts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\BlackwargreymonSkill3_Part1.h">
+      <Filter>02.GameObjects\Digimon\01.Blackwargreymon\Skill3\Part</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1214,6 +1220,9 @@
     </ClCompile>
     <ClCompile Include="..\private\AngewomonSkill2_Part4.cpp">
       <Filter>02.GameObjects\Digimon\00.Angewomon\Skill2\Parts</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\BlackwargreymonSkill3_Part1.cpp">
+      <Filter>02.GameObjects\Digimon\01.Blackwargreymon\Skill3\Part</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

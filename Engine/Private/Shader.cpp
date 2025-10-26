@@ -166,6 +166,19 @@ HRESULT CShader::Bind_State(const _char* pConstantName, _float value)
 	return pScalar->SetFloat(value);  // 단일 int 전달
 }
 
+HRESULT CShader::Bind_Vector(const _char* pConstantName, const _vector *vector)
+{
+	ID3DX11EffectVariable* pVariable = m_pEffect->GetVariableByName(pConstantName);
+	if (!pVariable)
+		return E_FAIL;
+
+	ID3DX11EffectVectorVariable* pScalar = pVariable->AsVector();
+	if (!pScalar)
+		return E_FAIL;
+
+	return pScalar->SetFloatVector(reinterpret_cast<const _float*>(vector));
+}
+
 
 HRESULT CShader::Bind_SRV(const _char* pConstantName, ID3D11ShaderResourceView* pSRV)
 {
