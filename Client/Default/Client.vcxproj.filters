@@ -418,6 +418,12 @@
     <Filter Include="02.GameObjects\Digimon\04.Leomon\Skill2\Part">
       <UniqueIdentifier>{a9897043-8c82-4f4c-ba79-acd4af4e259e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.GameObjects\Digimon\05.Metalgarumon\Skill2\Part">
+      <UniqueIdentifier>{b293f5cb-44d1-459b-bff0-d8b39e1f4543}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Digimon\05.Metalgarumon\Skill3\Part">
+      <UniqueIdentifier>{b153005d-ea1e-48e5-b4ec-5c1baf42a87b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -837,7 +843,15 @@
     <ClInclude Include="..\public\DevilmonSkill3_Part4.h">
       <Filter>02.GameObjects\Digimon\02.Devilmon\Skill3\Part</Filter>
     </ClInclude>
-    <ClInclude Include="..\public\LeomonSkill2_Part1.h" />
+    <ClInclude Include="..\public\LeomonSkill2_Part1.h">
+      <Filter>02.GameObjects\Digimon\03.Ladydevimon\Skill2\Part</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\MetalgarumonSkill2_Part1.h">
+      <Filter>02.GameObjects\Digimon\05.Metalgarumon\Skill2\Part</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\MetalgarumonSkill3_Part1.h">
+      <Filter>02.GameObjects\Digimon\05.Metalgarumon\Skill3\Part</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Client.ico">
@@ -1258,7 +1272,15 @@
     <ClCompile Include="..\private\DevilmonSkill3_Part4.cpp">
       <Filter>02.GameObjects\Digimon\02.Devilmon\Skill3\Part</Filter>
     </ClCompile>
-    <ClCompile Include="..\private\LeomonSkill2_Part1.cpp" />
+    <ClCompile Include="..\private\LeomonSkill2_Part1.cpp">
+      <Filter>02.GameObjects\Digimon\03.Ladydevimon\Skill2\Part</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\MetalgarumonSkill2_Part1.cpp">
+      <Filter>02.GameObjects\Digimon\05.Metalgarumon\Skill2\Part</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\MetalgarumonSkill3_Part1.cpp">
+      <Filter>02.GameObjects\Digimon\05.Metalgarumon\Skill3\Part</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxPosTex.hlsl">
@@ -1325,6 +1347,9 @@
       <Filter>97.ShaderFiles</Filter>
     </FxCompile>
     <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxSkillLeomon.hlsl">
+      <Filter>97.ShaderFiles</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxSkillMetalgarumon.hlsl">
       <Filter>97.ShaderFiles</Filter>
     </FxCompile>
   </ItemGroup>

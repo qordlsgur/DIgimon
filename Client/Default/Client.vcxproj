@@ -259,7 +259,9 @@
     <ClInclude Include="..\public\Metalgarumon.h" />
     <ClInclude Include="..\public\MetalgarumonSkill1.h" />
     <ClInclude Include="..\public\MetalgarumonSkill2.h" />
+    <ClInclude Include="..\public\MetalgarumonSkill2_Part1.h" />
     <ClInclude Include="..\public\MetalgarumonSkill3.h" />
+    <ClInclude Include="..\public\MetalgarumonSkill3_Part1.h" />
     <ClInclude Include="..\public\Metalgreymon.h" />
     <ClInclude Include="..\public\MetalgreymonSkill1.h" />
     <ClInclude Include="..\public\MetalgreymonSkill2.h" />
@@ -400,7 +402,9 @@
     <ClCompile Include="..\private\Metalgarumon.cpp" />
     <ClCompile Include="..\private\MetalgarumonSkill1.cpp" />
     <ClCompile Include="..\private\MetalgarumonSkill2.cpp" />
+    <ClCompile Include="..\private\MetalgarumonSkill2_Part1.cpp" />
     <ClCompile Include="..\private\MetalgarumonSkill3.cpp" />
+    <ClCompile Include="..\private\MetalgarumonSkill3_Part1.cpp" />
     <ClCompile Include="..\private\Metalgreymon.cpp" />
     <ClCompile Include="..\private\MetalgreymonSkill1.cpp" />
     <ClCompile Include="..\private\MetalgreymonSkill2.cpp" />
@@ -464,6 +468,7 @@
     <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxSkillAngewomon.hlsl" />
     <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxSkillLeomon.hlsl" />
     <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxSkillMesh.hlsl" />
+    <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxSkillMetalgarumon.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Bin\ShaderFiles\Effect.hlsli" />

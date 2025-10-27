@@ -53,6 +53,8 @@ void CBody_Metalgarumon::Update(_float fTimeDelta)
 
 	XMStoreFloat4x4(&m_CombinedWorldMatrix,
 		XMLoadFloat4x4(m_pTransformCom->Get_WorldMatrixPtr()) * XMLoadFloat4x4(m_pParentTransformCom->Get_WorldMatrixPtr()));
+	
+	m_fTrackPosition = m_pModelCom->Get_CurrentTrackPosition();
 
 	if (m_bDissolve)
 		m_fTime += fTimeDelta / 3.f;

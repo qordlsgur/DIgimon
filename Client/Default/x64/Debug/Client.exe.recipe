@@ -72,6 +72,9 @@
     <ContentFile>
       <FullPath>C:\Users\hyen6\Desktop\Framework\Digimon\Client\Bin\Shader_VtxSkillMesh.cso</FullPath>
     </ContentFile>
+    <ContentFile>
+      <FullPath>C:\Users\hyen6\Desktop\Framework\Digimon\Client\Bin\Shader_VtxSkillMetalgarumon.cso</FullPath>
+    </ContentFile>
   </ContentFiles>
   <SatelliteDlls />
   <NonRecipeFileRefs />

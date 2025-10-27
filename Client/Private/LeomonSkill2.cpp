@@ -118,7 +118,6 @@ HRESULT CLeomonSkill2::Ready_PartObjects()
 
 HRESULT CLeomonSkill2::Ready_SkillObjects()
 {
-
 	CLeomonSkill2_Part1::BODY_PLAYER_DESC Skill1{};
 
 	Skill1.pParentTransform = m_pTransformCom;

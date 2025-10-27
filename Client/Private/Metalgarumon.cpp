@@ -5,6 +5,7 @@
 #include "StateMachine.h"
 #include "Digimon_Manager.h"
 #include "SkillObject.h"
+#include "MetalgarumonSkill3.h"
 
 CMetalgarumon::CMetalgarumon(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CContainerObject{ pDevice, pContext }
@@ -59,15 +60,40 @@ void CMetalgarumon::Update(_float fTimeDelta)
 	{
 		if (!m_bBattle)
 		{
-			if (!m_bMonster)
+			//if (!m_bMonster)
+			//{
+			//	m_pTransformCom->LookAtPlayer(m_pDigimon_Manager->PlayerPos(), fTimeDelta);
+			//	m_bMove = false;
+			//	if (m_pTransformCom->FollowPlayer(m_pDigimon_Manager->PlayerPos(), 30, fTimeDelta))
+			//	{
+			//		m_pFsm->Enter(DIGIMONSTATE::RUN, m_pPart_Body);
+			//		m_bMove = true;
+			//	}
+			//}
+			//if (!m_bMove)
+			//	m_pFsm->Enter(DIGIMONSTATE::STAND, m_pPart_Body);
+			if (m_pGameInstance->Key_Down(DIK_1))
 			{
-				m_pTransformCom->LookAtPlayer(m_pDigimon_Manager->PlayerPos(), fTimeDelta);
-				m_bMove = false;
-				if (m_pTransformCom->FollowPlayer(m_pDigimon_Manager->PlayerPos(), 30, fTimeDelta))
+				m_pFsm->Enter(DIGIMONSTATE::SKILL3, m_pPart_Body, false, false);
+				m_bMove = true;
+			}
+			m_iDamage = static_cast<_int>(Info.Damage * Info.DigimonSkill1Info.HitCount * 0.4f);
+			m_iSkill = static_cast<_int>(m_pPart_Body->Get_TrackPosition());
+			switch (m_iSkill)
+			{
+			case 42:
+				if (m_iSkill != m_iLastSkill) // 이전과 다를 때만 실행
 				{
-					m_pFsm->Enter(DIGIMONSTATE::RUN, m_pPart_Body);
-					m_bMove = true;
+					Creat_Skill(3);
+					m_iLastSkill = m_iSkill;
 				}
+				break;
+			case 56:
+			case 70:
+				m_pSkill->Set_Hit(false);
+			default:
+				m_iLastSkill = -1;
+				break;
 			}
 			if (!m_bMove)
 				m_pFsm->Enter(DIGIMONSTATE::STAND, m_pPart_Body);
@@ -219,8 +245,6 @@ void CMetalgarumon::UseSkill(_int Skill)
 
 	else if (Skill == 2)
 	{
-		if (!m_bSkillMove)
-			m_bSkillMove = true;
 		m_bSkill2 = true;
 	}
 
@@ -291,8 +315,8 @@ void CMetalgarumon::Creat_Skill(_int SkillNum)
 
 	case 3:
 		Desc.iDamage = m_iDamage;
-		m_pGameInstance->Add_GameObject_ToLayer(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_MetalgarumonSkill3"),
-			ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Layer_MetalgarumonSkill3"), &Desc);
+		m_pSkill = static_cast<CMetalgarumonSkill3*>(m_pGameInstance->Add_GameObject_ToLayer_ToCreate(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_MetalgarumonSkill3"),
+			ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Layer_MetalgarumonSkill3"), &Desc));
 
 		break;
 	}
