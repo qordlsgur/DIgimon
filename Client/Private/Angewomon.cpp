@@ -83,7 +83,7 @@ void CAngewomon::Update(_float fTimeDelta)
 
 			if (m_pGameInstance->Key_Down(DIK_1))
 			{
-				m_pFsm->Enter(DIGIMONSTATE::SKILL1, m_pPart_Body, false, false);
+				m_pFsm->Enter(DIGIMONSTATE::SKILL2, m_pPart_Body, false, false);
 				m_bMove = true;
 			}
 
@@ -91,17 +91,17 @@ void CAngewomon::Update(_float fTimeDelta)
 			m_iSkill = static_cast<_int>(m_pPart_Body->Get_TrackPosition());
 			switch (m_iSkill)
 			{
-			case 13:
+			case 27:
 				if (m_iSkill != m_iLastSkill)
 				{
-					Creat_Skill(1);
+					Creat_Skill(2);
 					m_iLastSkill = m_iSkill;
 				}
 				break;
-			case 29:
+			case 47:
 				if (m_iSkill != m_iLastSkill)
 				{
-					m_pSkill1->Set_Move(true);
+					m_pSkill2->Set_Move(true);
 					m_iLastSkill = m_iSkill;
 				}
 				break;

@@ -139,8 +139,8 @@ PS_OUT PS_Cross(PS_IN In)
     float3 Color = float3(37, 17, 17) / 255.0f;
     float4 Disslove = g_Dissolve.Sample(DefaultSampler, In.vTexcoord);
     
-    if (vMtrlDiffuse.r <= 0.2f)
-        vMtrlDiffuse.rgb = vMtrlDiffuse.rgb + Color;
+    //if (vMtrlDiffuse.r <= 0.2f)
+    //    vMtrlDiffuse.rgb = vMtrlDiffuse.rgb + Color;
 
     
     //if (Time > Disslove.r)
@@ -184,7 +184,7 @@ technique11 DefaultTechnique
 
     pass AngewomonSkillCross
     {
-        SetRasterizerState(RS_Default);
+        SetRasterizerState(RS_Cull_None);
         SetDepthStencilState(DSS_Default, 0);
         SetBlendState(BS_Blend  , float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
         VertexShader = compile vs_5_0 VS_MAIN();

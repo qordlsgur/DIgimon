@@ -40,14 +40,12 @@ void CAngewomonSkill1_Part1::Priority_Update(_float fTimeDelta)
 
 void CAngewomonSkill1_Part1::Update(_float fTimeDelta)
 {
-    m_fTime -= fTimeDelta * 20.f;
+    //m_fTime -= fTimeDelta * 20.f;
 
-    if (m_fTime <= 0.f)
-        m_fTime = 0;
+    //if (m_fTime <= 0.f)
+    //    m_fTime = 0;
 
     m_pTransformCom->Set_Scale(m_fTime, m_fTime, m_fTime);
-
- 
 
     __super::Update(fTimeDelta);
 }
@@ -89,12 +87,12 @@ HRESULT CAngewomonSkill1_Part1::Ready_Components()
         return E_FAIL;
 
     /* Com_Battle_Mask*/
-    if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Space"),
+    if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Circle"),
         TEXT("Com_Battle_Mask"), reinterpret_cast<CComponent**>(&m_pMaskTextureCom))))
         return E_FAIL;
 
     /* Com_Shader */
-    if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Shader_VtxSkillAngewomon"),
+    if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::STATIC), TEXT("Prototype_Component_Shader_VtxPosTex"),
         TEXT("Com_Shader"), reinterpret_cast<CComponent**>(&m_pShaderCom))))
         return E_FAIL;
 
@@ -113,9 +111,9 @@ HRESULT CAngewomonSkill1_Part1::Bind_ShaderResources()
         return E_FAIL;
     if (FAILED(m_pShaderCom->Bind_State("Time", m_fTime)))
         return E_FAIL;
-    if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Mask", 1)))
+    if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture", 1)))
         return E_FAIL;
-    if (FAILED(m_pMaskTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture", 2)))
+    if (FAILED(m_pMaskTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Mask", 0)))
         return E_FAIL;
     return S_OK;
 }

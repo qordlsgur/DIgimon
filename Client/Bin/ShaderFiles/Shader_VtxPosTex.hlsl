@@ -181,13 +181,11 @@ struct PS_OUT_TEST
 PS_OUT PS_MAIN_TEST(PS_IN_TEST In)
 {
     PS_OUT_TEST Out;
-   
+  
     float4 vColor = g_Texture.Sample(DefaultSampler, In.vTexcoord);
-    
-    if (vColor.a == 0.f)
-        discard;
-    
+    float4 Mask = g_Mask.Sample(DefaultSampler, In.vTexcoord);
     float2 vTexcoord;
+    
     
     vTexcoord.x = In.vProjPos.x / In.vProjPos.w * 0.5f + 0.5f;
     vTexcoord.y = In.vProjPos.y / In.vProjPos.w * -0.5f + 0.5f;
@@ -198,39 +196,21 @@ PS_OUT PS_MAIN_TEST(PS_IN_TEST In)
     
     float fDistance = fOldViewZ - In.vProjPos.w;
     
-    vColor.a = vColor.a * saturate(fDistance);
+    Mask.a = Mask.a * saturate(fDistance);
+    
+    if (Mask.r <= 0.4f)
+        discard;
+    
+    float4 Color = float4(250 / 255.0f, 142 / 255.0f, 229 / 255.0f, Mask.a);
+    
+    Mask *= Color;
+    
+    vColor *= Mask;
     
     Out.vColor = vColor;
     
     return Out;
     
-     
-    //float4 vColor = g_Texture.Sample(DefaultSampler, In.vTexcoord);
-    //float4 Mask = g_Mask.Sample(DefaultSampler, In.vTexcoord);
-    //float2 vTexcoord;
-    
-    
-    //vTexcoord.x = In.vProjPos.x / In.vProjPos.w * 0.5f + 0.5f;
-    //vTexcoord.y = In.vProjPos.y / In.vProjPos.w * -0.5f + 0.5f;
-    
-    //float4 vDepthDesc = g_DepthTexture.Sample(DefaultSampler, vTexcoord);
-    
-    //float fOldViewZ = vDepthDesc.y * 500.f;
-    
-    //float fDistance = fOldViewZ - In.vProjPos.w;
-    
-    //Mask.a = Mask.a * saturate(fDistance);
-    
-    //if (Mask.r <= 0.4f)
-    //    discard;
-    
-    //float4 Color = float4(250 / 255.0f, 142 / 255.0f, 229 / 255.0f, Mask.a);
-    
-    //Mask *= Color;
-    
-    ////vColor *= Mask;
-    
-    //Out.vColor = vColor;
 }
 
 technique11 DefaultTechnique
@@ -266,7 +246,7 @@ technique11 DefaultTechnique
 
     pass Test
     {
-        SetRasterizerState(RS_Default);
+        SetRasterizerState(RS_Cull_None);
         SetDepthStencilState(DSS_Default, 0);
         SetBlendState(BS_Blend, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
         VertexShader = compile vs_5_0 VS_MAIN_TEST();

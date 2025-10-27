@@ -523,7 +523,7 @@ HRESULT CLoader::Loading_For_GamePlay()
 
 	/* For.Prototype_Component_Texture_CircleEffect*/
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_CircleEffect"),
-		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/Effect/CircleEffect%d.png"), 3))))
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/Effect/CircleEffect%d.png"), 8))))
 		return E_FAIL;	
 	
 	/* For.Prototype_Component_Texture_Circle*/
@@ -540,6 +540,7 @@ HRESULT CLoader::Loading_For_GamePlay()
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Space"),
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/Effect/Space%d.png"), 5))))
 		return E_FAIL;
+
 
 
 
@@ -1076,10 +1077,16 @@ HRESULT CLoader::Loading_For_GamePlay()
 		CDevilmonSkill2::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
+
 	/* For.Prototype_GameObject_DevilmonSkill3*/
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_DevilmonSkill3"),
 		CDevilmonSkill3::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
+	/* For.Prototype_Component_Texture_DevilmonSkill3_Image*/
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_DevilmonSkill3_Image"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Models/Angewomon/AngewomonSkill2_%d.png"), 2))))
+		return E_FAIL;
+
 
 	/* For.Prototype_Component_Model_Devilmon*/
 	PreTransformMatrix = XMMatrixScaling(0.1f, 0.1f, 0.1f) * XMMatrixRotationY(XMConvertToRadians(180.0f));
@@ -1404,9 +1411,23 @@ HRESULT CLoader::Loading_For_GamePlay()
 	//디지몬 스킬---------------------------------------------------------------------------------------------------------------------------
 
 
+	/* For.Prototype_Component_Model_fild*/
+	PreTransformMatrix = XMMatrixScaling(0.1f, 0.1f, 0.1f) * XMMatrixRotationY(XMConvertToRadians(180.0f)) ;
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Model_fild"),
+		CModel::Create(m_pDevice, m_pContext, MODEL::NONANIM, "../Bin/Resources/Models/All/fild.Bin", PreTransformMatrix))))
+		return E_FAIL;
 
+	/* For.Prototype_Component_Model_Thumder */
+	PreTransformMatrix = XMMatrixScaling(0.1f, 0.1f, 0.1f) * XMMatrixRotationY(XMConvertToRadians(180.0f));
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Model_Thumder"),
+		CModel::Create(m_pDevice, m_pContext, MODEL::NONANIM, "../Bin/Resources/Models/All/Thumder.Bin", PreTransformMatrix))))
+		return E_FAIL;
 
-
+	/* For.Prototype_Component_Model_Disc */
+	PreTransformMatrix = XMMatrixScaling(0.01f, 0.01f, 0.01f) * XMMatrixRotationY(XMConvertToRadians(180.0f));
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Model_Disc"),
+		CModel::Create(m_pDevice, m_pContext, MODEL::NONANIM, "../Bin/Resources/Models/All/Disc.Bin", PreTransformMatrix))))
+		return E_FAIL;
 
 
 	/* For.Prototype_GameObject_Skill_Model*/

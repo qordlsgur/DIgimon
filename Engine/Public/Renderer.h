@@ -53,6 +53,7 @@ private:
 	void Render_NonLight();
 	void Render_Blur();
 	void Render_Blend();
+	void Render_Effect();
 	void Render_UI();
 	void Render_BlendUI();
 

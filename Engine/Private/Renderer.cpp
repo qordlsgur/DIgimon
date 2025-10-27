@@ -121,6 +121,7 @@ void CRenderer::Render()
 	Render_Combined();
 	Render_NonLight();
 	Render_Blend();
+	Render_Effect();
 	Render_UI();
 	Render_BlendUI();
 }
@@ -328,6 +329,19 @@ void CRenderer::Render_Blend()
 	}
 
 	m_RenderObjects[ENUM_CLASS(RENDER::BLEND)].clear();
+}
+
+void CRenderer::Render_Effect()
+{
+	for (auto& pRenderObject : m_RenderObjects[ENUM_CLASS(RENDER::EFFECT)])
+	{
+		if (nullptr != pRenderObject)
+			pRenderObject->Render();
+
+		Safe_Release(pRenderObject);
+	}
+
+	m_RenderObjects[ENUM_CLASS(RENDER::EFFECT)].clear();
 }
 
 void CRenderer::Render_UI()
