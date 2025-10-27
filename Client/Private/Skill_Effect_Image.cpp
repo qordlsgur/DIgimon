@@ -38,7 +38,7 @@ void CSkill_Effect_Image::Priority_Update(_float fTimeDelta)
 
 void CSkill_Effect_Image::Update(_float fTimeDelta)
 {
-	m_fTime -= fTimeDelta * 50.f;
+	m_fTime += fTimeDelta * 10.f;
 
 	//m_pTransformCom->Set_Scale(m_fTime,m_fTime, m_fTime);
 
@@ -59,7 +59,6 @@ void CSkill_Effect_Image::Update(_float fTimeDelta)
 
 
 	m_vPosition = XMVectorSet(m_pTransformCom->Get_Scale().x, m_pTransformCom->Get_Scale().y, m_pTransformCom->Get_Scale().z, 1.f);
-	m_vCamPosition = XMLoadFloat4(m_pGameInstance->Get_CamPosition());
 }
 
 void CSkill_Effect_Image::Late_Update(_float fTimeDelta)
@@ -96,7 +95,7 @@ HRESULT CSkill_Effect_Image::Ready_Components()
 		return E_FAIL;
 
 	/* Com_Battle_Diffuse */
-	if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Space"),
+	if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Smoke"),
 		TEXT("Com_Battle_Diffuse"), reinterpret_cast<CComponent**>(&m_pTextureCom))))
 		return E_FAIL;	
 	
@@ -121,12 +120,12 @@ HRESULT CSkill_Effect_Image::Ready_Components()
 HRESULT CSkill_Effect_Image::Bind_ShaderResources()
 {
 	if (FAILED(m_pTransformCom->Bind_ShaderResource(m_pShaderCom, "g_WorldMatrix")))
-		return E_FAIL;
+		return E_FAIL; 
 	if (FAILED(m_pShaderCom->Bind_Vector("g_Scale", &m_vPosition)))
 		return E_FAIL;	
 	//if (FAILED(m_pShaderCom->Bind_Vector("g_vCamPosition", &m_vCamPosition)))
 	//	return E_FAIL;
-	if (FAILED(m_pShaderCom->Bind_RawValue("g_vCamPosition", m_pGameInstance->Get_CamPosition(), sizeof(_float3))))
+	if (FAILED(m_pShaderCom->Bind_Matrix("g_vCamPosition", m_pGameInstance->Get_Transform_Float4x4_Inverse(D3DTS::VIEW))))
 		return E_FAIL;
 	if (FAILED(m_pShaderCom->Bind_Matrix("g_ViewMatrix", m_pGameInstance->Get_Transform_Float4x4(D3DTS::VIEW))))
 		return E_FAIL;
@@ -136,12 +135,16 @@ HRESULT CSkill_Effect_Image::Bind_ShaderResources()
 		return E_FAIL;
 	if (FAILED(m_pShaderCom->Bind_State("Time", m_fTime)))
 		return E_FAIL;
-	if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture", a)))
+	if (FAILED(m_pShaderCom->Bind_State("Count", 2)))
 		return E_FAIL;
-	if (FAILED(m_pDissolveTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Dissolve", 0)))
+	if (FAILED(m_pShaderCom->Bind_State("Frame", 0.7)))
 		return E_FAIL;
-	if (FAILED(m_pMaskTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Mask", 1)))
+	if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture", 1)))
 		return E_FAIL;
+	//if (FAILED(m_pDissolveTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Dissolve", 0)))
+	//	return E_FAIL;
+	//if (FAILED(m_pMaskTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Mask", 1)))
+	//	return E_FAIL;
 	return S_OK;
 }
 

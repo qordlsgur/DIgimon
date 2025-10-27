@@ -24,9 +24,9 @@ HRESULT CSkill_Model::Initialize(void* pArg)
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 
-	m_pTransformCom->Set_State(STATE::POSITION, XMVectorSet(250.f, 10.f, 500.f, 1.f));
+	m_pTransformCom->Set_State(STATE::POSITION, XMVectorSet(250.f, 0.f, 500.f, 1.f));
 
-	//m_pTransformCom->Set_Scale(10.f, 10.f, 10.f);
+	m_pTransformCom->Set_Scale(10.f, 10.f, 10.f);
 
 	return S_OK;
 }
@@ -52,6 +52,11 @@ void CSkill_Model::Update(_float fTimeDelta)
 	//else
 	//	m_fTime = 0.f;
 
+	//m_fTime -= fTimeDelta;
+	//_vector Pos = m_pTransformCom->Get_State(STATE::POSITION);
+	//m_pTransformCom->TurnY(-fTimeDelta, 300.f, fTimeDelta);
+	//m_pTransformCom->Set_State(STATE::POSITION, XMVectorSet(Pos.m128_f32[0], m_fTime * -2, Pos.m128_f32[2], 1.f));
+
 	if (m_pGameInstance->Key_Down(DIK_L))
 		a++;
 
@@ -68,7 +73,7 @@ void CSkill_Model::Update(_float fTimeDelta)
 void CSkill_Model::Late_Update(_float fTimeDelta)
 {
 
-	m_pGameInstance->Add_RenderGroup(RENDER::UI, this);
+	m_pGameInstance->Add_RenderGroup(RENDER::BLEND, this);
 	//m_pGameInstance->Add_RenderGroup(RENDER::BLUR, this);
 }
 
@@ -98,7 +103,7 @@ HRESULT CSkill_Model::Render()
 HRESULT CSkill_Model::Ready_Components()
 {
 	/* Com_Model1 */
-	if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Model_Disc"),
+	if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Model_Plane"),
 		TEXT("Com_Model1"), reinterpret_cast<CComponent**>(&m_pModel1Com))))
 		return E_FAIL;
 
@@ -118,7 +123,7 @@ HRESULT CSkill_Model::Ready_Components()
 	//	return E_FAIL;
 
 	/* Com_Texture1 */
-	if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_CircleEffect"),
+	if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Whirlwind"),
 		TEXT("Com_Texture1"), reinterpret_cast<CComponent**>(&m_pTexture1Com))))
 		return E_FAIL;
 
@@ -163,7 +168,7 @@ HRESULT CSkill_Model::Bind_ShaderResources()
 	if (FAILED(m_pShaderCom->Bind_State("Time", m_fTime)))
 		return E_FAIL;
 
-	if (FAILED(m_pTexture1Com->Bind_ShaderResource(m_pShaderCom, "g_DiffuseTexture", 7)))
+	if (FAILED(m_pTexture1Com->Bind_ShaderResource(m_pShaderCom, "g_DiffuseTexture", 1)))
 		return E_FAIL;
 
 	//if (FAILED(m_pTexture2Com->Bind_ShaderResource(m_pShaderCom, "g_Mask", 1)))

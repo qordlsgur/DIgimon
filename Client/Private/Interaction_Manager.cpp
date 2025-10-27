@@ -35,6 +35,20 @@ void CInteraction_Manager::Update()
 			}
 		}
 	}
+	if (m_pAttackSkill != nullptr)
+	{
+		for (auto it : m_pBattle_Digimon_Collider)
+		{
+			if (it->Intersect(m_pSkill_Collider) != -1)
+			{
+				if (!m_pAttackDigimon->Get_Hit())
+				{
+					it->Set_HitDamage(m_pAttackDigimon->Get_Damage());
+					m_pAttackDigimon->Set_Hit(true);
+				}
+			}
+		}
+	}
 }
 
 void CInteraction_Manager::Late_Update()
@@ -71,6 +85,11 @@ void CInteraction_Manager::Set_Enemy_Digimon(CContainerObject* Enemy)
 void CInteraction_Manager::Set_Attack_Digimon(CSkillObject* Attacker)
 {
 	m_pAttackDigimon = Attacker;
+}
+
+void CInteraction_Manager::Set_Attack_Skill(CPartObject* Attacker)
+{
+	m_pAttackSkill = Attacker;
 }
 
 void CInteraction_Manager::Set_Hit_Digimon(CContainerObject* Battle_Digimon)

@@ -66,7 +66,7 @@ void CAngewomon::Update(_float fTimeDelta)
 		m_vHandPosition = m_mHandParts.r[3];
 		if (!m_bBattle)
 		{
-			/*if (!m_bMonster)
+			if (!m_bMonster)
 			{
 				m_pTransformCom->LookAtPlayer(m_pDigimon_Manager->PlayerPos(), fTimeDelta);
 				m_bMove = false;
@@ -77,42 +77,8 @@ void CAngewomon::Update(_float fTimeDelta)
 				}
 			}
 			if (!m_bMove)
-				m_pFsm->Enter(DIGIMONSTATE::STAND, m_pPart_Body);*/
-
-
-
-			if (m_pGameInstance->Key_Down(DIK_1))
-			{
-				m_pFsm->Enter(DIGIMONSTATE::SKILL2, m_pPart_Body, false, false);
-				m_bMove = true;
-			}
-
-			m_iDamage = static_cast<_int>(Info.Damage * Info.DigimonSkill2Info.HitCount * 1.3f);
-			m_iSkill = static_cast<_int>(m_pPart_Body->Get_TrackPosition());
-			switch (m_iSkill)
-			{
-			case 27:
-				if (m_iSkill != m_iLastSkill)
-				{
-					Creat_Skill(2);
-					m_iLastSkill = m_iSkill;
-				}
-				break;
-			case 47:
-				if (m_iSkill != m_iLastSkill)
-				{
-					m_pSkill2->Set_Move(true);
-					m_iLastSkill = m_iSkill;
-				}
-				break;
-			default:
-				m_iLastSkill = -1;
-				break;
-			}
-			if (m_pSkill1 != nullptr)
-				m_pSkill1->Update_Position(m_vHandPosition);
-			if (!m_bMove)
 				m_pFsm->Enter(DIGIMONSTATE::STAND, m_pPart_Body);
+
 		}
 		else
 		{

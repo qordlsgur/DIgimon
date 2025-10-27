@@ -135,25 +135,31 @@ PS_OUT PS_Cross(PS_IN In)
 
     PS_OUT Out;
 
-    vector vMtrlDiffuse = g_DiffuseTexture.Sample(DefaultSampler, In.vTexcoord);
-    float3 Color = float3(37, 17, 17) / 255.0f;
+    float u = In.vTexcoord.x;
+    float v = In.vTexcoord.y;
+    
+    //u = u + Time;
+    
+    float2 uv = float2(u, v);
+    
+    vector vMtrlDiffuse = g_DiffuseTexture.Sample(DefaultSampler, uv);
+    float3 Color = float3(18, 91, 159) / 255.0f;
     float4 Disslove = g_Dissolve.Sample(DefaultSampler, In.vTexcoord);
-    
-    //if (vMtrlDiffuse.r <= 0.2f)
-    //    vMtrlDiffuse.rgb = vMtrlDiffuse.rgb + Color;
-
-    
+        
     //if (Time > Disslove.r)
     //    discard;
     
     
+    
     //vMtrlDiffuse *= Disslove.a;
     
-    //if (vMtrlDiffuse.a <= 0.2f)
-    //    discard;
+    if (vMtrlDiffuse.r <= 0.25f)
+        discard;
+    
+    //if (vMtrlDiffuse.r <= 0.2f)
+    vMtrlDiffuse.rgb = vMtrlDiffuse.rgb * Color;
     
     //vMtrlDiffuse.a *= 1.5;
-     
     Out.vDiffuse = vMtrlDiffuse;
     Out.vNormal = float4(In.vNormal.xyz * 0.5f + 0.5f, 0.f);
     Out.vDepth = float4(In.vProjPos.z / In.vProjPos.w, In.vProjPos.w / 500.0f, 0.0f, 0.0f);
@@ -186,7 +192,7 @@ technique11 DefaultTechnique
     {
         SetRasterizerState(RS_Cull_None);
         SetDepthStencilState(DSS_Default, 0);
-        SetBlendState(BS_Blend  , float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
+        SetBlendState(BS_Blend, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
         VertexShader = compile vs_5_0 VS_MAIN();
         GeometryShader = NULL;
         PixelShader = compile ps_5_0 PS_Cross();

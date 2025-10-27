@@ -11,7 +11,8 @@ public:
 	{
 		class CTransform* pParentTransform = { nullptr };
 		_vector vPosition;
-
+		_matrix vMatrix;
+		_vector vPosition2;
 	}PARTOBJECT_DESC;
 
 protected:

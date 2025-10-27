@@ -1,0 +1,139 @@
+#include "DevilmonSkill3_Part3.h"
+#include "GameInstance.h"
+
+CDevilmonSkill3_Part3::CDevilmonSkill3_Part3(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
+	: CPartObject{ pDevice, pContext }
+{
+}
+
+CDevilmonSkill3_Part3::CDevilmonSkill3_Part3(const CDevilmonSkill3_Part3& Prototype)
+	: CPartObject{ Prototype }
+{
+}
+
+_float4x4* CDevilmonSkill3_Part3::Get_BoneMatrixPtr(const _char* pBoneName)
+{
+	return nullptr;
+}
+
+HRESULT CDevilmonSkill3_Part3::Initialize_Prototype()
+{
+	return S_OK;
+}
+
+HRESULT CDevilmonSkill3_Part3::Initialize(void* pArg)
+{
+	BODY_PLAYER_DESC* pDesc = static_cast<BODY_PLAYER_DESC*>(pArg);
+
+	if (FAILED(__super::Initialize(pArg)))
+		return E_FAIL;
+
+	if (FAILED(Ready_Components()))
+		return E_FAIL;
+
+	m_pTransformCom->Set_Scale(0.5f, 0.5f, 0.5f);
+
+
+	return S_OK;
+}
+
+void CDevilmonSkill3_Part3::Priority_Update(_float fTimeDelta)
+{
+}
+
+void CDevilmonSkill3_Part3::Update(_float fTimeDelta)
+{
+	XMStoreFloat4x4(&m_CombinedWorldMatrix,
+		XMLoadFloat4x4(m_pTransformCom->Get_WorldMatrixPtr()) * m_vPosition * XMLoadFloat4x4(m_pParentTransformCom->Get_WorldMatrixPtr()));
+}
+
+void CDevilmonSkill3_Part3::Late_Update(_float fTimeDelta)
+{
+	Compute_Depth();
+	m_pGameInstance->Add_RenderGroup(RENDER::BLEND, this);
+}
+
+HRESULT CDevilmonSkill3_Part3::Render()
+{
+	if (FAILED(Bind_ShaderResources()))
+		return E_FAIL;
+
+	if (FAILED(m_pShaderCom->Begin(1)))
+		return E_FAIL;
+
+	if (FAILED(m_pModelCom->Render(0)))
+		return E_FAIL;
+
+
+	return S_OK;
+}
+
+HRESULT CDevilmonSkill3_Part3::Ready_Components()
+{
+	/* Com_Model */
+	if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Model_Plane"),
+		TEXT("Com_Model"), reinterpret_cast<CComponent**>(&m_pModelCom))))
+		return E_FAIL;
+
+	/* Com_Texture */
+	if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Space"),
+		TEXT("Com_Texture"), reinterpret_cast<CComponent**>(&m_pTextureCom))))
+		return E_FAIL;
+
+	/* Com_Shader */
+	if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Shader_VtxSkillDevilmon"),
+		TEXT("Com_Shader"), reinterpret_cast<CComponent**>(&m_pShaderCom))))
+		return E_FAIL;
+
+	return S_OK;
+}
+
+HRESULT CDevilmonSkill3_Part3::Bind_ShaderResources()
+{
+
+	if (FAILED(m_pShaderCom->Bind_Matrix("g_WorldMatrix", &m_CombinedWorldMatrix)))
+		return E_FAIL;
+	if (FAILED(m_pShaderCom->Bind_Matrix("g_ViewMatrix", m_pGameInstance->Get_Transform_Float4x4(D3DTS::VIEW))))
+		return E_FAIL;
+	if (FAILED(m_pShaderCom->Bind_Matrix("g_ProjMatrix", m_pGameInstance->Get_Transform_Float4x4(D3DTS::PROJ))))
+		return E_FAIL;
+	if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_DiffuseTexture", 0)))
+		return E_FAIL;
+
+	return S_OK;
+}
+
+CDevilmonSkill3_Part3* CDevilmonSkill3_Part3::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
+{
+	CDevilmonSkill3_Part3* pInstance = new CDevilmonSkill3_Part3(pDevice, pContext);
+
+	if (FAILED(pInstance->Initialize_Prototype()))
+	{
+		MSG_BOX("Failed to Created : CDevilmonSkill3_Part3");
+		Safe_Release(pInstance);
+	}
+
+	return pInstance;
+}
+
+CGameObject* CDevilmonSkill3_Part3::Clone(void* pArg)
+{
+	CDevilmonSkill3_Part3* pInstance = new CDevilmonSkill3_Part3(*this);
+
+	if (FAILED(pInstance->Initialize(pArg)))
+	{
+		MSG_BOX("Failed to Cloned : CDevilmonSkill3_Part3");
+		Safe_Release(pInstance);
+	}
+
+	return pInstance;
+}
+
+void CDevilmonSkill3_Part3::Free()
+{
+	__super::Free();
+
+	Safe_Release(m_pModelCom);
+	Safe_Release(m_pTextureCom);
+	Safe_Release(m_pShaderCom);
+}

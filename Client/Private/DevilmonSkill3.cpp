@@ -1,6 +1,10 @@
 #include "DevilmonSkill3.h"
 #include "GameInstance.h"
 #include "Interaction_Manager.h"
+#include "DevilmonSkill3_Part1.h"
+#include "DevilmonSkill3_Part2.h"
+#include "DevilmonSkill3_Part3.h"
+#include "DevilmonSkill3_Part4.h"
 
 CDevilmonSkill3::CDevilmonSkill3(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
     : CSkillObject{ pDevice, pContext }
@@ -34,12 +38,15 @@ HRESULT CDevilmonSkill3::Initialize(void* pArg)
 	const POSITION* Pos = static_cast<const POSITION*>(pArg);
 
 	m_iDamage = Pos->iDamage;
-
+	m_vPosition = Pos->m_vPosition;
 	m_vTarget_pos = Pos->m_vTargetPosition;
-
-	m_pTransformCom->Set_State(STATE::POSITION, m_vTarget_pos);
+	m_pTransformCom->Set_State(STATE::POSITION, m_vPosition);
+	m_pTransformCom->Update_WoldMatrix();
 
 	if (FAILED(Ready_PartObjects()))
+		return E_FAIL;
+
+	if (FAILED(Ready_SkillObjects()))
 		return E_FAIL;
 
 	return S_OK;
@@ -52,9 +59,25 @@ void CDevilmonSkill3::Priority_Update(_float fTimeDelta)
 
 void CDevilmonSkill3::Update(_float fTimeDelta)
 {
-	m_pTransformCom->Set_State((STATE::POSITION), m_vTarget_pos);
+	m_pTransformCom->Set_State((STATE::POSITION), m_vPosition);
 
-	m_pColliderCom->Update(XMLoadFloat4x4(m_pTransformCom->Get_WorldMatrixPtr()));
+
+	if (m_bCharge)
+	{
+		//Ready_Skill2Objects();
+		m_bCharge = false;
+	}
+
+	if (m_pLeftHand != nullptr && m_pRightHand != nullptr)
+	{
+		m_pLeftHand->Set_Position(m_vLeft);
+		m_pRightHand->Set_Position(m_vRight);
+	}
+
+	if (m_bMove == true)
+	{
+		Ready_Skill3Objects();
+	}
 
 	__super::Update(fTimeDelta);
 }
@@ -67,9 +90,7 @@ void CDevilmonSkill3::Late_Update(_float fTimeDelta)
 
 HRESULT CDevilmonSkill3::Render()
 {
-#ifdef _DEBUG
-	m_pColliderCom->Render();
-#endif
+
 
 	return S_OK;
 }
@@ -91,9 +112,69 @@ HRESULT CDevilmonSkill3::Ready_PartObjects()
 		return E_FAIL;
 
 	m_pInteraction_Manager->Set_Skill_Collider(m_pColliderCom);
-	m_pColliderCom->Set_Matrix(XMLoadFloat4x4(m_pTransformCom->Get_WorldMatrixPtr()));
+	m_pColliderCom->Update(XMLoadFloat4x4(m_pTransformCom->Get_WorldMatrixPtr()));
 
 	return S_OK;;
+}
+
+HRESULT CDevilmonSkill3::Ready_SkillObjects()
+{
+	CDevilmonSkill3_Part1::BODY_PLAYER_DESC Skill1{};
+
+	Skill1.pParentTransform = m_pTransformCom;
+
+	/* Part_Skill1 */
+	if (FAILED(__super::Add_PartObject(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_DevilmonSkill3_Part1"),
+		TEXT("Part_Skill1"), &Skill1)))
+		return E_FAIL;
+
+	return S_OK;
+}
+
+HRESULT CDevilmonSkill3::Ready_Skill2Objects()
+{
+	CDevilmonSkill3_Part2::BODY_PLAYER_DESC Skill2{};
+
+	Skill2.pParentTransform = m_pTransformCom;
+	Skill2.vMatrix = m_vLeft;
+
+	/* Part_Skill1 */
+	if (FAILED(__super::Add_PartObject(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_DevilmonSkill3_Part2"),
+		TEXT("Part_Skill2"), &Skill2)))
+		return E_FAIL;
+
+	m_pLeftHand = dynamic_cast<CDevilmonSkill3_Part2*>(Find_PartObject(TEXT("Part_Skill2")));
+
+	CDevilmonSkill3_Part3::BODY_PLAYER_DESC Skill3{};
+	
+	Skill3.pParentTransform = m_pTransformCom;
+	Skill3.vMatrix = m_vRight;
+
+
+	/* Part_Skill1 */
+	if (FAILED(__super::Add_PartObject(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_DevilmonSkill3_Part3"),
+		TEXT("Part_Skill3"), &Skill3)))
+		return E_FAIL;
+
+	m_pRightHand = dynamic_cast<CDevilmonSkill3_Part3*>(Find_PartObject(TEXT("Part_Skill3")));
+
+	return S_OK;
+}
+
+HRESULT CDevilmonSkill3::Ready_Skill3Objects()
+{
+	CDevilmonSkill3_Part4::BODY_PLAYER_DESC Skill4{};
+
+	//Skill4.vMatrix = m_pTransformCom->Get_S;
+	Skill4.vPosition = m_vPosition;
+	Skill4.vPosition2 = m_vTarget_pos;
+
+	/* Part_Skill4 */
+	if (FAILED(__super::Add_PartObject(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_DevilmonSkill3_Part4"),
+		TEXT("Part_Skill4"), &Skill4)))
+		return E_FAIL;
+
+	return S_OK;
 }
 
 CDevilmonSkill3* CDevilmonSkill3::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)

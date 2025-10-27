@@ -455,6 +455,23 @@ void CTransform::TurnY(_float fAngle, _float fTimeDelta)
 	Set_State(STATE::LOOK, vLook);
 }
 
+void CTransform::TurnY(_float fAngle, _float Speed, _float fTimeDelta)
+{
+	_vector		vRight = Get_State(STATE::RIGHT);
+	_vector		vUp = Get_State(STATE::UP);
+	_vector		vLook = Get_State(STATE::LOOK);
+
+	_matrix		RotationMatrix = XMMatrixRotationAxis(XMVectorSet(0.f, 1.f, 0.f, 0.f), fAngle * Speed * fTimeDelta);
+
+	vRight = XMVector3TransformNormal(vRight, RotationMatrix);
+	vUp = XMVector3TransformNormal(vUp, RotationMatrix);
+	vLook = XMVector3TransformNormal(vLook, RotationMatrix);
+
+	Set_State(STATE::RIGHT, vRight);
+	Set_State(STATE::UP, vUp);
+	Set_State(STATE::LOOK, vLook);
+}
+
 void CTransform::Target_Pos_Move(_fvector Target_Pos, _float fTimeDelta)
 {
 	_vector vPos = Get_State(STATE::POSITION);
@@ -464,6 +481,35 @@ void CTransform::Target_Pos_Move(_fvector Target_Pos, _float fTimeDelta)
 
 	// 이번 프레임 이동량
 	_vector Move = Dir * m_fSpeedPerSec * fTimeDelta;
+
+	// 목표까지 남은 거리 계산
+	float Distance = XMVectorGetX(XMVector3Length(Target_Pos - vPos));
+	const float Threshold = 0.1f; // 도착 판정 범위
+
+	if (Distance <= Threshold)
+	{
+		// 도착하면 위치를 목표로 맞추고 이동 종료
+		Set_State(STATE::POSITION, Target_Pos);
+		return;
+	}
+
+	// 이동량이 남은 거리보다 크면, 목표 위치로 바로 이동
+	if (XMVectorGetX(XMVector3Length(Move)) > Distance)
+		Move = Target_Pos - vPos;
+
+	// 위치 갱신
+	Set_State(STATE::POSITION, vPos + Move);
+}
+
+void CTransform::Target_Pos_Move_Speed(_fvector Target_Pos, _float Speed, _float fTimeDelta)
+{
+	_vector vPos = Get_State(STATE::POSITION);
+
+	// 목표까지 방향 계산
+	_vector Dir = XMVector3Normalize(Target_Pos - vPos);
+
+	// 이번 프레임 이동량
+	_vector Move = Dir * Speed * fTimeDelta;
 
 	// 목표까지 남은 거리 계산
 	float Distance = XMVectorGetX(XMVector3Length(Target_Pos - vPos));

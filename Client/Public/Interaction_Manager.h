@@ -8,6 +8,7 @@ class CGameInstance;
 class CGameObject;
 class CContainerObject;
 class CCollider;
+class CPartObject;
 NS_END
 
 NS_BEGIN(Client)
@@ -33,6 +34,7 @@ public:
 
 
 	void Set_Attack_Digimon(class CSkillObject* Attacker);
+	void Set_Attack_Skill(CPartObject* Attacker);
 	void Set_Hit_Digimon(CContainerObject* Battle_Digimon);
 	void Set_Skill_Collider(CCollider* pCollider);
 	void Battle_End();
@@ -46,6 +48,9 @@ private:
 
 	class CSkillObject* m_pAttackDigimon = { nullptr };
 	CCollider* m_pSkill_Collider = { nullptr };
+
+	CPartObject* m_pAttackSkill = { nullptr };
+
 	vector<CContainerObject*> m_pBattle_Digimon_Collider;
 
 public:

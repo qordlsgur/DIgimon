@@ -74,34 +74,6 @@ void CBlackwargreymon::Update(_float fTimeDelta)
 			}
 			if (!m_bMove)
 				m_pFsm->Enter(DIGIMONSTATE::STAND, m_pPart_Body);
-			/*if (m_pGameInstance->Key_Down(DIK_1))
-			{
-				m_pFsm->Enter(DIGIMONSTATE::SKILL3, m_pPart_Body, false, false);
-				m_bMove = true;
-			}
-			m_iSkill = static_cast<_int>(m_pPart_Body->Get_TrackPosition());
-			switch (m_iSkill)
-			{
-			case 13:
-				if (m_iSkill != m_iLastSkill)
-				{
-					Creat_Skill(3);
-					m_iLastSkill = m_iSkill;
-				}
-				break;
-			case 109:
-				if (m_iSkill != m_iLastSkill)
-				{
-					m_pSkill1->Set_Move(true);
-					m_iLastSkill = m_iSkill;
-				}
-				break;
-			default:
-				m_iLastSkill = -1;
-				break;
-			}
-			if (!m_bMove)
-				m_pFsm->Enter(DIGIMONSTATE::STAND, m_pPart_Body);*/
 		}
 		else
 		{

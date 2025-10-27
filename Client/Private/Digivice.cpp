@@ -61,8 +61,8 @@ HRESULT CDigivice::Initialize(void* pArg)
 
 	m_Digimon_ID.resize(8, -1);
 
-	Acquire_Digimon(0);
-	Acquire_Digimon(0);
+	Acquire_Digimon(2);
+	Acquire_Digimon(1);
 	Acquire_Digimon(0);
 	m_strDigimon_Stage[0] = L"유아기";
 	m_strDigimon_Stage[1] = L"성장기";

@@ -219,6 +219,10 @@
     <ClInclude Include="..\public\DevilmonSkill1.h" />
     <ClInclude Include="..\public\DevilmonSkill2.h" />
     <ClInclude Include="..\public\DevilmonSkill3.h" />
+    <ClInclude Include="..\public\DevilmonSkill3_Part1.h" />
+    <ClInclude Include="..\public\DevilmonSkill3_Part2.h" />
+    <ClInclude Include="..\public\DevilmonSkill3_Part3.h" />
+    <ClInclude Include="..\public\DevilmonSkill3_Part4.h" />
     <ClInclude Include="..\public\Digimon_Manager.h" />
     <ClInclude Include="..\public\Digivice.h" />
     <ClInclude Include="..\public\Digivice_Exp.h" />
@@ -292,6 +296,7 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\private\DevilmonSkill3_Part3.cpp" />
     <ClCompile Include="..\private\Angewomon.cpp" />
     <ClCompile Include="..\private\AngewomonSkill1.cpp" />
     <ClCompile Include="..\private\AngewomonSkill1_Part1.cpp" />
@@ -355,6 +360,9 @@
     <ClCompile Include="..\private\DevilmonSkill1.cpp" />
     <ClCompile Include="..\private\DevilmonSkill2.cpp" />
     <ClCompile Include="..\private\DevilmonSkill3.cpp" />
+    <ClCompile Include="..\private\DevilmonSkill3_Part1.cpp" />
+    <ClCompile Include="..\private\DevilmonSkill3_Part2.cpp" />
+    <ClCompile Include="..\private\DevilmonSkill3_Part4.cpp" />
     <ClCompile Include="..\private\Digimon_Manager.cpp" />
     <ClCompile Include="..\private\Digivice.cpp" />
     <ClCompile Include="..\private\Digivice_Exp.cpp" />
@@ -446,6 +454,8 @@
     <FxCompile Include="..\Bin\ShaderFiles\Shader_UHD.hlsl" />
     <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxAnimMesh.hlsl" />
     <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxCube.hlsl" />
+    <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxEffectDevilmon.hlsl" />
+    <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxSkillDevilmon.hlsl" />
     <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxMesh.hlsl" />
     <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxNorTex.hlsl" />
     <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxPosTex.hlsl" />

@@ -5,20 +5,21 @@
 #include "StateMachine.h"
 #include "Digimon_Manager.h"
 #include "SkillObject.h"
+#include "DevilmonSkill3.h"
 
 CDevilmon::CDevilmon(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
-    : CContainerObject{ pDevice, pContext }
+	: CContainerObject{ pDevice, pContext }
 {
 }
 
 CDevilmon::CDevilmon(const CDevilmon& Prototype)
-    : CContainerObject{ Prototype }
+	: CContainerObject{ Prototype }
 {
 }
 
 HRESULT CDevilmon::Initialize_Prototype()
 {
-    return S_OK;
+	return S_OK;
 }
 
 HRESULT CDevilmon::Initialize(void* pArg)
@@ -57,143 +58,148 @@ void CDevilmon::Update(_float fTimeDelta)
 {
 	if (m_bLife)
 	{
+		if (m_bSkillOn)
+		{
+			m_vLeftHand = XMLoadFloat4x4(static_cast<CBody_Devilmon*>(m_pPart_Body)->Get_BoneMatrixPtr("Bip01-L-Finger2"));
+			m_vRightHand = XMLoadFloat4x4(static_cast<CBody_Devilmon*>(m_pPart_Body)->Get_BoneMatrixPtr("Bip01-R-Finger2"));
+			static_cast<CDevilmonSkill3*>(m_pSkill)->Set_Hand(m_vLeftHand, m_vRightHand);;
+		}
+
 		if (!m_bBattle)
 		{
-			//if (!m_bMonster)
-			//{
-			//	m_pTransformCom->LookAtPlayer(m_pDigimon_Manager->PlayerPos(), fTimeDelta);
-			//	m_bMove = false;
-			//	if (m_pTransformCom->FollowPlayer(m_pDigimon_Manager->PlayerPos(), 30, fTimeDelta))
-			//	{
-			//		m_pFsm->Enter(DIGIMONSTATE::RUN, m_pPart_Body);
-			//		m_bMove = true;
-			//	}
-			//}
-			//if (!m_bMove)
-			//	m_pFsm->Enter(DIGIMONSTATE::STAND, m_pPart_Body);
-			if (m_pGameInstance->Key_Down(DIK_1))
+			if (!m_bMonster)
 			{
-				m_pFsm->Enter(DIGIMONSTATE::SKILL3, m_pPart_Body, false, false);
-				m_bMove = true;
-			}
-
-			m_iSkill = static_cast<_int>(m_pPart_Body->Get_TrackPosition());
-			if (m_iSkill == 111)
-				Creat_Skill(3);
-			m_bMonster = true;
-			//switch (m_iSkill)
-			//{
-			//case 30:
-			//case 33:
-			//case 35:
-			//case 38:
-			//case 43:
-			//case 45:
-			//	if (m_iSkill != m_iLastSkill) // 이전과 다를 때만 실행
-			//	{
-			//		Creat_Skill(2);
-			//		m_iLastSkill = m_iSkill;
-			//	}
-			//	break;
-			//default:
-			//	m_iLastSkill = -1;
-			//	break;
-			//}
-
-			if (m_bMove && m_pPart_Body->Get_AnimFinish())
-			{
+				m_pTransformCom->LookAtPlayer(m_pDigimon_Manager->PlayerPos(), fTimeDelta);
 				m_bMove = false;
+				if (m_pTransformCom->FollowPlayer(m_pDigimon_Manager->PlayerPos(), 30, fTimeDelta))
+				{
+					m_pFsm->Enter(DIGIMONSTATE::RUN, m_pPart_Body);
+					m_bMove = true;
+				}
 			}
 			if (!m_bMove)
-				m_pFsm->Enter(DIGIMONSTATE::STAND, m_pPart_Body);
+				m_pFsm->Enter(DIGIMONSTATE::STANDBATTLE, m_pPart_Body);
+
+
 		}
 		else
 		{
+
 			if (Info.Hp <= 0)
 			{
 				Info.Hp = 0;
 				m_bLife = false;
 			}
 
-			if (m_bSkill1)
+			if (!m_bDie)
 			{
-				Skill1();
-				m_iDamage = static_cast<_int>(Info.Damage * Info.DigimonSkill1Info.HitCount * 0.4);
-				m_iSkill = static_cast<_int>(m_pPart_Body->Get_TrackPosition());
-
-				if (m_iSkill == 20)
+				if (m_bSkill1)
 				{
-					if (m_iLastSkill != m_iSkill)
+					Skill1();
+					m_iDamage = static_cast<_int>(Info.Damage * Info.DigimonSkill1Info.HitCount * 0.4);
+					m_iSkill = static_cast<_int>(m_pPart_Body->Get_TrackPosition());
+
+					if (m_iSkill == 20)
 					{
-						Creat_Skill(1);
-						m_iLastSkill = m_iSkill; // 마지막으로 실행한 트랙 위치 저장
+						if (m_iLastSkill != m_iSkill)
+						{
+							Creat_Skill(1);
+							m_iLastSkill = m_iSkill; // 마지막으로 실행한 트랙 위치 저장
+						}
+					}
+					else
+					{
+						m_iLastSkill = -1; // 다른 트랙 위치면 초기화
 					}
 				}
-				else
+				else if (m_bSkill2)
 				{
-					m_iLastSkill = -1; // 다른 트랙 위치면 초기화
-				}
-			}
-			else if (m_bSkill2)
-			{
-				Skill2();
-				m_iDamage = static_cast<_int>(Info.Damage * Info.DigimonSkill1Info.HitCount * 0.1);
-				m_iSkill = static_cast<_int>(m_pPart_Body->Get_TrackPosition());
+					Skill2();
+					m_iDamage = static_cast<_int>(Info.Damage * Info.DigimonSkill1Info.HitCount * 0.1);
+					m_iSkill = static_cast<_int>(m_pPart_Body->Get_TrackPosition());
 
-				switch (m_iSkill)
-				{
-				case 30:
-				case 33:
-				case 35:
-				case 38:
-				case 43:
-				case 45:
-					if (m_iSkill != m_iLastSkill) // 이전과 다를 때만 실행
+					switch (m_iSkill)
 					{
-						Creat_Skill(2);
-						m_iLastSkill = m_iSkill;
-					}
-					break;
-				default:
-					m_iLastSkill = -1;
-					break;
-				}
-			}
-			else if (m_bSkill3)
-			{
-				Skill3();
-				m_iDamage = static_cast<_int>(Info.Damage * Info.DigimonSkill1Info.HitCount * 1.F);
-				m_iSkill = static_cast<_int>(m_pPart_Body->Get_TrackPosition());
-
-				if (m_iSkill == 111)
-				{
-					if (m_iLastSkill != m_iSkill)
-					{
-						Creat_Skill(3);
-						m_iLastSkill = m_iSkill; // 마지막으로 실행한 트랙 위치 저장
+					case 30:
+					case 33:
+					case 35:
+					case 38:
+					case 43:
+					case 45:
+						if (m_iSkill != m_iLastSkill) // 이전과 다를 때만 실행
+						{
+							Creat_Skill(2);
+							m_iLastSkill = m_iSkill;
+						}
+						break;
+					default:
+						m_iLastSkill = -1;
+						break;
 					}
 				}
-				else
+				else if (m_bSkill3)
 				{
-					m_iLastSkill = -1; // 다른 트랙 위치면 초기화
+					Skill3();
+					m_iDamage = static_cast<_int>(Info.Damage * Info.DigimonSkill1Info.HitCount * 1.F);
+					m_iSkill = static_cast<_int>(m_pPart_Body->Get_TrackPosition());
+
+					switch (m_iSkill)
+					{
+					case 11:
+						if (m_iSkill != m_iLastSkill) // 이전과 다를 때만 실행
+						{
+							Creat_Skill(3);
+							m_iLastSkill = m_iSkill;
+						}
+						break;
+					case 62:
+						static_cast<CDevilmonSkill3*>(m_pSkill)->Set_Charge(true);
+						m_bSkillOn = true;
+						break;
+					case 111:
+						if (m_iSkill != m_iLastSkill) // 이전과 다를 때만 실행
+						{
+							m_pSkill->Set_Move(true);
+						}
+						break;
+					default:
+						m_iLastSkill = -1;
+						break;
+					}
+				}
+				if (m_bBackJump)
+				{
+					m_pFsm->Enter(DIGIMONSTATE::BATTLEBACK, m_pPart_Body);
+				}
+
+
+				if (!m_bSkill1 && !m_bSkill2 && !m_bSkill3 && !m_bBackJump)
+				{
+					m_bTurnEnd = true;
+					m_bSkillOn = false;
+					m_pFsm->Enter(DIGIMONSTATE::STANDBATTLE, m_pPart_Body);
 				}
 			}
-
-			if (m_bBackJump)
+			else
 			{
-				m_pFsm->Enter(DIGIMONSTATE::BATTLEBACK, m_pPart_Body);
-			}
+				m_pFsm->Enter(DIGIMONSTATE::DEATH, m_pPart_Body, false, false);
 
-			if (!m_bSkill1 && !m_bSkill2 && !m_bSkill3 && !m_bBackJump)
-			{
-				m_bTurnEnd = true;
-				m_pFsm->Enter(DIGIMONSTATE::STANDBATTLE, m_pPart_Body);
+				if (m_pPart_Body->Get_AnimFinish())
+				{
+					if (m_bMonster)
+					{
+						m_pPart_Body->Set_Dissolve(true);
+					}
+
+				}
+
 			}
 		}
 		m_pFsm->Update(fTimeDelta);
 		m_pColliderCom->Update(XMLoadFloat4x4(m_pTransformCom->Get_WorldMatrixPtr()));
 
 		__super::Update(fTimeDelta);
+
 	}
 }
 
@@ -318,8 +324,8 @@ void CDevilmon::Creat_Skill(_int SkillNum)
 
 	case 3:
 		Desc.iDamage = m_iDamage;
-		m_pGameInstance->Add_GameObject_ToLayer(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_DevilmonSkill3"),
-			ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Layer_DevilmonSkill3"), &Desc);
+		m_pSkill = static_cast<CDevilmonSkill3*>(m_pGameInstance->Add_GameObject_ToLayer_ToCreate(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_DevilmonSkill3"),
+			ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Layer_DevilmonSkill3"), &Desc));
 
 		break;
 	}
