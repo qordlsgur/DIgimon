@@ -59,7 +59,7 @@ void CLeomon::Update(_float fTimeDelta)
 	{
 		if (!m_bBattle)
 		{
-			if (!m_bMonster)
+			/*if (!m_bMonster)
 			{
 				m_pTransformCom->LookAtPlayer(m_pDigimon_Manager->PlayerPos(), fTimeDelta);
 				m_bMove = false;
@@ -68,6 +68,25 @@ void CLeomon::Update(_float fTimeDelta)
 					m_pFsm->Enter(DIGIMONSTATE::RUN, m_pPart_Body);
 					m_bMove = true;
 				}
+			}*/
+			if (m_pGameInstance->Key_Down(DIK_1))
+			{
+				m_pFsm->Enter(DIGIMONSTATE::SKILL2, m_pPart_Body, false,false);
+				m_bMove = true;
+			}
+			m_iDamage = static_cast<_int>(Info.Damage * Info.DigimonSkill2Info.HitCount * 0.6f);
+			m_iSkill = static_cast<_int>(m_pPart_Body->Get_TrackPosition());
+			if (m_iSkill == 42)
+			{
+				if (m_iLastSkill != m_iSkill)
+				{
+					Creat_Skill(2);
+					m_iLastSkill = m_iSkill; // 마지막으로 실행한 트랙 위치 저장
+				}
+			}
+			else
+			{
+				m_iLastSkill = -1; // 다른 트랙 위치면 초기화
 			}
 			if (!m_bMove)
 				m_pFsm->Enter(DIGIMONSTATE::STAND, m_pPart_Body);

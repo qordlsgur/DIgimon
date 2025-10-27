@@ -55,7 +55,7 @@ HRESULT CPlayer::Initialize(void* pArg)
 
 	m_pFsm->Initialize();
 
-	m_pFsm->Enter(DIGIMONSTATE::STAND, m_pPart_Body, false, false);
+	m_pFsm->Enter(DIGIMONSTATE::STAND, m_pPart_Body);
 
 	m_fGravity = 16.8f;
 	m_fJumpPower = 4.5f;
@@ -69,6 +69,8 @@ HRESULT CPlayer::Initialize(void* pArg)
 
 	m_pInteraction_Manager->Set_Player(this);
 	m_pInteraction_Manager->Set_Player_Collider(m_pColliderCom);
+
+	m_bMove = false;
 
 	return S_OK;
 }
@@ -185,6 +187,8 @@ void CPlayer::Update(_float fTimeDelta)
 	//		m_pBattle_Manager->Set_End(true);
 	//	}
 	//}
+
+	Info.CurrentHp = 100.f;
 	__super::Update(fTimeDelta);
 }
 

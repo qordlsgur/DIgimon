@@ -45,6 +45,7 @@ HRESULT CBlackwargreymon::Initialize(void* pArg)
 
 	__super::Set_Digimon_Info(m_pDigimon_Manager->Search_Digimon(1));
 
+
 	return S_OK;
 }
 

@@ -62,6 +62,7 @@
 
 #include "LeomonSkill1.h"
 #include "LeomonSkill2.h"
+#include "LeomonSkill2_Part1.h"
 #include "LeomonSkill3.h"
 
 #include "MetalgarumonSkill1.h"
@@ -528,8 +529,8 @@ HRESULT CLoader::Loading_For_GamePlay()
 	/* For.Prototype_Component_Texture_CircleEffect*/
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_CircleEffect"),
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/Effect/CircleEffect%d.png"), 8))))
-		return E_FAIL;	
-	
+		return E_FAIL;
+
 	/* For.Prototype_Component_Texture_Circle*/
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Circle"),
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/Effect/Circle%d.png"), 2))))
@@ -543,8 +544,8 @@ HRESULT CLoader::Loading_For_GamePlay()
 	/* For.Prototype_Component_Texture_Space*/
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Space"),
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/Effect/Space%d.png"), 5))))
-		return E_FAIL;	
-	
+		return E_FAIL;
+
 	/* For.Prototype_Component_Texture_Smoke*/
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Smoke"),
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/Effect/Smoke%d.png"), 3))))
@@ -941,7 +942,7 @@ HRESULT CLoader::Loading_For_GamePlay()
 		CAngewomonSkill1_Part2::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
-	
+
 	/* For.Prototype_GameObject_AngewomonSkill2*/
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_AngewomonSkill2"),
 		CAngewomonSkill2::Create(m_pDevice, m_pContext))))
@@ -998,7 +999,7 @@ HRESULT CLoader::Loading_For_GamePlay()
 		CAngewomonSkill3_Part1::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 	/* For.Prototype_Component_Model_Angewomon_Skill3_1*/
-	PreTransformMatrix = XMMatrixScaling(0.2f, 0.2f, 0.2f) * XMMatrixTranslation(0.f,5.f,-5.f);
+	PreTransformMatrix = XMMatrixScaling(0.2f, 0.2f, 0.2f) * XMMatrixTranslation(0.f, 5.f, -5.f);
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Model_Angewomon_Skill3_1"),
 		CModel::Create(m_pDevice, m_pContext, MODEL::NONANIM, "../Bin/Resources/Models/Angewomon/Angewomon3_0.bin", PreTransformMatrix))))
 		return E_FAIL;
@@ -1112,7 +1113,7 @@ HRESULT CLoader::Loading_For_GamePlay()
 	/* For.Prototype_GameObject_DevilmonSkill3_Part3*/
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_DevilmonSkill3_Part3"),
 		CDevilmonSkill3_Part3::Create(m_pDevice, m_pContext))))
-		return E_FAIL;	
+		return E_FAIL;
 	/* For.Prototype_GameObject_DevilmonSkill3_Part4*/
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_DevilmonSkill3_Part4"),
 		CDevilmonSkill3_Part4::Create(m_pDevice, m_pContext))))
@@ -1177,6 +1178,11 @@ HRESULT CLoader::Loading_For_GamePlay()
 #pragma endregion
 
 #pragma region Leomon
+	/* For.Prototype_Component_Shader_VtxSkillLeomon*/
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Shader_VtxSkillLeomon"),
+		CShader::Create(m_pDevice, m_pContext, TEXT("../Bin/ShaderFiles/Shader_VtxSkillLeomon.hlsl"), VTXANIMMESH::Elements, VTXANIMMESH::iNumElements))))
+		return E_FAIL;
+
 	/* For.Prototype_GameObject_Leomon*/
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Leomon"),
 		CLeomon::Create(m_pDevice, m_pContext))))
@@ -1190,6 +1196,19 @@ HRESULT CLoader::Loading_For_GamePlay()
 	/* For.Prototype_GameObject_LeomonSkill1*/
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_LeomonSkill1"),
 		CLeomonSkill1::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+	/* For.Prototype_GameObject_LeomonSkill2_Part1 */
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_LeomonSkill2_Part1"),
+		CLeomonSkill2_Part1::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+	/* For.Prototype_Component_Model_Leomon_Skill2*/
+	PreTransformMatrix = XMMatrixScaling(0.1f, 0.1f, 0.1f) * XMMatrixRotationY(XMConvertToRadians(180.0f));
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Model_Leomon_Skill2"),
+		CModel::Create(m_pDevice, m_pContext, MODEL::NONANIM, "../Bin/Resources/Models/Leomon/LeomonSkill1.bin", PreTransformMatrix))))
+		return E_FAIL;
+	/* For.Prototype_Component_Texture_LeomonSkill2_Image*/
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_LeomonSkill2_Image"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Models/Leomon/LeomonSkill2_%d.png"), 1))))
 		return E_FAIL;
 
 	/* For.Prototype_GameObject_LeomonSkill2*/
@@ -1456,7 +1475,7 @@ HRESULT CLoader::Loading_For_GamePlay()
 
 
 	/* For.Prototype_Component_Model_fild*/
-	PreTransformMatrix = XMMatrixScaling(0.1f, 0.1f, 0.1f) * XMMatrixRotationY(XMConvertToRadians(180.0f)) ;
+	PreTransformMatrix = XMMatrixScaling(0.1f, 0.1f, 0.1f) * XMMatrixRotationY(XMConvertToRadians(180.0f));
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Model_fild"),
 		CModel::Create(m_pDevice, m_pContext, MODEL::NONANIM, "../Bin/Resources/Models/All/fild.Bin", PreTransformMatrix))))
 		return E_FAIL;

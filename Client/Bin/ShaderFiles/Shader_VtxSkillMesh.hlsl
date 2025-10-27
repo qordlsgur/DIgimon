@@ -71,8 +71,6 @@ struct PS_OUT
     float4 vDepth : SV_TARGET2;
 };
 
-
-
 /* 픽셀 쉐이더 : 픽셀의 최종적인 색을 결정하낟. */
 PS_OUT PS_MAIN(PS_IN In)
 {

@@ -1,6 +1,7 @@
 #include "LeomonSkill2.h"
 #include "GameInstance.h"
 #include "Interaction_Manager.h"
+#include "LeomonSkill2_Part1.h"
 
 CLeomonSkill2::CLeomonSkill2(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CSkillObject{ pDevice, pContext }
@@ -52,6 +53,9 @@ HRESULT CLeomonSkill2::Initialize(void* pArg)
 	if (FAILED(Ready_PartObjects()))
 		return E_FAIL;
 
+	if (FAILED(Ready_SkillObjects()))
+		return E_FAIL;
+
 	return S_OK;
 }
 
@@ -62,6 +66,8 @@ void CLeomonSkill2::Priority_Update(_float fTimeDelta)
 
 void CLeomonSkill2::Update(_float fTimeDelta)
 {
+	m_pTransformCom->TargetLook(m_vTarget_pos);
+
 	m_pTransformCom->Target_Pos_Move(m_vTarget_pos, fTimeDelta);
 
 	m_pColliderCom->Update(XMLoadFloat4x4(m_pTransformCom->Get_WorldMatrixPtr()));
@@ -107,6 +113,22 @@ HRESULT CLeomonSkill2::Ready_PartObjects()
 	m_pInteraction_Manager->Set_Skill_Collider(m_pColliderCom);
 	m_pColliderCom->Update(XMLoadFloat4x4(m_pTransformCom->Get_WorldMatrixPtr()));
 
+	return S_OK;
+}
+
+HRESULT CLeomonSkill2::Ready_SkillObjects()
+{
+
+	CLeomonSkill2_Part1::BODY_PLAYER_DESC Skill1{};
+
+	Skill1.pParentTransform = m_pTransformCom;
+
+	/* Part_Skill1 */
+	if (FAILED(__super::Add_PartObject(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_LeomonSkill2_Part1"),
+		TEXT("Part_Skill1"), &Skill1)))
+		return E_FAIL;
+
+	m_pSkillModel1 = dynamic_cast<CLeomonSkill2_Part1*>(Find_PartObject(TEXT("Part_Skill1")));
 	return S_OK;
 }
 

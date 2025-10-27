@@ -38,10 +38,11 @@ HRESULT CDevilmon::Initialize(void* pArg)
 
 	m_pFsm = CStateMachine::Create();
 	m_pFsm->Initialize();
-	m_pFsm->Enter(DIGIMONSTATE::STAND, m_pPart_Body, false, false);
+	m_pFsm->Enter(DIGIMONSTATE::STAND, m_pPart_Body);
 	m_pTransformCom->Set_State(STATE::POSITION, XMVectorSet(10.f, 0.f, 190.f, 1.f));
 
 	__super::Set_Digimon_Info(m_pDigimon_Manager->Search_Digimon(2));
+
 
 	return S_OK;
 }
@@ -88,7 +89,7 @@ void CDevilmon::Update(_float fTimeDelta)
 			if (Info.Hp <= 0)
 			{
 				Info.Hp = 0;
-				m_bLife = false;
+				m_bDie = true;
 			}
 
 			if (!m_bDie)
@@ -197,7 +198,6 @@ void CDevilmon::Update(_float fTimeDelta)
 		}
 		m_pFsm->Update(fTimeDelta);
 		m_pColliderCom->Update(XMLoadFloat4x4(m_pTransformCom->Get_WorldMatrixPtr()));
-
 		__super::Update(fTimeDelta);
 
 	}

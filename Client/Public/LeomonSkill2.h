@@ -5,6 +5,8 @@
 NS_BEGIN(Engine)
 class CCollider;
 class CTexture;
+class CContainerObject;
+class CPartObject;
 NS_END
 
 NS_BEGIN(Client)
@@ -30,14 +32,15 @@ public:
 	virtual _int Get_Damage() override;
 private:
 	CCollider* m_pColliderCom = { nullptr };
-
+	CPartObject* m_pSkillModel1 = { nullptr };
+	CContainerObject* m_pPlayer = { nullptr };
 	class CInteraction_Manager* m_pInteraction_Manager = { nullptr };
 
 	_vector Pos{};
 
 private:
 	HRESULT Ready_PartObjects();
-
+	HRESULT Ready_SkillObjects();
 
 public:
 	static CLeomonSkill2* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);

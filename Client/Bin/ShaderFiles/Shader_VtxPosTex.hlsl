@@ -238,13 +238,13 @@ PS_OUT PS_MAIN_TEST(PS_IN_TEST In)
     //float4 color = g_Texture.Sample(DefaultSampler, uv);
 
     //Out.vColor = color;
-        float4 vColor = g_Mask.Sample(DefaultSampler, In.vTexcoord);
+     float4 vColor = g_Texture.Sample(DefaultSampler, In.vTexcoord);
     float2 vTexcoord;
     
     vTexcoord.x = In.vProjPos.x / In.vProjPos.w * 0.5f + 0.5f;
     vTexcoord.y = In.vProjPos.y / In.vProjPos.w * -0.5f + 0.5f;
     
-    float4 vDepthDesc = g_Mask.Sample(DefaultSampler, vTexcoord);
+    float4 vDepthDesc = g_DepthTexture.Sample(DefaultSampler, vTexcoord);
     
     float fOldViewZ = vDepthDesc.y * 500.f;
     

@@ -412,6 +412,12 @@
     <Filter Include="02.GameObjects\Digimon\02.Devilmon\Skill3\Part">
       <UniqueIdentifier>{70a49ba3-9643-41c1-b9d5-065a838aa55d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.GameObjects\Digimon\03.Ladydevimon\Skill2\Part">
+      <UniqueIdentifier>{12f8e57e-14a1-42a8-b575-7e3fc0075ea0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Digimon\04.Leomon\Skill2\Part">
+      <UniqueIdentifier>{a9897043-8c82-4f4c-ba79-acd4af4e259e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -831,6 +837,7 @@
     <ClInclude Include="..\public\DevilmonSkill3_Part4.h">
       <Filter>02.GameObjects\Digimon\02.Devilmon\Skill3\Part</Filter>
     </ClInclude>
+    <ClInclude Include="..\public\LeomonSkill2_Part1.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Client.ico">
@@ -1251,6 +1258,7 @@
     <ClCompile Include="..\private\DevilmonSkill3_Part4.cpp">
       <Filter>02.GameObjects\Digimon\02.Devilmon\Skill3\Part</Filter>
     </ClCompile>
+    <ClCompile Include="..\private\LeomonSkill2_Part1.cpp" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxPosTex.hlsl">
@@ -1314,6 +1322,9 @@
       <Filter>97.ShaderFiles</Filter>
     </FxCompile>
     <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxEffectDevilmon.hlsl">
+      <Filter>97.ShaderFiles</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxSkillLeomon.hlsl">
       <Filter>97.ShaderFiles</Filter>
     </FxCompile>
   </ItemGroup>
