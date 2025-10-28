@@ -59,18 +59,39 @@ void CMetalgreymon::Update(_float fTimeDelta)
 	{
 		if (!m_bBattle)
 		{
-			if (!m_bMonster)
-			{
-				m_pTransformCom->LookAtPlayer(m_pDigimon_Manager->PlayerPos(), fTimeDelta);
-				m_bMove = false;
-				if (m_pTransformCom->FollowPlayer(m_pDigimon_Manager->PlayerPos(), 30, fTimeDelta))
-				{
-					m_pFsm->Enter(DIGIMONSTATE::RUN, m_pPart_Body);
-					m_bMove = true;
-				}
-			}
+			//if (!m_bMonster)
+			//{
+			//	m_pTransformCom->LookAtPlayer(m_pDigimon_Manager->PlayerPos(), fTimeDelta);
+			//	m_bMove = false;
+			//	if (m_pTransformCom->FollowPlayer(m_pDigimon_Manager->PlayerPos(), 30, fTimeDelta))
+			//	{
+			//		m_pFsm->Enter(DIGIMONSTATE::RUN, m_pPart_Body);
+			//		m_bMove = true;
+			//	}
+			//}
 			if (!m_bMove)
 				m_pFsm->Enter(DIGIMONSTATE::STAND, m_pPart_Body);
+
+			if (m_pGameInstance->Key_Down(DIK_1))
+			{
+				m_pFsm->Enter(DIGIMONSTATE::SKILL2, m_pPart_Body, false, false);
+				m_bMove = true;
+			}
+			m_iDamage = static_cast<_int>(Info.Damage * Info.DigimonSkill1Info.HitCount * 0.4f);
+			m_iSkill = static_cast<_int>(m_pPart_Body->Get_TrackPosition());
+			switch (m_iSkill)
+			{
+			case 23:
+				if (m_iSkill != m_iLastSkill) // 이전과 다를 때만 실행
+				{
+					Creat_Skill(2);
+					m_iLastSkill = m_iSkill;
+				}
+				break;
+			default:
+				m_iLastSkill = -1;
+				break;
+			}
 		}
 		else
 		{

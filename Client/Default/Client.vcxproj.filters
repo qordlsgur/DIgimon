@@ -427,6 +427,9 @@
     <Filter Include="02.GameObjects\BattleObject">
       <UniqueIdentifier>{84ab6885-45bd-4297-b376-335a615a6534}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.GameObjects\Digimon\06.Metalgreymon\Skill2\Part">
+      <UniqueIdentifier>{0643c02e-0a73-4c80-9769-bf61b135dd87}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -863,6 +866,9 @@
     </ClInclude>
     <ClInclude Include="..\public\Tribune.h">
       <Filter>02.GameObjects\BattleObject</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\MetalgreymonSkill2_Part1.h">
+      <Filter>02.GameObjects\Digimon\06.Metalgreymon\Skill2\Part</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1301,6 +1307,9 @@
     </ClCompile>
     <ClCompile Include="..\private\Tribune.cpp">
       <Filter>02.GameObjects\BattleObject</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\MetalgreymonSkill2_Part1.cpp">
+      <Filter>02.GameObjects\Digimon\06.Metalgreymon\Skill2\Part</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -86,7 +86,7 @@ void CDigimon_Manager::Angewomon()
 	Info.AttackSpeed = 100;
 	Info.Exp = 10000;
 	Info.CurrentExp = 0;
-	Info.ExpReward = 1000;
+	Info.ExpReward = 100;
 	Info.Lv = 50;
 
 	Digimon_Add(Info.DigimonId, Info);

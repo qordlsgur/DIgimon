@@ -72,13 +72,13 @@ void CMetalgarumon::Update(_float fTimeDelta)
 			}
 			if (!m_bMove)
 				m_pFsm->Enter(DIGIMONSTATE::STAND, m_pPart_Body);
-			if (m_pGameInstance->Key_Down(DIK_1))
-			{
-				m_mMouth = XMLoadFloat4x4(static_cast<CBody_Metalgarumon*>(m_pPart_Body)->Get_BoneMatrixPtr("Bip001-Head")) * XMLoadFloat4x4(m_pTransformCom->Get_WorldMatrixPtr());
+			//if (m_pGameInstance->Key_Down(DIK_1))
+			//{
+			//	m_mMouth = XMLoadFloat4x4(static_cast<CBody_Metalgarumon*>(m_pPart_Body)->Get_BoneMatrixPtr("Bip001-Head")) * XMLoadFloat4x4(m_pTransformCom->Get_WorldMatrixPtr());
 
-				/*m_pFsm->Enter(DIGIMONSTATE::SKILL3, m_pPart_Body, false, false);*/
-				m_bMove = true;
-			}
+			//	/*m_pFsm->Enter(DIGIMONSTATE::SKILL3, m_pPart_Body, false, false);*/
+			//	m_bMove = true;
+			//}
 			//m_iDamage = static_cast<_int>(Info.Damage * Info.DigimonSkill1Info.HitCount * 0.4f);
 			//m_iSkill = static_cast<_int>(m_pPart_Body->Get_TrackPosition());
 			//switch (m_iSkill)

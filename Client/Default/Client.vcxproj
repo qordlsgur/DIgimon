@@ -265,6 +265,7 @@
     <ClInclude Include="..\public\Metalgreymon.h" />
     <ClInclude Include="..\public\MetalgreymonSkill1.h" />
     <ClInclude Include="..\public\MetalgreymonSkill2.h" />
+    <ClInclude Include="..\Public\MetalgreymonSkill2_Part1.h" />
     <ClInclude Include="..\public\MetalgreymonSkill3.h" />
     <ClInclude Include="..\public\Omegamon.h" />
     <ClInclude Include="..\public\OmegamonSkill1.h" />
@@ -411,6 +412,7 @@
     <ClCompile Include="..\private\Metalgreymon.cpp" />
     <ClCompile Include="..\private\MetalgreymonSkill1.cpp" />
     <ClCompile Include="..\private\MetalgreymonSkill2.cpp" />
+    <ClCompile Include="..\private\MetalgreymonSkill2_Part1.cpp" />
     <ClCompile Include="..\private\MetalgreymonSkill3.cpp" />
     <ClCompile Include="..\private\Omegamon.cpp" />
     <ClCompile Include="..\private\OmegamonSkill1.cpp" />

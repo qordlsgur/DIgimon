@@ -1,9 +1,10 @@
 #include "MetalgreymonSkill2.h"
 #include "GameInstance.h"
 #include "Interaction_Manager.h"
+#include "MetalgreymonSkill2_Part1.h"
 
 CMetalgreymonSkill2::CMetalgreymonSkill2(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
-    : CSkillObject{ pDevice, pContext }
+	: CSkillObject{ pDevice, pContext }
 {
 }
 
@@ -14,7 +15,7 @@ CMetalgreymonSkill2::CMetalgreymonSkill2(const CMetalgreymonSkill2& Prototype)
 
 HRESULT CMetalgreymonSkill2::Initialize_Prototype()
 {
-    return S_OK;
+	return S_OK;
 }
 
 HRESULT CMetalgreymonSkill2::Initialize(void* pArg)
@@ -33,8 +34,8 @@ HRESULT CMetalgreymonSkill2::Initialize(void* pArg)
 
 	m_iDamage = Pos->iDamage;
 	m_vPosition = Pos->m_vPosition;
-	m_vTarget_pos = Pos->m_vTargetPosition;
-
+	//m_vTarget_pos = Pos->m_vTargetPosition;
+	m_vTarget_pos = XMVectorSet(100.f, 10.f, 300.f, 1.f);
 	m_vPosition.m128_f32[1] += 10.f;
 	if (Pos->Look == 0)
 	{
@@ -48,6 +49,9 @@ HRESULT CMetalgreymonSkill2::Initialize(void* pArg)
 	m_pTransformCom->Set_State(STATE::POSITION, m_vPosition);
 
 	if (FAILED(Ready_PartObjects()))
+		return E_FAIL;
+
+	if (FAILED(Ready_SkillObjects()))
 		return E_FAIL;
 
 	return S_OK;
@@ -102,6 +106,21 @@ HRESULT CMetalgreymonSkill2::Ready_PartObjects()
 	m_pColliderCom->Set_Matrix(XMLoadFloat4x4(m_pTransformCom->Get_WorldMatrixPtr()));
 
 	return S_OK;;
+}
+
+HRESULT CMetalgreymonSkill2::Ready_SkillObjects()
+{
+	CMetalgreymonSkill2_Part1::BODY_PLAYER_DESC Skill1{};
+
+	Skill1.pParentTransform = m_pTransformCom;
+
+	/* Part_Skill1 */
+	if (FAILED(__super::Add_PartObject(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_MetalgreymonSkill2_Part1"),
+		TEXT("Part_Skill1"), &Skill1)))
+		return E_FAIL;
+
+	m_pSkillModel1 = dynamic_cast<CMetalgreymonSkill2_Part1*>(Find_PartObject(TEXT("Part_Skill1")));
+	return S_OK;
 }
 
 CMetalgreymonSkill2* CMetalgreymonSkill2::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
