@@ -45,7 +45,8 @@ private:
 	class CStateMachine* m_pFsm = { nullptr };
 
 	_bool m_bMove = false;
-
+	_matrix m_mMouth{};
+	_bool m_bRaser = { false };
 private:
 	HRESULT Ready_PartObjects();
 

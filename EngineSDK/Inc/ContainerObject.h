@@ -44,6 +44,7 @@ public:
 
 	virtual void Set_Hp(_int Hp);
 	virtual void Set_Sp(_int Sp);
+	virtual void Set_CurrentSp(_int Sp);
 	virtual void Set_Damage(_int Damage);
 	virtual void Set_AttackSpeed(_int AttackSpeed);
 	virtual void Set_Exp(_int Exp);
@@ -54,6 +55,7 @@ public:
 	virtual void Skill1();
 	virtual void Skill2();
 	virtual void Skill3();
+	virtual _int Get_SkillSp(_int SkillNum);
 
 	virtual void Set_Battle(_bool Battle) { m_bBattle = Battle; }
 	virtual _bool Get_Battle() { return m_bBattle; }

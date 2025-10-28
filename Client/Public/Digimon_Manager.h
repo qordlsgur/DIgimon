@@ -49,7 +49,9 @@ public:
 	void Set_Current_Digimon_Info(DIGIMON_INFO Info);
 	DIGIMON_INFO* Get_Current_Digimon_Info(_int Num);
 
-	void Set_Digimon_Update(_int InfoNum, DIGIMON_STATE eState, _int Add);
+	void Set_Digimon_Update(_int Add);
+	void State_Update();
+	void BattleEnd_Update(_int DigimonID, DIGIMON_INFO* Info);
 
 	//void Copy_Digimon();
 

@@ -594,42 +594,46 @@ DIGIMON_INFO* CDigimon_Manager::Get_Current_Digimon_Info(_int Num)
 	return &m_CurrentDigimon[Num];
 }
 
-void CDigimon_Manager::Set_Digimon_Update(_int InfoNum, DIGIMON_STATE eState, _int Add)
+void CDigimon_Manager::Set_Digimon_Update(_int Add)
 {
-	auto& Digimon = m_CurrentDigimon[InfoNum];
+	for (_int i = 0; i < 3; ++i)
+		m_CurrentDigimon[i].CurrentExp += Add;
+}
 
-	switch (eState)
+void CDigimon_Manager::State_Update()
+{
+	for (size_t i = 0; i < m_CurrentDigimon.size(); ++i)
 	{
-	case DIGIMON_STATE::HP:
-		Digimon.CurrentHp += Add;
-		if (Digimon.CurrentHp > Digimon.Hp)
-			Digimon.CurrentHp = Digimon.Hp;
+		if (m_CurrentDigimon[i].CurrentHp > m_CurrentDigimon[i].Hp)
+			m_CurrentDigimon[i].CurrentHp = m_CurrentDigimon[i].Hp;
 
-		if (Digimon.CurrentSp < 0)
-			Digimon.CurrentSp = 0;
-		break;
+		if (m_CurrentDigimon[i].CurrentHp < 0)
+			m_CurrentDigimon[i].CurrentHp = 0;
 
-	case DIGIMON_STATE::SP:
-		Digimon.CurrentSp += Add;
-		if (Digimon.CurrentSp > Digimon.Sp)
-			Digimon.CurrentSp = Digimon.Sp;
+		if (m_CurrentDigimon[i].CurrentSp > m_CurrentDigimon[i].Sp)
+			m_CurrentDigimon[i].CurrentSp = m_CurrentDigimon[i].Sp;
 
-		if (Digimon.CurrentSp < 0)
-			Digimon.CurrentSp = 0;
-		break;
+		if (m_CurrentDigimon[i].CurrentSp < 0)
+			m_CurrentDigimon[i].CurrentSp = 0;
 
-	case DIGIMON_STATE::EXP:
-		Digimon.CurrentExp += Add;
-		if (Digimon.CurrentExp >= Digimon.Exp)
+		if (m_CurrentDigimon[i].CurrentExp >= m_CurrentDigimon[i].Exp)
 		{
-			while (Digimon.CurrentExp >= Digimon.Exp)
-			{
-				Digimon.CurrentExp -= Digimon.Exp;
-				Digimon.Lv++;
-			}
+			m_CurrentDigimon[i].Lv += m_CurrentDigimon[i].CurrentExp / m_CurrentDigimon[i].Exp;
+			m_CurrentDigimon[i].CurrentExp %= m_CurrentDigimon[i].Exp;
 		}
-		break;
 	}
+
+}
+
+void CDigimon_Manager::BattleEnd_Update(_int DigimonID, DIGIMON_INFO* Info)
+{
+	if (m_CurrentDigimon.size() <= DigimonID)
+		return;
+
+	m_CurrentDigimon[DigimonID] = *Info;
+
+	State_Update();
+
 }
 
 DIGIMON_INFO* CDigimon_Manager::Search_Digimon(_int ID)

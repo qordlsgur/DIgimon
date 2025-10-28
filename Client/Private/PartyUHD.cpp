@@ -49,6 +49,11 @@ void CPartyUHD::Update(_float fTimeDelta)
 		Set_NonBattle_Slot();
 	else
 		Set_Battle_Slot();
+
+	for (_int i = 0; i < m_vSlots.size(); ++i)
+	{
+		m_vSlots[i]->Set_Digimon_Info(m_pDigimon_Manager->Get_Current_Digimon_Info(i));
+	}
 }
 	
 void CPartyUHD::Late_Update(_float fTimeDelta)

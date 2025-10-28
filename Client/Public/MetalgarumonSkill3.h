@@ -27,13 +27,14 @@ public:
 
 public:
 	virtual _int Get_Damage() override;
-
+	void Set_Matrix(_matrix mouth) { m_mMouth = mouth; }
 private:
 	CCollider* m_pColliderCom = { nullptr };
 	CContainerObject* m_pPlayer = { nullptr };
 	class CInteraction_Manager* m_pInteraction_Manager = { nullptr };
 	CPartObject* m_pSkillModel1 = { nullptr };
 
+	_matrix m_mMouth{};
 private:
 	HRESULT Ready_PartObjects();
 	HRESULT Ready_SkillObjects();

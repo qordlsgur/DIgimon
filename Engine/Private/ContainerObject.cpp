@@ -163,6 +163,11 @@ void CContainerObject::Set_Sp(_int Sp)
 	Info.CurrentSp += Sp;
 }
 
+void CContainerObject::Set_CurrentSp(_int Sp)
+{
+	Info.CurrentSp -= Sp;
+}
+
 void CContainerObject::Set_Damage(_int Damage)
 {
 	Info.Damage += Damage;
@@ -205,6 +210,23 @@ void CContainerObject::Skill2()
 
 void CContainerObject::Skill3()
 {
+}
+
+_int CContainerObject::Get_SkillSp(_int SkillNum)
+{
+	switch (SkillNum)
+	{
+	case 2:
+		return Info.DigimonSkill2Info.Sp;
+		break;
+	case 3:
+		return Info.DigimonSkill3Info.Sp;
+		break;
+	default:
+		return 0;
+		break;
+	}
+	return 0;
 }
 
 _vector CContainerObject::Get_Position()

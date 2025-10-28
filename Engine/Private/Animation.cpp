@@ -24,10 +24,13 @@ CAnimation::CAnimation(const CAnimation& Prototype)
 
 HRESULT CAnimation::Initialize(CModel* pModel, ANIMATION& mAnim)
 {
+	_char MissName[MAX_PATH] = "StnadBattle";
+	_char SkillName[MAX_PATH] = "StandBattle";
 	// 애니메이션 이름
 	strcpy_s(m_szCpyName, mAnim.mName);
-
 	strcpy_s(m_szName, strchr(m_szCpyName, '|') + 1);
+	if (strcmp(MissName, m_szName) == 0)
+		strcpy_s(m_szName, SkillName);
 
 	// 총 길이
 	m_fDuration = mAnim.mfDuration;

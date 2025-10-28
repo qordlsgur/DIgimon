@@ -427,7 +427,11 @@ void CBattle_UI_Manager::Die_Enemy_HP(_int Num)
 	{
 		if (m_pEnemyHps.size() == 2)
 		{
-			if (Num == 1)
+			if (Num == 0)
+			{
+				m_pEnemyHps[0]->Set_Dissolve(true);
+			}
+			else if (Num == 1)
 			{
 				m_pEnemyHps[0]->Set_Dissolve(true);
 			}
@@ -476,6 +480,10 @@ void CBattle_UI_Manager::Update_Enemy_HP()
 	{
 		if (m_pEnemyHps.size() == 2)
 		{
+			if (m_iDie_Enemy == 0)
+			{
+				m_pEnemyHps[1]->Set_Move(m_iEnemy_HpPos[2].x, m_iEnemy_HpPos[2].y);
+			}
 			if (m_iDie_Enemy == 1)
 			{
 				m_pEnemyHps[1]->Set_Move(m_iEnemy_HpPos[2].x, m_iEnemy_HpPos[2].y);

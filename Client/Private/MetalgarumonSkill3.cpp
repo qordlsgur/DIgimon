@@ -35,23 +35,11 @@ HRESULT CMetalgarumonSkill3::Initialize(void* pArg)
 	m_iDamage = Pos->iDamage;
 	m_vPosition = Pos->m_vPosition;
 	m_vTarget_pos = Pos->m_vTargetPosition;
-
 	m_pTransformCom->Set_Scale(3.f, 3.f, 10.f);
 
-	m_vPosition.m128_f32[1] += 7.f;
-	if (Pos->Look == 0)
-	{
-		m_vPosition.m128_f32[2] -= 10.f;
-		m_vTarget_pos.m128_f32[2] -= 10.f;
-	}
-	else if (Pos->Look == 1)
-	{
-		m_vPosition.m128_f32[2] += 10.f;
-		m_vTarget_pos.m128_f32[2] += 10.f;
-	}
 
 	m_pTransformCom->Set_State(STATE::POSITION, m_vPosition);
-
+	m_pTransformCom->Update_WoldMatrix();
 	if (FAILED(Ready_PartObjects()))
 		return E_FAIL;
 
@@ -125,6 +113,7 @@ HRESULT CMetalgarumonSkill3::Ready_SkillObjects()
 		return E_FAIL;
 
 	m_pSkillModel1 = dynamic_cast<CMetalgarumonSkill3_Part1*>(Find_PartObject(TEXT("Part_Skill1")));
+	static_cast<CMetalgarumonSkill3_Part1*>(m_pSkillModel1)->Set_Mouth(m_mMouth);
 	return S_OK;
 }
 

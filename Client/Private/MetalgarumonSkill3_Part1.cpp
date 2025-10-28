@@ -43,9 +43,9 @@ void CMetalgarumonSkill3_Part1::Priority_Update(_float fTimeDelta)
 void CMetalgarumonSkill3_Part1::Update(_float fTimeDelta)
 {
 	XMStoreFloat4x4(&m_CombinedWorldMatrix,
-		XMLoadFloat4x4(m_pTransformCom->Get_WorldMatrixPtr()) * XMLoadFloat4x4(m_pParentTransformCom->Get_WorldMatrixPtr()));
+		XMLoadFloat4x4(m_pTransformCom->Get_WorldMatrixPtr()) *  XMLoadFloat4x4(m_pParentTransformCom->Get_WorldMatrixPtr()));
 
-	m_fTime += fTimeDelta * 15.f;
+	m_fTime += fTimeDelta * 5.f;
 }
 
 void CMetalgarumonSkill3_Part1::Late_Update(_float fTimeDelta)
@@ -59,7 +59,7 @@ HRESULT CMetalgarumonSkill3_Part1::Render()
 	if (FAILED(Bind_ShaderResources()))
 		return E_FAIL;
 
-	if (FAILED(m_pShaderCom->Begin(0)))
+	if (FAILED(m_pShaderCom->Begin(1)))
 		return E_FAIL;
 
 	if (FAILED(m_pModelCom->Render(0)))
@@ -106,7 +106,7 @@ HRESULT CMetalgarumonSkill3_Part1::Bind_ShaderResources()
 
 	if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_DiffuseTexture", 1)))
 		return E_FAIL;
-	if (FAILED(m_pMaskTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Mask", 0)))
+	if (FAILED(m_pMaskTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Mask", 1)))
 		return E_FAIL;
 
 	return S_OK;

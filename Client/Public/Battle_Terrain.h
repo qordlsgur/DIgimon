@@ -34,6 +34,10 @@ public:
 	virtual void Late_Update(_float fTimeDelta) override;
 	virtual HRESULT Render() override;
 
+private:
+	void Load_Object(const _tchar* szFileName);
+	template<typename T>
+	void LoadObject(const wstring& strPrototype, _float4x4 worldMatrix);
 
 private:
 	CVIBuffer_Terrain* m_pVIBufferCom = { nullptr };
@@ -54,6 +58,11 @@ private:
 	_vector m_vPlayerDigimonAttackPos[5] = {};
 	_vector m_vMonsterDigimonAttackPos[5] = {};
 
+	_bool					m_bObjectSet = false;
+	vector<CGameObject*>	m_vObjects;
+	vector<OBJECT_DATA>		m_vLoadDate;
+	CGameObject* m_pObject = { nullptr };
+
 private:
 	HRESULT Ready_Components();
 	HRESULT Bind_ShaderResources();
@@ -65,3 +74,5 @@ public:
 };
 
 NS_END
+
+

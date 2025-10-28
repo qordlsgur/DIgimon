@@ -354,7 +354,16 @@ void CRenderer::Render_UI()
 		Safe_Release(pRenderObject);
 	}
 
+	for (auto& pRenderObject : m_RenderObjects[ENUM_CLASS(RENDER::UUI)])
+	{
+		if (nullptr != pRenderObject)
+			pRenderObject->Render();
+
+		Safe_Release(pRenderObject);
+	}
+
 	m_RenderObjects[ENUM_CLASS(RENDER::UI)].clear();
+	m_RenderObjects[ENUM_CLASS(RENDER::UUI)].clear();
 }
 
 void CRenderer::Render_BlendUI()

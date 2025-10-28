@@ -137,7 +137,7 @@ PS_OUT_LASER PS_LASER(PS_IN_LASER In)
     float v = In.vTexcoord.y;
     
     u = u + Time;
-    
+    v = v + Time;
     float2 uv = float2(u, v);
     
     float4 vMtrlDiffuse = g_DiffuseTexture.Sample(DefaultSampler, uv);
@@ -147,7 +147,7 @@ PS_OUT_LASER PS_LASER(PS_IN_LASER In)
     if (vColor.a <= 0.f)
         discard;
     
-    vMtrlDiffuse = vMtrlDiffuse + vColor;
+    vMtrlDiffuse = vMtrlDiffuse * vColor;
     
     Out.vDiffuse = vMtrlDiffuse;
     Out.vNormal = float4(In.vNormal.xyz * 0.5f + 0.5f, 0.f);
@@ -171,7 +171,7 @@ technique11 DefaultTechnique
     {
         SetRasterizerState(RS_Cull_None);
         SetDepthStencilState(DSS_Default, 0);
-        SetBlendState(BS_None, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
+        SetBlendState(BS_Blend, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
         VertexShader = compile vs_5_0 VS_LASER();
         GeometryShader = NULL;
         PixelShader = compile ps_5_0 PS_LASER();

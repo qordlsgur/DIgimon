@@ -137,7 +137,7 @@ HRESULT CSkill_Effect_Image::Bind_ShaderResources()
 		return E_FAIL;
 	if (FAILED(m_pShaderCom->Bind_State("Count", 2)))
 		return E_FAIL;
-	if (FAILED(m_pShaderCom->Bind_State("Frame", 0.7)))
+	if (FAILED(m_pShaderCom->Bind_State("Frame", 0.7f)))
 		return E_FAIL;
 	if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture", 1)))
 		return E_FAIL;

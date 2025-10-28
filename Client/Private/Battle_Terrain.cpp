@@ -12,6 +12,9 @@
 #include "Metalgreymon.h"
 #include "Omegamon.h"
 #include "Wargreymon.h"
+#include "Tribune.h"
+#include "TennisField.h"
+#include "TennisLight.h"
 
 CBattle_Terrain::CBattle_Terrain(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CGameObject{ pDevice, pContext }
@@ -44,17 +47,20 @@ HRESULT CBattle_Terrain::Initialize(void* pArg)
 
 	m_iMaxDigimon = 5;
 
+	Load_Object(TEXT("../Bin/Resources/Textures/BattleObjects.bin"));
+
+
 	for (_int i = 0; i < m_iMaxDigimon; ++i)
 	{
 		_float fX = 15.f * static_cast<_float>(i);
 
-		m_vPlayerDigimonPos[i] = XMVectorSet(130.f - fX, 0.f, 130.f, 1.f);
-		m_vMonsterDigimonPos[i] = XMVectorSet(130.f - fX, 0.f, 70.f, 1.f);
-		m_vPlayerDigimonAttackPos[i] = XMVectorSet(130.f - fX, 0.f, 85.f, 1.f);
-		m_vMonsterDigimonAttackPos[i] = XMVectorSet(130.f - fX, 0.f, 115.f, 1.f);
+		m_vPlayerDigimonPos[i] = XMVectorSet(230.f - fX, 0.f, 230.f, 1.f);
+		m_vMonsterDigimonPos[i] = XMVectorSet(230.f - fX, 0.f, 170.f, 1.f);
+		m_vPlayerDigimonAttackPos[i] = XMVectorSet(230.f - fX, 0.f, 185.f, 1.f);
+		m_vMonsterDigimonAttackPos[i] = XMVectorSet(230.f - fX, 0.f, 215.f, 1.f);
 	}
 	
-	m_vPlayerPos = XMVectorSet(100.f, 0.f, 150.f, 1.f);
+	m_vPlayerPos = XMVectorSet(200.f, 0.f, 250.f, 1.f);
 
 	m_pBattle_Manager->Set_Battle_Pos(m_vMonsterDigimonPos, m_vPlayerDigimonPos, m_vPlayerPos, m_vMonsterDigimonAttackPos, m_vPlayerDigimonAttackPos);
 	return S_OK;
@@ -91,10 +97,63 @@ HRESULT CBattle_Terrain::Render()
 
 		if (FAILED(m_pVIBufferCom->Render()))
 			return E_FAIL;
+
+		for (size_t i = 0; i < m_vObjects.size(); ++i)
+		{
+			m_vObjects[i]->Render();
+		}
 	}
 
 	return S_OK;
 }
+
+void CBattle_Terrain::Load_Object(const _tchar* szFileName)
+{
+	ifstream in(szFileName, ios::binary);
+	if (!in)
+		return;
+
+	size_t size = 0;
+	in.read(reinterpret_cast<_char*>(&size), sizeof(size));
+
+	m_vLoadDate.resize(size);
+
+	in.read(reinterpret_cast<char*>(m_vLoadDate.data()), sizeof(OBJECT_DATA) * size);
+
+
+	for (auto& it : m_vLoadDate)
+	{
+
+		switch (it.Object_Type)
+		{
+		case ENUM_CLASS(OBJECT::TRIBUNE):
+			LoadObject<CTribune>(L"Prototype_GameObject_Tribune", it.World_Matrix);
+			break;
+		case ENUM_CLASS(OBJECT::TENNISLIGHT):
+			LoadObject<CTennisLight>(L"Prototype_GameObject_TennisLight", it.World_Matrix);
+			break;
+		}
+	}
+}
+
+template<typename T>
+void CBattle_Terrain::LoadObject(const wstring& strPrototype, _float4x4 worldMatrix)
+{
+	if (!m_bObjectSet)
+		m_bObjectSet = true;
+	int iObject_Count{};
+
+	iObject_Count = static_cast<int>(m_vObjects.size());
+	wstring strName = L"Object_Layer";
+
+	m_pObject = dynamic_cast<T*>(m_pGameInstance->Add_GameObject_ToLayer_ToCreate(ENUM_CLASS(LEVEL::GAMEPLAY), strPrototype,
+		ENUM_CLASS(LEVEL::GAMEPLAY), strName, nullptr, false));
+
+	m_pObject->Set_Matrix(worldMatrix);
+
+	m_vObjects.push_back(m_pObject);
+}
+
 
 HRESULT CBattle_Terrain::Ready_Components()
 {

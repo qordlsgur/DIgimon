@@ -104,6 +104,9 @@
 #include "BldK.h"
 #include "Tennis.h"
 #include "Spawner.h"
+#include "Tribune.h"
+#include "TennisLight.h"
+#include "TennisField.h"
 #pragma endregion
 
 #pragma region Digimon
@@ -660,6 +663,17 @@ HRESULT CLoader::Loading_For_GamePlay()
 	//	return E_FAIL;
 
 
+	/* For.Prototype_Component_Model_TennisFloolight */
+	PreTransformMatrix = XMMatrixScaling(0.1f, 0.1f, 0.1f) * XMMatrixRotationY(XMConvertToRadians(180.0f)) ;
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Model_Tennislight"),
+		CModel::Create(m_pDevice, m_pContext, MODEL::NONANIM,"../Bin/Resources/Models/BattleField/TennisFloolight.bin", PreTransformMatrix))))
+		return E_FAIL;
+
+	/* For.Prototype_Component_Model_tribune */
+	PreTransformMatrix = XMMatrixScaling(0.1f, 0.1f, 0.1f) * XMMatrixRotationY(XMConvertToRadians(180.0f)) * XMMatrixTranslation(0.f, 0.f, 3.f);
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Model_tribune"),
+		CModel::Create(m_pDevice, m_pContext, MODEL::NONANIM, "../Bin/Resources/Models/tribune/tribune.bin", PreTransformMatrix))))
+		return E_FAIL;
 
 #pragma endregion
 
@@ -1504,6 +1518,18 @@ HRESULT CLoader::Loading_For_GamePlay()
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Spawner"),
 		CSpawner::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
+
+	/* For.Prototype_GameObject_Tribune*/
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Tribune"),
+		CTribune::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	/* For.Prototype_GameObject_TennisLight*/
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_TennisLight"),
+		CTennisLight::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+
 
 	//디지몬 스킬---------------------------------------------------------------------------------------------------------------------------
 

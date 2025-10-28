@@ -66,7 +66,7 @@ void CBattle_Skill::Update(_float fTimeDelta)
 
 void CBattle_Skill::Late_Update(_float fTimeDelta)
 {
-	m_pGameInstance->Add_RenderGroup(RENDER::BATTLEUI, this);
+	m_pGameInstance->Add_RenderGroup(RENDER::UI, this);
 }
 
 HRESULT CBattle_Skill::Render()

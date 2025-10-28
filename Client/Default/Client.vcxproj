@@ -287,7 +287,10 @@
     <ClInclude Include="..\Public\State.h" />
     <ClInclude Include="..\Public\StateMachine.h" />
     <ClInclude Include="..\Public\Tennis.h" />
+    <ClInclude Include="..\public\TennisField.h" />
+    <ClInclude Include="..\public\TennisLight.h" />
     <ClInclude Include="..\public\Terrain.h" />
+    <ClInclude Include="..\public\Tribune.h" />
     <ClInclude Include="..\public\UHD_Slot.h" />
     <ClInclude Include="..\public\Wargreymon.h" />
     <ClInclude Include="..\public\WargreymonSkill1.h" />
@@ -430,7 +433,10 @@
     <ClCompile Include="..\Private\State.cpp" />
     <ClCompile Include="..\Private\StateMachine.cpp" />
     <ClCompile Include="..\Private\Tennis.cpp" />
+    <ClCompile Include="..\private\TennisField.cpp" />
+    <ClCompile Include="..\private\TennisLight.cpp" />
     <ClCompile Include="..\private\Terrain.cpp" />
+    <ClCompile Include="..\private\Tribune.cpp" />
     <ClCompile Include="..\private\UHD_Slot.cpp" />
     <ClCompile Include="..\private\Wargreymon.cpp" />
     <ClCompile Include="..\private\WargreymonSkill1.cpp" />

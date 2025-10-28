@@ -59,13 +59,6 @@ void CDevilmon::Update(_float fTimeDelta)
 {
 	if (m_bLife)
 	{
-		if (m_bSkillOn)
-		{
-			m_vLeftHand = XMLoadFloat4x4(static_cast<CBody_Devilmon*>(m_pPart_Body)->Get_BoneMatrixPtr("Bip01-L-Finger2"));
-			m_vRightHand = XMLoadFloat4x4(static_cast<CBody_Devilmon*>(m_pPart_Body)->Get_BoneMatrixPtr("Bip01-R-Finger2"));
-			static_cast<CDevilmonSkill3*>(m_pSkill)->Set_Hand(m_vLeftHand, m_vRightHand);;
-		}
-
 		if (!m_bBattle)
 		{
 			if (!m_bMonster)
@@ -79,8 +72,7 @@ void CDevilmon::Update(_float fTimeDelta)
 				}
 			}
 			if (!m_bMove)
-				m_pFsm->Enter(DIGIMONSTATE::STANDBATTLE, m_pPart_Body);
-
+				m_pFsm->Enter(DIGIMONSTATE::STAND, m_pPart_Body);
 
 		}
 		else
@@ -91,7 +83,12 @@ void CDevilmon::Update(_float fTimeDelta)
 				Info.Hp = 0;
 				m_bDie = true;
 			}
-
+			if (m_bSkillOn)
+			{
+				m_vLeftHand = XMLoadFloat4x4(static_cast<CBody_Devilmon*>(m_pPart_Body)->Get_BoneMatrixPtr("Bip01-L-Finger2"));
+				m_vRightHand = XMLoadFloat4x4(static_cast<CBody_Devilmon*>(m_pPart_Body)->Get_BoneMatrixPtr("Bip01-R-Finger2"));
+				static_cast<CDevilmonSkill3*>(m_pSkill)->Set_Hand(m_vLeftHand, m_vRightHand);;
+			}
 			if (!m_bDie)
 			{
 				if (m_bSkill1)
@@ -161,6 +158,7 @@ void CDevilmon::Update(_float fTimeDelta)
 						if (m_iSkill != m_iLastSkill) // 이전과 다를 때만 실행
 						{
 							m_pSkill->Set_Move(true);
+							m_iLastSkill = m_iSkill;
 						}
 						break;
 					default:
@@ -199,7 +197,6 @@ void CDevilmon::Update(_float fTimeDelta)
 		m_pFsm->Update(fTimeDelta);
 		m_pColliderCom->Update(XMLoadFloat4x4(m_pTransformCom->Get_WorldMatrixPtr()));
 		__super::Update(fTimeDelta);
-
 	}
 }
 

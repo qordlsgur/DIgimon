@@ -89,7 +89,6 @@ HRESULT CDigivice_Hp::Render()
 void CDigivice_Hp::Set_MaxHp(_int MaxHp)
 {
 	m_fMaxHp = MaxHp;
-	m_fCurrentHp = MaxHp;
 }
 
 void CDigivice_Hp::Set_CurrentHp(_int CurrentHp)

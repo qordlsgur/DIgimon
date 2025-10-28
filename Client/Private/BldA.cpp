@@ -27,6 +27,7 @@ HRESULT CBldA::Initialize(void* pArg)
 
 	return S_OK;
 }
+
 void CBldA::Priority_Update(_float fTimeDelta)
 {
 }

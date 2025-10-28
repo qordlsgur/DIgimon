@@ -34,6 +34,8 @@ public:
 	virtual void Late_Update(_float fTimeDelta) override;
 	virtual HRESULT Render() override;
 
+	void Set_Mouth(_matrix Matrix) { m_mMouth = Matrix; }
+
 private:
 	CModel* m_pModelCom = { nullptr };
 	CTexture* m_pTextureCom = { nullptr };
@@ -41,7 +43,7 @@ private:
 	CShader* m_pShaderCom = { nullptr };
 
 	_matrix RootBone{};
-
+	_matrix m_mMouth{};
 private:
 
 

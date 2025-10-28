@@ -88,7 +88,6 @@ HRESULT CDigivice_Sp::Render()
 void CDigivice_Sp::Set_MaxSp(_int MaxSp)
 {
 	m_iMaxSp = MaxSp;
-	m_iCurrentSp = MaxSp;
 }
 
 void CDigivice_Sp::Set_CurrentSp(_int CurrentSp)

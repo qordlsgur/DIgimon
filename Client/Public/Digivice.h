@@ -39,6 +39,8 @@ public:
 
 	DIGIMON_INFO Set_Info(_int ID);
 
+	void Set_Slot(_int ID);
+
 private:
 	void Set_State(DIGIMON_INFO ID);
 
@@ -88,7 +90,7 @@ private:
 
 	class CDigimon_Manager* m_pDigimon_Manager = {nullptr};
 	class CBattle_Manager* m_pBattle_Manager = {nullptr};
-	class CDigivice_Slot* m_pSelectSlot = { nullptr };
+	DIGIMON_INFO* m_pSelectSlot = { nullptr };
 
 private:
 	HRESULT Ready_Components();

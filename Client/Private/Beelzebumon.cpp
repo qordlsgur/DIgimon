@@ -170,7 +170,8 @@ void CBeelzebumon::Update(_float fTimeDelta)
 			}
 			else
 			{
-				m_pFsm->Enter(DIGIMONSTATE::DEATH, m_pPart_Body);
+				m_pFsm->Enter(DIGIMONSTATE::DEATH, m_pPart_Body, false, false);
+				
 				if (m_pPart_Body->Get_AnimFinish())
 				{
 					if (m_bMonster)
@@ -226,12 +227,10 @@ void CBeelzebumon::UseSkill(_int Skill)
 			m_bSkillMove = true;
 		m_bSkill1 = true;
 	}
-
 	else if (Skill == 2)
 	{
 		m_bSkill2 = true;
 	}
-
 	else if (Skill == 3)
 		m_bSkill3 = true;
 }

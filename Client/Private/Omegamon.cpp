@@ -171,7 +171,7 @@ void COmegamon::Update(_float fTimeDelta)
 			}
 			else
 			{
-				m_pFsm->Enter(DIGIMONSTATE::DEATH, m_pPart_Body);
+				m_pFsm->Enter(DIGIMONSTATE::DEATH, m_pPart_Body, false, false);
 
 				if (m_pPart_Body->Get_AnimFinish())
 				{

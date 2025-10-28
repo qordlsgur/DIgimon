@@ -38,6 +38,7 @@ HRESULT CMetalgarumonSkill1::Initialize(void* pArg)
 	m_vTarget_pos = Pos->m_vTargetPosition;
 
 	m_pTransformCom->Set_State(STATE::POSITION, m_vTarget_pos);
+	m_pTransformCom->Update_WoldMatrix();
 
 	if (FAILED(Ready_PartObjects()))
 		return E_FAIL;
