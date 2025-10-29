@@ -27,14 +27,21 @@ public:
 
 public:
 	virtual _int Get_Damage() override;
+	void Set_Hatch(_matrix LHatch, _matrix RHatch) { m_mLeftHatch = LHatch; m_mRightHatch = RHatch; }
 
 private:
 	CCollider* m_pColliderCom = { nullptr };
 	CContainerObject* m_pPlayer = { nullptr };
+	CPartObject* m_pSkillModel1 = { nullptr };
+	CPartObject* m_pSkillModel2 = { nullptr };
 	class CInteraction_Manager* m_pInteraction_Manager = { nullptr };
+
+	_matrix m_mLeftHatch{};
+	_matrix m_mRightHatch{};
 
 private:
 	HRESULT Ready_PartObjects();
+	HRESULT Ready_SkillObjects();
 
 public:
 	static CMetalgreymonSkill3* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);

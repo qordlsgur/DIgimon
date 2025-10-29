@@ -155,6 +155,42 @@ PS_OUT_LASER PS_LASER(PS_IN_LASER In)
     return Out;
 }
 
+PS_OUT_MISSILE PS_GMISSILE(PS_IN_MISSILE In)
+{
+    PS_OUT_MISSILE Out;
+    
+
+    float4 vMtrlDiffuse = g_DiffuseTexture.Sample(DefaultSampler, In.vTexcoord);
+    float3 Color = float3(254, 253, 72) / 255.f;
+    
+    vMtrlDiffuse.rgb = vMtrlDiffuse.rgb * Color.rgb;
+    
+    Out.vDiffuse = vMtrlDiffuse;
+    Out.vNormal = float4(In.vNormal.xyz * 0.5f + 0.5f, 0.f);
+    Out.vDepth = float4(In.vProjPos.z / In.vProjPos.w, In.vProjPos.w / 500.0f, 0.0f, 0.0f);
+    return Out;
+}
+
+PS_OUT_LASER PS_GLASER(PS_IN_LASER In)
+{
+    PS_OUT_LASER Out;
+    
+    
+    float4 vMtrlDiffuse = g_DiffuseTexture.Sample(DefaultSampler, In.vTexcoord);
+    float4 vColor = g_Mask.Sample(DefaultSampler, In.vTexcoord);
+
+    
+    if (vMtrlDiffuse.a <= 0.f)
+        discard;
+    
+    vMtrlDiffuse = vMtrlDiffuse * vColor;
+    
+    Out.vDiffuse = vMtrlDiffuse;
+    Out.vNormal = float4(In.vNormal.xyz * 0.5f + 0.5f, 0.f);
+    Out.vDepth = float4(In.vProjPos.z / In.vProjPos.w, In.vProjPos.w / 500.0f, 0.0f, 0.0f);
+    return Out;
+}
+
 technique11 DefaultTechnique
 {
     pass Missile
@@ -175,5 +211,25 @@ technique11 DefaultTechnique
         VertexShader = compile vs_5_0 VS_LASER();
         GeometryShader = NULL;
         PixelShader = compile ps_5_0 PS_LASER();
+    }
+
+    pass GMissile
+    {
+        SetRasterizerState(RS_Cull_None);
+        SetDepthStencilState(DSS_Default, 0);
+        SetBlendState(BS_None, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
+        VertexShader = compile vs_5_0 VS_MISSILE();
+        GeometryShader = NULL;
+        PixelShader = compile ps_5_0 PS_GMISSILE();
+    }
+
+    pass GigaStorm
+    {
+        SetRasterizerState(RS_Cull_None);
+        SetDepthStencilState(DSS_Default, 0);
+        SetBlendState(BS_Blend, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
+        VertexShader = compile vs_5_0 VS_LASER();
+        GeometryShader = NULL;
+        PixelShader = compile ps_5_0 PS_GLASER();
     }
 }

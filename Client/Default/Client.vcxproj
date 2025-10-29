@@ -267,6 +267,7 @@
     <ClInclude Include="..\public\MetalgreymonSkill2.h" />
     <ClInclude Include="..\Public\MetalgreymonSkill2_Part1.h" />
     <ClInclude Include="..\public\MetalgreymonSkill3.h" />
+    <ClInclude Include="..\public\MetalgreymonSkill3_Part1.h" />
     <ClInclude Include="..\public\Omegamon.h" />
     <ClInclude Include="..\public\OmegamonSkill1.h" />
     <ClInclude Include="..\public\OmegamonSkill2.h" />
@@ -414,6 +415,7 @@
     <ClCompile Include="..\private\MetalgreymonSkill2.cpp" />
     <ClCompile Include="..\private\MetalgreymonSkill2_Part1.cpp" />
     <ClCompile Include="..\private\MetalgreymonSkill3.cpp" />
+    <ClCompile Include="..\private\MetalgreymonSkill3_Part1.cpp" />
     <ClCompile Include="..\private\Omegamon.cpp" />
     <ClCompile Include="..\private\OmegamonSkill1.cpp" />
     <ClCompile Include="..\private\OmegamonSkill2.cpp" />
@@ -469,6 +471,7 @@
     <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxAnimMesh.hlsl" />
     <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxCube.hlsl" />
     <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxEffectDevilmon.hlsl" />
+    <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxSkillBlackwargreymon.hlsl" />
     <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxSkillDevilmon.hlsl" />
     <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxMesh.hlsl" />
     <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxNorTex.hlsl" />

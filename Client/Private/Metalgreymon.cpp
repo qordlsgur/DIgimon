@@ -5,6 +5,7 @@
 #include "StateMachine.h"
 #include "Digimon_Manager.h"
 #include "SkillObject.h"
+#include "MetalgreymonSkill3.h"
 
 CMetalgreymon::CMetalgreymon(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CContainerObject{ pDevice, pContext }
@@ -74,7 +75,7 @@ void CMetalgreymon::Update(_float fTimeDelta)
 
 			if (m_pGameInstance->Key_Down(DIK_1))
 			{
-				m_pFsm->Enter(DIGIMONSTATE::SKILL2, m_pPart_Body, false, false);
+				m_pFsm->Enter(DIGIMONSTATE::SKILL3, m_pPart_Body, false, false);
 				m_bMove = true;
 			}
 			m_iDamage = static_cast<_int>(Info.Damage * Info.DigimonSkill1Info.HitCount * 0.4f);
@@ -84,7 +85,9 @@ void CMetalgreymon::Update(_float fTimeDelta)
 			case 23:
 				if (m_iSkill != m_iLastSkill) // 이전과 다를 때만 실행
 				{
-					Creat_Skill(2);
+					m_mLeftHatch = XMLoadFloat4x4(static_cast<CBody_Metalgreymon*>(m_pPart_Body)->Get_BoneMatrixPtr("Bone014"));
+					m_mRightHatch = XMLoadFloat4x4(static_cast<CBody_Metalgreymon*>(m_pPart_Body)->Get_BoneMatrixPtr("Bone016"));
+					Creat_Skill(3);
 					m_iLastSkill = m_iSkill;
 				}
 				break;
@@ -108,18 +111,18 @@ void CMetalgreymon::Update(_float fTimeDelta)
 					Skill1();
 					m_iDamage = static_cast<_int>(Info.Damage * Info.DigimonSkill2Info.HitCount * 0.5f);
 					m_iSkill = static_cast<_int>(m_pPart_Body->Get_TrackPosition());
-
-					if (m_iSkill == 14)
+					switch (m_iSkill)
 					{
-						if (m_iLastSkill != m_iSkill)
+					case 14:
+						if (m_iSkill != m_iLastSkill) // 이전과 다를 때만 실행
 						{
 							Creat_Skill(1);
-							m_iLastSkill = m_iSkill; // 마지막으로 실행한 트랙 위치 저장
+							m_iLastSkill = m_iSkill;
 						}
-					}
-					else
-					{
-						m_iLastSkill = -1; // 다른 트랙 위치면 초기화
+						break;
+					default:
+						m_iLastSkill = -1;
+						break;
 					}
 				}
 				else if (m_bSkill2)
@@ -128,17 +131,18 @@ void CMetalgreymon::Update(_float fTimeDelta)
 					m_iDamage = static_cast<_int>(Info.Damage * Info.DigimonSkill2Info.HitCount * 1.f);
 					m_iSkill = static_cast<_int>(m_pPart_Body->Get_TrackPosition());
 
-					if (m_iSkill == 23)
+					switch (m_iSkill)
 					{
-						if (m_iLastSkill != m_iSkill)
+					case 23:
+						if (m_iSkill != m_iLastSkill) // 이전과 다를 때만 실행
 						{
 							Creat_Skill(2);
-							m_iLastSkill = m_iSkill; // 마지막으로 실행한 트랙 위치 저장
+							m_iLastSkill = m_iSkill;
 						}
-					}
-					else
-					{
-						m_iLastSkill = -1; // 다른 트랙 위치면 초기화
+						break;
+					default:
+						m_iLastSkill = -1;
+						break;
 					}
 				}
 				else if (m_bSkill3)
@@ -147,17 +151,18 @@ void CMetalgreymon::Update(_float fTimeDelta)
 					m_iDamage = static_cast<_int>(Info.Damage * Info.DigimonSkill2Info.HitCount * 1.2f);
 					m_iSkill = static_cast<_int>(m_pPart_Body->Get_TrackPosition());
 
-					if (m_iSkill == 23)
+					switch (m_iSkill)
 					{
-						if (m_iLastSkill != m_iSkill)
+					case 23:
+						if (m_iSkill != m_iLastSkill) // 이전과 다를 때만 실행
 						{
 							Creat_Skill(3);
-							m_iLastSkill = m_iSkill; // 마지막으로 실행한 트랙 위치 저장
+							m_iLastSkill = m_iSkill;
 						}
-					}
-					else
-					{
-						m_iLastSkill = -1; // 다른 트랙 위치면 초기화
+						break;
+					default:
+						m_iLastSkill = -1;
+						break;
 					}
 				}
 
@@ -237,8 +242,6 @@ void CMetalgreymon::UseSkill(_int Skill)
 
 	else if (Skill == 2)
 	{
-		if (!m_bSkillMove)
-			m_bSkillMove = true;
 		m_bSkill2 = true;
 	}
 
@@ -307,10 +310,11 @@ void CMetalgreymon::Creat_Skill(_int SkillNum)
 		break;
 
 	case 3:
+		Desc.mMatrix = m_mLeftHatch;
+		Desc.mMatrix2 = m_mRightHatch;
 		Desc.iDamage = m_iDamage;
-		m_pGameInstance->Add_GameObject_ToLayer(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_MetalgreymonSkill3"),
-			ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Layer_MetalgreymonSkill3"), &Desc);
-
+		m_pSkill = static_cast<CMetalgreymonSkill3*>(m_pGameInstance->Add_GameObject_ToLayer_ToCreate(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_MetalgreymonSkill3"),
+			ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Layer_MetalgreymonSkill3"), &Desc));
 		break;
 	}
 }

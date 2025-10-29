@@ -75,6 +75,7 @@
 #include "MetalgreymonSkill2.h"
 #include "MetalgreymonSkill2_Part1.h"
 #include "MetalgreymonSkill3.h"
+#include "MetalgreymonSkill3_Part1.h"
 
 #include "OmegamonSkill1.h"
 #include "OmegamonSkill2.h"
@@ -1045,6 +1046,11 @@ HRESULT CLoader::Loading_For_GamePlay()
 #pragma endregion
 
 #pragma region Blackwargreymon
+	/* For.Prototype_Component_Shader_VtxSkillBlackwargreymon*/
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Shader_VtxSkillBlackwargreymon"),
+		CShader::Create(m_pDevice, m_pContext, TEXT("../Bin/ShaderFiles/Shader_VtxSkillBlackwargreymon.hlsl"), VTXANIMMESH::Elements, VTXANIMMESH::iNumElements))))
+		return E_FAIL;
+
 	/* For.Prototype_GameObject_Blackwargreymon*/
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Blackwargreymon"),
 		CBlackwargreymon::Create(m_pDevice, m_pContext))))
@@ -1313,7 +1319,7 @@ HRESULT CLoader::Loading_For_GamePlay()
 
 
 #pragma endregion
-
+	
 #pragma region Metalgreymon
 	/* For.Prototype_GameObject_Metalgreymon*/
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Metalgreymon"),
@@ -1339,7 +1345,7 @@ HRESULT CLoader::Loading_For_GamePlay()
 		CMetalgreymonSkill2_Part1::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 	/* For.Prototype_Component_MetalgreymonSkill2 */
-	PreTransformMatrix = XMMatrixScaling(0.1f, 0.1f, 0.1f) * XMMatrixRotationY(XMConvertToRadians(180.0f)) * XMMatrixTranslation(0.f, -0.9f, 0.f);
+	PreTransformMatrix = XMMatrixScaling(0.03f, 0.03f, 0.03f) * XMMatrixRotationY(XMConvertToRadians(180.0f));
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_MetalgreymonSkill2"),
 		CModel::Create(m_pDevice, m_pContext, MODEL::NONANIM, "../Bin/Resources/Models/Metalgreymon/MetalgreymonSkill1.Bin", PreTransformMatrix))))
 		return E_FAIL;
@@ -1352,7 +1358,14 @@ HRESULT CLoader::Loading_For_GamePlay()
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_MetalgreymonSkill3"),
 		CMetalgreymonSkill3::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
-
+	/* For.Prototype_GameObject_MetalgreymonSkill3_Part1*/
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_MetalgreymonSkill3_Part1"),
+		CMetalgreymonSkill3_Part1::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+	/* For.Prototype_Component_Texture_MetalgreymonSkill3_Image*/
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_MetalgreymonSkill3_Image"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Models/Metalgreymon/MetalgreymonSkill3_Image%d.png"), 2))))
+		return E_FAIL;
 	/* For.Prototype_Component_Model_Metalgreymon*/
 	PreTransformMatrix = XMMatrixScaling(0.1f, 0.1f, 0.1f) * XMMatrixRotationY(XMConvertToRadians(180.0f));
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Model_Metalgreymon"),
@@ -1418,7 +1431,7 @@ HRESULT CLoader::Loading_For_GamePlay()
 		CWargreymonSkill2::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 	/* For.Prototype_Component_Model_WargreymonSkill2_1*/
-	PreTransformMatrix = XMMatrixScaling(0.01f, 0.01f, 0.01f)/* * XMMatrixRotationY(XMConvertToRadians(-180.0f))*/;
+	PreTransformMatrix = XMMatrixScaling(0.01f, 0.01f, 0.01f) * XMMatrixRotationY(XMConvertToRadians(-180.0f));
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Model_WargreymonSkill2_1"),
 		CModel::Create(m_pDevice, m_pContext, MODEL::NONANIM, "../Bin/Resources/Models/Wargreymon/Wargreymon2_1.Bin", PreTransformMatrix))))
 		return E_FAIL;

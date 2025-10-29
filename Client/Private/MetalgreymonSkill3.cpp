@@ -1,6 +1,7 @@
 #include "MetalgreymonSkill3.h"
 #include "GameInstance.h"
 #include "Interaction_Manager.h"
+#include "MetalgreymonSkill3_Part1.h"
 
 CMetalgreymonSkill3::CMetalgreymonSkill3(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
     : CSkillObject{ pDevice, pContext }
@@ -34,20 +35,18 @@ HRESULT CMetalgreymonSkill3::Initialize(void* pArg)
 	m_iDamage = Pos->iDamage;
 	m_vPosition = Pos->m_vPosition;
 	m_vTarget_pos = Pos->m_vTargetPosition;
-
-	m_vPosition.m128_f32[1] += 10.f;
-	if (Pos->Look == 0)
-	{
-		m_vPosition.m128_f32[2] -= 10.f;
-	}
-	else if (Pos->Look == 1)
-	{
-		m_vPosition.m128_f32[2] += 10.f;
-	}
+	m_pTransformCom->Set_Scale(3.f, 3.f, 10.f);
 
 	m_pTransformCom->Set_State(STATE::POSITION, m_vPosition);
+	m_pTransformCom->Update_WoldMatrix();
+
+	m_mLeftHatch = Pos->mMatrix;
+	m_mRightHatch = Pos->mMatrix2;
 
 	if (FAILED(Ready_PartObjects()))
+		return E_FAIL;
+
+	if (FAILED(Ready_SkillObjects()))
 		return E_FAIL;
 
 	return S_OK;
@@ -60,7 +59,7 @@ void CMetalgreymonSkill3::Priority_Update(_float fTimeDelta)
 
 void CMetalgreymonSkill3::Update(_float fTimeDelta)
 {
-	m_pTransformCom->Target_Pos_Move(m_vTarget_pos, fTimeDelta);
+	m_pTransformCom->TargetLook(m_vTarget_pos);
 
 	m_pColliderCom->Update(XMLoadFloat4x4(m_pTransformCom->Get_WorldMatrixPtr()));
 
@@ -69,7 +68,7 @@ void CMetalgreymonSkill3::Update(_float fTimeDelta)
 
 void CMetalgreymonSkill3::Late_Update(_float fTimeDelta)
 {
-	m_pGameInstance->Add_RenderGroup(RENDER::UI, this);
+	m_pGameInstance->Add_RenderGroup(RENDER::EFFECT, this);
 	__super::Late_Update(fTimeDelta);
 }
 
@@ -103,6 +102,32 @@ HRESULT CMetalgreymonSkill3::Ready_PartObjects()
 	m_pColliderCom->Set_Matrix(XMLoadFloat4x4(m_pTransformCom->Get_WorldMatrixPtr()));
 
 	return S_OK;;
+}
+
+HRESULT CMetalgreymonSkill3::Ready_SkillObjects()
+{
+	CMetalgreymonSkill3_Part1::BODY_PLAYER_DESC Skill1{};
+
+	Skill1.pParentTransform = m_pTransformCom;
+	Skill1.vMatrix = m_mLeftHatch;
+	/* Part_Skill1 */
+	if (FAILED(__super::Add_PartObject(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_MetalgreymonSkill3_Part1"),
+		TEXT("Part_Skill1"), &Skill1)))
+		return E_FAIL;
+
+	m_pSkillModel1 = dynamic_cast<CMetalgreymonSkill3_Part1*>(Find_PartObject(TEXT("Part_Skill1")));
+
+	CMetalgreymonSkill3_Part1::BODY_PLAYER_DESC Skill2{};
+
+	Skill2.pParentTransform = m_pTransformCom;
+	Skill2.vMatrix = m_mRightHatch;
+	/* Part_Skill2 */
+	if (FAILED(__super::Add_PartObject(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_MetalgreymonSkill3_Part1"),
+		TEXT("Part_Skill2"), &Skill2)))
+		return E_FAIL;
+
+	m_pSkillModel2 = dynamic_cast<CMetalgreymonSkill3_Part1*>(Find_PartObject(TEXT("Part_Skill2")));
+	return S_OK;
 }
 
 CMetalgreymonSkill3* CMetalgreymonSkill3::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)

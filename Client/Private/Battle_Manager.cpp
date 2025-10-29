@@ -415,7 +415,7 @@ void CBattle_Manager::Enemy_Attack(_float fTimeDelta)
 
 	if (!m_bSkill)
 	{
-		m_pCurrentDigimon->UseSkill(/*Enemy_Skill()*/3);
+		m_pCurrentDigimon->UseSkill(/*Enemy_Skill()*/2);
 		m_pCurrentDigimon->LookAt(m_vPlayerDigimonPos[m_iLook_Target_position]);
 		m_pInteraction_Manager->Set_Hit_Digimon(m_pHitCurrentDigimon);
 		m_bSkill = true;
@@ -692,38 +692,45 @@ void CBattle_Manager::Current_Digimon(/*DIGIMON_INFO* Digimon_Info_1, DIGIMON_IN
 	}
 }
 
-_int CBattle_Manager::CheckMana(_int DigimonNum, _int SkillNum)
+void CBattle_Manager::CheckMana(_int SkillNum)
 {
+	if (m_pCurrentDigimon == nullptr)
+		return;
+
+	_int DigimonID{};
+
+	for (_int i = 0; i < m_pMyDigimon.size(); ++i)
+	{
+		if (m_pMyDigimon[i] == m_pCurrentDigimon)
+			DigimonID = i;
+	}
+
 	switch (SkillNum)
 	{
 	case 2:
 		if (m_pCurrentDigimon->Get_CurrentSp() <= m_pCurrentDigimon->Get_SkillSp(SkillNum))
-			return 1;
+			m_pCurrentDigimon->UseSkill(1);
 		else
 		{
-			m_pCurrentDigimon->Set_CurrentSp(m_pCurrentDigimon->Get_SkillSp(SkillNum));
-			m_pDigimon_Manager->Get_Current_Digimon_Info(DigimonNum)->CurrentSp -= m_pCurrentDigimon->Get_SkillSp(SkillNum);
-			return 2;
+			m_pCurrentDigimon->UseSkill(SkillNum);
+			m_pDigimon_Manager->Get_Current_Digimon_Info(DigimonID)->CurrentSp -= m_pCurrentDigimon->Get_SkillSp(SkillNum);
 		}
 		break;
 
 	case 3:
 		if (m_pCurrentDigimon->Get_CurrentSp() <= m_pCurrentDigimon->Get_SkillSp(SkillNum))
-			return 1;
+			m_pCurrentDigimon->UseSkill(1);
 		else
 		{
-			m_pCurrentDigimon->Set_CurrentSp(m_pCurrentDigimon->Get_SkillSp(SkillNum));
-			m_pDigimon_Manager->Get_Current_Digimon_Info(DigimonNum)->CurrentSp -= m_pCurrentDigimon->Get_SkillSp(SkillNum);
+			m_pCurrentDigimon->UseSkill(SkillNum);
+			m_pDigimon_Manager->Get_Current_Digimon_Info(DigimonID)->CurrentSp -= m_pCurrentDigimon->Get_SkillSp(SkillNum);
 		}
-			return 3;
 		break;
 
 	default:
-		return 1;
+		m_pCurrentDigimon->UseSkill(1);
 		break;
 	}
-	return 1;
-
 }
 
 void CBattle_Manager::Digimon1_Skill()
@@ -879,9 +886,8 @@ void CBattle_Manager::DigimonTargetOrder()
 void CBattle_Manager::Digimon1_Attack(_float fTimeDelta)
 {
 	m_pCurrentDigimon->LookAt(Player_Digimon_Attack_Pos(m_DigimonOrder1.m_iTarget));
-	m_pCurrentDigimon->UseSkill(CheckMana(1, m_DigimonOrder1.m_iDigimonSkill));
 	m_pInteraction_Manager->Set_Hit_Digimon(m_pHitCurrentDigimon);
-
+	CheckMana(m_DigimonOrder1.m_iDigimonSkill);
 	m_pBattle_UI_Manager->Digimon_UseSkill1(1);
 	m_pBattle_UI_Manager->Digimon_UseTarget1(1);
 
@@ -897,10 +903,8 @@ void CBattle_Manager::Digimon1_Attack(_float fTimeDelta)
 void CBattle_Manager::Digimon2_Attack(_float fTimeDelta)
 {
 	m_pCurrentDigimon->LookAt(Player_Digimon_Attack_Pos(m_DigimonOrder2.m_iTarget));
-	m_pCurrentDigimon->UseSkill(CheckMana(2, m_DigimonOrder2.m_iDigimonSkill));
-
 	m_pInteraction_Manager->Set_Hit_Digimon(m_pHitCurrentDigimon);
-
+	CheckMana(m_DigimonOrder2.m_iDigimonSkill);
 	m_pBattle_UI_Manager->Digimon_UseSkill2(1);
 	m_pBattle_UI_Manager->Digimon_UseTarget2(1);
 
@@ -916,9 +920,8 @@ void CBattle_Manager::Digimon2_Attack(_float fTimeDelta)
 void CBattle_Manager::Digimon3_Attack(_float fTimeDelta)
 {
 	m_pCurrentDigimon->LookAt(Player_Digimon_Attack_Pos(m_DigimonOrder3.m_iTarget));
-	m_pCurrentDigimon->UseSkill(CheckMana(3, m_DigimonOrder3.m_iDigimonSkill));
 	m_pInteraction_Manager->Set_Hit_Digimon(m_pHitCurrentDigimon);
-
+	CheckMana(m_DigimonOrder3.m_iDigimonSkill);
 	m_pBattle_UI_Manager->Digimon_UseSkill3(1);
 	m_pBattle_UI_Manager->Digimon_UseTarget3(1);
 
@@ -1122,7 +1125,7 @@ void CBattle_Manager::Digimon_Alive()
 	{
 		for (_int i = 0; i < m_pMyDigimon.size(); ++i)
 		{
-			if (m_pHitCurrentDigimon == m_pMyDigimon[i])                                  
+			if (m_pHitCurrentDigimon == m_pMyDigimon[i])
 			{
 				m_pDigimon_Manager->BattleEnd_Update(i, &m_pHitCurrentDigimon->CurrentInfo());
 			}

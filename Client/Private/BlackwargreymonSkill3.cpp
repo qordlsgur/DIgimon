@@ -74,7 +74,6 @@ void CBlackwargreymonSkill3::Priority_Update(_float fTimeDelta)
 
 void CBlackwargreymonSkill3::Update(_float fTimeDelta)
 {
-
 	m_vCurrent_pos = m_pTransformCom->Get_State(STATE::POSITION);
 	if (m_bFirst == false)
 	{
@@ -106,7 +105,7 @@ void CBlackwargreymonSkill3::Update(_float fTimeDelta)
 	if (m_bFirst && m_bMove)
 		m_pTransformCom->Target_Pos_Move(m_vTarget_pos, m_fSpeed * fTimeDelta);
 	
-
+	m_pTransformCom->TargetLook(m_vTarget_pos);
 	m_pColliderCom->Update(XMLoadFloat4x4(m_pTransformCom->Get_WorldMatrixPtr()));
 
 	__super::Update(fTimeDelta);

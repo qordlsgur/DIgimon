@@ -430,6 +430,9 @@
     <Filter Include="02.GameObjects\Digimon\06.Metalgreymon\Skill2\Part">
       <UniqueIdentifier>{0643c02e-0a73-4c80-9769-bf61b135dd87}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.GameObjects\Digimon\06.Metalgreymon\Skill3\Part">
+      <UniqueIdentifier>{818d6de2-6a42-47e7-9dd3-c14ff47d10ed}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -869,6 +872,9 @@
     </ClInclude>
     <ClInclude Include="..\Public\MetalgreymonSkill2_Part1.h">
       <Filter>02.GameObjects\Digimon\06.Metalgreymon\Skill2\Part</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\MetalgreymonSkill3_Part1.h">
+      <Filter>02.GameObjects\Digimon\06.Metalgreymon\Skill3\Part</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1311,6 +1317,9 @@
     <ClCompile Include="..\private\MetalgreymonSkill2_Part1.cpp">
       <Filter>02.GameObjects\Digimon\06.Metalgreymon\Skill2\Part</Filter>
     </ClCompile>
+    <ClCompile Include="..\private\MetalgreymonSkill3_Part1.cpp">
+      <Filter>02.GameObjects\Digimon\06.Metalgreymon\Skill3\Part</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxPosTex.hlsl">
@@ -1380,6 +1389,9 @@
       <Filter>97.ShaderFiles</Filter>
     </FxCompile>
     <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxSkillMetalgarumon.hlsl">
+      <Filter>97.ShaderFiles</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxSkillBlackwargreymon.hlsl">
       <Filter>97.ShaderFiles</Filter>
     </FxCompile>
   </ItemGroup>

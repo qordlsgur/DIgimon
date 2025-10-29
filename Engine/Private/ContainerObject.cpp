@@ -131,6 +131,11 @@ DIGIMON_INFO& CContainerObject::CurrentInfo()
 	return Info;
 }
 
+DIGIMON_INFO* CContainerObject::CurrentInfoPoint()
+{
+	return &Info;
+}
+
 DIGIMON_STAGE CContainerObject::Get_Stage()
 {
 	return Info.Stage;
@@ -299,9 +304,12 @@ _int CContainerObject::Skill_Damage()
 void CContainerObject::Set_HitDamage(_int Damage)
 {
 	m_iHitDamage = Damage;
-	Info.CurrentHp -= m_iHitDamage;
 	if (Info.CurrentHp < m_iHitDamage)
 		Info.CurrentHp = 0;
+
+	else
+		Info.CurrentHp -= m_iHitDamage;
+
 	m_bHit = true;
 }
 

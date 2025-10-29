@@ -49,6 +49,7 @@ void CMetalgreymonSkill2_Part1::Update(_float fTimeDelta)
 void CMetalgreymonSkill2_Part1::Late_Update(_float fTimeDelta)
 {
 	m_pGameInstance->Add_RenderGroup(RENDER::EFFECT, this);
+	m_pGameInstance->Add_RenderGroup(RENDER::BLUR, this);
 }
 
 HRESULT CMetalgreymonSkill2_Part1::Render()
@@ -56,7 +57,7 @@ HRESULT CMetalgreymonSkill2_Part1::Render()
 	if (FAILED(Bind_ShaderResources()))
 		return E_FAIL;
 
-	if (FAILED(m_pShaderCom->Begin(0)))
+	if (FAILED(m_pShaderCom->Begin(2)))
 		return E_FAIL;
 
 	if (FAILED(m_pModelCom->Render(0)))

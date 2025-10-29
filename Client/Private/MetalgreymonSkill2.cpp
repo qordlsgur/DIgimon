@@ -22,7 +22,7 @@ HRESULT CMetalgreymonSkill2::Initialize(void* pArg)
 {
 	CGameObject::GAMEOBJECT_DESC	Desc{};
 	Desc.fRotationPerSec = XMConvertToRadians(180.0f);
-	Desc.fSpeedPerSec = 500.f;
+	Desc.fSpeedPerSec = 200.f;
 
 	if (FAILED(__super::Initialize(&Desc)))
 		return E_FAIL;
@@ -34,8 +34,7 @@ HRESULT CMetalgreymonSkill2::Initialize(void* pArg)
 
 	m_iDamage = Pos->iDamage;
 	m_vPosition = Pos->m_vPosition;
-	//m_vTarget_pos = Pos->m_vTargetPosition;
-	m_vTarget_pos = XMVectorSet(100.f, 10.f, 300.f, 1.f);
+	m_vTarget_pos = Pos->m_vTargetPosition;
 	m_vPosition.m128_f32[1] += 10.f;
 	if (Pos->Look == 0)
 	{
@@ -45,7 +44,7 @@ HRESULT CMetalgreymonSkill2::Initialize(void* pArg)
 	{
 		m_vPosition.m128_f32[2] += 10.f;
 	}
-
+	m_vTarget_pos.m128_f32[1] += 10.f;
 	m_pTransformCom->Set_State(STATE::POSITION, m_vPosition);
 
 	if (FAILED(Ready_PartObjects()))
@@ -64,7 +63,7 @@ void CMetalgreymonSkill2::Priority_Update(_float fTimeDelta)
 void CMetalgreymonSkill2::Update(_float fTimeDelta)
 {
 	m_pTransformCom->Target_Pos_Move(m_vTarget_pos, fTimeDelta);
-
+	m_pTransformCom->TargetLook(m_vTarget_pos);
 	m_pColliderCom->Update(XMLoadFloat4x4(m_pTransformCom->Get_WorldMatrixPtr()));
 
 	__super::Update(fTimeDelta);

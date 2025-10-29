@@ -39,11 +39,14 @@ public:
 private:
 	CCollider* m_pColliderCom = { nullptr };
 	CPartObject* m_pPart_Body = { nullptr };
+	class CSkillObject* m_pSkill = { nullptr };
 
 	class CDigimon_Manager* m_pDigimon_Manager = { nullptr };
 	class CStateMachine* m_pFsm = { nullptr };
 
 	_bool m_bMove = false;
+	_matrix m_mLeftHatch{};
+	_matrix m_mRightHatch{};
 
 private:
 	HRESULT Ready_PartObjects();

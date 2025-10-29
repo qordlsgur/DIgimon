@@ -39,6 +39,7 @@ public:
 	virtual _int Get_Lv();
 
 	virtual DIGIMON_INFO& CurrentInfo();
+	virtual DIGIMON_INFO* CurrentInfoPoint();
 
 	virtual void Set_Digimon_Info(DIGIMON_INFO* Digimon_Info);
 
