@@ -438,6 +438,44 @@ void CTransform::LookAtPlayer(_vector fTarger, _float fTimeDelta)
 	Set_State(STATE::LOOK, vLook);
 }
 
+void CTransform::LookAtCamera(_vector fTarger, _float Speed, _float fTimeDelta)
+{
+	_vector	vRight = Get_State(STATE::RIGHT);
+	_vector	vUp = Get_State(STATE::UP);
+	_vector	vLook = Get_State(STATE::LOOK);
+
+	_vector pos = Get_State(STATE::POSITION);
+	_vector Look = XMVector3Normalize(vLook);
+
+	_vector Target = XMVectorSet(fTarger.m128_f32[0], 0.f, fTarger.m128_f32[2], fTarger.m128_f32[3]);
+
+	_vector Dir = XMVector3Normalize(XMVectorSubtract(Target, pos));
+
+	_float Dot = XMVectorGetX(XMVector3Dot(Dir, Look));
+
+	_float vAngle = acos(clamp(Dot, -1.f, 1.f));
+
+	_vector Cross = XMVector3Cross(Look, Dir);
+
+	_float Sing = XMVectorGetY(Cross);
+
+	if (fabs(Sing) <= 0.0001f)
+		Sing = 0.f;
+
+	Sing = (Sing >= 0) ? 1.f : -1.f;
+
+	_matrix RotationMatrix = XMMatrixRotationAxis(XMVectorSet(0.f, 1.f, 0.f, 0.f), vAngle * Sing * Speed * fTimeDelta);
+
+	vRight = XMVector3TransformNormal(vRight, RotationMatrix);
+	vUp = XMVector3TransformNormal(vUp, RotationMatrix);
+	vLook = XMVector3TransformNormal(vLook, RotationMatrix);
+
+	Set_State(STATE::RIGHT, vRight);
+	Set_State(STATE::UP, vUp);
+	Set_State(STATE::LOOK, vLook);
+
+}
+
 void CTransform::TurnY(_float fAngle, _float fTimeDelta)
 {
 	_vector		vRight = Get_State(STATE::RIGHT);
@@ -546,6 +584,31 @@ _bool CTransform::Target_Pos_Move_Bool(_fvector Target_Pos, _float fTimeDelta)
 
 	_vector dir = XMVector3Normalize(toTarget);
 	_vector move = dir * m_fSpeedPerSec * fTimeDelta;
+
+	// 이동량이 남은 거리보다 크면 목표 위치로 바로 이동
+	if (XMVectorGetX(XMVector3Length(move)) > distance)
+		move = toTarget;
+
+	Set_State(STATE::POSITION, vPos + move);
+	return true; // 이동 중
+}
+
+_bool CTransform::Target_Pos_Move_Bool_Speed(_fvector Target_Pos, _float Speed, _float fTimeDelta)
+{
+	_vector vPos = Get_State(STATE::POSITION);
+
+	_vector toTarget = Target_Pos - vPos;
+	float distance = XMVectorGetX(XMVector3Length(toTarget));
+
+	const float Threshold = 0.1f;
+	if (distance <= Threshold)
+	{
+		Set_State(STATE::POSITION, Target_Pos);
+		return false; // 이동 완료
+	}
+
+	_vector dir = XMVector3Normalize(toTarget);
+	_vector move = dir * Speed * fTimeDelta;
 
 	// 이동량이 남은 거리보다 크면 목표 위치로 바로 이동
 	if (XMVectorGetX(XMVector3Length(move)) > distance)

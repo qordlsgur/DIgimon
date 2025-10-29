@@ -876,6 +876,18 @@
     <ClInclude Include="..\public\MetalgreymonSkill3_Part1.h">
       <Filter>02.GameObjects\Digimon\06.Metalgreymon\Skill3\Part</Filter>
     </ClInclude>
+    <ClInclude Include="..\public\MetalgreymonSkill2_Part2.h">
+      <Filter>02.GameObjects\Digimon\06.Metalgreymon\Skill2\Part</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\MetalgreymonSkill2_Part3.h">
+      <Filter>02.GameObjects\Digimon\06.Metalgreymon\Skill2\Part</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\MetalgreymonSkill3_Part2.h">
+      <Filter>02.GameObjects\Digimon\06.Metalgreymon\Skill3\Part</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\MetalgreymonSkill3_Part3.h">
+      <Filter>02.GameObjects\Digimon\06.Metalgreymon\Skill3\Part</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Client.ico">
@@ -1318,6 +1330,18 @@
       <Filter>02.GameObjects\Digimon\06.Metalgreymon\Skill2\Part</Filter>
     </ClCompile>
     <ClCompile Include="..\private\MetalgreymonSkill3_Part1.cpp">
+      <Filter>02.GameObjects\Digimon\06.Metalgreymon\Skill3\Part</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\MetalgreymonSkill2_Part2.cpp">
+      <Filter>02.GameObjects\Digimon\06.Metalgreymon\Skill2\Part</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\MetalgreymonSkill2_Part3.cpp">
+      <Filter>02.GameObjects\Digimon\06.Metalgreymon\Skill2\Part</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\MetalgreymonSkill3_Part2.cpp">
+      <Filter>02.GameObjects\Digimon\06.Metalgreymon\Skill3\Part</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\MetalgreymonSkill3_Part3.cpp">
       <Filter>02.GameObjects\Digimon\06.Metalgreymon\Skill3\Part</Filter>
     </ClCompile>
   </ItemGroup>

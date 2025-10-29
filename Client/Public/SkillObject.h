@@ -11,6 +11,7 @@ public:
 	typedef struct tagPosition
 	{
 		_vector m_vPosition;
+		_vector m_vPosition2;
 		_vector m_vTargetPosition;
 		_int	iDamage;
 		_int	Look;
@@ -45,6 +46,7 @@ public:
 	virtual void Set_Move(_bool Move) { m_bMove = Move; }
 protected:
 	_vector		m_vPosition{};
+	_vector		m_vPosition2{};
 	_vector		m_vTarget_pos{};
 	_vector		m_vCurrent_pos{};
 

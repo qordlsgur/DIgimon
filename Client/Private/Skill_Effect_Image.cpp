@@ -95,7 +95,7 @@ HRESULT CSkill_Effect_Image::Ready_Components()
 		return E_FAIL;
 
 	/* Com_Battle_Diffuse */
-	if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Space"),
+	if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Fire"),
 		TEXT("Com_Battle_Diffuse"), reinterpret_cast<CComponent**>(&m_pTextureCom))))
 		return E_FAIL;	
 	
@@ -135,7 +135,7 @@ HRESULT CSkill_Effect_Image::Bind_ShaderResources()
 		return E_FAIL;
 	if (FAILED(m_pShaderCom->Bind_State("Time", m_fTime)))
 		return E_FAIL;
-	if (FAILED(m_pShaderCom->Bind_State("Count", 2)))
+	if (FAILED(m_pShaderCom->Bind_State("Count", 8)))
 		return E_FAIL;
 	if (FAILED(m_pShaderCom->Bind_State("Frame", 0.7f)))
 		return E_FAIL;

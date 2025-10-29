@@ -31,12 +31,18 @@ public:
 private:
 	CCollider* m_pColliderCom = { nullptr };
 	CPartObject* m_pSkillModel1 = { nullptr };
+	CPartObject* m_pSkillModel2 = { nullptr };
+	CPartObject* m_pSkillModel3 = { nullptr };
 	CContainerObject* m_pPlayer = { nullptr };
 	class CInteraction_Manager* m_pInteraction_Manager = { nullptr };
+
+	_float m_fTime{};
 
 private:
 	HRESULT Ready_PartObjects();
 	HRESULT Ready_SkillObjects();
+	HRESULT Ready_Skill2Objects();
+	HRESULT Ready_Skill3Objects();
 
 public:
 	static CMetalgreymonSkill2* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);

@@ -94,11 +94,13 @@ public:
 	_bool FollowPlayer(_vector fTarget, _float fFollowDistance, _float fTimeDelta);
 	void Look(_vector Angle, _float fTimeDeata);
 	void LookAtPlayer(_vector fTarger, _float fTimeDelta);
+	void LookAtCamera(_vector fTarger,_float Speed, _float fTimeDelta);
 	void TurnY(_float fAngle, _float fTimeDelta);
 	void TurnY(_float fAngle, _float Speed, _float fTimeDelta);
 	void Target_Pos_Move(_fvector Target_Pos, _float fTimeDelta);
 	void Target_Pos_Move_Speed(_fvector Target_Pos, _float Speed, _float fTimeDelta);
 	_bool Target_Pos_Move_Bool(_fvector Target_Pos, _float fTimeDelta);
+	_bool Target_Pos_Move_Bool_Speed(_fvector Target_Pos,_float Speed, _float fTimeDelta);
 
 private:
 	// 오브젝트의 이동 속도

@@ -11,16 +11,17 @@ NS_END
 
 NS_BEGIN(Client)
 
-class CMetalgreymonSkill3_Part1 final : public CPartObject
+class CMetalgreymonSkill3_Part2 final : public CPartObject
 {
 public:
 	typedef struct tagBody_Player_Desc : public CPartObject::PARTOBJECT_DESC
 	{
+
 	}BODY_PLAYER_DESC;
 private:
-	CMetalgreymonSkill3_Part1(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
-	CMetalgreymonSkill3_Part1(const CMetalgreymonSkill3_Part1& Prototype);
-	virtual ~CMetalgreymonSkill3_Part1() = default;
+	CMetalgreymonSkill3_Part2(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
+	CMetalgreymonSkill3_Part2(const CMetalgreymonSkill3_Part2& Prototype);
+	virtual ~CMetalgreymonSkill3_Part2() = default;
 
 public:
 	_float4x4* Get_BoneMatrixPtr(const _char* pBoneName);
@@ -33,18 +34,15 @@ public:
 	virtual void Late_Update(_float fTimeDelta) override;
 	virtual HRESULT Render() override;
 
-	void Set_Hatch(_matrix Hatch) { m_mHatch = Hatch; }
-
 private:
 	CModel* m_pModelCom = { nullptr };
 	CTexture* m_pTextureCom = { nullptr };
-	CTexture* m_pMaskTextureCom = { nullptr };
+	CTexture* m_pTextureCom2 = { nullptr };
 	CShader* m_pShaderCom = { nullptr };
 
-	_bool m_bSize = { false };
-
 	_matrix RootBone{};
-	_matrix m_mHatch{};
+	_float m_fTime2{};
+	_vector m_vTargetPos{};
 private:
 
 
@@ -53,7 +51,7 @@ private:
 	HRESULT Bind_ShaderResources();
 
 public:
-	static CMetalgreymonSkill3_Part1* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
+	static CMetalgreymonSkill3_Part2* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	virtual CGameObject* Clone(void* pArg) override;
 	virtual void Free() override;
 };

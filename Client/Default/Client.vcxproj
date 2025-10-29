@@ -266,8 +266,12 @@
     <ClInclude Include="..\public\MetalgreymonSkill1.h" />
     <ClInclude Include="..\public\MetalgreymonSkill2.h" />
     <ClInclude Include="..\Public\MetalgreymonSkill2_Part1.h" />
+    <ClInclude Include="..\public\MetalgreymonSkill2_Part2.h" />
+    <ClInclude Include="..\public\MetalgreymonSkill2_Part3.h" />
     <ClInclude Include="..\public\MetalgreymonSkill3.h" />
     <ClInclude Include="..\public\MetalgreymonSkill3_Part1.h" />
+    <ClInclude Include="..\public\MetalgreymonSkill3_Part2.h" />
+    <ClInclude Include="..\public\MetalgreymonSkill3_Part3.h" />
     <ClInclude Include="..\public\Omegamon.h" />
     <ClInclude Include="..\public\OmegamonSkill1.h" />
     <ClInclude Include="..\public\OmegamonSkill2.h" />
@@ -414,8 +418,12 @@
     <ClCompile Include="..\private\MetalgreymonSkill1.cpp" />
     <ClCompile Include="..\private\MetalgreymonSkill2.cpp" />
     <ClCompile Include="..\private\MetalgreymonSkill2_Part1.cpp" />
+    <ClCompile Include="..\private\MetalgreymonSkill2_Part2.cpp" />
+    <ClCompile Include="..\private\MetalgreymonSkill2_Part3.cpp" />
     <ClCompile Include="..\private\MetalgreymonSkill3.cpp" />
     <ClCompile Include="..\private\MetalgreymonSkill3_Part1.cpp" />
+    <ClCompile Include="..\private\MetalgreymonSkill3_Part2.cpp" />
+    <ClCompile Include="..\private\MetalgreymonSkill3_Part3.cpp" />
     <ClCompile Include="..\private\Omegamon.cpp" />
     <ClCompile Include="..\private\OmegamonSkill1.cpp" />
     <ClCompile Include="..\private\OmegamonSkill2.cpp" />

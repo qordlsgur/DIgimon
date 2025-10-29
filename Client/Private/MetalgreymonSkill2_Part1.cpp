@@ -48,12 +48,15 @@ void CMetalgreymonSkill2_Part1::Update(_float fTimeDelta)
 
 void CMetalgreymonSkill2_Part1::Late_Update(_float fTimeDelta)
 {
-	m_pGameInstance->Add_RenderGroup(RENDER::EFFECT, this);
-	m_pGameInstance->Add_RenderGroup(RENDER::BLUR, this);
+
+		m_pGameInstance->Add_RenderGroup(RENDER::EFFECT, this);
+		m_pGameInstance->Add_RenderGroup(RENDER::BLUR, this);
 }
 
 HRESULT CMetalgreymonSkill2_Part1::Render()
 {
+	if (!m_bHit)
+	{
 	if (FAILED(Bind_ShaderResources()))
 		return E_FAIL;
 
@@ -62,6 +65,7 @@ HRESULT CMetalgreymonSkill2_Part1::Render()
 
 	if (FAILED(m_pModelCom->Render(0)))
 		return E_FAIL;
+	}
 
 	return S_OK;
 }
@@ -88,15 +92,17 @@ HRESULT CMetalgreymonSkill2_Part1::Ready_Components()
 
 HRESULT CMetalgreymonSkill2_Part1::Bind_ShaderResources()
 {
-	if (FAILED(m_pShaderCom->Bind_Matrix("g_WorldMatrix", &m_CombinedWorldMatrix)))
-		return E_FAIL;
-	if (FAILED(m_pShaderCom->Bind_Matrix("g_ViewMatrix", m_pGameInstance->Get_Transform_Float4x4(D3DTS::VIEW))))
-		return E_FAIL;
-	if (FAILED(m_pShaderCom->Bind_Matrix("g_ProjMatrix", m_pGameInstance->Get_Transform_Float4x4(D3DTS::PROJ))))
-		return E_FAIL;
+	
+		if (FAILED(m_pShaderCom->Bind_Matrix("g_WorldMatrix", &m_CombinedWorldMatrix)))
+			return E_FAIL;
+		if (FAILED(m_pShaderCom->Bind_Matrix("g_ViewMatrix", m_pGameInstance->Get_Transform_Float4x4(D3DTS::VIEW))))
+			return E_FAIL;
+		if (FAILED(m_pShaderCom->Bind_Matrix("g_ProjMatrix", m_pGameInstance->Get_Transform_Float4x4(D3DTS::PROJ))))
+			return E_FAIL;
 
-	if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_DiffuseTexture", 0)))
-		return E_FAIL;
+		if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_DiffuseTexture", 0)))
+			return E_FAIL;
+	
 
 	return S_OK;
 }

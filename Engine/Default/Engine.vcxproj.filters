@@ -68,10 +68,10 @@
       <Filter>01.Utility\98.Sound</Filter>
     </ClInclude>
     <ClInclude Include="..\public\VIBuffer.h">
-      <Filter>01.Utility\03.Components\Transform\VIBuffer</Filter>
+      <Filter>01.Utility\03.Components\VIBuffer</Filter>
     </ClInclude>
     <ClInclude Include="..\public\VIBuffer_Rect.h">
-      <Filter>01.Utility\03.Components\Transform\VIBuffer\VIBuffer_Rect</Filter>
+      <Filter>01.Utility\03.Components\VIBuffer\VIBuffer_Rect</Filter>
     </ClInclude>
     <ClInclude Include="..\public\Texture.h">
       <Filter>01.Utility\03.Components\Texture</Filter>
@@ -83,7 +83,7 @@
       <Filter>01.Utility\06.Mouse_Manager</Filter>
     </ClInclude>
     <ClInclude Include="..\public\VIBuffer_Terrain.h">
-      <Filter>01.Utility\03.Components\Transform\VIBuffer\VIBuffer_Terrain</Filter>
+      <Filter>01.Utility\03.Components\VIBuffer\VIBuffer_Terrain</Filter>
     </ClInclude>
     <ClInclude Include="..\public\PipeLine.h">
       <Filter>01.Utility\07.PipeLine</Filter>
@@ -149,13 +149,13 @@
       <Filter>01.Utility\03.Components\Navigation</Filter>
     </ClInclude>
     <ClInclude Include="..\public\VIBuffer_Cell.h">
-      <Filter>01.Utility\03.Components\Transform\VIBuffer\Cell</Filter>
+      <Filter>01.Utility\03.Components\VIBuffer\Cell</Filter>
     </ClInclude>
     <ClInclude Include="..\public\Cell.h">
       <Filter>01.Utility\03.Components\Navigation\Cell</Filter>
     </ClInclude>
     <ClInclude Include="..\public\VIBuffer_Cube.h">
-      <Filter>01.Utility\03.Components\Transform\VIBuffer\Cube</Filter>
+      <Filter>01.Utility\03.Components\VIBuffer\Cube</Filter>
     </ClInclude>
     <ClInclude Include="..\public\Light.h">
       <Filter>01.Utility\09.Light</Filter>
@@ -191,16 +191,16 @@
       <Filter>01.Utility\11.RenderTarget\Manager</Filter>
     </ClInclude>
     <ClInclude Include="..\public\VIBuffer_Rect_Instance.h">
-      <Filter>01.Utility\03.Components\Transform\VIBuffer\Instance\Rect</Filter>
+      <Filter>01.Utility\03.Components\VIBuffer\Instance\Rect</Filter>
     </ClInclude>
     <ClInclude Include="..\public\VIBuffer_Point_Instance.h">
-      <Filter>01.Utility\03.Components\Transform\VIBuffer\Instance\Point</Filter>
+      <Filter>01.Utility\03.Components\VIBuffer\Instance\Point</Filter>
     </ClInclude>
     <ClInclude Include="..\public\Effect.h">
       <Filter>01.Utility\02.GameObjects\Effect</Filter>
     </ClInclude>
     <ClInclude Include="..\public\VIBuffer_Instance.h">
-      <Filter>01.Utility\03.Components\Transform\VIBuffer\Instance</Filter>
+      <Filter>01.Utility\03.Components\VIBuffer\Instance</Filter>
     </ClInclude>
     <ClInclude Include="..\public\Shadow.h">
       <Filter>01.Utility\12.Shadow</Filter>
@@ -259,10 +259,10 @@
       <Filter>01.Utility\98.Sound</Filter>
     </ClCompile>
     <ClCompile Include="..\private\VIBuffer.cpp">
-      <Filter>01.Utility\03.Components\Transform\VIBuffer</Filter>
+      <Filter>01.Utility\03.Components\VIBuffer</Filter>
     </ClCompile>
     <ClCompile Include="..\private\VIBuffer_Rect.cpp">
-      <Filter>01.Utility\03.Components\Transform\VIBuffer\VIBuffer_Rect</Filter>
+      <Filter>01.Utility\03.Components\VIBuffer\VIBuffer_Rect</Filter>
     </ClCompile>
     <ClCompile Include="..\private\Texture.cpp">
       <Filter>01.Utility\03.Components\Texture</Filter>
@@ -274,7 +274,7 @@
       <Filter>01.Utility\06.Mouse_Manager</Filter>
     </ClCompile>
     <ClCompile Include="..\private\VIBuffer_Terrain.cpp">
-      <Filter>01.Utility\03.Components\Transform\VIBuffer\VIBuffer_Terrain</Filter>
+      <Filter>01.Utility\03.Components\VIBuffer\VIBuffer_Terrain</Filter>
     </ClCompile>
     <ClCompile Include="..\private\PipeLine.cpp">
       <Filter>01.Utility\07.PipeLine</Filter>
@@ -316,13 +316,13 @@
       <Filter>01.Utility\03.Components\Navigation</Filter>
     </ClCompile>
     <ClCompile Include="..\private\VIBuffer_Cell.cpp">
-      <Filter>01.Utility\03.Components\Transform\VIBuffer\Cell</Filter>
+      <Filter>01.Utility\03.Components\VIBuffer\Cell</Filter>
     </ClCompile>
     <ClCompile Include="..\private\Cell.cpp">
       <Filter>01.Utility\03.Components\Navigation\Cell</Filter>
     </ClCompile>
     <ClCompile Include="..\private\VIBuffer_Cube.cpp">
-      <Filter>01.Utility\03.Components\Transform\VIBuffer\Cube</Filter>
+      <Filter>01.Utility\03.Components\VIBuffer\Cube</Filter>
     </ClCompile>
     <ClCompile Include="..\private\Light.cpp">
       <Filter>01.Utility\09.Light</Filter>
@@ -358,16 +358,16 @@
       <Filter>01.Utility\11.RenderTarget\Manager</Filter>
     </ClCompile>
     <ClCompile Include="..\private\VIBuffer_Rect_Instance.cpp">
-      <Filter>01.Utility\03.Components\Transform\VIBuffer\Instance\Rect</Filter>
+      <Filter>01.Utility\03.Components\VIBuffer\Instance\Rect</Filter>
     </ClCompile>
     <ClCompile Include="..\private\VIBuffer_Point_Instance.cpp">
-      <Filter>01.Utility\03.Components\Transform\VIBuffer\Instance\Point</Filter>
+      <Filter>01.Utility\03.Components\VIBuffer\Instance\Point</Filter>
     </ClCompile>
     <ClCompile Include="..\private\Effect.cpp">
       <Filter>01.Utility\02.GameObjects\Effect</Filter>
     </ClCompile>
     <ClCompile Include="..\private\VIBuffer_Instance.cpp">
-      <Filter>01.Utility\03.Components\Transform\VIBuffer\Instance</Filter>
+      <Filter>01.Utility\03.Components\VIBuffer\Instance</Filter>
     </ClCompile>
     <ClCompile Include="..\private\Shadow.cpp">
       <Filter>01.Utility\12.Shadow</Filter>
@@ -539,28 +539,28 @@
     <Filter Include="01.Utility\02.GameObjects\BlendObject">
       <UniqueIdentifier>{befb5919-305c-4a6c-bb36-f1cbbd2ae236}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01.Utility\03.Components\Transform\VIBuffer">
+    <Filter Include="01.Utility\03.Components\VIBuffer">
       <UniqueIdentifier>{936321a2-8dd5-461b-ab80-005f6c67d893}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01.Utility\03.Components\Transform\VIBuffer\VIBuffer_Rect">
+    <Filter Include="01.Utility\03.Components\VIBuffer\VIBuffer_Rect">
       <UniqueIdentifier>{41a2fd93-24a1-47ac-b25c-7d97a31f44c5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01.Utility\03.Components\Transform\VIBuffer\VIBuffer_Terrain">
+    <Filter Include="01.Utility\03.Components\VIBuffer\VIBuffer_Terrain">
       <UniqueIdentifier>{31440dcc-e07f-44d6-a129-d8f7ac5e62a9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01.Utility\03.Components\Transform\VIBuffer\Cube">
+    <Filter Include="01.Utility\03.Components\VIBuffer\Cube">
       <UniqueIdentifier>{e3d8d529-7a8b-43c8-8fdb-b96ccd2bba76}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01.Utility\03.Components\Transform\VIBuffer\Cell">
+    <Filter Include="01.Utility\03.Components\VIBuffer\Cell">
       <UniqueIdentifier>{46f91a5d-8aa7-4e37-8390-566767aa523d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01.Utility\03.Components\Transform\VIBuffer\Instance">
+    <Filter Include="01.Utility\03.Components\VIBuffer\Instance">
       <UniqueIdentifier>{316fd36e-740a-411d-b251-44a2917d54ba}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01.Utility\03.Components\Transform\VIBuffer\Instance\Point">
+    <Filter Include="01.Utility\03.Components\VIBuffer\Instance\Point">
       <UniqueIdentifier>{73708a82-21e8-4b81-b363-f7747d6ccc0f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01.Utility\03.Components\Transform\VIBuffer\Instance\Rect">
+    <Filter Include="01.Utility\03.Components\VIBuffer\Instance\Rect">
       <UniqueIdentifier>{1696a38a-b01c-4aa4-bf4f-f415b6dae379}</UniqueIdentifier>
     </Filter>
   </ItemGroup>

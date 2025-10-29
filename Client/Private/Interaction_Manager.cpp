@@ -3,6 +3,7 @@
 #include "Collider.h"
 #include "SkillObject.h"
 #include "Player.h"
+#include "PartObject.h"
 
 IMPLEMENT_SINGLETON(CInteraction_Manager);
 
@@ -76,6 +77,12 @@ void CInteraction_Manager::Set_Attack_Digimon(CSkillObject* Attacker)
 void CInteraction_Manager::Set_Attack_Skill(CPartObject* Attacker)
 {
 	m_pAttackSkill = Attacker;
+}
+
+void CInteraction_Manager::Die_Attack_Skill()
+{
+	m_pAttackDigimon = nullptr;
+	m_pAttackSkill = nullptr;
 }
 
 void CInteraction_Manager::Set_Hit_Digimon(CContainerObject* Battle_Digimon)

@@ -219,42 +219,42 @@ PS_OUT PS_MAIN_TEST(PS_IN_TEST In)
     
     PS_OUT_TEST Out;
     
-    //int totalFrame = Count * Count;
+    int totalFrame = Count * Count;
     
-    //int currentFrame = int(Time / Frame) % totalFrame;
+    int currentFrame = int(Time / Frame) % totalFrame;
 
-    //int frameX = currentFrame % Count;
-    //int frameY = currentFrame / Count;
+    int frameX = currentFrame % Count;
+    int frameY = currentFrame / Count;
 
-    //float frameWidth = 1.0 / Count;
-    //float frameHeight = 1.0 / Count;
+    float frameWidth = 1.0 / Count;
+    float frameHeight = 1.0 / Count;
     
     
-    //float2 uv = In.vTexcoord;
-    //uv.y = 1.f - uv.y;
-    //uv.x = uv.x * frameWidth + frameX * frameWidth;
-    //uv.y = uv.y * frameHeight + frameY * frameHeight;
+    float2 uv = In.vTexcoord;
+    uv.y = 1.f - uv.y;
+    uv.x = uv.x * frameWidth + frameX * frameWidth;
+    uv.y = uv.y * frameHeight + frameY * frameHeight;
     
-    //float4 color = g_Texture.Sample(DefaultSampler, uv);
+    float4 color = g_Texture.Sample(DefaultSampler, uv);
 
-    //Out.vColor = color;
-     float4 vColor = g_Texture.Sample(DefaultSampler, In.vTexcoord);
-    float2 vTexcoord;
+    Out.vColor = color;
+    // float4 vColor = g_Texture.Sample(DefaultSampler, In.vTexcoord);
+    //float2 vTexcoord;
     
-    vTexcoord.x = In.vProjPos.x / In.vProjPos.w * 0.5f + 0.5f;
-    vTexcoord.y = In.vProjPos.y / In.vProjPos.w * -0.5f + 0.5f;
+    //vTexcoord.x = In.vProjPos.x / In.vProjPos.w * 0.5f + 0.5f;
+    //vTexcoord.y = In.vProjPos.y / In.vProjPos.w * -0.5f + 0.5f;
     
-    float4 vDepthDesc = g_DepthTexture.Sample(DefaultSampler, vTexcoord);
+    //float4 vDepthDesc = g_DepthTexture.Sample(DefaultSampler, vTexcoord);
     
-    float fOldViewZ = vDepthDesc.y * 500.f;
+    //float fOldViewZ = vDepthDesc.y * 500.f;
     
-    float fDistance = fOldViewZ - In.vProjPos.w;
+    //float fDistance = fOldViewZ - In.vProjPos.w;
     
-    float4 Color = float4(250 / 255.0f, 142 / 255.0f, 229 / 255.0f, vColor.a);
+    //float4 Color = float4(250 / 255.0f, 142 / 255.0f, 229 / 255.0f, vColor.a);
     
-    vColor = vColor * Color;
+    //vColor = vColor * Color;
     
-    Out.vColor = vColor;
+    //Out.vColor = vColor;
     return Out;
 }
 

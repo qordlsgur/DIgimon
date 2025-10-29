@@ -31,6 +31,7 @@ HRESULT CMetalgarumonSkill3_Part1::Initialize(void* pArg)
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 
+
 	m_pTransformCom->Set_Scale(3.f, 3.f, 3.f);
 
 	return S_OK;

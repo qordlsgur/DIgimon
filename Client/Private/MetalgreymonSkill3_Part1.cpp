@@ -31,9 +31,15 @@ HRESULT CMetalgreymonSkill3_Part1::Initialize(void* pArg)
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 
-	m_pTransformCom->Set_Scale(3.f, 3.f, 3.f);
-	m_mHatch = pDesc->vMatrix;
+	_vector Posx = XMVectorSetX(m_pTransformCom->Get_State(STATE::POSITION), pDesc->LR);
+	_vector Posy = XMVectorSetX(m_pTransformCom->Get_State(STATE::POSITION), -1.2f);
+	_vector Posz = m_pTransformCom->Get_State(STATE::POSITION);
 
+	_vector Pos = XMVectorSet(Posx.m128_f32[0], Posy.m128_f32[1], Posz.m128_f32[2], 1.f);
+
+	m_pTransformCom->Set_State(STATE::POSITION, Pos);
+	m_mHatch = pDesc->vMatrix;
+	m_fTime = 0.3f;
 	return S_OK;
 }
 
@@ -44,9 +50,24 @@ void CMetalgreymonSkill3_Part1::Priority_Update(_float fTimeDelta)
 void CMetalgreymonSkill3_Part1::Update(_float fTimeDelta)
 {
 	XMStoreFloat4x4(&m_CombinedWorldMatrix,
-		XMLoadFloat4x4(m_pTransformCom->Get_WorldMatrixPtr()) * m_mHatch * XMLoadFloat4x4(m_pParentTransformCom->Get_WorldMatrixPtr()));
+		XMLoadFloat4x4(m_pTransformCom->Get_WorldMatrixPtr()) * XMLoadFloat4x4(m_pParentTransformCom->Get_WorldMatrixPtr()));
 
-	m_fTime += fTimeDelta * 5.f;
+
+	if (!m_bSize)
+	{
+		m_fTime += fTimeDelta * 7.f;
+		if (m_fTime >= 3.f)
+			m_bSize = true;
+	}
+	else if (m_bSize)
+	{
+		m_fTime -= fTimeDelta * 5.f;
+	}
+
+	if (m_fTime <= 0.f)
+		m_fTime = 0.f;
+
+	m_pTransformCom->Set_Scale(m_fTime, m_fTime, 30.f);
 }
 
 
@@ -106,9 +127,9 @@ HRESULT CMetalgreymonSkill3_Part1::Bind_ShaderResources()
 	if (FAILED(m_pShaderCom->Bind_State("Time", m_fTime)))
 		return E_FAIL;
 
-	if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_DiffuseTexture", 1)))
+	if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Mask", 1)))
 		return E_FAIL;
-	if (FAILED(m_pMaskTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Mask",1)))
+	if (FAILED(m_pMaskTextureCom->Bind_ShaderResource(m_pShaderCom, "g_DiffuseTexture", 1)))
 		return E_FAIL;
 
 	return S_OK;

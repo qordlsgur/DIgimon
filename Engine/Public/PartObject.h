@@ -13,6 +13,7 @@ public:
 		_vector vPosition;
 		_matrix vMatrix;
 		_vector vPosition2;
+		_float LR;
 	}PARTOBJECT_DESC;
 
 protected:
@@ -36,7 +37,8 @@ public:
 
 	virtual _float Get_TrackPosition() { return m_fTrackPosition; }
 	virtual void Set_Dissolve(_bool Dissolve) { m_bDissolve = Dissolve; }
-
+	virtual void Set_Hit(_bool Hit) { m_bHit = Hit; }
+	virtual _bool Get_Hit() { return m_bHit; }
 	void Compute_Depth();
 protected:
 	class CTransform*	m_pParentTransformCom = { nullptr };
@@ -48,6 +50,7 @@ protected:
 	_float m_fTrackPosition{};
 	_bool m_bDissolve = { false };
 	_float m_fTime{};
+	_bool m_bHit = { false };
 
 	_float				m_fDepth = {};
 

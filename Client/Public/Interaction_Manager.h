@@ -35,6 +35,7 @@ public:
 
 	void Set_Attack_Digimon(class CSkillObject* Attacker);
 	void Set_Attack_Skill(CPartObject* Attacker);
+	void Die_Attack_Skill();
 	void Set_Hit_Digimon(CContainerObject* Battle_Digimon);
 	void Set_Skill_Collider(CCollider* pCollider);
 	void Battle_End();

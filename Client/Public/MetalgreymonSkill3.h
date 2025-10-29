@@ -34,6 +34,7 @@ private:
 	CContainerObject* m_pPlayer = { nullptr };
 	CPartObject* m_pSkillModel1 = { nullptr };
 	CPartObject* m_pSkillModel2 = { nullptr };
+	CPartObject* m_pSkillModel3 = { nullptr };
 	class CInteraction_Manager* m_pInteraction_Manager = { nullptr };
 
 	_matrix m_mLeftHatch{};
@@ -42,6 +43,7 @@ private:
 private:
 	HRESULT Ready_PartObjects();
 	HRESULT Ready_SkillObjects();
+	HRESULT Ready_SkillObjects2();
 
 public:
 	static CMetalgreymonSkill3* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);

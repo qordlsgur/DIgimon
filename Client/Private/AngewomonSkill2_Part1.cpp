@@ -112,7 +112,6 @@ HRESULT CAngewomonSkill2_Part1::Bind_ShaderResources()
 
 CAngewomonSkill2_Part1* CAngewomonSkill2_Part1::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 {
-
 	CAngewomonSkill2_Part1* pInstance = new CAngewomonSkill2_Part1(pDevice, pContext);
 
 	if (FAILED(pInstance->Initialize_Prototype()))
