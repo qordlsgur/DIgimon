@@ -35,15 +35,17 @@ private:
 	CPartObject* m_pSkillModel1 = { nullptr };
 	CPartObject* m_pSkillModel2 = { nullptr };
 	CPartObject* m_pSkillModel3 = { nullptr };
+	CPartObject* m_pSkillModel4 = { nullptr };
 	class CInteraction_Manager* m_pInteraction_Manager = { nullptr };
 
 	_matrix m_mLeftHatch{};
 	_matrix m_mRightHatch{};
-
+	_float m_fTime{};
 private:
 	HRESULT Ready_PartObjects();
 	HRESULT Ready_SkillObjects();
 	HRESULT Ready_SkillObjects2();
+	HRESULT Ready_SkillObjects3();
 
 public:
 	static CMetalgreymonSkill3* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);

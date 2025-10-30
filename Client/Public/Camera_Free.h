@@ -34,6 +34,7 @@ public:
 private:
 	void Save_MousePos();
 	void LookPlayer(_float fTimeDelta);
+	void LookField(_float fTimeDelta);
 
 private:
 	_float			m_fMouseSensor = {};

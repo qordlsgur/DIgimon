@@ -26,7 +26,7 @@ HRESULT CSkill_Model::Initialize(void* pArg)
 
 	m_pTransformCom->Set_State(STATE::POSITION, XMVectorSet(250.f, 0.f, 500.f, 1.f));
 
-	m_pTransformCom->Set_Scale(10.f, 10.f, 10.f);
+	//m_pTransformCom->Set_Scale(10.f, 10.f, 10.f);
 
 	return S_OK;
 }
@@ -48,7 +48,7 @@ void CSkill_Model::Update(_float fTimeDelta)
 	//	m_bOn = !m_bOn;
 
 	//if (m_bOn)
-	//	m_fTime += fTimeDelta;
+		m_fTime += fTimeDelta * 5.f;
 	//else
 	//	m_fTime = 0.f;
 
@@ -103,7 +103,7 @@ HRESULT CSkill_Model::Render()
 HRESULT CSkill_Model::Ready_Components()
 {
 	/* Com_Model1 */
-	if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Model_Plane"),
+	if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Model_Thumder"),
 		TEXT("Com_Model1"), reinterpret_cast<CComponent**>(&m_pModel1Com))))
 		return E_FAIL;
 
@@ -123,7 +123,7 @@ HRESULT CSkill_Model::Ready_Components()
 	//	return E_FAIL;
 
 	/* Com_Texture1 */
-	if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Whirlwind"),
+	if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Spark"),
 		TEXT("Com_Texture1"), reinterpret_cast<CComponent**>(&m_pTexture1Com))))
 		return E_FAIL;
 
@@ -167,8 +167,9 @@ HRESULT CSkill_Model::Bind_ShaderResources()
 		return E_FAIL;
 	if (FAILED(m_pShaderCom->Bind_State("Time", m_fTime)))
 		return E_FAIL;
-
-	if (FAILED(m_pTexture1Com->Bind_ShaderResource(m_pShaderCom, "g_DiffuseTexture", 1)))
+	if (FAILED(m_pShaderCom->Bind_State("Radian", 1)))
+		return E_FAIL; 
+	if (FAILED(m_pTexture1Com->Bind_ShaderResource(m_pShaderCom, "g_DiffuseTexture", 0)))
 		return E_FAIL;
 
 	//if (FAILED(m_pTexture2Com->Bind_ShaderResource(m_pShaderCom, "g_Mask", 1)))

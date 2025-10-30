@@ -26,7 +26,7 @@ void CInteraction_Manager::Update()
 	{
 		for (auto it : m_pBattle_Digimon_Collider)
 		{
-			if (it->Intersect(m_pSkill_Collider) != -1)
+			if (m_pSkill_Collider != nullptr && it->Intersect(m_pSkill_Collider) != -1)
 			{
 				if (!m_pAttackDigimon->Get_Hit())
 				{
@@ -83,6 +83,7 @@ void CInteraction_Manager::Die_Attack_Skill()
 {
 	m_pAttackDigimon = nullptr;
 	m_pAttackSkill = nullptr;
+	m_pSkill_Collider = nullptr;
 }
 
 void CInteraction_Manager::Set_Hit_Digimon(CContainerObject* Battle_Digimon)

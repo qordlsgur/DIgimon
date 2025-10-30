@@ -433,6 +433,9 @@
     <Filter Include="02.GameObjects\Digimon\06.Metalgreymon\Skill3\Part">
       <UniqueIdentifier>{818d6de2-6a42-47e7-9dd3-c14ff47d10ed}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.GameObjects\Digimon\06.Metalgreymon\Skill1\Part">
+      <UniqueIdentifier>{84b9e14d-75da-43d7-a973-caf7a08fd226}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -887,6 +890,18 @@
     </ClInclude>
     <ClInclude Include="..\public\MetalgreymonSkill3_Part3.h">
       <Filter>02.GameObjects\Digimon\06.Metalgreymon\Skill3\Part</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\MetalgreymonSkill1_Part1.h">
+      <Filter>02.GameObjects\Digimon\06.Metalgreymon\Skill1\Part</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\MetalgreymonSkill1_Part2.h">
+      <Filter>02.GameObjects\Digimon\06.Metalgreymon\Skill1\Part</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\MetalgreymonSkill1_Part3.h">
+      <Filter>02.GameObjects\Digimon\06.Metalgreymon\Skill1\Part</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\MetalgreymonSkill2_Part4.h">
+      <Filter>02.GameObjects\Digimon\06.Metalgreymon\Skill2\Part</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1343,6 +1358,18 @@
     </ClCompile>
     <ClCompile Include="..\private\MetalgreymonSkill3_Part3.cpp">
       <Filter>02.GameObjects\Digimon\06.Metalgreymon\Skill3\Part</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\MetalgreymonSkill1_Part1.cpp">
+      <Filter>02.GameObjects\Digimon\06.Metalgreymon\Skill1\Part</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\MetalgreymonSkill1_Part2.cpp">
+      <Filter>02.GameObjects\Digimon\06.Metalgreymon\Skill1\Part</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\MetalgreymonSkill1_Part3.cpp">
+      <Filter>02.GameObjects\Digimon\06.Metalgreymon\Skill1\Part</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\MetalgreymonSkill2_Part4.cpp">
+      <Filter>02.GameObjects\Digimon\06.Metalgreymon\Skill2\Part</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -5,6 +5,7 @@
 #include "StateMachine.h"
 #include "Digimon_Manager.h"
 #include "SkillObject.h"
+#include "MetalgreymonSkill1.h"
 #include "MetalgreymonSkill2.h"
 #include "MetalgreymonSkill3.h"
 
@@ -92,12 +93,16 @@ void CMetalgreymon::Update(_float fTimeDelta)
 					m_iSkill = static_cast<_int>(m_pPart_Body->Get_TrackPosition());
 					switch (m_iSkill)
 					{
-					case 14:
+					case 10:
 						if (m_iSkill != m_iLastSkill) // 이전과 다를 때만 실행
 						{
+							m_mLeftHatch = XMLoadFloat4x4(static_cast<CBody_Metalgreymon*>(m_pPart_Body)->Get_BoneMatrixPtr("Bip01-Ponytail1Nub")) * XMLoadFloat4x4(m_pTransformCom->Get_WorldMatrixPtr());
 							Creat_Skill(1);
 							m_iLastSkill = m_iSkill;
 						}
+						break;
+					case 14:
+						m_pSkill->Set_Move(true);
 						break;
 					default:
 						m_iLastSkill = -1;
@@ -285,14 +290,15 @@ void CMetalgreymon::Creat_Skill(_int SkillNum)
 	{
 	case 1:
 		Desc.iDamage = m_iDamage;
-		m_pGameInstance->Add_GameObject_ToLayer(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_MetalgreymonSkill1"),
-			ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Layer_MetalgreymonSkill1"), &Desc);
+		Desc.m_vPosition2 = m_mLeftHatch.r[3];
+		m_pSkill = static_cast<CMetalgreymonSkill1*>(m_pGameInstance->Add_GameObject_ToLayer_ToCreate(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_MetalgreymonSkill1"),
+			ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Layer_MetalgreymonSkill1"), &Desc));
 		break;
 
 	case 2:
 		Desc.iDamage = m_iDamage;
 		Desc.m_vPosition2 = m_mLeftHatch.r[3];
-		m_pSkill = static_cast<CMetalgreymonSkill3*>(m_pGameInstance->Add_GameObject_ToLayer_ToCreate(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_MetalgreymonSkill2"),
+		m_pSkill = static_cast<CMetalgreymonSkill2*>(m_pGameInstance->Add_GameObject_ToLayer_ToCreate(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_MetalgreymonSkill2"),
 			ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Layer_MetalgreymonSkill2"), &Desc));
 		break;
 

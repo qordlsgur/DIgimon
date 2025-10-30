@@ -133,7 +133,12 @@ void CCamera_Free::Priority_Update(_float fTimeDelta)
 			m_pCamera_Manager->Set_LockCamera(m_bRightClick);
 		}
 
-		LookPlayer(fTimeDelta);
+		if (!m_bBattle)
+		{
+			LookPlayer(fTimeDelta);
+		}
+		else
+			LookField(fTimeDelta);
 
 		__super::Bind_Matrices();
 	//}
@@ -211,6 +216,26 @@ void CCamera_Free::LookPlayer(_float fTimeDelta)
 		m_pTransformCom->Set_State(STATE::POSITION, vCamerapos);
 		m_pTransformCom->LookAt(vPlayerPos);
 	}
+}
+
+void CCamera_Free::LookField(_float fTimeDelta)
+{
+	_vector vPlayerPos = XMVectorSet(200.f, 0.f, 200.f, 1.f);
+	_vector Offset = m_fCameraDistanceOffset;
+
+	_matrix matRotX = XMMatrixRotationX(m_fX);
+	_matrix matRotY = XMMatrixRotationY(m_fY);
+	m_pCamera_Manager->Camera_Angle(m_fY);
+
+	_vector        vQuternion = XMQuaternionRotationRollPitchYaw(m_fX, m_fY, 0.f);
+	_matrix        RotationMatrix = XMMatrixRotationQuaternion(vQuternion);
+
+	_vector vRotOffset = XMVector3TransformNormal(Offset, RotationMatrix);
+
+	_vector vCamerapos = XMVectorAdd(vPlayerPos, vRotOffset);
+
+	m_pTransformCom->Set_State(STATE::POSITION, vCamerapos);
+	m_pTransformCom->LookAt(vPlayerPos);
 }
 
 CCamera_Free* CCamera_Free::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)

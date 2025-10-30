@@ -108,7 +108,7 @@ void CBattle_Manager::Update(_float fTimeDelta)
 		case BATTLE_STATE::ING:
 			m_bSkill = true;
 			if (m_pCurrentDigimon->Get_BackJump())
-				ReturnToPosition(fTimeDelta);
+				ReturnToPosition(fTimeDelta * 1.1f);
 			else
 			{
 				if (m_pCurrentDigimon->Get_TurnEnd())

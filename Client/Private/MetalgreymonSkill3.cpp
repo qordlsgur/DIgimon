@@ -3,6 +3,7 @@
 #include "Interaction_Manager.h"
 #include "MetalgreymonSkill3_Part1.h"
 #include "MetalgreymonSkill3_Part2.h"
+#include "MetalgreymonSkill3_Part3.h"
 
 CMetalgreymonSkill3::CMetalgreymonSkill3(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
     : CSkillObject{ pDevice, pContext }
@@ -38,17 +39,17 @@ HRESULT CMetalgreymonSkill3::Initialize(void* pArg)
 	m_vPosition2 = Pos->m_vPosition;
 	m_vTarget_pos = Pos->m_vTargetPosition;
 	m_pTransformCom->Update_WoldMatrix();
-
+	m_vTarget_pos.m128_f32[1] += 10.f;
 	m_mLeftHatch = Pos->mMatrix;
 	m_mRightHatch = Pos->mMatrix2;
 	m_pTransformCom->Set_Scale(1.f, 1.f, 10.f);
 
-	if (FAILED(Ready_PartObjects()))
-		return E_FAIL;
+	//if (FAILED(Ready_PartObjects()))
+	//	return E_FAIL;
 
+	m_pTransformCom->Set_State(STATE::POSITION, m_vPosition);
 	if (FAILED(Ready_SkillObjects2()))
 		return E_FAIL;
-	m_pTransformCom->Set_State(STATE::POSITION, m_vPosition);
 
 	return S_OK;
 }
@@ -62,10 +63,29 @@ void CMetalgreymonSkill3::Update(_float fTimeDelta)
 {
 	m_pTransformCom->TargetLook(m_vTarget_pos);
 
-	m_pColliderCom->Update(XMLoadFloat4x4(m_pTransformCom->Get_WorldMatrixPtr()));
-
 	if (m_bMove == true)
+	{
+		m_fTime += fTimeDelta;
+		m_fFontUp += fTimeDelta * 2.f;
 		Ready_SkillObjects();
+		Ready_PartObjects();
+	}
+
+	if (m_bHit == true)
+	{
+		m_fTime += fTimeDelta;
+		Ready_SkillObjects3();
+	}
+
+
+	if (m_fTime > 2.f)
+	{
+		m_pInteraction_Manager->Die_Attack_Skill();
+		m_isDead = true;
+	}
+
+	if (m_pColliderCom != nullptr)
+		m_pColliderCom->Update(XMLoadFloat4x4(m_pTransformCom->Get_WorldMatrixPtr()));
 
 	__super::Update(fTimeDelta);
 }
@@ -79,8 +99,24 @@ void CMetalgreymonSkill3::Late_Update(_float fTimeDelta)
 HRESULT CMetalgreymonSkill3::Render()
 {
 #ifdef _DEBUG
-	m_pColliderCom->Render();
+	if (m_pColliderCom != nullptr)
+		m_pColliderCom->Render();
 #endif
+
+	if (m_bHit)
+	{
+		_itow_s(m_iDamage, m_szDamage, MAX_PATH, 10);
+
+		m_pGameInstance->Perspective_Render_Text(
+			m_pGameInstance->Get_Transform_Matrix(D3DTS::VIEW),
+			m_pGameInstance->Get_Transform_Matrix(D3DTS::PROJ),
+			TEXT("42"), m_szDamage,
+
+			XMVectorSet(m_vTarget_pos.m128_f32[0],
+				m_vTarget_pos.m128_f32[1] + m_fFontUp + 10.f,
+				m_vTarget_pos.m128_f32[2],
+				m_vTarget_pos.m128_f32[3]));
+	}
 
 	return S_OK;
 }
@@ -150,6 +186,24 @@ HRESULT CMetalgreymonSkill3::Ready_SkillObjects2()
 		return E_FAIL;
 
 	m_pSkillModel3 = dynamic_cast<CMetalgreymonSkill3_Part2*>(Find_PartObject(TEXT("Part_Skill3")));
+
+	return S_OK;
+}
+
+HRESULT CMetalgreymonSkill3::Ready_SkillObjects3()
+{
+	CMetalgreymonSkill3_Part3::BODY_PLAYER_DESC Skill4{};
+
+	Skill4.vPosition = m_vTarget_pos;
+	//Skill4.pParentTransform = m_pTransformCom;
+	Skill4.LR = m_iDamage;
+
+	/* Part_Skill4 */
+	if (FAILED(__super::Add_PartObject(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_MetalgreymonSkill3_Part3"),
+		TEXT("Part_Skill4"), &Skill4)))
+		return E_FAIL;
+
+	m_pSkillModel4 = dynamic_cast<CMetalgreymonSkill3_Part2*>(Find_PartObject(TEXT("Part_Skill4")));
 
 	return S_OK;
 }

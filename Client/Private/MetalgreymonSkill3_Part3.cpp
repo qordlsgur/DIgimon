@@ -31,8 +31,11 @@ HRESULT CMetalgreymonSkill3_Part3::Initialize(void* pArg)
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 
-	m_pTransformCom->Set_Scale(10.0f, 10.f, 10.f);
+	m_pTransformCom->Set_Scale(4.f, 4.f, 4.f);
 	m_fTime = 0.f;
+	m_vTargetPos = pDesc->vPosition;
+		
+	//m_vPosition = XMLoadFloat4x4(&m_CombinedWorldMatrix).r[3];
 
 	return S_OK;
 }
@@ -43,17 +46,19 @@ void CMetalgreymonSkill3_Part3::Priority_Update(_float fTimeDelta)
 
 void CMetalgreymonSkill3_Part3::Update(_float fTimeDelta)
 {
-	m_fTime += fTimeDelta * 5.f;
+	m_fTime += fTimeDelta * 10.f;
 
-	XMStoreFloat4x4(&m_CombinedWorldMatrix,
-		XMLoadFloat4x4(m_pTransformCom->Get_WorldMatrixPtr()) * XMLoadFloat4x4(m_pParentTransformCom->Get_WorldMatrixPtr()));
+	/*XMStoreFloat4x4(&m_CombinedWorldMatrix,
+		XMLoadFloat4x4(m_pTransformCom->Get_WorldMatrixPtr()) * XMLoadFloat4x4(m_pParentTransformCom->Get_WorldMatrixPtr()));*/
 
+	m_pTransformCom->Set_State(STATE::POSITION, m_vTargetPos);
 
 }
 
 void CMetalgreymonSkill3_Part3::Late_Update(_float fTimeDelta)
 {
 	m_pGameInstance->Add_RenderGroup(RENDER::BLEND, this);
+	m_pGameInstance->Add_RenderGroup(RENDER::BLUR, this);
 }
 
 HRESULT CMetalgreymonSkill3_Part3::Render()
@@ -61,7 +66,7 @@ HRESULT CMetalgreymonSkill3_Part3::Render()
 	if (FAILED(Bind_ShaderResources()))
 		return E_FAIL;
 
-	if (FAILED(m_pShaderCom->Begin(4)))
+	if (FAILED(m_pShaderCom->Begin(5)))
 		return E_FAIL;
 
 	if (FAILED(m_pModelCom->Render(0)))
@@ -73,12 +78,12 @@ HRESULT CMetalgreymonSkill3_Part3::Render()
 HRESULT CMetalgreymonSkill3_Part3::Ready_Components()
 {
 	/* Com_Mode */
-	if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Model_Plane"),
+	if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Model_Thumder"),
 		TEXT("Com_Model"), reinterpret_cast<CComponent**>(&m_pModelCom))))
 		return E_FAIL;
 
 	/* Com_Texture */
-	if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_MetalgreymonSkill3_Image"),
+	if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Spark"),
 		TEXT("Com_Texture"), reinterpret_cast<CComponent**>(&m_pTextureCom))))
 		return E_FAIL;
 
@@ -92,7 +97,9 @@ HRESULT CMetalgreymonSkill3_Part3::Ready_Components()
 
 HRESULT CMetalgreymonSkill3_Part3::Bind_ShaderResources()
 {
-	if (FAILED(m_pShaderCom->Bind_Matrix("g_WorldMatrix", &m_CombinedWorldMatrix)))
+	/*if (FAILED(m_pShaderCom->Bind_Matrix("g_WorldMatrix", &m_CombinedWorldMatrix)))
+		return E_FAIL;*/
+	if (FAILED(m_pTransformCom->Bind_ShaderResource(m_pShaderCom,"g_WorldMatrix")))
 		return E_FAIL;
 	if (FAILED(m_pShaderCom->Bind_Matrix("g_ViewMatrix", m_pGameInstance->Get_Transform_Float4x4(D3DTS::VIEW))))
 		return E_FAIL;
@@ -100,11 +107,9 @@ HRESULT CMetalgreymonSkill3_Part3::Bind_ShaderResources()
 		return E_FAIL;
 	if (FAILED(m_pShaderCom->Bind_State("Time", m_fTime)))
 		return E_FAIL;
-	if (FAILED(m_pShaderCom->Bind_State("Count", 2)))
+	if (FAILED(m_pShaderCom->Bind_State("Radian", 2)))
 		return E_FAIL;
-	if (FAILED(m_pShaderCom->Bind_State("Frame", 0.2f)))
-		return E_FAIL;
-	if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture", 2)))
+	if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture", 0)))
 		return E_FAIL;
 
 	return S_OK;

@@ -45,6 +45,10 @@ public:
 
 	virtual void Set_Move(_bool Move) { m_bMove = Move; }
 protected:
+	_tchar		m_szDamage[MAX_PATH] = {};
+
+	_float		m_fFontUp{};
+
 	_vector		m_vPosition{};
 	_vector		m_vPosition2{};
 	_vector		m_vTarget_pos{};
@@ -56,9 +60,9 @@ protected:
 
 	_int		m_iDamage{};
 
-	_float		m_fX;
-	_float		m_fY;
-
+	_float		m_fX{};
+	_float		m_fY{};
+	_float		m_fTime{};
 	_bool		m_bHit = { false };
 
 	_bool		m_bMove = { false };

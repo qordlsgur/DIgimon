@@ -72,13 +72,18 @@
 #include "MetalgarumonSkill3_Part1.h"
 
 #include "MetalgreymonSkill1.h"
+#include "MetalgreymonSkill1_Part1.h"
+#include "MetalgreymonSkill1_Part2.h"
+#include "MetalgreymonSkill1_Part3.h"
 #include "MetalgreymonSkill2.h"
 #include "MetalgreymonSkill2_Part1.h"
 #include "MetalgreymonSkill2_Part2.h"
 #include "MetalgreymonSkill2_Part3.h"
+#include "MetalgreymonSkill2_Part4.h"
 #include "MetalgreymonSkill3.h"
 #include "MetalgreymonSkill3_Part1.h"
 #include "MetalgreymonSkill3_Part2.h"
+#include "MetalgreymonSkill3_Part3.h"
 
 #include "OmegamonSkill1.h"
 #include "OmegamonSkill2.h"
@@ -559,6 +564,11 @@ HRESULT CLoader::Loading_For_GamePlay()
 	/* For.Prototype_Component_Texture_Smoke*/
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Smoke"),
 		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/Effect/Smoke%d.png"), 3))))
+		return E_FAIL;
+
+	/* For.Prototype_Component_Texture_Spark*/
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Spark"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/Effect/Spark%d.png"), 5))))
 		return E_FAIL;
 
 
@@ -1337,10 +1347,22 @@ HRESULT CLoader::Loading_For_GamePlay()
 	/* For.Prototype_GameObject_MetalgreymonSkill1*/
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_MetalgreymonSkill1"),
 		CMetalgreymonSkill1::Create(m_pDevice, m_pContext))))
+		return E_FAIL;	
+	/* For.Prototype_GameObject_MetalgreymonSkill1_Part1*/
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_MetalgreymonSkill1_Part1"),
+		CMetalgreymonSkill1_Part1::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+	/* For.Prototype_GameObject_MetalgreymonSkill1_Part2*/
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_MetalgreymonSkill1_Part2"),
+		CMetalgreymonSkill1_Part2::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+	/* For.Prototype_GameObject_MetalgreymonSkill1_Part3*/
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_MetalgreymonSkill1_Part3"),
+		CMetalgreymonSkill1_Part3::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 	/* For.Prototype_Component_Texture_MetalgreymonSkill_Image*/
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_MetalgreymonSkill_Image"),
-		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Models/Metalgreymon/MetalgreymonSkill_Image%d.png"), 2))))
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Models/Metalgreymon/MetalgreymonSkill_Image%d.png"), 3))))
 		return E_FAIL;
 
 	/* For.Prototype_GameObject_MetalgreymonSkill2*/
@@ -1358,6 +1380,10 @@ HRESULT CLoader::Loading_For_GamePlay()
 	/* For.Prototype_GameObject_MetalgreymonSkill2_Part3 */
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_MetalgreymonSkill2_Part3"),
 		CMetalgreymonSkill2_Part3::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+	/* For.Prototype_GameObject_MetalgreymonSkill2_Part4*/
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_MetalgreymonSkill2_Part4"),
+		CMetalgreymonSkill2_Part4::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 	/* For.Prototype_Component_MetalgreymonSkill2 */
 	PreTransformMatrix = XMMatrixScaling(0.03f, 0.03f, 0.03f) * XMMatrixRotationY(XMConvertToRadians(180.0f));
@@ -1380,6 +1406,10 @@ HRESULT CLoader::Loading_For_GamePlay()
 	/* For.Prototype_GameObject_MetalgreymonSkill3_Part2*/
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_MetalgreymonSkill3_Part2"),
 		CMetalgreymonSkill3_Part2::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+	/* For.Prototype_GameObject_MetalgreymonSkill3_Part3*/
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_MetalgreymonSkill3_Part3"),
+		CMetalgreymonSkill3_Part3::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 		/* For.Prototype_Component_Texture_MetalgreymonSkill3_Image*/
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_MetalgreymonSkill3_Image"),

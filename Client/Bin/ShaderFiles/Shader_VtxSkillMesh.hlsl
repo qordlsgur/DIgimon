@@ -13,6 +13,7 @@ texture2D g_Dissolve;
 texture2D g_Mask;
 
 float Time;
+float Radian;
 
 /* 정점 쉐이더 : */
 /* 정점에 대한 셰이딩 == 정점에 필요한 연산을 수행한다 == 정점의 상태변환(월드, 뷰, 투영) + 추가변환 */
@@ -78,12 +79,13 @@ PS_OUT PS_MAIN(PS_IN In)
     
     float2 uv = In.vTexcoord;
     //uv.x *= 4.f;
-    uv.x -= Time;
-    float3 Color = float3(1.f, 1.f, 1.f);
+    //uv.x -= Time;
+    float3 Color = float3(1.f,0.f, 0.f);
+    float2 uvRotated = float2(1.0f - In.vTexcoord.y, In.vTexcoord.x);
     
-    vector vMtrlDiffuse = g_DiffuseTexture.Sample(DefaultSampler, uv);
+    vector vMtrlDiffuse = g_DiffuseTexture.Sample(DefaultSampler, uvRotated);
     
-    if (vMtrlDiffuse.r <= 0.4f)
+    if (vMtrlDiffuse.r <= 0.f)
         discard;
     
     if (vMtrlDiffuse.r != 0.f)
@@ -99,11 +101,12 @@ PS_OUT PS_MAIN(PS_IN In)
 PS_OUT PS_Arrow(PS_IN In)
 {
     PS_OUT Out;
-
     vector vMtrlDiffuse = g_DiffuseTexture.Sample(DefaultSampler, In.vTexcoord);
     
     if (vMtrlDiffuse.r <= 0.4f)
         discard;
+    
+    
     
     Out.vDiffuse = vMtrlDiffuse;
     Out.vNormal = float4(In.vNormal.xyz * 0.5f + 0.5f, 0.f);
@@ -133,15 +136,24 @@ PS_OUT PS_Cross(PS_IN In)
 
     PS_OUT Out;
 
-    float u = In.vTexcoord.x;
-    float v = In.vTexcoord.y;
+      
+    float2 uv = In.vTexcoord;
     
-    //u = u + Time;
+    uv = uv - 0.5f;
     
-    float2 uv = float2(u, v);
+    float sinR = sin(Radian * Time);
+    float cosR = cos(Radian * Time);
     
-    vector vMtrlDiffuse = g_DiffuseTexture.Sample(DefaultSampler, uv);
-    float3 Color = float3(18, 91, 159) / 255.0f;
+    float2 Rotated;
+    
+    Rotated.x = uv.x * cosR - uv.y * sinR;
+    Rotated.y = uv.x * sinR + uv.y * cosR;
+    
+    Rotated += 0.5f;
+    Rotated *= 2.f;
+    
+    vector vMtrlDiffuse = g_DiffuseTexture.Sample(DefaultSampler, Rotated);
+    //float3 Color = float3(18, 91, 159) / 255.0f;
     float4 Disslove = g_Dissolve.Sample(DefaultSampler, In.vTexcoord);
         
     //if (Time > Disslove.r)
@@ -151,11 +163,11 @@ PS_OUT PS_Cross(PS_IN In)
     
     //vMtrlDiffuse *= Disslove.a;
     
-    if (vMtrlDiffuse.r <= 0.25f)
+    if (vMtrlDiffuse.a <= 0.25f)
         discard;
     
     //if (vMtrlDiffuse.r <= 0.2f)
-    vMtrlDiffuse.rgb = vMtrlDiffuse.rgb * Color;
+    //vMtrlDiffuse.rgb = vMtrlDiffuse.rgb * Color;
     
     //vMtrlDiffuse.a *= 1.5;
     Out.vDiffuse = vMtrlDiffuse;

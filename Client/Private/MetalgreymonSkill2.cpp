@@ -4,6 +4,7 @@
 #include "MetalgreymonSkill2_Part1.h"
 #include "MetalgreymonSkill2_Part2.h"
 #include "MetalgreymonSkill2_Part3.h"
+#include "MetalgreymonSkill2_Part4.h"
 
 CMetalgreymonSkill2::CMetalgreymonSkill2(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CSkillObject{ pDevice, pContext }
@@ -72,11 +73,12 @@ void CMetalgreymonSkill2::Update(_float fTimeDelta)
 		m_pSkillModel1->Set_Hit(true);
 		Ready_Skill3Objects();
 		m_fTime += fTimeDelta;
-		//m_isDead = true;
+		m_fTime += fTimeDelta;
+		m_fFontUp += fTimeDelta * 2.f;
 	}
 
 
-	if (m_fTime > 1.f)
+	if (m_fTime > 2.f)
 	{
 		m_pInteraction_Manager->Die_Attack_Skill();
 		m_isDead = true;
@@ -91,17 +93,27 @@ void CMetalgreymonSkill2::Update(_float fTimeDelta)
 
 void CMetalgreymonSkill2::Late_Update(_float fTimeDelta)
 {
-	m_pGameInstance->Add_RenderGroup(RENDER::UI, this);
+	m_pGameInstance->Add_RenderGroup(RENDER::EFFECT, this);
 	__super::Late_Update(fTimeDelta);
 }
 
 
 HRESULT CMetalgreymonSkill2::Render()
 {
-#ifdef _DEBUG
-	m_pColliderCom->Render();
-#endif
+	if (m_bHit)
+	{
+		_itow_s(m_iDamage, m_szDamage, MAX_PATH, 10);
 
+		m_pGameInstance->Perspective_Render_Text(
+			m_pGameInstance->Get_Transform_Matrix(D3DTS::VIEW),
+			m_pGameInstance->Get_Transform_Matrix(D3DTS::PROJ),
+			TEXT("42"), m_szDamage,
+
+			XMVectorSet(m_vTarget_pos.m128_f32[0],
+				m_vTarget_pos.m128_f32[1] + m_fFontUp + 10.f,
+				m_vTarget_pos.m128_f32[2],
+				m_vTarget_pos.m128_f32[3]));
+	}
 	return S_OK;
 }
 
@@ -158,7 +170,7 @@ HRESULT CMetalgreymonSkill2::Ready_SkillObjects()
 
 HRESULT CMetalgreymonSkill2::Ready_Skill3Objects()
 {
-	CMetalgreymonSkill2_Part1::BODY_PLAYER_DESC Skil13{};
+	CMetalgreymonSkill2_Part3::BODY_PLAYER_DESC Skil13{};
 
 	Skil13.pParentTransform = m_pTransformCom;
 	Skil13.vPosition = m_vTarget_pos;
@@ -168,7 +180,19 @@ HRESULT CMetalgreymonSkill2::Ready_Skill3Objects()
 		TEXT("Part_Skill3"), &Skil13)))
 		return E_FAIL;
 
-	m_pSkillModel3 = dynamic_cast<CMetalgreymonSkill2_Part2*>(Find_PartObject(TEXT("Part_Skill2")));
+	m_pSkillModel3 = dynamic_cast<CMetalgreymonSkill2_Part2*>(Find_PartObject(TEXT("Part_Skill3")));
+
+	CMetalgreymonSkill2_Part4::BODY_PLAYER_DESC Skil14{};
+
+	Skil14.pParentTransform = m_pTransformCom;
+	Skil14.vPosition = m_vTarget_pos;
+
+	/* Part_Skill2 */
+	if (FAILED(__super::Add_PartObject(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_MetalgreymonSkill2_Part4"),
+		TEXT("Part_Skill4"), &Skil14)))
+		return E_FAIL;
+
+	m_pSkillModel4 = dynamic_cast<CMetalgreymonSkill2_Part2*>(Find_PartObject(TEXT("Part_Skill4")));
 	return S_OK;
 }
 

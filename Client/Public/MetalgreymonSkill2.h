@@ -33,6 +33,7 @@ private:
 	CPartObject* m_pSkillModel1 = { nullptr };
 	CPartObject* m_pSkillModel2 = { nullptr };
 	CPartObject* m_pSkillModel3 = { nullptr };
+	CPartObject* m_pSkillModel4 = { nullptr };
 	CContainerObject* m_pPlayer = { nullptr };
 	class CInteraction_Manager* m_pInteraction_Manager = { nullptr };
 
