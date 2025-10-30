@@ -55,6 +55,9 @@ HRESULT CAngewomonSkill2::Initialize(void* pArg)
 	m_pTransformCom->Set_State(STATE::POSITION, m_vPosition);
 	m_pTransformCom->Update_WoldMatrix();
 
+	m_fTime = 2.f;
+	m_pTransformCom->Set_Scale(m_fTime, m_fTime, m_fTime);
+
 	if (FAILED(Ready_PartObjects()))
 		return E_FAIL;
 
@@ -73,8 +76,31 @@ void CAngewomonSkill2::Update(_float fTimeDelta)
 {
 	m_pTransformCom->TargetLook(m_vTarget_pos);
 
+	if (m_fTime >= 1.f)
+		m_fTime -= fTimeDelta * 5.f;
+
+	m_pTransformCom->Set_Scale(m_fTime, m_fTime, m_fTime);
+
 	if (m_bMove)
+	{
 		m_pTransformCom->Target_Pos_Move(m_vTarget_pos, fTimeDelta);
+	}
+
+	if (m_bHit == true)
+	{
+		m_pSkillModel1->Set_Hit(true);
+		m_pSkillModel2->Set_Hit(true);
+		m_pSkillModel3->Set_Hit(true);
+		m_fFontUp += fTimeDelta;
+		m_fEndTime += fTimeDelta;
+	}
+
+	if (m_fEndTime > 2.f)
+	{
+		m_pInteraction_Manager->Die_Attack_Skill();
+		m_isDead = true;
+	}
+
 
 	m_pColliderCom->Update(XMLoadFloat4x4(m_pTransformCom->Get_WorldMatrixPtr()));
 
@@ -89,9 +115,20 @@ void CAngewomonSkill2::Late_Update(_float fTimeDelta)
 
 HRESULT CAngewomonSkill2::Render()
 {
-#ifdef _DEBUG
-	m_pColliderCom->Render();
-#endif
+	if (m_bHit)
+	{
+		_itow_s(m_iDamage, m_szDamage, MAX_PATH, 10);
+
+		m_pGameInstance->Perspective_Render_Text(
+			m_pGameInstance->Get_Transform_Matrix(D3DTS::VIEW),
+			m_pGameInstance->Get_Transform_Matrix(D3DTS::PROJ),
+			TEXT("42"), m_szDamage,
+
+			XMVectorSet(m_vTarget_pos.m128_f32[0],
+				m_vTarget_pos.m128_f32[1] + m_fFontUp + 10.f,
+				m_vTarget_pos.m128_f32[2],
+				m_vTarget_pos.m128_f32[3]));
+	}
 
 	return S_OK;
 }
@@ -129,6 +166,9 @@ HRESULT CAngewomonSkill2::Ready_SkillObjects()
 		TEXT("Part_Skill1"), &Skill1)))
 		return E_FAIL;
 
+	m_pSkillModel1 = dynamic_cast<CAngewomonSkill2_Part1*>(Find_PartObject(TEXT("Part_Skill1")));
+
+
 	CAngewomonSkill2_Part2::BODY_PLAYER_DESC Skill2{};
 
 	Skill2.pParentTransform = m_pTransformCom;
@@ -137,6 +177,7 @@ HRESULT CAngewomonSkill2::Ready_SkillObjects()
 	if (FAILED(__super::Add_PartObject(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_AngewomonSkill2_Part2"),
 		TEXT("Part_Skill2"), &Skill2)))
 		return E_FAIL;
+	m_pSkillModel2 = dynamic_cast<CAngewomonSkill2_Part2*>(Find_PartObject(TEXT("Part_Skill2")));
 
 	CAngewomonSkill2_Part3::BODY_PLAYER_DESC Skill3{};
 
@@ -147,15 +188,7 @@ HRESULT CAngewomonSkill2::Ready_SkillObjects()
 		TEXT("Part_Skill3"), &Skill3)))
 		return E_FAIL;
 
-	//CAngewomonSkill2_Part4::BODY_PLAYER_DESC Skill4{};
-
-	//Skill4.pParentTransform = m_pTransformCom;
-
-	///* Part_Skill4 */
-	//if (FAILED(__super::Add_PartObject(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_AngewomonSkill2_Part4"),
-	//	TEXT("Part_Skill4"), &Skill4)))
-	//	return E_FAIL;
-
+	m_pSkillModel3 = dynamic_cast<CAngewomonSkill2_Part3*>(Find_PartObject(TEXT("Part_Skill3")));
 
 	return S_OK;
 }

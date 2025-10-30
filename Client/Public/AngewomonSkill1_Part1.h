@@ -4,13 +4,12 @@
 #include "PartObject.h"
 
 NS_BEGIN(Engine)
-class CVIBuffer_Rect;
-class CTexture;
+class CModel;
 class CShader;
+class CTexture;
 NS_END
 
 NS_BEGIN(Client)
-
 
 class CAngewomonSkill1_Part1 final : public CPartObject
 {
@@ -25,6 +24,9 @@ private:
 	virtual ~CAngewomonSkill1_Part1() = default;
 
 public:
+	_float4x4* Get_BoneMatrixPtr(const _char* pBoneName);
+
+public:
 	virtual HRESULT Initialize_Prototype() override;
 	virtual HRESULT Initialize(void* pArg) override;
 	virtual void Priority_Update(_float fTimeDelta) override;
@@ -32,16 +34,17 @@ public:
 	virtual void Late_Update(_float fTimeDelta) override;
 	virtual HRESULT Render() override;
 
-protected:
-	class CTransform* m_pParentTransformCom = { nullptr };
-
 private:
-	CVIBuffer_Rect* m_pVIBufferCom = { nullptr };
+	CModel* m_pModelCom = { nullptr };
 	CTexture* m_pTextureCom = { nullptr };
-	CTexture* m_pMaskTextureCom = { nullptr };
+	CTexture* m_pTexture1Com = { nullptr };
 	CShader* m_pShaderCom = { nullptr };
 
-	_float m_fTime{};
+	_matrix RootBone{};
+	_float m_fDir{};
+	_vector m_vTargetPos{};
+private:
+
 
 private:
 	HRESULT Ready_Components();
@@ -51,7 +54,6 @@ public:
 	static CAngewomonSkill1_Part1* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	virtual CGameObject* Clone(void* pArg) override;
 	virtual void Free() override;
-
 };
 
 NS_END

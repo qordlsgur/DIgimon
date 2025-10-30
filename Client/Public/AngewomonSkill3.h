@@ -32,6 +32,7 @@ public:
 private:
 	CPartObject* m_pSkillModel1 = { nullptr };
 	CPartObject* m_pSkillModel2 = { nullptr };
+	CPartObject* m_pSkillModel3 = { nullptr };
 	CCollider* m_pColliderCom = { nullptr };
 	CContainerObject* m_pPlayer = { nullptr };
 	class CInteraction_Manager* m_pInteraction_Manager = { nullptr };
@@ -42,6 +43,8 @@ private:
 private:
 	HRESULT Ready_PartObjects();
 	HRESULT Ready_SkillObjects();
+	HRESULT Ready_SkillObjects2();
+	HRESULT Ready_SkillObjects3();
 
 public:
 	static CAngewomonSkill3* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);

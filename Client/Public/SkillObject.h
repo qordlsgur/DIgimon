@@ -44,6 +44,9 @@ public:
 	virtual _int Get_Damage() = 0;
 
 	virtual void Set_Move(_bool Move) { m_bMove = Move; }
+	virtual _bool Get_Move() { return m_bMove; }
+	virtual void Set_Create(_bool Create) { m_bCreate = Create; }
+	virtual _bool Get_Create() { return m_bCreate; }
 protected:
 	_tchar		m_szDamage[MAX_PATH] = {};
 
@@ -64,6 +67,7 @@ protected:
 	_float		m_fY{};
 	_float		m_fTime{};
 	_bool		m_bHit = { false };
+	_bool		m_bCreate = { false };
 
 	_bool		m_bMove = { false };
 public:

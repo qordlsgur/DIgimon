@@ -11,7 +11,7 @@ NS_END
 
 NS_BEGIN(Client)
 
-class CAngewomonSkill3_Part2 : public CPartObject
+class CAngewomonSkill3_Part3 final : public CPartObject
 {
 public:
 	typedef struct tagBody_Player_Desc : public CPartObject::PARTOBJECT_DESC
@@ -19,9 +19,9 @@ public:
 
 	}BODY_PLAYER_DESC;
 private:
-	CAngewomonSkill3_Part2(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
-	CAngewomonSkill3_Part2(const CAngewomonSkill3_Part2& Prototype);
-	virtual ~CAngewomonSkill3_Part2() = default;
+	CAngewomonSkill3_Part3(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
+	CAngewomonSkill3_Part3(const CAngewomonSkill3_Part3& Prototype);
+	virtual ~CAngewomonSkill3_Part3() = default;
 
 public:
 	_float4x4* Get_BoneMatrixPtr(const _char* pBoneName);
@@ -37,12 +37,12 @@ public:
 private:
 	CModel* m_pModelCom = { nullptr };
 	CTexture* m_pTextureCom = { nullptr };
+	CTexture* m_pTextureCom2 = { nullptr };
 	CShader* m_pShaderCom = { nullptr };
 
 	_matrix RootBone{};
-	_float m_fTime{};
+	_float m_fTime2{};
 	_vector m_vTargetPos{};
-
 private:
 
 
@@ -51,7 +51,7 @@ private:
 	HRESULT Bind_ShaderResources();
 
 public:
-	static CAngewomonSkill3_Part2* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
+	static CAngewomonSkill3_Part3* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	virtual CGameObject* Clone(void* pArg) override;
 	virtual void Free() override;
 };

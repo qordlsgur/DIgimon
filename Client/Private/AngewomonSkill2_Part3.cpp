@@ -40,6 +40,9 @@ void CAngewomonSkill2_Part3::Priority_Update(_float fTimeDelta)
 
 void CAngewomonSkill2_Part3::Update(_float fTimeDelta)
 {
+	if (m_bHit)
+		m_fTime += fTimeDelta;
+
 	XMStoreFloat4x4(&m_CombinedWorldMatrix,
 		XMLoadFloat4x4(m_pTransformCom->Get_WorldMatrixPtr()) * XMLoadFloat4x4(m_pParentTransformCom->Get_WorldMatrixPtr()));
 }
@@ -103,7 +106,8 @@ HRESULT CAngewomonSkill2_Part3::Bind_ShaderResources()
 
 	if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_DiffuseTexture", 1)))
 		return E_FAIL;
-
+	if (FAILED(m_pShaderCom->Bind_State("Time", m_fTime)))
+		return E_FAIL;
 	if (FAILED(m_pDIssolveTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Dissolve", 10)))
 		return E_FAIL;
 

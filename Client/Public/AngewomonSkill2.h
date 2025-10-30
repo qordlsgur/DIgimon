@@ -6,6 +6,7 @@ NS_BEGIN(Engine)
 class CCollider;
 class CTexture;
 class CContainerObject;
+class CPartObject;
 NS_END
 
 NS_BEGIN(Client)
@@ -30,8 +31,13 @@ public:
 
 private:
 	CCollider* m_pColliderCom = { nullptr };
+	CPartObject* m_pSkillModel1 = { nullptr };
+	CPartObject* m_pSkillModel2 = { nullptr };
+	CPartObject* m_pSkillModel3 = { nullptr };
 	CContainerObject* m_pPlayer = { nullptr };
 	class CInteraction_Manager* m_pInteraction_Manager = { nullptr };
+
+	_float m_fEndTime{};
 
 private:
 	HRESULT Ready_PartObjects();

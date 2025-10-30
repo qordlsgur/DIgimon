@@ -2,36 +2,44 @@
 #include "GameInstance.h"
 
 CAngewomonSkill1_Part1::CAngewomonSkill1_Part1(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
-    : CPartObject{ pDevice, pContext }
+	: CPartObject{ pDevice, pContext }
 {
 }
 
 CAngewomonSkill1_Part1::CAngewomonSkill1_Part1(const CAngewomonSkill1_Part1& Prototype)
-    : CPartObject{ Prototype }
+	: CPartObject{ Prototype }
 {
 }
 
+_float4x4* CAngewomonSkill1_Part1::Get_BoneMatrixPtr(const _char* pBoneName)
+{
+	return nullptr;
+}
+
+
 HRESULT CAngewomonSkill1_Part1::Initialize_Prototype()
 {
-    return S_OK;
+	return S_OK;
 }
 
 HRESULT CAngewomonSkill1_Part1::Initialize(void* pArg)
 {
-    if (FAILED(__super::Initialize(pArg)))
-        return E_FAIL;
+	BODY_PLAYER_DESC* pDesc = static_cast<BODY_PLAYER_DESC*>(pArg);
 
-    if (FAILED(Ready_Components()))
-        return E_FAIL;
+	if (FAILED(__super::Initialize(pArg)))
+		return E_FAIL;
 
-    m_vPosition.m128_f32[1] += 10.f;
+	if (FAILED(Ready_Components()))
+		return E_FAIL;
 
-    m_pTransformCom->Set_State(STATE::POSITION, m_vPosition);
-    m_fTime = 10.f;
+	m_pTransformCom->Set_Scale(5.f, 5.f, 5.f);
+	m_fTime = 0.f;
 
-    m_pTransformCom->Set_Scale(m_fTime, m_fTime, m_fTime);
+	m_vTargetPos = pDesc->vPosition;
 
-    return S_OK;
+	m_fDir = pDesc->LR;
+
+	return S_OK;
 }
 
 void CAngewomonSkill1_Part1::Priority_Update(_float fTimeDelta)
@@ -40,118 +48,110 @@ void CAngewomonSkill1_Part1::Priority_Update(_float fTimeDelta)
 
 void CAngewomonSkill1_Part1::Update(_float fTimeDelta)
 {
-    //m_fTime -= fTimeDelta * 20.f;
+	m_fTime += fTimeDelta * 5.f;
 
-    //if (m_fTime <= 0.f)
-    //    m_fTime = 0;
-
-    m_pTransformCom->Set_Scale(m_fTime, m_fTime, m_fTime);
-
-    __super::Update(fTimeDelta);
+	XMStoreFloat4x4(&m_CombinedWorldMatrix,
+		XMLoadFloat4x4(m_pTransformCom->Get_WorldMatrixPtr()) * XMLoadFloat4x4(m_pParentTransformCom->Get_WorldMatrixPtr()));
 }
 
 void CAngewomonSkill1_Part1::Late_Update(_float fTimeDelta)
 {
-    Compute_Depth();
-
-    m_pGameInstance->Add_RenderGroup(RENDER::BLEND, this);
+	if (!m_bHit)
+	{
+		m_pGameInstance->Add_RenderGroup(RENDER::BLEND, this);
+		m_pGameInstance->Add_RenderGroup(RENDER::BLUR, this);
+	}
 }
 
 HRESULT CAngewomonSkill1_Part1::Render()
 {
-    if (FAILED(Bind_ShaderResources()))
-        return E_FAIL;
+	if (FAILED(Bind_ShaderResources()))
+		return E_FAIL;
 
-    if (FAILED(m_pShaderCom->Begin(3)))
-        return E_FAIL;
+	if (FAILED(m_pShaderCom->Begin(0)))
+		return E_FAIL;
 
-    if (FAILED(m_pVIBufferCom->Bind_Resources()))
-        return E_FAIL;
+	if (FAILED(m_pModelCom->Render(0)))
+		return E_FAIL;
 
-    if (FAILED(m_pVIBufferCom->Render()))
-        return E_FAIL;
-
-    return S_OK;
+	return S_OK;
 }
 
 HRESULT CAngewomonSkill1_Part1::Ready_Components()
 {
-    /* Com_VIBuffer */
-    if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::STATIC), TEXT("Prototype_Component_VIBuffer_Rect"),
-        TEXT("Com_VIBuffer"), reinterpret_cast<CComponent**>(&m_pVIBufferCom))))
-        return E_FAIL;
+	/* Com_Mode */
+	if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Model_Attack2"),
+		TEXT("Com_Model"), reinterpret_cast<CComponent**>(&m_pModelCom))))
+		return E_FAIL;
 
-    /* Com_Battle_Diffuse */
-    if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Space"),
-        TEXT("Com_Battle_Diffuse"), reinterpret_cast<CComponent**>(&m_pTextureCom))))
-        return E_FAIL;
+	/* Com_Texture */
+	if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_shockwave"),
+		TEXT("Com_Texture"), reinterpret_cast<CComponent**>(&m_pTextureCom))))
+		return E_FAIL;
 
-    /* Com_Battle_Mask*/
-    if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Circle"),
-        TEXT("Com_Battle_Mask"), reinterpret_cast<CComponent**>(&m_pMaskTextureCom))))
-        return E_FAIL;
+	/* Com_Texture */
+	if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_MetalgreymonSkill3_Image"),
+		TEXT("Com_Texture1"), reinterpret_cast<CComponent**>(&m_pTexture1Com))))
+		return E_FAIL;
 
-    /* Com_Shader */
-    if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::STATIC), TEXT("Prototype_Component_Shader_VtxPosTex"),
-        TEXT("Com_Shader"), reinterpret_cast<CComponent**>(&m_pShaderCom))))
-        return E_FAIL;
+	/* Com_Shader */
+	if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Shader_VtxSkillAngewomon"),
+		TEXT("Com_Shader"), reinterpret_cast<CComponent**>(&m_pShaderCom))))
+		return E_FAIL;
 
-    return S_OK;
+	return S_OK;
 }
 
 HRESULT CAngewomonSkill1_Part1::Bind_ShaderResources()
 {
-    if (FAILED(m_pTransformCom->Bind_ShaderResource(m_pShaderCom, "g_WorldMatrix")))
-        return E_FAIL;
-    if (FAILED(m_pShaderCom->Bind_Matrix("g_ViewMatrix", m_pGameInstance->Get_Transform_Float4x4(D3DTS::VIEW))))
-        return E_FAIL;
-    if (FAILED(m_pShaderCom->Bind_Matrix("g_ProjMatrix", m_pGameInstance->Get_Transform_Float4x4(D3DTS::PROJ))))
-        return E_FAIL;
-    if (FAILED(m_pGameInstance->Bind_RenderTarget(TEXT("Target_Depth"), m_pShaderCom, "g_DepthTexture")))
-        return E_FAIL;
-    if (FAILED(m_pShaderCom->Bind_State("Time", m_fTime)))
-        return E_FAIL;
-    if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture", 1)))
-        return E_FAIL;
-    if (FAILED(m_pMaskTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Mask", 0)))
-        return E_FAIL;
-    return S_OK;
+	if (FAILED(m_pShaderCom->Bind_Matrix("g_WorldMatrix", &m_CombinedWorldMatrix)))
+		return E_FAIL;
+	if (FAILED(m_pShaderCom->Bind_Matrix("g_ViewMatrix", m_pGameInstance->Get_Transform_Float4x4(D3DTS::VIEW))))
+		return E_FAIL;
+	if (FAILED(m_pShaderCom->Bind_Matrix("g_ProjMatrix", m_pGameInstance->Get_Transform_Float4x4(D3DTS::PROJ))))
+		return E_FAIL;
+	if (FAILED(m_pShaderCom->Bind_State("Dir", m_fDir)))
+		return E_FAIL;
+	if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_DiffuseTexture", 0)))
+		return E_FAIL;
+	//if (FAILED(m_pTexture1Com->Bind_ShaderResource(m_pShaderCom, "g_Mask", 1)))
+	//	return E_FAIL;
+
+	return S_OK;
 }
 
 CAngewomonSkill1_Part1* CAngewomonSkill1_Part1::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 {
-    CAngewomonSkill1_Part1* pInstance = new CAngewomonSkill1_Part1(pDevice, pContext);
+	CAngewomonSkill1_Part1* pInstance = new CAngewomonSkill1_Part1(pDevice, pContext);
 
-    if (FAILED(pInstance->Initialize_Prototype()))
-    {
-        MSG_BOX("Failed to Created : CAngewomonSkill1_Part1 ");
-        Safe_Release(pInstance);
-    }
+	if (FAILED(pInstance->Initialize_Prototype()))
+	{
+		MSG_BOX("Failed to Created : CAngewomonSkill1_Part1");
+		Safe_Release(pInstance);
+	}
 
-    return pInstance;
+	return pInstance;
 }
-
 
 CGameObject* CAngewomonSkill1_Part1::Clone(void* pArg)
 {
-    CAngewomonSkill1_Part1* pInstance = new CAngewomonSkill1_Part1(*this);
+	CAngewomonSkill1_Part1* pInstance = new CAngewomonSkill1_Part1(*this);
 
-    if (FAILED(pInstance->Initialize(pArg)))
-    {
-        MSG_BOX("Failed to Created :CBattle_Turn");
-        Safe_Release(pInstance);
-    }
+	if (FAILED(pInstance->Initialize(pArg)))
+	{
+		MSG_BOX("Failed to Cloned : CMetalgreymonSkill1_Part1");
+		Safe_Release(pInstance);
+	}
 
-    return pInstance;
+	return pInstance;
 }
 
 void CAngewomonSkill1_Part1::Free()
 {
-    __super::Free();
+	__super::Free();
 
-    Safe_Release(m_pMaskTextureCom);
-    Safe_Release(m_pTextureCom);
-    Safe_Release(m_pVIBufferCom);
-    Safe_Release(m_pShaderCom);
+	Safe_Release(m_pModelCom);
+	Safe_Release(m_pTexture1Com);
+	Safe_Release(m_pTextureCom);
+	Safe_Release(m_pShaderCom);
 }
-

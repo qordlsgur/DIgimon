@@ -61,9 +61,9 @@ HRESULT CDigivice::Initialize(void* pArg)
 
 	m_Digimon_ID.resize(8, -1);
 
-	Acquire_Digimon(6);
-	Acquire_Digimon(6);
-	Acquire_Digimon(6);
+	Acquire_Digimon(0);
+	Acquire_Digimon(0);
+	Acquire_Digimon(0);
 	m_strDigimon_Stage[0] = L"유아기";
 	m_strDigimon_Stage[1] = L"성장기";
 	m_strDigimon_Stage[2] = L"성숙기";
@@ -306,7 +306,7 @@ DIGIMON_INFO CDigivice::Set_Info(_int ID)
 	Info.Sp += m_pGameInstance->intRandom(250, 500);
 	Info.CurrentSp = Info.Sp;
 	Info.Damage += m_pGameInstance->intRandom(1, 200);
-	Info.AttackSpeed += m_pGameInstance->intRandom(1, 20);
+	Info.AttackSpeed += m_pGameInstance->intRandom(100, 200);
 	Info.ExpReward += m_pGameInstance->intRandom(500, 1000);
 	Info.CurrentExp = 0;
 	//pInfo->AttackSpeed += 40;

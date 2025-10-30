@@ -167,6 +167,7 @@
     <ClInclude Include="..\public\AngewomonSkill3_Part2.h" />
     <ClInclude Include="..\public\AngewomonSkill3_Part1.h" />
     <ClInclude Include="..\public\AngewomonSkill1_Part2.h" />
+    <ClInclude Include="..\public\AngewomonSkill3_Part3.h" />
     <ClInclude Include="..\public\ApplyGatherEffect.h" />
     <ClInclude Include="..\public\ApplySpreadEffect.h" />
     <ClInclude Include="..\Public\BackGround.h" />
@@ -312,6 +313,7 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\private\AngewomonSkill3_Part3.cpp" />
     <ClCompile Include="..\private\DevilmonSkill3_Part3.cpp" />
     <ClCompile Include="..\private\Angewomon.cpp" />
     <ClCompile Include="..\private\AngewomonSkill1.cpp" />

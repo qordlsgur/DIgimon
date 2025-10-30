@@ -40,6 +40,9 @@ void CAngewomonSkill2_Part4::Priority_Update(_float fTimeDelta)
 
 void CAngewomonSkill2_Part4::Update(_float fTimeDelta)
 {
+	if (m_bHit)
+		m_fTime += fTimeDelta;
+
 	XMStoreFloat4x4(&m_CombinedWorldMatrix,
 		XMLoadFloat4x4(m_pTransformCom->Get_WorldMatrixPtr()) * XMLoadFloat4x4(m_pParentTransformCom->Get_WorldMatrixPtr()));
 }

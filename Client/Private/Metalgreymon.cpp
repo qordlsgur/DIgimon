@@ -204,12 +204,6 @@ void CMetalgreymon::Late_Update(_float fTimeDelta)
 
 HRESULT CMetalgreymon::Render()
 {
-	if (m_bLife)
-	{
-#ifdef _DEBUG
-		m_pColliderCom->Render();
-#endif
-	}
 	return S_OK;
 }
 

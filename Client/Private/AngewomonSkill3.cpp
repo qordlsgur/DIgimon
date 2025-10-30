@@ -3,6 +3,7 @@
 #include "Interaction_Manager.h"
 #include "AngewomonSkill3_Part1.h"
 #include "AngewomonSkill3_Part2.h"
+#include "AngewomonSkill3_Part3.h"
 
 CAngewomonSkill3::CAngewomonSkill3(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CSkillObject{ pDevice, pContext }
@@ -37,34 +38,18 @@ HRESULT CAngewomonSkill3::Initialize(void* pArg)
 	m_iDamage = Pos->iDamage;
 
 	m_vPosition = Pos->m_vPosition;
-	m_vFirstPosigion = Pos->m_vPosition;
+	m_vPosition2 = Pos->m_vPosition;
 	m_iDamage = Pos->iDamage;
 	m_vTarget_pos = Pos->m_vTargetPosition;
-
 	m_vTarget_pos.m128_f32[1] += 10.f;
-
-	m_vFirstPosigion.m128_f32[1] += 12.f;
-	m_vPosition.m128_f32[1] += 10.f;
-
-	if (Pos->Look == 0)
-	{
-		m_vFirstPosigion.m128_f32[0] -= 1.f;
-		m_vFirstPosigion.m128_f32[2] += 3.f;
-	}
-	else
-	{
-		m_vFirstPosigion.m128_f32[0] += 1.f;
-	}
 
 	m_pTransformCom->Set_State(STATE::POSITION, m_vPosition);
 	m_pTransformCom->Update_WoldMatrix();
+
 	if (FAILED(Ready_PartObjects()))
 		return E_FAIL;
-
 	if (FAILED(Ready_SkillObjects()))
 		return E_FAIL;
-
-
 
 	return S_OK;
 }
@@ -78,12 +63,30 @@ void CAngewomonSkill3::Update(_float fTimeDelta)
 {
 	_fTime += fTimeDelta;
 
+
+	if (m_bCreate == true)
+		Ready_SkillObjects2();
+
+	if (m_bMove)
+		m_pTransformCom->Target_Pos_Move(m_vTarget_pos, fTimeDelta);
+
+
+	if (m_bHit == true)
+	{
+		m_pSkillModel2->Set_Hit(true);
+		Ready_SkillObjects3();
+		m_fTime += fTimeDelta;
+		m_fFontUp += fTimeDelta;
+	}
+
+	if (m_fTime > 2.f)
+	{
+		m_pInteraction_Manager->Die_Attack_Skill();
+		m_isDead = true;
+	}
+
 	m_pTransformCom->TargetLook(m_vTarget_pos);
 
-	if (_fTime >= 1.4f)
-		m_pTransformCom->Target_Pos_Move(m_vTarget_pos, fTimeDelta);
-	else
-		m_pTransformCom->Set_State(STATE::POSITION, m_vFirstPosigion);
 
 	m_pColliderCom->Update(XMLoadFloat4x4(m_pTransformCom->Get_WorldMatrixPtr()));
 
@@ -92,16 +95,26 @@ void CAngewomonSkill3::Update(_float fTimeDelta)
 
 void CAngewomonSkill3::Late_Update(_float fTimeDelta)
 {
-	m_pGameInstance->Add_RenderGroup(RENDER::UI, this);
+	m_pGameInstance->Add_RenderGroup(RENDER::EFFECT, this);
 	__super::Late_Update(fTimeDelta);
 }
 
 HRESULT CAngewomonSkill3::Render()
 {
-#ifdef _DEBUG
-	m_pColliderCom->Render();
-#endif
+	if (m_bHit)
+	{
+		_itow_s(m_iDamage, m_szDamage, MAX_PATH, 10);
 
+		m_pGameInstance->Perspective_Render_Text(
+			m_pGameInstance->Get_Transform_Matrix(D3DTS::VIEW),
+			m_pGameInstance->Get_Transform_Matrix(D3DTS::PROJ),
+			TEXT("42"), m_szDamage,
+
+			XMVectorSet(m_vTarget_pos.m128_f32[0],
+				m_vTarget_pos.m128_f32[1] + m_fFontUp + 10.f,
+				m_vTarget_pos.m128_f32[2],
+				m_vTarget_pos.m128_f32[3]));
+	}
 	return S_OK;
 }
 
@@ -129,26 +142,50 @@ HRESULT CAngewomonSkill3::Ready_PartObjects()
 
 HRESULT CAngewomonSkill3::Ready_SkillObjects()
 {
-	CAngewomonSkill3_Part1::BODY_PLAYER_DESC Skill1{};
+	CAngewomonSkill3_Part3::BODY_PLAYER_DESC Skill1{};
 
 	Skill1.pParentTransform = m_pTransformCom;
+	Skill1.vPosition = m_vPosition;
 
 	/* Part_Skill1 */
-	if (FAILED(__super::Add_PartObject(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_AngewomonSkill3_Part1"),
+	if (FAILED(__super::Add_PartObject(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_AngewomonSkill3_Part3"),
 		TEXT("Part_Skill1"), &Skill1)))
 		return E_FAIL;
 
 	m_pSkillModel1 = dynamic_cast<CAngewomonSkill3_Part1*>(Find_PartObject(TEXT("Part_Skill1")));
 
-	//CAngewomonSkill3_Part2::BODY_PLAYER_DESC Skill2{};
-	//Skill2.pParentTransform = m_pTransformCom;
+	return S_OK;
+}
 
-	///* Part_Skill2 */
-	//if (FAILED(__super::Add_PartObject(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_AngewomonSkill3_Part2"),
-	//	TEXT("Part_Skill2"), &Skill2)))
-	//	return E_FAIL;
+HRESULT CAngewomonSkill3::Ready_SkillObjects2()
+{
+	CAngewomonSkill3_Part1::BODY_PLAYER_DESC Skill2{};
 
-	//m_pSkillModel2 = dynamic_cast<CAngewomonSkill3_Part2*>(Find_PartObject(TEXT("Part_Skill2")));
+	Skill2.pParentTransform = m_pTransformCom;
+
+	/* Part_Skill1 */
+	if (FAILED(__super::Add_PartObject(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_AngewomonSkill3_Part1"),
+		TEXT("Part_Skill2"), &Skill2)))
+		return E_FAIL;
+
+	m_pSkillModel2 = dynamic_cast<CAngewomonSkill3_Part1*>(Find_PartObject(TEXT("Part_Skill2")));
+
+	return S_OK;
+}
+
+HRESULT CAngewomonSkill3::Ready_SkillObjects3()
+{
+	CAngewomonSkill3_Part2::BODY_PLAYER_DESC Skill3{};
+
+	Skill3.vPosition = m_vTarget_pos;
+	Skill3.LR = m_iDamage;
+
+	/* Part_Skill3 */
+	if (FAILED(__super::Add_PartObject(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_AngewomonSkill3_Part2"),
+		TEXT("Part_Skill3"), &Skill3)))
+		return E_FAIL;
+
+	m_pSkillModel3 = dynamic_cast<CAngewomonSkill3_Part1*>(Find_PartObject(TEXT("Part_Skill3")));
 
 	return S_OK;
 }

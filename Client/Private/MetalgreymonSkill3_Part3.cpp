@@ -35,8 +35,6 @@ HRESULT CMetalgreymonSkill3_Part3::Initialize(void* pArg)
 	m_fTime = 0.f;
 	m_vTargetPos = pDesc->vPosition;
 		
-	//m_vPosition = XMLoadFloat4x4(&m_CombinedWorldMatrix).r[3];
-
 	return S_OK;
 }
 
@@ -48,16 +46,13 @@ void CMetalgreymonSkill3_Part3::Update(_float fTimeDelta)
 {
 	m_fTime += fTimeDelta * 10.f;
 
-	/*XMStoreFloat4x4(&m_CombinedWorldMatrix,
-		XMLoadFloat4x4(m_pTransformCom->Get_WorldMatrixPtr()) * XMLoadFloat4x4(m_pParentTransformCom->Get_WorldMatrixPtr()));*/
-
 	m_pTransformCom->Set_State(STATE::POSITION, m_vTargetPos);
 
 }
 
 void CMetalgreymonSkill3_Part3::Late_Update(_float fTimeDelta)
 {
-	m_pGameInstance->Add_RenderGroup(RENDER::BLEND, this);
+	m_pGameInstance->Add_RenderGroup(RENDER::EFFECT, this);
 	m_pGameInstance->Add_RenderGroup(RENDER::BLUR, this);
 }
 

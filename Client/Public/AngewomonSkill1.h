@@ -33,7 +33,7 @@ private:
 	CCollider* m_pColliderCom = { nullptr };
 	class CInteraction_Manager* m_pInteraction_Manager = { nullptr };
 
-
+	_float m_fDir{};
 private:
 	HRESULT Ready_PartObjects();
 	HRESULT Ready_SkillObjects();

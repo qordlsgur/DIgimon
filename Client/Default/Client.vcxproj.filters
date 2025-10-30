@@ -903,6 +903,9 @@
     <ClInclude Include="..\public\MetalgreymonSkill2_Part4.h">
       <Filter>02.GameObjects\Digimon\06.Metalgreymon\Skill2\Part</Filter>
     </ClInclude>
+    <ClInclude Include="..\public\AngewomonSkill3_Part3.h">
+      <Filter>02.GameObjects\Digimon\00.Angewomon\Skill3\Parts</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Client.ico">
@@ -1370,6 +1373,9 @@
     </ClCompile>
     <ClCompile Include="..\private\MetalgreymonSkill2_Part4.cpp">
       <Filter>02.GameObjects\Digimon\06.Metalgreymon\Skill2\Part</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\AngewomonSkill3_Part3.cpp">
+      <Filter>02.GameObjects\Digimon\00.Angewomon\Skill3\Parts</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

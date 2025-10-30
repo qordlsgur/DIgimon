@@ -38,9 +38,23 @@ HRESULT CAngewomonSkill1::Initialize(void* pArg)
 	m_iDamage = Pos->iDamage;
 	m_vPosition = Pos->m_vPosition;
 	m_vTarget_pos = Pos->m_vTargetPosition;
-	m_pTransformCom->Set_State(STATE::POSITION, m_vPosition);
 
-	m_pTransformCom->Update_WoldMatrix();
+	m_pTransformCom->Set_State(STATE::POSITION, m_vPosition);
+	m_fDir = Pos->Look;
+	if (m_fDir == 0)
+	{
+		m_vTarget_pos.m128_f32[2] += 5.f;
+		m_vTarget_pos.m128_f32[1] += 10.f;
+		m_pTransformCom->Set_Scale(-2.0f, 2.0f, -2.0f);
+		m_pTransformCom->Update_WoldMatrix();
+	}
+	else
+	{
+		m_vTarget_pos.m128_f32[2] -= 5.f;
+		m_vTarget_pos.m128_f32[1] += 10.f;
+		m_pTransformCom->Set_Scale(2.f, 2.f, 2.f);
+		m_pTransformCom->Update_WoldMatrix();
+	}
 
 	if (FAILED(Ready_PartObjects()))
 		return E_FAIL;
@@ -59,14 +73,22 @@ void CAngewomonSkill1::Priority_Update(_float fTimeDelta)
 
 void CAngewomonSkill1::Update(_float fTimeDelta)
 {
-	if (m_bMove)
-	{
-		m_pTransformCom->Set_State((STATE::POSITION), m_vTarget_pos);
-		Ready_SkillObjects2();
-		m_bMonster = false;
-	}
+
+	m_pTransformCom->Set_State((STATE::POSITION), m_vTarget_pos);
 
 	m_pColliderCom->Update(XMLoadFloat4x4(m_pTransformCom->Get_WorldMatrixPtr()));
+
+	if (m_bHit == true)
+	{
+		m_fTime += fTimeDelta;
+		m_fFontUp += fTimeDelta;
+	}
+
+	if (m_fTime > 1.f)
+	{
+		m_pInteraction_Manager->Die_Attack_Skill();
+		m_isDead = true;
+	}
 
 	__super::Update(fTimeDelta);
 }
@@ -79,10 +101,20 @@ void CAngewomonSkill1::Late_Update(_float fTimeDelta)
 
 HRESULT CAngewomonSkill1::Render()
 {
-#ifdef _DEBUG
-	m_pColliderCom->Render();
-#endif
+	if (m_bHit)
+	{
+		_itow_s(m_iDamage, m_szDamage, MAX_PATH, 10);
 
+		m_pGameInstance->Perspective_Render_Text(
+			m_pGameInstance->Get_Transform_Matrix(D3DTS::VIEW),
+			m_pGameInstance->Get_Transform_Matrix(D3DTS::PROJ),
+			TEXT("42"), m_szDamage,
+
+			XMVectorSet(m_vTarget_pos.m128_f32[0],
+				m_vTarget_pos.m128_f32[1] + m_fFontUp + 10.f,
+				m_vTarget_pos.m128_f32[2],
+				m_vTarget_pos.m128_f32[3]));
+	}
 	return S_OK;
 }
 
@@ -112,8 +144,9 @@ HRESULT CAngewomonSkill1::Ready_SkillObjects()
 {
 	CAngewomonSkill1_Part1::BODY_PLAYER_DESC Skill1{};
 
+	Skill1.pParentTransform = m_pTransformCom;
 	Skill1.vPosition = m_pTransformCom->Get_State(STATE::POSITION);
-
+	Skill1.LR = m_fDir;
 	/* Part_Skill1 */
 	if (FAILED(__super::Add_PartObject(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_AngewomonSkill1_Part1"),
 		TEXT("Part_Skill1"), &Skill1)))

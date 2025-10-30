@@ -6,18 +6,18 @@
 #include "MetalgreymonSkill3_Part3.h"
 
 CMetalgreymonSkill3::CMetalgreymonSkill3(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
-    : CSkillObject{ pDevice, pContext }
+	: CSkillObject{ pDevice, pContext }
 {
 }
 
 CMetalgreymonSkill3::CMetalgreymonSkill3(const CMetalgreymonSkill3& Prototype)
-    : CSkillObject{ Prototype }
+	: CSkillObject{ Prototype }
 {
 }
 
 HRESULT CMetalgreymonSkill3::Initialize_Prototype()
 {
-    return S_OK;
+	return S_OK;
 }
 
 HRESULT CMetalgreymonSkill3::Initialize(void* pArg)
@@ -98,10 +98,6 @@ void CMetalgreymonSkill3::Late_Update(_float fTimeDelta)
 
 HRESULT CMetalgreymonSkill3::Render()
 {
-#ifdef _DEBUG
-	if (m_pColliderCom != nullptr)
-		m_pColliderCom->Render();
-#endif
 
 	if (m_bHit)
 	{

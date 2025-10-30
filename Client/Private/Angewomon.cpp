@@ -7,6 +7,7 @@
 #include "SkillObject.h"
 #include "AngewomonSkill1.h"
 #include "AngewomonSkill2.h"
+#include "AngewomonSkill3.h"
 
 CAngewomon::CAngewomon(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CContainerObject{ pDevice, pContext }
@@ -98,18 +99,12 @@ void CAngewomon::Update(_float fTimeDelta)
 
 					switch (m_iSkill)
 					{
-					case 17:
+;
+					case 29:
 						if (m_iSkill != m_iLastSkill)
 						{
 							m_mHandParts = XMLoadFloat4x4(static_cast<CBody_Angewomon*>(m_pPart_Body)->Get_BoneMatrixPtr("Bip001-L-Finger2"));
 							Creat_Skill(1);
-							m_iLastSkill = m_iSkill;
-						}
-						break;
-					case 29:
-						if (m_iSkill != m_iLastSkill)
-						{
-							m_pSkill1->Set_Move(true);
 							m_iLastSkill = m_iSkill;
 						}
 						break;
@@ -126,7 +121,7 @@ void CAngewomon::Update(_float fTimeDelta)
 
 					switch (m_iSkill)
 					{
-					case 27:
+					case 15:
 						if (m_iSkill != m_iLastSkill)
 						{
 							Creat_Skill(2);
@@ -136,7 +131,7 @@ void CAngewomon::Update(_float fTimeDelta)
 					case 47:
 						if (m_iSkill != m_iLastSkill)
 						{
-							m_pSkill2->Set_Move(true);
+							m_pSkill->Set_Move(true);
 							m_iLastSkill = m_iSkill;
 						}
 						break;
@@ -150,21 +145,38 @@ void CAngewomon::Update(_float fTimeDelta)
 				else if (m_bSkill3)
 				{
 					Skill3();
-					m_mHandParts = XMLoadFloat4x4(static_cast<CBody_Angewomon*>(m_pPart_Body)->Get_BoneMatrixPtr("Bip001-L-Finger2"));
 					m_iDamage = static_cast<_int>(Info.Damage * Info.DigimonSkill2Info.HitCount * 1.3f);
 					m_iSkill = static_cast<_int>(m_pPart_Body->Get_TrackPosition());
-					if (m_iSkill == 33)
+					m_mHandParts = XMLoadFloat4x4(static_cast<CBody_Angewomon*>(m_pPart_Body)->Get_BoneMatrixPtr("Bip001-R-Hand")) * XMLoadFloat4x4(m_pTransformCom->Get_WorldMatrixPtr());
+					switch (m_iSkill)
 					{
-						if (m_iLastSkill != m_iSkill)
+					case 20:
+						if (m_iSkill != m_iLastSkill)
 						{
 							Creat_Skill(3);
-							m_iLastSkill = m_iSkill; // 마지막으로 실행한 트랙 위치 저장
+							m_iLastSkill = m_iSkill;
 						}
+						break;
+					case 40:
+						if (m_iSkill != m_iLastSkill)
+						{
+							m_pSkill->Set_Create(true);
+							m_iLastSkill = m_iSkill;
+						}
+						break;
+					case 68:
+						if (m_iSkill != m_iLastSkill)
+						{
+							m_pSkill->Set_Move(true);
+							m_iLastSkill = m_iSkill;
+						}
+						break;
+					default:
+						m_iLastSkill = -1;
+						break;
 					}
-					else
-					{
-						m_iLastSkill = -1; // 다른 트랙 위치면 초기화
-					}
+					if (m_pSkill != nullptr && m_pSkill->Get_Move() == false)
+						m_pSkill->Set_Position(m_mHandParts.r[3]);
 				}
 
 				if (m_bBackJump)
@@ -212,12 +224,6 @@ void CAngewomon::Late_Update(_float fTimeDelta)
 
 HRESULT CAngewomon::Render()
 {
-	if (m_bLife)
-	{
-#ifdef _DEBUG
-		m_pColliderCom->Render();
-#endif
-	}
 	return S_OK;
 }
 
@@ -295,21 +301,22 @@ void CAngewomon::Creat_Skill(_int SkillNum)
 	case 1:
 		Desc.m_vPosition = m_vHandPosition;
 		Desc.iDamage = m_iDamage;
-		m_pSkill1 = static_cast<CAngewomonSkill1*>(m_pGameInstance->Add_GameObject_ToLayer_ToCreate(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_AngewomonSkill1"),
+		m_pSkill = static_cast<CAngewomonSkill1*>(m_pGameInstance->Add_GameObject_ToLayer_ToCreate(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_AngewomonSkill1"),
 			ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Layer_Angewomon1"), &Desc));
 		break;
 
 	case 2:
 		Desc.iDamage = m_iDamage;
-		m_pSkill2 = static_cast<CAngewomonSkill2*>(m_pGameInstance->Add_GameObject_ToLayer_ToCreate(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_AngewomonSkill2"),
+		m_pSkill = static_cast<CAngewomonSkill2*>(m_pGameInstance->Add_GameObject_ToLayer_ToCreate(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_AngewomonSkill2"),
 			ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Layer_Angewomon2"), &Desc));
 
 		break;
 
 	case 3:
+		Desc.m_vPosition = m_mHandParts.r[3];
 		Desc.iDamage = m_iDamage;
-		m_pGameInstance->Add_GameObject_ToLayer(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_AngewomonSkill3"),
-			ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Layer_Angewomon3"), &Desc);
+		m_pSkill = static_cast<CAngewomonSkill3*>(m_pGameInstance->Add_GameObject_ToLayer_ToCreate(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_AngewomonSkill3"),
+			ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Layer_Angewomon3"), &Desc));
 
 		break;
 	}

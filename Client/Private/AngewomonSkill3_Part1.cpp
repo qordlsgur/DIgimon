@@ -31,6 +31,8 @@ HRESULT CAngewomonSkill3_Part1::Initialize(void* pArg)
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 
+	m_pTransformCom->Set_Scale(2.f, 2.f, 2.f);
+
 	return S_OK;
 }
 
@@ -46,17 +48,17 @@ void CAngewomonSkill3_Part1::Update(_float fTimeDelta)
 
 void CAngewomonSkill3_Part1::Late_Update(_float fTimeDelta)
 {
-	m_pGameInstance->Add_RenderGroup(RENDER::UI, this);
-	m_pGameInstance->Add_RenderGroup(RENDER::BLUR, this);
+	if (!m_bHit)
+	{
+		m_pGameInstance->Add_RenderGroup(RENDER::UI, this);
+		m_pGameInstance->Add_RenderGroup(RENDER::BLUR, this);
+	}
 }
 
 HRESULT CAngewomonSkill3_Part1::Render()
 {
 	if (FAILED(Bind_ShaderResources()))
 		return E_FAIL;
-
-	_uint		iNumMeshes = m_pModelCom->Get_NumMeshes();
-
 
 	if (FAILED(m_pShaderCom->Begin(1)))
 		return E_FAIL;
@@ -80,7 +82,7 @@ HRESULT CAngewomonSkill3_Part1::Ready_Components()
 		return E_FAIL;
 
 	/* Com_Shader */
-	if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Shader_VtxSkillMesh"),
+	if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Shader_VtxSkillAngewomon"),
 		TEXT("Com_Shader"), reinterpret_cast<CComponent**>(&m_pShaderCom))))
 		return E_FAIL;
 
