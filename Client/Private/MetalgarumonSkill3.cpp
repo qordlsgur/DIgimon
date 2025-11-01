@@ -4,18 +4,18 @@
 #include "MetalgarumonSkill3_Part1.h"
 
 CMetalgarumonSkill3::CMetalgarumonSkill3(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
-    : CSkillObject{ pDevice, pContext }
+	: CSkillObject{ pDevice, pContext }
 {
 }
 
 CMetalgarumonSkill3::CMetalgarumonSkill3(const CMetalgarumonSkill3& Prototype)
-    : CSkillObject{ Prototype }
+	: CSkillObject{ Prototype }
 {
 }
 
 HRESULT CMetalgarumonSkill3::Initialize_Prototype()
 {
-    return S_OK;
+	return S_OK;
 }
 
 HRESULT CMetalgarumonSkill3::Initialize(void* pArg)
@@ -35,8 +35,9 @@ HRESULT CMetalgarumonSkill3::Initialize(void* pArg)
 	m_iDamage = Pos->iDamage;
 	m_vPosition = Pos->m_vPosition;
 	m_vTarget_pos = Pos->m_vTargetPosition;
-	m_pTransformCom->Set_Scale(3.f, 3.f, 10.f);
 
+	m_fEndTime = 3.f;
+	m_pTransformCom->Set_Scale(m_fEndTime, m_fEndTime, 10.f);
 
 	m_pTransformCom->Set_State(STATE::POSITION, m_vPosition);
 	m_pTransformCom->Update_WoldMatrix();
@@ -56,6 +57,41 @@ void CMetalgarumonSkill3::Priority_Update(_float fTimeDelta)
 
 void CMetalgarumonSkill3::Update(_float fTimeDelta)
 {
+	m_fTime = fTimeDelta;
+
+	if (m_bHit == true && m_iHitCount <= 3)
+	{
+		if (iHitCount != m_iHitCount)
+		{
+			HITINFO Info;
+
+			Info.damage = m_iDamage;
+			Info.pos =
+				XMVectorSet(m_vTarget_pos.m128_f32[0],
+					m_vTarget_pos.m128_f32[1] + m_fFontUp + 10.f,
+					m_vTarget_pos.m128_f32[2],
+					m_vTarget_pos.m128_f32[3]);
+			Info.duration = 1.f;
+			m_Info.push_back(Info);
+			iHitCount = m_iHitCount;
+		}
+	}
+
+	if (iHitCount == 3)
+	{
+		m_fEndTime -= fTimeDelta * 3.f;
+	}
+
+	if (m_fEndTime <= 0.f)
+	{
+		m_pInteraction_Manager->Die_Attack_Skill();
+		iHitCount = m_iHitCount = 0;
+		m_fEndTime = 0.f;
+		m_isDead = true;
+	}
+
+	m_pTransformCom->Set_Scale(m_fEndTime, m_fEndTime, 10.f);
+
 	m_pTransformCom->TargetLook(m_vTarget_pos);
 
 	m_pColliderCom->Update(XMLoadFloat4x4(m_pTransformCom->Get_WorldMatrixPtr()));
@@ -72,9 +108,26 @@ void CMetalgarumonSkill3::Late_Update(_float fTimeDelta)
 
 HRESULT CMetalgarumonSkill3::Render()
 {
-#ifdef _DEBUG
-	m_pColliderCom->Render();
-#endif
+	for (auto it = m_Info.begin(); it != m_Info.end();)
+	{
+		wchar_t szDamage[MAX_PATH];
+		_itow_s(it->damage, szDamage, MAX_PATH, 10);
+
+		m_pGameInstance->Perspective_Render_Text(
+			m_pGameInstance->Get_Transform_Matrix(D3DTS::VIEW),
+			m_pGameInstance->Get_Transform_Matrix(D3DTS::PROJ),
+			TEXT("42"), szDamage, it->pos);
+
+		_vector up = XMVectorSet(0.f, 1.f * (1.f - it->duration) * 50.f, 0.f, 0.f);
+		it->pos = XMVectorAdd(it->pos, up * m_fTime);
+
+		// 시간 감소
+		it->duration -= m_fTime;
+		if (it->duration <= 0.f)
+			it = m_Info.erase(it);
+		else
+			++it;
+	}
 
 	return S_OK;
 }

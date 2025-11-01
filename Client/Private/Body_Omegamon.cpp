@@ -61,14 +61,6 @@ void CBody_Omegamon::Update(_float fTimeDelta)
 
     m_fTrackPosition = m_pModelCom->Get_CurrentTrackPosition();
 
-    if (m_bDissolve)
-        m_fTime += fTimeDelta / 3.f;
-
-    if (num > 8)
-        num = 0;
-
-    if (num < 0)
-        num = 8;
 }
 
 void CBody_Omegamon::Late_Update(_float fTimeDelta)
@@ -115,8 +107,6 @@ HRESULT CBody_Omegamon::Render()
                 return E_FAIL;
         }
 
-        wstring a = to_wstring(num);
-        m_pGameInstance->Render_Text(TEXT("18"), a.c_str(), _float2(620.f, 70.f), XMVectorSet(0.f, 0.f, 1.f, 1.f));
 
     }
 

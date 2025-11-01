@@ -42,6 +42,8 @@ public:
 	void Swap_Digimon(_int Sour, _int Dest);
 	void Digimon_UHD();
 
+	void Digimon_Heal();
+
 	void Acquire_Digimon(_int ID);
 	void Release_Digimon(_int ID);
 

@@ -21,7 +21,6 @@ HRESULT CMetalgreymonSkill2_Part4::Initialize_Prototype()
 	return S_OK;
 }
 
-
 HRESULT CMetalgreymonSkill2_Part4::Initialize(void* pArg)
 {
 	BODY_PLAYER_DESC* pDesc = static_cast<BODY_PLAYER_DESC*>(pArg);
@@ -37,7 +36,6 @@ HRESULT CMetalgreymonSkill2_Part4::Initialize(void* pArg)
 
 	return S_OK;
 }
-
 
 void CMetalgreymonSkill2_Part4::Priority_Update(_float fTimeDelta)
 {
@@ -107,7 +105,7 @@ HRESULT CMetalgreymonSkill2_Part4::Bind_ShaderResources()
 		return E_FAIL;
 	if (FAILED(m_pShaderCom->Bind_State("Frame", 0.2f)))
 		return E_FAIL;
-	if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture", 2)))
+	if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture", 1)))
 		return E_FAIL;
 
 	return S_OK;

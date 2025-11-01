@@ -31,7 +31,8 @@ private:
 	CTexture* m_pTextureCom = { nullptr };
 	CShader* m_pShaderCom = { nullptr };
 
-	
+
+	_int m_iNext{};
 private:
 	HRESULT Ready_Components();
 	HRESULT Bind_ShaderResources();

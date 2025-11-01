@@ -33,6 +33,8 @@ HRESULT CBackGround::Initialize(void* pArg)
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 
+	m_iNext = 0;
+
 	return S_OK;
 }
 
@@ -43,7 +45,12 @@ void CBackGround::Priority_Update(_float fTimeDelta)
 
 void CBackGround::Update(_float fTimeDelta)
 {
-	int a = 10;
+	if (m_pGameInstance->Key_Down(DIK_M))
+		m_iNext++;
+
+	if (m_iNext >=3)
+		m_iNext = 0;
+
 }
 
 void CBackGround::Late_Update(_float fTimeDelta)
@@ -78,7 +85,7 @@ HRESULT CBackGround::Ready_Components()
 		return E_FAIL;
 
 	/* Com_Texture */
-	if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::LOGO), TEXT("Prototype_Component_Texture_BackGround"),
+	if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::STATIC), TEXT("Prototype_Component_Texture_BackGround"),
 		TEXT("Com_Texture"), reinterpret_cast<CComponent**>(&m_pTextureCom))))
 		return E_FAIL;
 
@@ -99,7 +106,7 @@ HRESULT CBackGround::Bind_ShaderResources()
 		return E_FAIL;
 	if (FAILED(m_pShaderCom->Bind_Matrix("g_ProjMatrix", &m_ProjMatrix)))
 		return E_FAIL;
-	if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture", 0)))
+	if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Texture", m_iNext)))
 		return E_FAIL;
 
 	return S_OK;

@@ -36,8 +36,8 @@ public:
 
 public:
 	virtual _int Intersect(class CCollider* pPlayer_Collider) override;
+	virtual void HitAnim() override;
 
-	//void DamageUp(_float fTimeDelta);
 
 private:
 	CCollider* m_pColliderCom = { nullptr };

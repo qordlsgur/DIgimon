@@ -66,7 +66,6 @@ public:
 
 	virtual void Set_Life(_bool Life) { m_bLife = Life; }
 	virtual _bool Get_Life() { return m_bLife; }
-
 	virtual _bool Get_Skill1() { return m_bSkill1; }
 	virtual _bool Get_Skill2() { return m_bSkill2; }
 	virtual _bool Get_Skill3() { return m_bSkill3; }
@@ -109,6 +108,8 @@ public:
 
 	virtual void Creat_Skill(_int SkillNum);
 
+	virtual void HitAnim() {};
+	virtual void Set_HitAnumP(_bool Hit) { m_bHitAinm = Hit; }
 protected:
 	map<const _wstring, class CPartObject*>			m_PartObjects;
 
@@ -132,9 +133,10 @@ protected:
 	_bool m_bDie = { false };
 	_vector m_vTarget_Position{};
 	_float m_vLook{};
-
+	_bool m_bHitAinm = { false };
 	_int m_iSkill{};
 	_int m_iLastSkill{};
+	_float			m_fSoundEffectPlayed = {};
 
 	queue<DIGIMONSTATE> m_eSkill_State;
 

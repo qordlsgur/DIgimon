@@ -84,8 +84,11 @@ void CMetalgreymon::Update(_float fTimeDelta)
 				m_bDie = true;
 			}
 
+
 			if (!m_bDie)
 			{
+
+
 				if (m_bSkill1)
 				{
 					Skill1();
@@ -97,6 +100,7 @@ void CMetalgreymon::Update(_float fTimeDelta)
 						if (m_iSkill != m_iLastSkill) // 이전과 다를 때만 실행
 						{
 							m_mLeftHatch = XMLoadFloat4x4(static_cast<CBody_Metalgreymon*>(m_pPart_Body)->Get_BoneMatrixPtr("Bip01-Ponytail1Nub")) * XMLoadFloat4x4(m_pTransformCom->Get_WorldMatrixPtr());
+							m_pGameInstance->Manager_PlaySound(L"MetalgreymonSkill1.wav", CHANNELID::EFFECT, 1);
 							Creat_Skill(1);
 							m_iLastSkill = m_iSkill;
 						}
@@ -121,6 +125,7 @@ void CMetalgreymon::Update(_float fTimeDelta)
 						if (m_iSkill != m_iLastSkill) // 이전과 다를 때만 실행
 						{
 							m_mLeftHatch = XMLoadFloat4x4(static_cast<CBody_Metalgreymon*>(m_pPart_Body)->Get_BoneMatrixPtr("Bone014")) * XMLoadFloat4x4(m_pTransformCom->Get_WorldMatrixPtr());
+							m_pGameInstance->Manager_PlaySound(L"MetalgreymonSkill2.wav", CHANNELID::EFFECT, 1);
 							Creat_Skill(2);
 							m_iLastSkill = m_iSkill;
 						}
@@ -145,9 +150,11 @@ void CMetalgreymon::Update(_float fTimeDelta)
 							Creat_Skill(3);
 							m_iLastSkill = m_iSkill;
 						}
+						break;
 					case 23:
 						if (m_iSkill != m_iLastSkill) // 이전과 다를 때만 실행
 						{
+							m_pGameInstance->Manager_PlaySound(L"MetalgreymonSkill3.wav", CHANNELID::EFFECT, 1);
 							m_pSkill->Set_Move(true);
 							m_iLastSkill = m_iSkill;
 						}
@@ -163,11 +170,12 @@ void CMetalgreymon::Update(_float fTimeDelta)
 					m_pFsm->Enter(DIGIMONSTATE::BATTLEBACK, m_pPart_Body);
 				}
 
-				if (!m_bSkill1 && !m_bSkill2 && !m_bSkill3 && !m_bBackJump)
+				if (!m_bSkill1 && !m_bSkill2 && !m_bSkill3 && !m_bBackJump && !m_bHitAinm)
 				{
 					m_bTurnEnd = true;
 					m_pFsm->Enter(DIGIMONSTATE::STANDBATTLE, m_pPart_Body);
 				}
+
 			}
 
 			else
@@ -196,6 +204,14 @@ void CMetalgreymon::Late_Update(_float fTimeDelta)
 {
 	if (m_bLife)
 	{
+		if (m_bHitAinm == true)
+		{
+			m_pFsm->Enter(DIGIMONSTATE::HIT, m_pPart_Body, false, false);
+
+			if (m_pPart_Body->Get_AnimFinish() == true)
+				m_bHitAinm = false;
+		}
+
 		__super::Late_Update(fTimeDelta);
 
 		m_pGameInstance->Add_RenderGroup(RENDER::NONBLEND, this);
@@ -213,6 +229,11 @@ _int CMetalgreymon::Intersect(CCollider* pPlayer_Collider)
 		return Get_ID();
 
 	return -1;
+}
+
+void CMetalgreymon::HitAnim()
+{
+	m_bHitAinm = true;
 }
 
 void CMetalgreymon::UseSkill(_int Skill)

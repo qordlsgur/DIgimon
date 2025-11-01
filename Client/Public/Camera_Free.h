@@ -4,6 +4,7 @@
 #include "Camera.h"
 
 NS_BEGIN(Engine)
+class CNavigation;
 
 NS_END
 
@@ -39,7 +40,9 @@ private:
 private:
 	_float			m_fMouseSensor = {};
 	class CCamera_Manager* m_pCamera_Manager = { nullptr };
+	class CBattle_Manager* m_pBattle_Manager = { nullptr };
 
+	CNavigation* m_pNavigationCom = { nullptr };
 	_float m_fLerp{};
 
 	_float	m_fDefaultDistanceY{};

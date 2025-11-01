@@ -10,6 +10,7 @@
 #include "Mouse_Manager.h"
 #include "Light_Manager.h"
 #include "Key_Manager.h"
+#include "Sound_Manager.h"
 #include "Font_Manager.h"
 #include "Renderer.h"
 #include "PipeLine.h"
@@ -71,6 +72,10 @@ HRESULT CGameInstance::Initialize_Engine(const ENGINE_DESC& EngineDesc, ID3D11De
 
 	m_pPicking = CPicking::Create(*ppDevice, *ppContext, EngineDesc.hWnd);
 	if (nullptr == m_pPicking)
+		return E_FAIL;
+
+	m_pSound_Manager = CSound_Manager::Create();
+	if (nullptr == m_pSound_Manager)
 		return E_FAIL;
 
 	m_pFont_Manager = CFont_Manager::Create(*ppDevice, *ppContext);
@@ -440,10 +445,42 @@ HRESULT CGameInstance::Bind_Shadow_Resource(CShader* pShader, const _char* pCons
 
 #pragma endregion
 
+
+#pragma region SOUND_MANAGER
+
+void CGameInstance::Manager_PlaySound(const TCHAR* pSoundKey, CHANNELID eID, float fVolume)
+{
+	m_pSound_Manager->Manager_PlaySound(pSoundKey, eID, fVolume);
+}
+
+void CGameInstance::Manager_PlayBGM(const TCHAR* pSoundKey, float fVolume)
+{
+	m_pSound_Manager->Manager_PlayBGM(pSoundKey, fVolume);
+}
+
+void CGameInstance::Manager_StopSound(CHANNELID eID)
+{
+	m_pSound_Manager->Manager_StopSound(eID);
+}
+
+void CGameInstance::Manager_StopAll()
+{
+	m_pSound_Manager->Manager_StopAll();
+}
+
+void CGameInstance::Manager_SetChannelVolume(CHANNELID eID, float fVolume)
+{
+	m_pSound_Manager->Manager_SetChannelVolume(eID, fVolume);
+}
+
+#pragma endregion
+
+
 void CGameInstance::Release_Engine()
 {
 	DestroyInstance();
 
+	Safe_Release(m_pSound_Manager);
 	Safe_Release(m_pShadow);
 	Safe_Release(m_pTarget_Manager);
 	Safe_Release(m_pFont_Manager);

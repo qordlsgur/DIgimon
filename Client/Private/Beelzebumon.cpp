@@ -200,12 +200,7 @@ void CBeelzebumon::Late_Update(_float fTimeDelta)
 
 HRESULT CBeelzebumon::Render()
 {
-	if (m_bLife)
-	{
-#ifdef _DEBUG
-		m_pColliderCom->Render();
-#endif
-	}
+
 	return S_OK;
 }
 
@@ -216,6 +211,13 @@ _int CBeelzebumon::Intersect(CCollider* pPlayer_Collider)
 
 	return -1;
 }
+
+void CBeelzebumon::HitAnim()
+{
+	m_bHitAinm = true;
+	m_pFsm->Enter(DIGIMONSTATE::HIT, m_pPart_Body, false, false);
+}
+
 
 void CBeelzebumon::UseSkill(_int Skill)
 {

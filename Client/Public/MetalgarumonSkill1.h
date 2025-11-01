@@ -32,9 +32,12 @@ private:
 	CCollider* m_pColliderCom = { nullptr };
 	CContainerObject* m_pPlayer = { nullptr };
 	class CInteraction_Manager* m_pInteraction_Manager = { nullptr };
+	CPartObject* m_pSkillModel1 = { nullptr };
 
+	_float m_fDir{};
 private:
 	HRESULT Ready_PartObjects();
+	HRESULT Ready_SkillObjects();
 
 public:
 	static CMetalgarumonSkill1* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);

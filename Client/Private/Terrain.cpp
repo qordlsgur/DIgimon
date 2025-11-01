@@ -36,7 +36,7 @@ HRESULT CTerrain::Initialize(void* pArg)
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 
-	//Load_Object(TEXT("../Bin/Resources/Textures/Objects.bin"));
+	Load_Object(TEXT("../Bin/Resources/Textures/Objects.bin"));
 
 	m_pBattle_Manager = CBattle_Manager::GetInstance();
 

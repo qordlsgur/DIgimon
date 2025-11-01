@@ -30,14 +30,20 @@ public:
 	virtual _int Get_Damage() override;
 private:
 	CCollider* m_pColliderCom = { nullptr };
+	CPartObject* m_pSkillModel1 = { nullptr };
+	CPartObject* m_pSkillModel2 = { nullptr };
 
 	class CInteraction_Manager* m_pInteraction_Manager = { nullptr };
 
 	_vector Pos{};
+	vector<HITINFO> m_Info;
+	_int iHitCount{};
+	_float m_fEndTime{};
 
 private:
 	HRESULT Ready_PartObjects();
-
+	HRESULT Ready_SkillObjects();
+	HRESULT Ready_SkillObjects2();
 
 public:
 	static CLeomonSkill1* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);

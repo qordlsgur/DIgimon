@@ -29,7 +29,7 @@ HRESULT CPlayer::Initialize(void* pArg)
 {
 	CGameObject::GAMEOBJECT_DESC	Desc{};
 	Desc.fRotationPerSec = XMConvertToRadians(180.0f);
-	Desc.fSpeedPerSec = 300.f;
+	Desc.fSpeedPerSec = 50.f;
 
 	if (FAILED(__super::Initialize(&Desc)))
 		return E_FAIL;
@@ -72,6 +72,8 @@ HRESULT CPlayer::Initialize(void* pArg)
 
 	m_bMove = false;
 
+	m_pGameInstance->Manager_PlayBGM(L"NonBattle.mp3", 1);
+
 	return S_OK;
 }
 
@@ -84,6 +86,12 @@ void CPlayer::Priority_Update(_float fTimeDelta)
 void CPlayer::Update(_float fTimeDelta)
 {
 	m_bBattle = m_pBattle_Manager->Get_Battle();
+
+	if(m_bBattle)
+		m_pGameInstance->Manager_PlayBGM(L"Battle.mp3", 1);
+	else
+		m_pGameInstance->Manager_PlayBGM(L"NonBattle.mp3", 1);
+
 	if (!m_FindCell)
 	{
 		m_pNavigationCom->Find_Cell(m_pTransformCom->Get_State(STATE::POSITION));
@@ -130,6 +138,11 @@ void CPlayer::Update(_float fTimeDelta)
 			m_bMove = true;
 		}
 
+		if (m_pGameInstance->Key_Down(DIK_0))
+		{
+			m_pDigimon_Manager->Digimon_Heal();
+		}
+
 		if (m_bMove)
 		{
 			m_eCurrentState = PLAYER_STATE::MOVE;
@@ -153,7 +166,6 @@ void CPlayer::Update(_float fTimeDelta)
 		if (m_bisJump)
 			Jump(fTimeDelta);
 	}
-
 	else
 	{
 		m_eCurrentState = PLAYER_STATE::STAND;
@@ -163,7 +175,7 @@ void CPlayer::Update(_float fTimeDelta)
 	m_pFsm->Update(fTimeDelta);
 	m_pColliderCom->Update(XMLoadFloat4x4(m_pTransformCom->Get_WorldMatrixPtr()));
 
-	if (/*m_bOnInteract && */!m_pBattle_Manager->Get_Battle())
+	if (m_bOnInteract && !m_pBattle_Manager->Get_Battle())
 	{
 		if (m_pGameInstance->Key_Down(DIK_F))
 		{
@@ -171,7 +183,7 @@ void CPlayer::Update(_float fTimeDelta)
 			m_pBattle_Manager->Set_Player_Pos(m_pTransformCom->Get_State(STATE::POSITION));
 			m_pBattle_Manager->Set_First_Digimon_Pos(m_pFirst_Digimon->Get_Position());
 			// 적 디지몬을 생성 한다.
-			m_pBattle_Manager->EnemyDigimon_Info(0);
+			m_pBattle_Manager->EnemyDigimon_Info(m_iEnemy);
 			// 그리고 전투를 하기 위해서 세팅을 해준다.
 			m_pBattle_Manager->Battle_System();
 			// 세팅이 끝나면 이제 전투한다고 bool값을 바꿔주면서 카메라도 바꿔준다.
@@ -180,13 +192,14 @@ void CPlayer::Update(_float fTimeDelta)
 		}
 	}
 
-	//if (m_pBattle_Manager->Get_Battle())
-	//{
-	//	if (m_pGameInstance->Key_Down(DIK_G))
-	//	{
-	//		m_pBattle_Manager->Set_End(true);
-	//	}
-	//}
+	if (m_pBattle_Manager->Get_Battle())
+	{
+		if (m_pGameInstance->Key_Down(DIK_G))
+		{
+			m_pBattle_Manager->Set_End(true);
+		}
+	}
+	_vector a = m_pTransformCom->Get_State(STATE::POSITION);
 
 	Info.CurrentHp = 100;
 	__super::Update(fTimeDelta);

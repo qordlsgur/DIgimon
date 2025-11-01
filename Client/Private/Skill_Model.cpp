@@ -26,7 +26,7 @@ HRESULT CSkill_Model::Initialize(void* pArg)
 
 	m_pTransformCom->Set_State(STATE::POSITION, XMVectorSet(250.f, 0.f, 500.f, 1.f));
 
-	//m_pTransformCom->Set_Scale(10.f, 10.f, 10.f);
+	m_pTransformCom->Set_Scale(20.f, 20.f, 20.f);
 
 	return S_OK;
 }
@@ -74,7 +74,7 @@ void CSkill_Model::Late_Update(_float fTimeDelta)
 {
 
 	m_pGameInstance->Add_RenderGroup(RENDER::BLEND, this);
-	//m_pGameInstance->Add_RenderGroup(RENDER::BLUR, this);
+	m_pGameInstance->Add_RenderGroup(RENDER::BLUR, this);
 }
 
 HRESULT CSkill_Model::Render()
@@ -103,7 +103,7 @@ HRESULT CSkill_Model::Render()
 HRESULT CSkill_Model::Ready_Components()
 {
 	/* Com_Model1 */
-	if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Model_Thumder"),
+	if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Model_Circle"),
 		TEXT("Com_Model1"), reinterpret_cast<CComponent**>(&m_pModel1Com))))
 		return E_FAIL;
 
@@ -123,14 +123,14 @@ HRESULT CSkill_Model::Ready_Components()
 	//	return E_FAIL;
 
 	/* Com_Texture1 */
-	if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Spark"),
+	if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_CircleEffect"),
 		TEXT("Com_Texture1"), reinterpret_cast<CComponent**>(&m_pTexture1Com))))
 		return E_FAIL;
 
-	///* Com_Texture2 */
-	//if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_DevilmonSkill3_Image"),
-	//	TEXT("Com_Texture2"), reinterpret_cast<CComponent**>(&m_pTexture2Com))))
-	//	return E_FAIL;
+	/* Com_Texture2 */
+	if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Noise"),
+		TEXT("Com_Texture2"), reinterpret_cast<CComponent**>(&m_pTexture2Com))))
+		return E_FAIL;
 
 	///* Com_Texture3 */
 	//if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_AngewomonSkill2_Image"),
@@ -169,11 +169,10 @@ HRESULT CSkill_Model::Bind_ShaderResources()
 		return E_FAIL;
 	if (FAILED(m_pShaderCom->Bind_State("Radian", 1)))
 		return E_FAIL; 
-	if (FAILED(m_pTexture1Com->Bind_ShaderResource(m_pShaderCom, "g_DiffuseTexture", 0)))
+	if (FAILED(m_pTexture1Com->Bind_ShaderResource(m_pShaderCom, "g_DiffuseTexture", 5)))
 		return E_FAIL;
-
-	//if (FAILED(m_pTexture2Com->Bind_ShaderResource(m_pShaderCom, "g_Mask", 1)))
-	//	return E_FAIL;
+	if (FAILED(m_pTexture2Com->Bind_ShaderResource(m_pShaderCom, "g_Mask", 9)))
+		return E_FAIL;
 
 	//if (FAILED(m_pTexture3Com->Bind_ShaderResource(m_pShaderCom, "g_DiffuseTexture2", 1)))
 	//	return E_FAIL;

@@ -72,35 +72,6 @@ void CMetalgarumon::Update(_float fTimeDelta)
 			}
 			if (!m_bMove)
 				m_pFsm->Enter(DIGIMONSTATE::STAND, m_pPart_Body);
-			//if (m_pGameInstance->Key_Down(DIK_1))
-			//{
-			//	m_mMouth = XMLoadFloat4x4(static_cast<CBody_Metalgarumon*>(m_pPart_Body)->Get_BoneMatrixPtr("Bip001-Head")) * XMLoadFloat4x4(m_pTransformCom->Get_WorldMatrixPtr());
-
-			//	/*m_pFsm->Enter(DIGIMONSTATE::SKILL3, m_pPart_Body, false, false);*/
-			//	m_bMove = true;
-			//}
-			//m_iDamage = static_cast<_int>(Info.Damage * Info.DigimonSkill1Info.HitCount * 0.4f);
-			//m_iSkill = static_cast<_int>(m_pPart_Body->Get_TrackPosition());
-			//switch (m_iSkill)
-			//{
-			//case 42:
-			//	if (m_iSkill != m_iLastSkill) // 이전과 다를 때만 실행
-			//	{
-			//		m_mMouth = XMLoadFloat4x4(static_cast<CBody_Metalgarumon*>(m_pPart_Body)->Get_BoneMatrixPtr("Bip001-Head"));
-			//		Creat_Skill(3);
-			//		m_iLastSkill = m_iSkill;
-			//	}
-			//	break;
-			//case 56:
-			//case 70:
-			//	m_pSkill->Set_Hit(false);
-			//	break;
-			//default:
-			//	m_iLastSkill = -1;
-			//	break;
-			//}
-			//if (!m_bMove)
-			//	m_pFsm->Enter(DIGIMONSTATE::STAND, m_pPart_Body);
 		}
 		else
 		{
@@ -119,10 +90,12 @@ void CMetalgarumon::Update(_float fTimeDelta)
 					m_iDamage = static_cast<_int>(Info.Damage * Info.DigimonSkill2Info.HitCount * 0.5f);
 					m_iSkill = static_cast<_int>(m_pPart_Body->Get_TrackPosition());
 
-					if (m_iSkill == 21)
+					if (m_iSkill == 22)
 					{
 						if (m_iLastSkill != m_iSkill)
 						{
+							m_mMouth = XMLoadFloat4x4(static_cast<CBody_Metalgarumon*>(m_pPart_Body)->Get_BoneMatrixPtr("Bip001-R-Finger0")) * XMLoadFloat4x4(m_pTransformCom->Get_WorldMatrixPtr());
+							m_pGameInstance->Manager_PlaySound(L"MetalgarumonSkill1.wav", CHANNELID::EFFECT, 1);
 							Creat_Skill(1);
 							m_iLastSkill = m_iSkill; // 마지막으로 실행한 트랙 위치 저장
 						}
@@ -137,11 +110,13 @@ void CMetalgarumon::Update(_float fTimeDelta)
 					Skill2();
 					m_iDamage = static_cast<_int>(Info.Damage * Info.DigimonSkill2Info.HitCount * 1.f);
 					m_iSkill = static_cast<_int>(m_pPart_Body->Get_TrackPosition());
-
+					
 					if (m_iSkill == 48)
 					{
 						if (m_iLastSkill != m_iSkill)
 						{
+							m_pGameInstance->Manager_PlaySound(L"MetalgarumonSkill2.wav", CHANNELID::EFFECT, 1);
+							m_mMouth = XMLoadFloat4x4(static_cast<CBody_Metalgarumon*>(m_pPart_Body)->Get_BoneMatrixPtr("Missile_Bone")) * XMLoadFloat4x4(m_pTransformCom->Get_WorldMatrixPtr());
 							Creat_Skill(2);
 							m_iLastSkill = m_iSkill; // 마지막으로 실행한 트랙 위치 저장
 						}
@@ -163,7 +138,9 @@ void CMetalgarumon::Update(_float fTimeDelta)
 						if (m_iSkill != m_iLastSkill) // 이전과 다를 때만 실행
 						{
 							m_mMouth = XMLoadFloat4x4(static_cast<CBody_Metalgarumon*>(m_pPart_Body)->Get_BoneMatrixPtr("Bip001-Head")) * XMLoadFloat4x4(m_pTransformCom->Get_WorldMatrixPtr());
+							m_pGameInstance->Manager_PlaySound(L"MetalgarumonSkill3.wav", CHANNELID::EFFECT, 1);
 							Creat_Skill(3);
+							m_pSkill->Set_End(false);
 							m_iLastSkill = m_iSkill;
 						}
 						break;
@@ -171,6 +148,7 @@ void CMetalgarumon::Update(_float fTimeDelta)
 					case 70:
 						if (m_iSkill != m_iLastSkill)
 						{
+							m_pGameInstance->Manager_PlaySound(L"MetalgarumonSkill3.wav", CHANNELID::EFFECT, 1);
 							m_pSkill->Set_Hit(false);
 							m_iLastSkill = m_iSkill;
 						}
@@ -186,10 +164,15 @@ void CMetalgarumon::Update(_float fTimeDelta)
 					m_pFsm->Enter(DIGIMONSTATE::BATTLEBACK, m_pPart_Body);
 				}
 
-				if (!m_bSkill1 && !m_bSkill2 && !m_bSkill3 && !m_bBackJump)
+				if (!m_bSkill1 && !m_bSkill2 && !m_bSkill3 && !m_bBackJump && !m_bHitAinm)
 				{
 					m_bTurnEnd = true;
 					m_pFsm->Enter(DIGIMONSTATE::STANDBATTLE, m_pPart_Body);
+				}
+				if (m_bHitAinm == true)
+				{
+					if (m_pPart_Body->Get_AnimFinish() == true)
+						m_bHitAinm = false;
 				}
 			}
 			else
@@ -225,12 +208,6 @@ void CMetalgarumon::Late_Update(_float fTimeDelta)
 
 HRESULT CMetalgarumon::Render()
 {
-	if (m_bLife)
-	{
-#ifdef _DEBUG
-		m_pColliderCom->Render();
-#endif
-	}
 	return S_OK;
 }
 
@@ -240,6 +217,12 @@ _int CMetalgarumon::Intersect(CCollider* pPlayer_Collider)
 		return Get_ID();
 
 	return -1;
+}
+
+void CMetalgarumon::HitAnim()
+{
+	m_bHitAinm = true;
+	m_pFsm->Enter(DIGIMONSTATE::HIT, m_pPart_Body, false, false);
 }
 
 void CMetalgarumon::UseSkill(_int Skill)
@@ -311,12 +294,14 @@ void CMetalgarumon::Creat_Skill(_int SkillNum)
 	switch (SkillNum)
 	{
 	case 1:
+		Desc.m_vPosition2 = m_mMouth.r[3];
 		Desc.iDamage = m_iDamage;
 		m_pGameInstance->Add_GameObject_ToLayer(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_MetalgarumonSkill1"),
 			ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Layer_MetalgarumonSkill1"), &Desc);
 		break;
 
 	case 2:
+		Desc.m_vPosition = m_mMouth.r[3];
 		Desc.iDamage = m_iDamage;
 		m_pGameInstance->Add_GameObject_ToLayer(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_MetalgarumonSkill2"),
 			ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Layer_MetalgarumonSkill2"), &Desc);

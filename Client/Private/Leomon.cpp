@@ -5,6 +5,8 @@
 #include "StateMachine.h"
 #include "Digimon_Manager.h"
 #include "SkillObject.h"
+#include "LeomonSkill1.h"
+#include "LeomonSkill2.h"
 
 CLeomon::CLeomon(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CContainerObject{ pDevice, pContext }
@@ -59,7 +61,7 @@ void CLeomon::Update(_float fTimeDelta)
 	{
 		if (!m_bBattle)
 		{
-			/*if (!m_bMonster)
+			if (!m_bMonster)
 			{
 				m_pTransformCom->LookAtPlayer(m_pDigimon_Manager->PlayerPos(), fTimeDelta);
 				m_bMove = false;
@@ -68,28 +70,11 @@ void CLeomon::Update(_float fTimeDelta)
 					m_pFsm->Enter(DIGIMONSTATE::RUN, m_pPart_Body);
 					m_bMove = true;
 				}
-			}*/
-			if (m_pGameInstance->Key_Down(DIK_1))
-			{
-				m_pFsm->Enter(DIGIMONSTATE::SKILL2, m_pPart_Body, false,false);
-				m_bMove = true;
-			}
-			m_iDamage = static_cast<_int>(Info.Damage * Info.DigimonSkill2Info.HitCount * 0.6f);
-			m_iSkill = static_cast<_int>(m_pPart_Body->Get_TrackPosition());
-			if (m_iSkill == 42)
-			{
-				if (m_iLastSkill != m_iSkill)
-				{
-					Creat_Skill(2);
-					m_iLastSkill = m_iSkill; // 마지막으로 실행한 트랙 위치 저장
-				}
-			}
-			else
-			{
-				m_iLastSkill = -1; // 다른 트랙 위치면 초기화
 			}
 			if (!m_bMove)
 				m_pFsm->Enter(DIGIMONSTATE::STAND, m_pPart_Body);
+
+
 		}
 		else
 		{
@@ -101,6 +86,7 @@ void CLeomon::Update(_float fTimeDelta)
 
 			if (!m_bDie)
 			{
+
 				if (m_bSkill1)
 				{
 					Skill1();
@@ -109,11 +95,23 @@ void CLeomon::Update(_float fTimeDelta)
 					m_iSkill = static_cast<_int>(m_pPart_Body->Get_TrackPosition());
 					switch (m_iSkill)
 					{
-					case 17:
+					case 18:
+						if (m_iSkill != m_iLastSkill) // 이전과 다를 때만 실행
+						{
+							m_mRHand = XMLoadFloat4x4(static_cast<CBody_Leomon*>(m_pPart_Body)->Get_BoneMatrixPtr("Bip001-R-Hand")) * XMLoadFloat4x4(m_pTransformCom->Get_WorldMatrixPtr());
+							m_pGameInstance->Manager_PlaySound(L"LeomonSkill11.wav", CHANNELID::EFFECT, 1);
+							Creat_Skill(1);
+							m_iLastSkill = m_iSkill;
+						}
+						break;
 					case 31:
 						if (m_iSkill != m_iLastSkill) // 이전과 다를 때만 실행
 						{
-							Creat_Skill(1);
+							m_mLHand = XMLoadFloat4x4(static_cast<CBody_Leomon*>(m_pPart_Body)->Get_BoneMatrixPtr("Bip001-L-Hand")) * XMLoadFloat4x4(m_pTransformCom->Get_WorldMatrixPtr());
+							m_pSkill->Set_TargetPos2(m_mLHand.r[3]);
+							m_pSkill->Set_Move(true);
+							m_pGameInstance->Manager_PlaySound(L"LeomonSkill12.wav", CHANNELID::EFFECT, 1);
+							m_pSkill->Set_Hit(false);
 							m_iLastSkill = m_iSkill;
 						}
 						break;
@@ -127,18 +125,36 @@ void CLeomon::Update(_float fTimeDelta)
 					Skill2();
 					m_iDamage = static_cast<_int>(Info.Damage * Info.DigimonSkill2Info.HitCount * 0.6f);
 					m_iSkill = static_cast<_int>(m_pPart_Body->Get_TrackPosition());
-					if (m_iSkill == 42)
+					switch (m_iSkill)
 					{
-						if (m_iLastSkill != m_iSkill)
+					case 22:
+						if (m_iSkill != m_iLastSkill) // 이전과 다를 때만 실행
 						{
+							m_mRHand = XMLoadFloat4x4(static_cast<CBody_Leomon*>(m_pPart_Body)->Get_BoneMatrixPtr("Bip001-R-Hand")) * XMLoadFloat4x4(m_pTransformCom->Get_WorldMatrixPtr());
 							Creat_Skill(2);
-							m_iLastSkill = m_iSkill; // 마지막으로 실행한 트랙 위치 저장
+							m_iLastSkill = m_iSkill;
 						}
+						break;
+					case 26:
+						if (m_iSkill != m_iLastSkill) // 이전과 다를 때만 실행
+						{
+							m_pGameInstance->Manager_PlaySound(L"LeomonSkill2.wav", CHANNELID::EFFECT, 1);
+							m_iLastSkill = m_iSkill;
+
+						}
+						break;
+					case 42:
+						if (m_iSkill != m_iLastSkill) // 이전과 다를 때만 실행
+						{
+							m_pSkill->Set_Move(true);
+							m_iLastSkill = m_iSkill;
+						}
+						break;
+					default:
+						m_iLastSkill = -1;
+						break;
 					}
-					else
-					{
-						m_iLastSkill = -1; // 다른 트랙 위치면 초기화
-					}
+
 				}
 				else if (m_bSkill3)
 				{
@@ -151,6 +167,7 @@ void CLeomon::Update(_float fTimeDelta)
 						if (m_iLastSkill != m_iSkill)
 						{
 							Creat_Skill(3);
+							m_pGameInstance->Manager_PlaySound(L"LeomonSkill3.wav", CHANNELID::EFFECT, 1);
 							m_iLastSkill = m_iSkill; // 마지막으로 실행한 트랙 위치 저장
 						}
 					}
@@ -165,10 +182,15 @@ void CLeomon::Update(_float fTimeDelta)
 					m_pFsm->Enter(DIGIMONSTATE::BATTLEBACK, m_pPart_Body);
 				}
 
-				if (!m_bSkill1 && !m_bSkill2 && !m_bSkill3 && !m_bBackJump)
+				if (!m_bSkill1 && !m_bSkill2 && !m_bSkill3 && !m_bBackJump && !m_bHitAinm)
 				{
 					m_bTurnEnd = true;
 					m_pFsm->Enter(DIGIMONSTATE::STANDBATTLE, m_pPart_Body);
+				}
+				if (m_bHitAinm == true)
+				{
+					if (m_pPart_Body->Get_AnimFinish() == true)
+						m_bHitAinm = false;
 				}
 			}
 			else
@@ -181,10 +203,10 @@ void CLeomon::Update(_float fTimeDelta)
 					{
 						m_pPart_Body->Set_Dissolve(true);
 					}
-
 				}
-
 			}
+
+
 		}
 		m_pFsm->Update(fTimeDelta);
 		m_pColliderCom->Update(XMLoadFloat4x4(m_pTransformCom->Get_WorldMatrixPtr()));
@@ -205,12 +227,6 @@ void CLeomon::Late_Update(_float fTimeDelta)
 
 HRESULT CLeomon::Render()
 {
-	if (m_bLife)
-	{
-#ifdef _DEBUG
-		m_pColliderCom->Render();
-#endif
-	}
 	return S_OK;
 }
 
@@ -220,6 +236,12 @@ _int CLeomon::Intersect(CCollider* pPlayer_Collider)
 		return Get_ID();
 
 	return -1;
+}
+
+void CLeomon::HitAnim()
+{
+	m_bHitAinm = true;
+	m_pFsm->Enter(DIGIMONSTATE::HIT, m_pPart_Body, false, false);
 }
 
 void CLeomon::UseSkill(_int Skill)
@@ -304,14 +326,15 @@ void CLeomon::Creat_Skill(_int SkillNum)
 	{
 	case 1:
 		Desc.iDamage = m_iDamage;
-		m_pGameInstance->Add_GameObject_ToLayer(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_LeomonSkill1"),
-			ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Layer_LeomonSkill1"), &Desc);
+		m_pSkill = static_cast<CLeomonSkill1*>(m_pGameInstance->Add_GameObject_ToLayer_ToCreate(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_LeomonSkill1"),
+			ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Layer_LeomonSkill1"), &Desc));
 		break;
 
 	case 2:
 		Desc.iDamage = m_iDamage;
-		m_pGameInstance->Add_GameObject_ToLayer(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_LeomonSkill2"),
-			ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Layer_LeomonSkill2"), &Desc);
+		Desc.m_vPosition2 = m_mRHand.r[3];
+		m_pSkill = static_cast<CLeomonSkill2*>(m_pGameInstance->Add_GameObject_ToLayer_ToCreate(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_LeomonSkill2"),
+			ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Layer_LeomonSkill2"), &Desc));
 
 		break;
 
@@ -348,6 +371,8 @@ HRESULT CLeomon::Ready_PartObjects()
 
 	return S_OK;
 }
+
+
 
 CLeomon* CLeomon::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 {

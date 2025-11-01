@@ -234,6 +234,7 @@ _int CContainerObject::Get_SkillSp(_int SkillNum)
 	return 0;
 }
 
+
 _vector CContainerObject::Get_Position()
 {
 	return m_pTransformCom->Get_State(STATE::POSITION);

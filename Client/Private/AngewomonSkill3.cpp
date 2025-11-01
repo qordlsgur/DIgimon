@@ -68,7 +68,9 @@ void CAngewomonSkill3::Update(_float fTimeDelta)
 		Ready_SkillObjects2();
 
 	if (m_bMove)
+	{
 		m_pTransformCom->Target_Pos_Move(m_vTarget_pos, fTimeDelta);
+	}
 
 
 	if (m_bHit == true)

@@ -36,7 +36,7 @@ public:
 
 public:
 	virtual _int Intersect(class CCollider* pPlayer_Collider) override;
-
+	virtual void HitAnim() override;
 private:
 	CCollider* m_pColliderCom = { nullptr };
 	CPartObject* m_pPart_Body = { nullptr };
@@ -49,7 +49,7 @@ private:
 	_bool m_bMove = false;
 	_vector m_vHandPosition{};
 	_bool m_bSkillOn = { false };
-
+	_float	m_fTime{};
 private:
 
 	HRESULT Ready_PartObjects();

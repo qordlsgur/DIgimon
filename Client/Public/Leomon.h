@@ -36,15 +36,18 @@ public:
 
 public:
 	virtual _int Intersect(class CCollider* pPlayer_Collider) override;
-
+	virtual void HitAnim() override;
 private:
 	CCollider* m_pColliderCom = { nullptr };
 	CPartObject* m_pPart_Body = { nullptr };
+	class CSkillObject* m_pSkill = { nullptr };
 
 	class CDigimon_Manager* m_pDigimon_Manager = { nullptr };
 	class CStateMachine* m_pFsm = { nullptr };
 
 	_bool m_bMove = false;
+	_matrix m_mLHand{};
+	_matrix m_mRHand{};
 
 private:
 	HRESULT Ready_PartObjects();

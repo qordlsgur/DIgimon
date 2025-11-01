@@ -415,7 +415,7 @@ void CBattle_Manager::Enemy_Attack(_float fTimeDelta)
 
 	if (!m_bSkill)
 	{
-		m_pCurrentDigimon->UseSkill(/*Enemy_Skill()*/1);
+		m_pCurrentDigimon->UseSkill(Enemy_Skill());
 		m_pCurrentDigimon->LookAt(m_vPlayerDigimonPos[m_iLook_Target_position]);
 		m_pInteraction_Manager->Set_Hit_Digimon(m_pHitCurrentDigimon);
 		m_bSkill = true;
@@ -941,15 +941,15 @@ void CBattle_Manager::EnemyDigimon_Info(_int EnemyDigimonID)
 	// 적 디지몬을 생성하기 위해서 우선 안에 있는 값을 다 밀어버린다.
 	m_pEnemyDigimon.clear();
 	// 그 후에 적 디지몬의 갯수를 저장하고
-	m_iEnemyDigimonCount = /*m_pGameInstance->intRandom(1, 3)*/3;
+	m_iEnemyDigimonCount = 3;
 	for (_int i = 0; i < m_iEnemyDigimonCount; ++i)
 	{
 		m_pEnemyDigimon.push_back(Digimon_Create(EnemyDigimonID));
 
-		m_pEnemyDigimon[i]->Set_Hp(1500);
-		m_pEnemyDigimon[i]->Set_Sp(500);
-		m_pEnemyDigimon[i]->Set_Damage(m_pGameInstance->intRandom(250, 500));
-		m_pEnemyDigimon[i]->Set_AttackSpeed(10);
+		m_pEnemyDigimon[i]->Set_Hp(500);
+		m_pEnemyDigimon[i]->Set_Sp(50);
+		m_pEnemyDigimon[i]->Set_Damage(m_pGameInstance->intRandom(1000, 20000));
+		m_pEnemyDigimon[i]->Set_AttackSpeed(1000);
 		m_pEnemyDigimon[i]->Set_Exp(m_pGameInstance->intRandom(900, 1000));
 		m_pEnemyDigimon[i]->Set_Lv(m_pGameInstance->intRandom(1, 92));
 		m_pEnemyDigimon[i]->Set_Monster(true);

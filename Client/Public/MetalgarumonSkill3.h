@@ -35,6 +35,9 @@ private:
 	CPartObject* m_pSkillModel1 = { nullptr };
 
 	_matrix m_mMouth{};
+	_float m_fEndTime{};
+	vector<HITINFO> m_Info;
+	_int iHitCount{};
 private:
 	HRESULT Ready_PartObjects();
 	HRESULT Ready_SkillObjects();

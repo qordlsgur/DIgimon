@@ -145,10 +145,15 @@ void CLadydevimon::Update(_float fTimeDelta)
 					m_pFsm->Enter(DIGIMONSTATE::BATTLEBACK, m_pPart_Body);
 				}
 
-				if (!m_bSkill1 && !m_bSkill2 && !m_bSkill3 && !m_bBackJump)
+				if (!m_bSkill1 && !m_bSkill2 && !m_bSkill3 && !m_bBackJump && !m_bHitAinm)
 				{
 					m_bTurnEnd = true;
 					m_pFsm->Enter(DIGIMONSTATE::STANDBATTLE, m_pPart_Body);
+				}
+				if (m_bHitAinm == true)
+				{
+					if (m_pPart_Body->Get_AnimFinish() == true)
+						m_bHitAinm = false;
 				}
 			}
 			else
@@ -183,12 +188,7 @@ void CLadydevimon::Late_Update(_float fTimeDelta)
 
 HRESULT CLadydevimon::Render()
 {
-	if (m_bLife)
-	{
-#ifdef _DEBUG
-		m_pColliderCom->Render();
-#endif
-	}
+
 	return S_OK;
 }
 
@@ -198,6 +198,12 @@ _int CLadydevimon::Intersect(CCollider* pPlayer_Collider)
 		return Get_ID();
 
 	return -1;
+}
+
+void CLadydevimon::HitAnim()
+{
+	m_bHitAinm = true;
+	m_pFsm->Enter(DIGIMONSTATE::HIT, m_pPart_Body, false, false);
 }
 
 void CLadydevimon::UseSkill(_int Skill)

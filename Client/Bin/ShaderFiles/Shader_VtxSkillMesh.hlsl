@@ -136,38 +136,24 @@ PS_OUT PS_Cross(PS_IN In)
 
     PS_OUT Out;
 
-      
-    float2 uv = In.vTexcoord;
-    
-    uv = uv - 0.5f;
-    
-    float sinR = sin(Radian * Time);
-    float cosR = cos(Radian * Time);
-    
-    float2 Rotated;
-    
-    Rotated.x = uv.x * cosR - uv.y * sinR;
-    Rotated.y = uv.x * sinR + uv.y * cosR;
-    
-    Rotated += 0.5f;
-    Rotated *= 2.f;
-    
-    vector vMtrlDiffuse = g_DiffuseTexture.Sample(DefaultSampler, Rotated);
-    //float3 Color = float3(18, 91, 159) / 255.0f;
-    float4 Disslove = g_Dissolve.Sample(DefaultSampler, In.vTexcoord);
+   // 중앙 기준
+    float2 center = float2(0.5f, 0.5f);
+
+// 상수 확대 비율
+    const float scale = 1.5f; // 1.0 = 원래 크기, 1.5 = 50% 확대
+    const float fadeAlpha = 0.3f; // 최종 알파값 (0 = 완전히 사라짐)
+
+// 중앙 기준 UV 확대
+    float2 scaledUV = (Radian - center) * scale + center;
         
-    //if (Time > Disslove.r)
-    //    discard;
-    
-    
-    
-    //vMtrlDiffuse *= Disslove.a;
+// 텍스처 샘플링
+    vector vMtrlDiffuse = g_DiffuseTexture.Sample(DefaultSampler, scaledUV);
+    // 색상 적용
+    float3 Color = float3(78, 228, 251) / 255.0f;
+    vMtrlDiffuse.rgb *= Color;
     
     if (vMtrlDiffuse.a <= 0.25f)
         discard;
-    
-    //if (vMtrlDiffuse.r <= 0.2f)
-    //vMtrlDiffuse.rgb = vMtrlDiffuse.rgb * Color;
     
     //vMtrlDiffuse.a *= 1.5;
     Out.vDiffuse = vMtrlDiffuse;

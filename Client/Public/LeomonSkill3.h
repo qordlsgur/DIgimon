@@ -30,13 +30,14 @@ public:
 	virtual _int Get_Damage() override;
 private:
 	CCollider* m_pColliderCom = { nullptr };
+	CPartObject* m_pSkillModel1 = { nullptr };
 
 	class CInteraction_Manager* m_pInteraction_Manager = { nullptr };
 
 	_vector Pos{};
-
 private:
 	HRESULT Ready_PartObjects();
+	HRESULT Ready_SkillObjects();
 
 
 public:

@@ -1,6 +1,7 @@
 #include "MetalgarumonSkill1.h"
 #include "GameInstance.h"
 #include "Interaction_Manager.h"
+#include "MetalgarumonSkill1_Part1.h"
 
 CMetalgarumonSkill1::CMetalgarumonSkill1(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
     : CSkillObject{ pDevice, pContext }
@@ -35,12 +36,30 @@ HRESULT CMetalgarumonSkill1::Initialize(void* pArg)
 
 	m_iDamage = Pos->iDamage;
 
-	m_vTarget_pos = Pos->m_vTargetPosition;
+	m_vTarget_pos = Pos->m_vPosition2;
 
 	m_pTransformCom->Set_State(STATE::POSITION, m_vTarget_pos);
 	m_pTransformCom->Update_WoldMatrix();
 
+	m_fDir = Pos->Look;
+	if (m_fDir == 0)
+	{
+		m_vTarget_pos.m128_f32[2] += 3.f;
+		m_pTransformCom->Set_Scale(20.f, -20.f, 20.f);
+		m_pTransformCom->Update_WoldMatrix();
+	}
+	else
+	{
+		m_vTarget_pos.m128_f32[2] -= 3.f;
+		m_pTransformCom->Set_Scale(-20.f, -20.f, -20.f);
+		m_pTransformCom->Update_WoldMatrix();
+	}
+	m_vTarget_pos.m128_f32[1] += 3.f;
+
 	if (FAILED(Ready_PartObjects()))
+		return E_FAIL;
+
+	if (FAILED(Ready_SkillObjects()))
 		return E_FAIL;
 
 	return S_OK;
@@ -53,6 +72,21 @@ void CMetalgarumonSkill1::Priority_Update(_float fTimeDelta)
 
 void CMetalgarumonSkill1::Update(_float fTimeDelta)
 {
+
+	if (m_bHit)
+	{
+		m_pSkillModel1->Set_Hit(true);
+		m_fTime += fTimeDelta;
+		m_fFontUp += fTimeDelta * 2.f;
+	}
+
+
+	if (m_fTime > 2.f)
+	{
+		m_pInteraction_Manager->Die_Attack_Skill();
+		m_isDead = true;
+	}
+
 	m_pTransformCom->Set_State((STATE::POSITION), m_vTarget_pos);
 
 	m_pColliderCom->Update(XMLoadFloat4x4(m_pTransformCom->Get_WorldMatrixPtr()));
@@ -62,16 +96,26 @@ void CMetalgarumonSkill1::Update(_float fTimeDelta)
 
 void CMetalgarumonSkill1::Late_Update(_float fTimeDelta)
 {
-	m_pGameInstance->Add_RenderGroup(RENDER::NONBLEND, this);
+	m_pGameInstance->Add_RenderGroup(RENDER::EFFECT, this);
 	__super::Late_Update(fTimeDelta);
 }
 
 HRESULT CMetalgarumonSkill1::Render()
 {
-#ifdef _DEBUG
-	m_pColliderCom->Render();
-#endif
+	if (m_bHit)
+	{
+		_itow_s(m_iDamage, m_szDamage, MAX_PATH, 10);
 
+		m_pGameInstance->Perspective_Render_Text(
+			m_pGameInstance->Get_Transform_Matrix(D3DTS::VIEW),
+			m_pGameInstance->Get_Transform_Matrix(D3DTS::PROJ),
+			TEXT("42"), m_szDamage,
+
+			XMVectorSet(m_vTarget_pos.m128_f32[0],
+				m_vTarget_pos.m128_f32[1] + m_fFontUp + 10.f,
+				m_vTarget_pos.m128_f32[2],
+				m_vTarget_pos.m128_f32[3]));
+	}
 	return S_OK;
 }
 
@@ -95,6 +139,41 @@ HRESULT CMetalgarumonSkill1::Ready_PartObjects()
 	m_pColliderCom->Set_Matrix(XMLoadFloat4x4(m_pTransformCom->Get_WorldMatrixPtr()));
 
 	return S_OK;;
+}
+
+HRESULT CMetalgarumonSkill1::Ready_SkillObjects()
+{
+	CMetalgarumonSkill1_Part1::BODY_PLAYER_DESC Skill1{};
+
+	Skill1.pParentTransform = m_pTransformCom;
+
+	/* Part_Skill1 */
+	if (FAILED(__super::Add_PartObject(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_MetalgarumonSkill1_Part1"),
+		TEXT("Part_Skill1"), &Skill1)))
+		return E_FAIL;
+
+	m_pSkillModel1 = dynamic_cast<CMetalgarumonSkill1_Part1*>(Find_PartObject(TEXT("Part_Skill1")));
+	CMetalgarumonSkill1_Part1::BODY_PLAYER_DESC Skill2{};
+
+	Skill2.pParentTransform = m_pTransformCom;
+
+	/* Part_Skill1 */
+	if (FAILED(__super::Add_PartObject(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_MetalgarumonSkill1_Part1"),
+		TEXT("Part_Skill2"), &Skill2)))
+		return E_FAIL;
+
+	m_pSkillModel1 = dynamic_cast<CMetalgarumonSkill1_Part1*>(Find_PartObject(TEXT("Part_Skill2")));
+	CMetalgarumonSkill1_Part1::BODY_PLAYER_DESC Skill3{};
+
+	Skill3.pParentTransform = m_pTransformCom;
+
+	/* Part_Skill1 */
+	if (FAILED(__super::Add_PartObject(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_MetalgarumonSkill1_Part1"),
+		TEXT("Part_Skill3"), &Skill3)))
+		return E_FAIL;
+
+	m_pSkillModel1 = dynamic_cast<CMetalgarumonSkill1_Part1*>(Find_PartObject(TEXT("Part_Skill3")));
+	return S_OK;
 }
 
 CMetalgarumonSkill1* CMetalgarumonSkill1::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)

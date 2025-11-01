@@ -28,7 +28,7 @@ private:
 
 private:
 	void LoadSoundFile();
-
+	_tchar* m_pLatestBGMKey = nullptr;
 public:
 	static	CSound_Manager* Create();
 	virtual void			Free() override;

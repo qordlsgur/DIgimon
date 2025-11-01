@@ -27,12 +27,14 @@ public:
 	virtual HRESULT Render() override;
 
 public:
-	virtual _int Intersect(class CCollider* pPlayer_Collider) override;
 	virtual void Skill1() override;
 	virtual void Skill2() override;
 	virtual void Skill3() override;
 
 	void Creat_Skill(_int SkillNum);
+public:
+	virtual _int Intersect(class CCollider* pPlayer_Collider) override;
+	virtual void HitAnim() override; 
 
 private:
 	CPartObject* m_pPart_Body = { nullptr };

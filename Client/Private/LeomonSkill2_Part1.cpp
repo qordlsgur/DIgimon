@@ -1,4 +1,4 @@
-#include "LeomonSkill2_Part1.h"
+  #include "LeomonSkill2_Part1.h"
 #include "GameInstance.h"
 
 CLeomonSkill2_Part1::CLeomonSkill2_Part1(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
@@ -32,7 +32,7 @@ HRESULT CLeomonSkill2_Part1::Initialize(void* pArg)
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 
-	m_pTransformCom->Set_Scale(3.f, 3.f, 3.f);
+	m_pTransformCom->Set_Scale(5.f, 5.f, 5.f);
 
 	return S_OK;
 }
@@ -43,14 +43,18 @@ void CLeomonSkill2_Part1::Priority_Update(_float fTimeDelta)
 
 void CLeomonSkill2_Part1::Update(_float fTimeDelta)
 {
+	if (m_bHit == true)
+		m_fTime += fTimeDelta * 0.5;
+
 	XMStoreFloat4x4(&m_CombinedWorldMatrix,
 		XMLoadFloat4x4(m_pTransformCom->Get_WorldMatrixPtr()) * XMLoadFloat4x4(m_pParentTransformCom->Get_WorldMatrixPtr()));
 }
 
 void CLeomonSkill2_Part1::Late_Update(_float fTimeDelta)
 {
-	m_pGameInstance->Add_RenderGroup(RENDER::UI, this);
-	m_pGameInstance->Add_RenderGroup(RENDER::BLUR, this);
+	m_pGameInstance->Add_RenderGroup(RENDER::EFFECT, this);
+	if (m_bHit == false)
+		m_pGameInstance->Add_RenderGroup(RENDER::BLUR, this);
 }
 
 HRESULT CLeomonSkill2_Part1::Render()
@@ -79,6 +83,11 @@ HRESULT CLeomonSkill2_Part1::Ready_Components()
 		TEXT("Com_Texture"), reinterpret_cast<CComponent**>(&m_pTextureCom))))
 		return E_FAIL;
 
+	/* Com_DissolveTexture*/
+	if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Noise"),
+		TEXT("Com_DissolveTexture"), reinterpret_cast<CComponent**>(&m_pDissolveTexture))))
+		return E_FAIL;
+
 	/* Com_Shader */
 	if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Shader_VtxSkillLeomon"),
 		TEXT("Com_Shader"), reinterpret_cast<CComponent**>(&m_pShaderCom))))
@@ -95,8 +104,11 @@ HRESULT CLeomonSkill2_Part1::Bind_ShaderResources()
 		return E_FAIL;
 	if (FAILED(m_pShaderCom->Bind_Matrix("g_ProjMatrix", m_pGameInstance->Get_Transform_Float4x4(D3DTS::PROJ))))
 		return E_FAIL;
-
+	if (FAILED(m_pShaderCom->Bind_State("Time", m_fTime)))
+		return E_FAIL;
 	if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_DiffuseTexture", 0)))
+		return E_FAIL;
+	if (FAILED(m_pTextureCom->Bind_ShaderResource(m_pShaderCom, "g_Mask", 0)))
 		return E_FAIL;
 
 	return S_OK;

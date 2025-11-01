@@ -274,8 +274,6 @@ PS_OUT_4X4 PS_FIRE4X4(PS_IN_4X4 In)
     if (lastFrame <= Time)
         discard;
     
-    color.a *= 0.7f;
-    
     Out.vDiffuse = color;
     Out.vNormal = float4(In.vNormal.xyz * 0.5f + 0.5f, 0.f);
     Out.vDepth = float4(In.vProjPos.z / In.vProjPos.w, In.vProjPos.w / 500.0f, 0.0f, 0.0f);
@@ -482,6 +480,75 @@ PS_OUT_4X4 PS_BITEEFFECT(PS_IN_4X4 In)
     return Out;
 }
 
+struct VS_IN_NAIL
+{
+    float3 vPosition : POSITION;
+    float3 vNormal : NORMAL;
+    float3 vTangent : TANGENT;
+    float2 vTexcoord : TEXCOORD0;
+};
+
+struct VS_OUT_NAIL
+{
+    float4 vPosition : SV_POSITION;
+    float4 vNormal : NORMAL;
+    float2 vTexcoord : TEXCOORD0;
+    float4 vWorldPos : TEXCOORD1;
+    float4 vProjPos : TEXCOORD2;
+};
+
+VS_OUT_NAIL VS_NAIL(VS_IN_NAIL In)
+{
+    VS_OUT_NAIL Out;
+  
+    matrix matWV, matWVP;
+    
+    matWV = mul(g_WorldMatrix, g_ViewMatrix);
+    matWVP = mul(matWV, g_ProjMatrix);
+    
+    Out.vPosition = mul(vector(In.vPosition, 1.f), matWVP);
+    Out.vTexcoord = In.vTexcoord;
+    Out.vNormal = normalize(mul(vector(In.vNormal, 0.f), g_WorldMatrix));
+    Out.vWorldPos = mul(vector(In.vPosition, 1.f), g_WorldMatrix);
+    Out.vProjPos = Out.vPosition;
+    return Out;
+}
+
+struct PS_IN_NAIL
+{
+    float4 vPosition : SV_POSITION;
+    float4 vNormal : NORMAL;
+    float2 vTexcoord : TEXCOORD0;
+    float4 vWorldPos : TEXCOORD1;
+    float4 vProjPos : TEXCOORD2;
+};
+
+struct PS_OUT_NAIL
+{
+    float4 vDiffuse : SV_TARGET0;
+    float4 vNormal : SV_TARGET1;
+    float4 vDepth : SV_TARGET2;
+};
+
+PS_OUT_NAIL PS_NAIL(PS_IN_NAIL In)
+{
+    PS_OUT_NAIL Out;
+
+    vector vMtrlDiffuse = g_DiffuseTexture.Sample(DefaultSampler,In.vTexcoord);
+    float3 Color = float3(78, 228, 251) / 255.0f;
+   
+    if (vMtrlDiffuse.r <= 0.25f)
+        discard;
+    
+    vMtrlDiffuse.rgb = vMtrlDiffuse.rgb * Color;
+    
+    //vMtrlDiffuse.a *= 1.5;
+    Out.vDiffuse = vMtrlDiffuse;
+    Out.vNormal = float4(In.vNormal.xyz * 0.5f + 0.5f, 0.f);
+    Out.vDepth = float4(In.vProjPos.z / In.vProjPos.w, In.vProjPos.w / 500.0f, 0.0f, 0.0f);
+    return Out;
+}
+
 technique11 DefaultTechnique
 {
     pass Missile
@@ -562,5 +629,15 @@ technique11 DefaultTechnique
         VertexShader = compile vs_5_0 VS_FIRE4X4();
         GeometryShader = NULL;
         PixelShader = compile ps_5_0 PS_BITEEFFECT();
+    }
+
+    pass Nail
+    {
+        SetRasterizerState(RS_Cull_None);
+        SetDepthStencilState(DSS_Default, 0);
+        SetBlendState(BS_Blend, float4(0.f, 0.f, 0.f, 0.f), 0xffffffff);
+        VertexShader = compile vs_5_0 VS_NAIL();
+        GeometryShader = NULL;
+        PixelShader = compile ps_5_0 PS_NAIL();
     }
 }

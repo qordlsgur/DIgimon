@@ -71,8 +71,7 @@ void CMetalgreymonSkill2::Update(_float fTimeDelta)
 	if (!m_pTransformCom->Target_Pos_Move_Bool(m_vTarget_pos, fTimeDelta))
 	{
 		m_pSkillModel1->Set_Hit(true);
-		Ready_Skill3Objects();
-		m_fTime += fTimeDelta;
+		Ready_SkillObjects2();
 		m_fTime += fTimeDelta;
 		m_fFontUp += fTimeDelta * 2.f;
 	}
@@ -168,7 +167,7 @@ HRESULT CMetalgreymonSkill2::Ready_SkillObjects()
 	return S_OK;
 }
 
-HRESULT CMetalgreymonSkill2::Ready_Skill3Objects()
+HRESULT CMetalgreymonSkill2::Ready_SkillObjects2()
 {
 	CMetalgreymonSkill2_Part3::BODY_PLAYER_DESC Skil13{};
 

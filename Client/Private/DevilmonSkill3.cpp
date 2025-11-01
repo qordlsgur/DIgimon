@@ -84,7 +84,7 @@ void CDevilmonSkill3::Update(_float fTimeDelta)
 
 void CDevilmonSkill3::Late_Update(_float fTimeDelta)
 {
-	m_pGameInstance->Add_RenderGroup(RENDER::NONBLEND, this);
+	m_pGameInstance->Add_RenderGroup(RENDER::EFFECT, this);
 	__super::Late_Update(fTimeDelta);
 }
 

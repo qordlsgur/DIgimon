@@ -36,7 +36,7 @@ HRESULT CSpawner::Initialize(void* pArg)
 	m_pBattlea_Manager = CBattle_Manager::GetInstance();
 	m_pTransformCom->Set_State(STATE::POSITION, m_pSpawnerPos);
 
-	m_iMaxMonster = 5;
+	m_iMaxMonster = 3;
 
 	return S_OK;
 }
@@ -59,23 +59,23 @@ void CSpawner::Update(_float fTimeDelta)
 			m_iMonsterCount++;
 			m_pInteraction_Manager->Set_Enemy_Digimon(m_pMonster);
 			m_pMonsters[i]->Set_Monster(true);
-			m_pMonster->Set_Position(m_pSpawnerPos.m128_f32[0] + m_pGameInstance->Random(1.f, 150.f), m_pSpawnerPos.m128_f32[2] + m_pGameInstance->Random(1.f, 150.f));
+			m_pMonster->Set_Position(m_pSpawnerPos.m128_f32[0] + m_pGameInstance->Random(1.f, 100.f), m_pSpawnerPos.m128_f32[2] + m_pGameInstance->Random(1.f, 100.f));
 		}
 	}
-	//if (m_pBattlea_Manager->Get_Battle())
-	//{
-	//	for (_uint i = 0; i < m_iMaxMonster; ++i)
-	//	{
-	//		m_pMonsters[i]->Set_Life(false);
-	//	}
-	//}
-	//else
-	//{
-	//	for (_uint i = 0; i < m_iMaxMonster; ++i)
-	//	{
-	//		m_pMonsters[i]->Set_Life(true);
-	//	}
-	//}
+	if (m_pBattlea_Manager->Get_Battle())
+	{
+		for (_uint i = 0; i < m_iMaxMonster; ++i)
+		{
+			m_pMonsters[i]->Set_Life(false);
+		}
+	}
+	else
+	{
+		for (_uint i = 0; i < m_iMaxMonster; ++i)
+		{
+			m_pMonsters[i]->Set_Life(true);
+		}
+	}
 }
 
 void CSpawner::Late_Update(_float fTimeDelta)

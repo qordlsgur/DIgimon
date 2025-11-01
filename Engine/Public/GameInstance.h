@@ -127,8 +127,15 @@ public:
 
 #pragma endregion
 
+#pragma region SOUND_MANAGER
 
+	void Manager_PlaySound(const TCHAR* pSoundKey, CHANNELID eID, float fVolume);
+	void Manager_PlayBGM(const TCHAR* pSoundKey, float fVolume);
+	void Manager_StopSound(CHANNELID eID);
+	void Manager_StopAll();
+	void Manager_SetChannelVolume(CHANNELID eID, float fVolume);
 
+#pragma endregion
 
 private:
 	class CGraphic_Device*			m_pGraphic_Device = { nullptr };
@@ -145,6 +152,7 @@ private:
 	class CFont_Manager*			m_pFont_Manager = { nullptr };
 	class CTarget_Manager*			m_pTarget_Manager = { nullptr };
 	class CShadow*					m_pShadow = { nullptr };
+	class CSound_Manager*			m_pSound_Manager = { nullptr };
 
 public:
 	void Release_Engine();

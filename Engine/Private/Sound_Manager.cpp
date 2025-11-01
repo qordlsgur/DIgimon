@@ -56,7 +56,6 @@ void CSound_Manager::Manager_PlaySound(const TCHAR* pSoundKey, CHANNELID eID, fl
 
 void CSound_Manager::Manager_PlayBGM(const TCHAR* pSoundKey, float fVolume)
 {
-	// iter = find_if(m_mapSound.begin(), m_mapSound.end(), CTag_Finder(pSoundKey));
 	auto iter = find_if(m_mapSound.begin(), m_mapSound.end(), [&](auto& iter)->bool
 		{
 			return !lstrcmp(pSoundKey, iter.first);
@@ -65,9 +64,32 @@ void CSound_Manager::Manager_PlayBGM(const TCHAR* pSoundKey, float fVolume)
 	if (iter == m_mapSound.end())
 		return;
 
-	m_pSystem->playSound(iter->second, nullptr, FALSE, &m_pChannelArr[ENUM_CLASS(CHANNELID::BGM)]);
-	m_pChannelArr[ENUM_CLASS(CHANNELID::BGM)]->setMode(FMOD_LOOP_NORMAL);
-	m_pChannelArr[ENUM_CLASS(CHANNELID::BGM)]->setVolume(fVolume);
+	FMOD::Channel*& pChannel = m_pChannelArr[ENUM_CLASS(CHANNELID::BGM)];
+
+	// 이미 채널이 있고 재생 중이면 검사
+	if (pChannel)
+	{
+		bool isPlaying = false;
+		pChannel->isPlaying(&isPlaying);
+
+		if (isPlaying)
+		{
+			FMOD::Sound* pCurSound = nullptr;
+			pChannel->getCurrentSound(&pCurSound);
+
+			// 같은 사운드면 그냥 return (재생 안 함)
+			if (pCurSound == iter->second)
+				return;
+
+			// 다른 사운드면 정지
+			pChannel->stop();
+		}
+	}
+
+	// 새 BGM 재생
+	m_pSystem->playSound(iter->second, nullptr, FALSE, &pChannel);
+	pChannel->setMode(FMOD_LOOP_NORMAL);
+	pChannel->setVolume(fVolume);
 	m_pSystem->update();
 }
 
@@ -113,7 +135,7 @@ void CSound_Manager::LoadSoundFile()
 		// "../Sound/Success.wav"
 
 		FMOD::Sound* pSound = nullptr;
-		FMOD_RESULT eRes = m_pSystem->createSound(szFullPath, FMOD_CREATESTREAM, 0, &pSound);
+		FMOD_RESULT eRes = m_pSystem->createSound(szFullPath, FMOD_DEFAULT | FMOD_CREATESAMPLE, 0, &pSound);
 
 		if (eRes == FMOD_OK)
 		{

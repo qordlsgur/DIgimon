@@ -42,8 +42,7 @@ private:
 private:
 	HRESULT Ready_PartObjects();
 	HRESULT Ready_SkillObjects();
-	HRESULT Ready_Skill2Objects();
-	HRESULT Ready_Skill3Objects();
+	HRESULT Ready_SkillObjects2();
 
 public:
 	static CMetalgreymonSkill2* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);

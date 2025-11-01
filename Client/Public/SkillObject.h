@@ -18,6 +18,12 @@ public:
 		_matrix mMatrix;
 		_matrix mMatrix2;
 	}POSITION;
+	typedef struct HitInfo
+	{
+		_int damage;
+		_vector pos;
+		_float duration = 1.f;
+	}HITINFO;
 protected:
 	CSkillObject(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	CSkillObject(const CSkillObject& Prototype);
@@ -33,18 +39,21 @@ public:
 
 public:
 	void Set_TargetPos(_fvector Pos) { m_vTarget_pos = Pos; }
+	void Set_TargetPos2(_fvector Pos) { m_vPosition2 = Pos; }
 	void Set_TrakPosition(_float TrakPosition) { m_fTrakPosition = TrakPosition; }
 
 	void Update_Position(_fvector Position);
 
 	virtual void Set_Move(_vector Position);
 	virtual void Move(_float fTimeDatel);
-	virtual void Set_Hit(_bool Hit) { m_bHit = Hit; }
+	virtual void Set_Hit(_bool Hit) {m_bHit = Hit; }
+	virtual void HitCountUp() { m_iHitCount++; }
 	virtual _bool Get_Hit() { return m_bHit; }
 	virtual _int Get_Damage() = 0;
-
 	virtual void Set_Move(_bool Move) { m_bMove = Move; }
 	virtual _bool Get_Move() { return m_bMove; }
+	virtual void Set_End(_bool End) { m_bEnd = End; }
+	virtual _bool Get_End() { return m_bEnd; }
 	virtual void Set_Create(_bool Create) { m_bCreate = Create; }
 	virtual _bool Get_Create() { return m_bCreate; }
 protected:
@@ -62,13 +71,14 @@ protected:
 	_float		m_fTrakPosition{};
 
 	_int		m_iDamage{};
-
+	_int		m_iHitCount{};
+	
 	_float		m_fX{};
 	_float		m_fY{};
 	_float		m_fTime{};
 	_bool		m_bHit = { false };
 	_bool		m_bCreate = { false };
-
+	_bool		m_bEnd = { false };
 	_bool		m_bMove = { false };
 public:
 	virtual CGameObject* Clone(void* pArg) = 0;

@@ -2,6 +2,7 @@
 
 #include "GameInstance.h"
 #include "Camera_Manager.h"
+#include "Battle_Manager.h"
 
 CCamera_Free::CCamera_Free(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CCamera{ pDevice, pContext }
@@ -17,6 +18,7 @@ CCamera_Free::CCamera_Free(const CCamera_Free& Prototype)
 
 HRESULT CCamera_Free::Initialize_Prototype()
 {
+
 	return S_OK;
 }
 
@@ -51,6 +53,16 @@ HRESULT CCamera_Free::Initialize(void* pArg)
 
 	m_fLerp = 0.1f;
 
+	m_pBattle_Manager = CBattle_Manager::GetInstance();
+
+
+	/* Com_Navigation */
+	CNavigation::NAVIGATION_DESC		NavigationDesc{};
+	NavigationDesc.iCurrentCellIndex = 150;
+	if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Navigation"),
+		TEXT("Com_Navigation"), reinterpret_cast<CComponent**>(&m_pNavigationCom), &NavigationDesc)))
+		return E_FAIL;
+
 
 	return S_OK;
 }
@@ -59,6 +71,7 @@ void CCamera_Free::Priority_Update(_float fTimeDelta)
 {
 	//if (!m_bBattle)
 	//{
+		m_bBattle = m_pBattle_Manager->Get_Battle();
 		_long		MouseMove = {};
 
 		if (m_pCamera_Manager->HasPlayer() == true)
@@ -146,6 +159,7 @@ void CCamera_Free::Priority_Update(_float fTimeDelta)
 
 void CCamera_Free::Update(_float fTimeDelta)
 {
+	m_pNavigationCom->Compute_Height(m_pTransformCom);
 }
 
 void CCamera_Free::Late_Update(_float fTimeDelta)
@@ -267,5 +281,6 @@ CGameObject* CCamera_Free::Clone(void* pArg)
 void CCamera_Free::Free()
 {
 	__super::Free();
+	Safe_Release(m_pNavigationCom);
 
 }

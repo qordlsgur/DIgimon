@@ -159,10 +159,15 @@ void CBlackwargreymon::Update(_float fTimeDelta)
 					m_pFsm->Enter(DIGIMONSTATE::BATTLEBACK, m_pPart_Body);
 				}
 
-				if (!m_bSkill1 && !m_bSkill2 && !m_bSkill3 && !m_bBackJump)
+				if (!m_bSkill1 && !m_bSkill2 && !m_bSkill3 && !m_bBackJump && !m_bHitAinm)
 				{
 					m_bTurnEnd = true;
 					m_pFsm->Enter(DIGIMONSTATE::STANDBATTLE, m_pPart_Body);
+				}
+				if (m_bHitAinm == true)
+				{
+					if (m_pPart_Body->Get_AnimFinish() == true)
+						m_bHitAinm = false;
 				}
 			}
 			else
@@ -185,21 +190,7 @@ void CBlackwargreymon::Update(_float fTimeDelta)
 		__super::Update(fTimeDelta);
 	}
 }
-//if (m_pGameInstance->Key_Down(DIK_1))
-//{
-//	m_bisHit = !m_bisHit;
-//	m_fRandom = m_pGameInstance->Random(-3.f, 3.f);
-//}
 
-//if (m_bisHit)
-//{
-//	DamageUp(fTimeDelta);
-//}
-//else
-//{
-//	m_fTime = 0.f;
-//	m_fFontUp = 13.5f;
-//}
 void CBlackwargreymon::Late_Update(_float fTimeDelta)
 {
 	if (m_bLife)
@@ -212,26 +203,7 @@ void CBlackwargreymon::Late_Update(_float fTimeDelta)
 
 HRESULT CBlackwargreymon::Render()
 {
-	if (m_bLife)
-	{
-		if (m_bisHit)
-		{
-			m_pGameInstance->Perspective_Render_Text(
-				m_pGameInstance->Get_Transform_Matrix(D3DTS::VIEW),
-				m_pGameInstance->Get_Transform_Matrix(D3DTS::PROJ),
-				TEXT("42"), TEXT("111"),
-				XMVectorSet(m_pTransformCom->Get_State(STATE::POSITION).m128_f32[0] + m_fRandom,
-					m_pTransformCom->Get_State(STATE::POSITION).m128_f32[1] + m_fFontUp,
-					m_pTransformCom->Get_State(STATE::POSITION).m128_f32[2] + 5.f,
-					m_pTransformCom->Get_State(STATE::POSITION).m128_f32[3]));
-		}
-
-#ifdef _DEBUG
-		m_pColliderCom->Render();
-#endif
-
-	}
-		return S_OK;
+	return S_OK;
 }
 
 _int CBlackwargreymon::Intersect(CCollider* pPlayer_Collider)
@@ -242,14 +214,11 @@ _int CBlackwargreymon::Intersect(CCollider* pPlayer_Collider)
 	return -1;
 }
 
-//void CBlackwargreymon::DamageUp(_float fTimeDelta)
-//{
-//	//m_fTime += fTimeDelta;
-//	m_fFontUp += 0.8f;
-//
-//	if (m_fFontUp >= 27.f)
-//		m_bisHit = false;
-//}
+void CBlackwargreymon::HitAnim()
+{
+	m_bHitAinm = true;
+	m_pFsm->Enter(DIGIMONSTATE::HIT, m_pPart_Body, false, false);
+}
 
 void CBlackwargreymon::UseSkill(_int Skill)
 {

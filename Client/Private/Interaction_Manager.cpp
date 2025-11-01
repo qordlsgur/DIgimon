@@ -30,7 +30,9 @@ void CInteraction_Manager::Update()
 			{
 				if (!m_pAttackDigimon->Get_Hit())
 				{
+					it->HitAnim();
 					m_pAttackDigimon->Set_Hit(true);
+					m_pAttackDigimon->HitCountUp();
 					it->Set_HitDamage(m_pAttackDigimon->Get_Damage());
 				}
 			}

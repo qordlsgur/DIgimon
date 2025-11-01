@@ -23,6 +23,7 @@ private:
 	LEVEL				m_eNextLevelID = { LEVEL::END };
 	class CLoader*		m_pLoader = { nullptr };
 
+	_bool	m_bLogo = { false };
 private:
 	HRESULT Ready_Layer_BackGround();
 

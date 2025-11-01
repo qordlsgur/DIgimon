@@ -2,6 +2,7 @@
 #include "GameInstance.h"
 #include "Interaction_Manager.h"
 #include "LeomonSkill2_Part1.h"
+#include "LeomonSkill2_Part2.h"
 
 CLeomonSkill2::CLeomonSkill2(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CSkillObject{ pDevice, pContext }
@@ -34,6 +35,7 @@ HRESULT CLeomonSkill2::Initialize(void* pArg)
 
 	m_iDamage = Pos->iDamage;
 	m_vPosition = Pos->m_vPosition;
+	m_vPosition2 = Pos->m_vPosition2;
 	m_vTarget_pos = Pos->m_vTargetPosition;
 
 	m_vPosition.m128_f32[1] += 10.f;
@@ -48,12 +50,12 @@ HRESULT CLeomonSkill2::Initialize(void* pArg)
 
 	m_vTarget_pos.m128_f32[1] += 5.f;
 
-	m_pTransformCom->Set_State(STATE::POSITION, m_vPosition);
+	m_pTransformCom->Set_State(STATE::POSITION, m_vPosition2);
 
 	if (FAILED(Ready_PartObjects()))
 		return E_FAIL;
 
-	if (FAILED(Ready_SkillObjects()))
+	if (FAILED(Ready_SkillObjects2()))
 		return E_FAIL;
 
 	return S_OK;
@@ -66,9 +68,30 @@ void CLeomonSkill2::Priority_Update(_float fTimeDelta)
 
 void CLeomonSkill2::Update(_float fTimeDelta)
 {
-	m_pTransformCom->TargetLook(m_vTarget_pos);
 
-	m_pTransformCom->Target_Pos_Move(m_vTarget_pos, fTimeDelta);
+	if (m_bMove)
+	{
+		Ready_SkillObjects();
+		if (!m_pTransformCom->Target_Pos_Move_Bool(m_vTarget_pos, fTimeDelta))
+			m_pSkillModel1->Set_Hit(true);
+
+	}
+
+	if (m_bHit)
+	{
+		m_pSkillModel1->Set_Hit(true);
+		m_fTime += fTimeDelta;
+		m_fFontUp += fTimeDelta * 2.f;
+	}
+
+
+	if (m_fTime > 2.f)
+	{
+		m_pInteraction_Manager->Die_Attack_Skill();
+		m_isDead = true;
+	}
+
+	m_pTransformCom->TargetLook(m_vTarget_pos);
 
 	m_pColliderCom->Update(XMLoadFloat4x4(m_pTransformCom->Get_WorldMatrixPtr()));
 
@@ -77,16 +100,27 @@ void CLeomonSkill2::Update(_float fTimeDelta)
 
 void CLeomonSkill2::Late_Update(_float fTimeDelta)
 {
-	m_pGameInstance->Add_RenderGroup(RENDER::UI, this);
+	m_pGameInstance->Add_RenderGroup(RENDER::EFFECT, this);
 	__super::Late_Update(fTimeDelta);
 }
 
 HRESULT CLeomonSkill2::Render()
 {
-#ifdef _DEBUG
-	m_pColliderCom->Render();
-#endif
 
+	if (m_bHit)
+	{
+		_itow_s(m_iDamage, m_szDamage, MAX_PATH, 10);
+
+		m_pGameInstance->Perspective_Render_Text(
+			m_pGameInstance->Get_Transform_Matrix(D3DTS::VIEW),
+			m_pGameInstance->Get_Transform_Matrix(D3DTS::PROJ),
+			TEXT("42"), m_szDamage,
+
+			XMVectorSet(m_vTarget_pos.m128_f32[0],
+				m_vTarget_pos.m128_f32[1] + m_fFontUp + 10.f,
+				m_vTarget_pos.m128_f32[2],
+				m_vTarget_pos.m128_f32[3]));
+	}
 	return S_OK;
 }
 
@@ -128,6 +162,22 @@ HRESULT CLeomonSkill2::Ready_SkillObjects()
 		return E_FAIL;
 
 	m_pSkillModel1 = dynamic_cast<CLeomonSkill2_Part1*>(Find_PartObject(TEXT("Part_Skill1")));
+	return S_OK;
+}
+
+HRESULT CLeomonSkill2::Ready_SkillObjects2()
+{
+	CLeomonSkill2_Part2::BODY_PLAYER_DESC Skill2{};
+
+	Skill2.pParentTransform = m_pTransformCom;
+	Skill2.vPosition = m_vPosition;
+	/* Part_Skill1 */
+	if (FAILED(__super::Add_PartObject(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_LeomonSkill2_Part2"),
+		TEXT("Part_Skill2"), &Skill2)))
+		return E_FAIL;
+
+	m_pSkillModel2 = dynamic_cast<CLeomonSkill2_Part2*>(Find_PartObject(TEXT("Part_Skill2")));
+
 	return S_OK;
 }
 

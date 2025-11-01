@@ -67,6 +67,7 @@ void CAngewomon::Update(_float fTimeDelta)
 		m_vHandPosition = m_mHandParts.r[3];
 		if (!m_bBattle)
 		{
+			m_bDie = false;
 			if (!m_bMonster)
 			{
 				m_pTransformCom->LookAtPlayer(m_pDigimon_Manager->PlayerPos(), fTimeDelta);
@@ -105,6 +106,7 @@ void CAngewomon::Update(_float fTimeDelta)
 						{
 							m_mHandParts = XMLoadFloat4x4(static_cast<CBody_Angewomon*>(m_pPart_Body)->Get_BoneMatrixPtr("Bip001-L-Finger2"));
 							Creat_Skill(1);
+							m_pGameInstance->Manager_PlaySound(L"AngewomonSkill1.wav", CHANNELID::EFFECT, 1);
 							m_iLastSkill = m_iSkill;
 						}
 						break;
@@ -132,6 +134,7 @@ void CAngewomon::Update(_float fTimeDelta)
 						if (m_iSkill != m_iLastSkill)
 						{
 							m_pSkill->Set_Move(true);
+							m_pGameInstance->Manager_PlaySound(L"AngewomonSkill2.wav", CHANNELID::EFFECT, 1);
 							m_iLastSkill = m_iSkill;
 						}
 						break;
@@ -154,6 +157,7 @@ void CAngewomon::Update(_float fTimeDelta)
 						if (m_iSkill != m_iLastSkill)
 						{
 							Creat_Skill(3);
+							m_bSkillOn = true;
 							m_iLastSkill = m_iSkill;
 						}
 						break;
@@ -167,7 +171,9 @@ void CAngewomon::Update(_float fTimeDelta)
 					case 68:
 						if (m_iSkill != m_iLastSkill)
 						{
+							m_bSkillOn = false;
 							m_pSkill->Set_Move(true);
+							m_pGameInstance->Manager_PlaySound(L"AngewomonSkill3.wav", CHANNELID::EFFECT, 1);
 							m_iLastSkill = m_iSkill;
 						}
 						break;
@@ -175,7 +181,7 @@ void CAngewomon::Update(_float fTimeDelta)
 						m_iLastSkill = -1;
 						break;
 					}
-					if (m_pSkill != nullptr && m_pSkill->Get_Move() == false)
+					if (m_bSkillOn)
 						m_pSkill->Set_Position(m_mHandParts.r[3]);
 				}
 
@@ -184,10 +190,15 @@ void CAngewomon::Update(_float fTimeDelta)
 					m_pFsm->Enter(DIGIMONSTATE::BATTLEBACK, m_pPart_Body);
 				}
 
-				if (!m_bSkill1 && !m_bSkill2 && !m_bSkill3 && !m_bBackJump)
+				if (!m_bSkill1 && !m_bSkill2 && !m_bSkill3 && !m_bBackJump && !m_bHitAinm)
 				{
 					m_bTurnEnd = true;
 					m_pFsm->Enter(DIGIMONSTATE::STANDBATTLE, m_pPart_Body);
+				}
+				if (m_bHitAinm == true)
+				{
+					if (m_pPart_Body->Get_AnimFinish() == true)
+						m_bHitAinm = false;
 				}
 			}
 			else
@@ -235,7 +246,11 @@ _int CAngewomon::Intersect(CCollider* pPlayer_Collider)
 	return -1;
 }
 
-
+void CAngewomon::HitAnim()
+{
+	m_bHitAinm = true;
+	m_pFsm->Enter(DIGIMONSTATE::HIT, m_pPart_Body, false, false);
+}
 void CAngewomon::UseSkill(_int Skill)
 {
 	m_bSkill = true;
@@ -307,6 +322,7 @@ void CAngewomon::Creat_Skill(_int SkillNum)
 
 	case 2:
 		Desc.iDamage = m_iDamage;
+
 		m_pSkill = static_cast<CAngewomonSkill2*>(m_pGameInstance->Add_GameObject_ToLayer_ToCreate(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_AngewomonSkill2"),
 			ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Layer_Angewomon2"), &Desc));
 

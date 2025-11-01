@@ -171,6 +171,7 @@
     <ClInclude Include="..\public\ApplyGatherEffect.h" />
     <ClInclude Include="..\public\ApplySpreadEffect.h" />
     <ClInclude Include="..\Public\BackGround.h" />
+    <ClInclude Include="..\public\BackGround2.h" />
     <ClInclude Include="..\public\Battle.h" />
     <ClInclude Include="..\Public\BattleBack.h" />
     <ClInclude Include="..\Public\BattleDash.h" />
@@ -248,9 +249,13 @@
     <ClInclude Include="..\public\LadydevimonSkill3.h" />
     <ClInclude Include="..\public\Leomon.h" />
     <ClInclude Include="..\public\LeomonSkill1.h" />
+    <ClInclude Include="..\Public\LeomonSkill1_Part1.h" />
+    <ClInclude Include="..\public\LeomonSkill1_Part2.h" />
     <ClInclude Include="..\public\LeomonSkill2.h" />
     <ClInclude Include="..\public\LeomonSkill2_Part1.h" />
+    <ClInclude Include="..\public\LeomonSkill2_Part2.h" />
     <ClInclude Include="..\public\LeomonSkill3.h" />
+    <ClInclude Include="..\public\LeomonSkill3_Part1.h" />
     <ClInclude Include="..\Public\Level_GamePlay.h" />
     <ClInclude Include="..\Public\Level_Loading.h" />
     <ClInclude Include="..\Public\Level_Logo.h" />
@@ -259,8 +264,13 @@
     <ClInclude Include="..\Public\MainApp.h" />
     <ClInclude Include="..\public\Metalgarumon.h" />
     <ClInclude Include="..\public\MetalgarumonSkill1.h" />
+    <ClInclude Include="..\public\MetalgarumonSkill1_Part1.h" />
     <ClInclude Include="..\public\MetalgarumonSkill2.h" />
     <ClInclude Include="..\public\MetalgarumonSkill2_Part1.h" />
+    <ClInclude Include="..\public\MetalgarumonSkill2_Part2.h" />
+    <ClInclude Include="..\public\MetalgarumonSkill2_Part3.h" />
+    <ClInclude Include="..\public\MetalgarumonSkill2_Part4.h" />
+    <ClInclude Include="..\public\MetalgarumonSkill2_Part5.h" />
     <ClInclude Include="..\public\MetalgarumonSkill3.h" />
     <ClInclude Include="..\public\MetalgarumonSkill3_Part1.h" />
     <ClInclude Include="..\public\Metalgreymon.h" />
@@ -314,6 +324,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\private\AngewomonSkill3_Part3.cpp" />
+    <ClCompile Include="..\private\BackGround2.cpp" />
     <ClCompile Include="..\private\DevilmonSkill3_Part3.cpp" />
     <ClCompile Include="..\private\Angewomon.cpp" />
     <ClCompile Include="..\private\AngewomonSkill1.cpp" />
@@ -405,9 +416,13 @@
     <ClCompile Include="..\private\LadydevimonSkill3.cpp" />
     <ClCompile Include="..\private\Leomon.cpp" />
     <ClCompile Include="..\private\LeomonSkill1.cpp" />
+    <ClCompile Include="..\Private\LeomonSkill1_Part1.cpp" />
+    <ClCompile Include="..\private\LeomonSkill1_Part2.cpp" />
     <ClCompile Include="..\private\LeomonSkill2.cpp" />
     <ClCompile Include="..\private\LeomonSkill2_Part1.cpp" />
+    <ClCompile Include="..\private\LeomonSkill2_Part2.cpp" />
     <ClCompile Include="..\private\LeomonSkill3.cpp" />
+    <ClCompile Include="..\private\LeomonSkill3_Part1.cpp" />
     <ClCompile Include="..\Private\Level_GamePlay.cpp" />
     <ClCompile Include="..\Private\Level_Loading.cpp" />
     <ClCompile Include="..\Private\Level_Logo.cpp" />
@@ -416,8 +431,13 @@
     <ClCompile Include="..\Private\MainApp.cpp" />
     <ClCompile Include="..\private\Metalgarumon.cpp" />
     <ClCompile Include="..\private\MetalgarumonSkill1.cpp" />
+    <ClCompile Include="..\private\MetalgarumonSkill1_Part1.cpp" />
     <ClCompile Include="..\private\MetalgarumonSkill2.cpp" />
     <ClCompile Include="..\private\MetalgarumonSkill2_Part1.cpp" />
+    <ClCompile Include="..\private\MetalgarumonSkill2_Part2.cpp" />
+    <ClCompile Include="..\private\MetalgarumonSkill2_Part3.cpp" />
+    <ClCompile Include="..\private\MetalgarumonSkill2_Part4.cpp" />
+    <ClCompile Include="..\private\MetalgarumonSkill2_Part5.cpp" />
     <ClCompile Include="..\private\MetalgarumonSkill3.cpp" />
     <ClCompile Include="..\private\MetalgarumonSkill3_Part1.cpp" />
     <ClCompile Include="..\private\Metalgreymon.cpp" />

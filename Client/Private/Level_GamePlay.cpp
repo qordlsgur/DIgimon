@@ -31,6 +31,8 @@ HRESULT CLevel_GamePlay::Initialize()
 	m_pIntertaction_Manager->Initialize();
 	m_pBattle_UI_Manager->Initialize();
 
+
+
 	if (FAILED(Ready_Lights()))
 		return E_FAIL;
 
@@ -107,29 +109,6 @@ HRESULT CLevel_GamePlay::Ready_Lights()
 	if (FAILED(m_pGameInstance->Add_Light(LightDesc)))
 		return E_FAIL;
 
-	//LIGHT_DESC			PointLightDesc{};
-
-	//PointLightDesc.eType = LIGHT::POINT; // ¹æÇâ±¤ ´ë½Å Á¡±¤¿ø
-	//PointLightDesc.vDiffuse = _float4(1.f, 1.f, 1.f, 1.f);
-	//PointLightDesc.vAmbient = _float4(1.f,1.f,1.f,1.f);
-	//PointLightDesc.vSpecular = _float4(0.5f, 0.5f, 0.5f, 1.f);
-	//PointLightDesc.vPosition = _float4(0.f, 80.f, 0.f, 1.f); // ¾À Áß¾Ó
-	//PointLightDesc.fRange = 100.f; // ºûÀÌ ÆÛÁö´Â ¹Ý°æ
-
-	//if (FAILED(m_pGameInstance->Add_Light(PointLightDesc)))
-	//	return E_FAIL;
-
-	//LIGHT_DESC			LLightDesc{};
-
-	//LLightDesc.eType = LIGHT::DIRECTIONAL;
-	//LLightDesc.vDiffuse = _float4(0.8f, 0.8f, 0.8f, 1.f);
-	//LLightDesc.vAmbient = _float4(0.2f, 0.2f, 0.2f, 1.f);
-	//LLightDesc.vSpecular = _float4(0.5f, 0.5f, 0.5f, 1.f);
-	//LLightDesc.vDirection = _float4(1.f, -1.f, 1.f, 0.f);
-
-	//if (FAILED(m_pGameInstance->Add_Light(LLightDesc)))
-	//	return E_FAIL;
-
 	return S_OK;
 }
 
@@ -190,65 +169,11 @@ HRESULT CLevel_GamePlay::Ready_Layer_Player(const _wstring& strLayerTag)
 		ENUM_CLASS(LEVEL::GAMEPLAY), strLayerTag)))
 		return E_FAIL;
 
-	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Skill_Model"),
-		ENUM_CLASS(LEVEL::GAMEPLAY), strLayerTag)))
-		return E_FAIL;	
-	
-	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Skill_Effect_Image"),
-		ENUM_CLASS(LEVEL::GAMEPLAY), strLayerTag)))
-		return E_FAIL;
-
 	return S_OK;
 }
 
 HRESULT CLevel_GamePlay::Ready_Layer_Digimon(const _wstring& strLayerTag)
 {
-
-	////¿£Á©¿ì¸ó
-	//if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Angewomon"),
-	//	ENUM_CLASS(LEVEL::GAMEPLAY), strLayerTag)))
-	//	//return E_FAIL;
-
-	// //¿À¸Þ°¡¸ó
-	//if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Omegamon"),
-	//	ENUM_CLASS(LEVEL::GAMEPLAY), strLayerTag)))
-	//	return E_FAIL;
-
-	//// µ¥ºô¸ó
-	//if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Devilmon"),
-	//	ENUM_CLASS(LEVEL::GAMEPLAY), strLayerTag)))
-	//	return E_FAIL;
-
-	//// ·¹ÀÌµð µ¥ºô¸ó
-	//if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Ladydevimon"),
-	//	ENUM_CLASS(LEVEL::GAMEPLAY), strLayerTag)))
-	//	return E_FAIL;
-
-	//// ·¹¿À¸ó
-	//if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Leomon"),
-	//	ENUM_CLASS(LEVEL::GAMEPLAY), strLayerTag)))
-	//	return E_FAIL;
-
-	//// ¸ÞÅ» °¡·ç¸ó
-	//if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Metalgarumon"),
-	//	ENUM_CLASS(LEVEL::GAMEPLAY), strLayerTag)))
-	//	return E_FAIL;
-
-	//// ¸ÞÅ» ±×·¹ÀÌ¸ó
-	//if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Metalgreymon"),
-	//	ENUM_CLASS(LEVEL::GAMEPLAY), strLayerTag)))
-	//	return E_FAIL;
-
-	//// ¿ö ±×·¹ÀÌ¸ó
-	//if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Wargreymon"),
-	//	ENUM_CLASS(LEVEL::GAMEPLAY), strLayerTag)))
-	//	return E_FAIL;
-
-	//// ºí·º ¿ö ±×·¹ÀÌ¸ó
-	//if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Blackwargreymon"),
-	//	ENUM_CLASS(LEVEL::GAMEPLAY), strLayerTag)))
-	//	return E_FAIL;
-
 	return S_OK;
 }
 
@@ -267,20 +192,55 @@ HRESULT CLevel_GamePlay::Ready_Layer_Interaction(const _wstring& strLayerTag)
 
 HRESULT CLevel_GamePlay::Ready_Layer_Monster(const _wstring& strLayerTag)
 {
-	CSpawner::SPAWNER_POS   SpawnPos[1]{};
-	SpawnPos[0].SpawnerPos = XMVectorSet(660.f, 0.f, 540.f, 0.f);
-	SpawnPos[0].strPrototypeTag = TEXT("Prototype_GameObject_Ladydevimon");
+	CSpawner::SPAWNER_POS   SpawnPos[10]{};
+	SpawnPos[0].SpawnerPos = XMVectorSet(144.f, 0.f, 276.f, 0.f);
+	SpawnPos[0].strPrototypeTag = TEXT("Prototype_GameObject_Leomon");
 
 	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Spawner"),
 		ENUM_CLASS(LEVEL::GAMEPLAY), strLayerTag, &SpawnPos[0])))
 		return E_FAIL;
 
-	//SpawnPos[1].SpawnerPos = XMVectorSet(770.f, 0.f, 650.f, 0.f);
-	//SpawnPos[1].strPrototypeTag = TEXT("Prototype_GameObject_Angewomon");
+	SpawnPos[1].SpawnerPos = XMVectorSet(138, 0.f,500, 0.f);
+	SpawnPos[1].strPrototypeTag = TEXT("Prototype_GameObject_Ladydevimon");
 
-	//if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Spawner"),
-	//	ENUM_CLASS(LEVEL::GAMEPLAY), strLayerTag, &SpawnPos[1])))
-	//	return E_FAIL;
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Spawner"),
+		ENUM_CLASS(LEVEL::GAMEPLAY), strLayerTag, &SpawnPos[1])))
+		return E_FAIL;
+
+	SpawnPos[2].SpawnerPos = XMVectorSet(840, 0.f, 700.f, 0.f);
+	SpawnPos[2].strPrototypeTag = TEXT("Prototype_GameObject_Metalgreymon");
+
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Spawner"),
+		ENUM_CLASS(LEVEL::GAMEPLAY), strLayerTag, &SpawnPos[2])))
+		return E_FAIL;
+
+	SpawnPos[3].SpawnerPos = XMVectorSet(680, 0.f, 650, 0.f);
+	SpawnPos[3].strPrototypeTag = TEXT("Prototype_GameObject_Blackwargreymon");
+
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Spawner"),
+		ENUM_CLASS(LEVEL::GAMEPLAY), strLayerTag, &SpawnPos[3])))
+		return E_FAIL;
+
+	SpawnPos[4].SpawnerPos = XMVectorSet(530, 0.f, 280.f, 0.f);
+	SpawnPos[4].strPrototypeTag = TEXT("Prototype_GameObject_Metalgarumon");
+
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Spawner"),
+		ENUM_CLASS(LEVEL::GAMEPLAY), strLayerTag, &SpawnPos[4])))
+		return E_FAIL;
+
+	SpawnPos[5].SpawnerPos = XMVectorSet(370, 0.f, 230.f, 0.f);
+	SpawnPos[5].strPrototypeTag = TEXT("Prototype_GameObject_Wargreymon");
+
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Spawner"),
+		ENUM_CLASS(LEVEL::GAMEPLAY), strLayerTag, &SpawnPos[5])))
+		return E_FAIL;
+
+	SpawnPos[6].SpawnerPos = XMVectorSet(140.f, 0.f, 850.f, 0.f);
+	SpawnPos[6].strPrototypeTag = TEXT("Prototype_GameObject_Angewomon");
+
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Spawner"),
+		ENUM_CLASS(LEVEL::GAMEPLAY), strLayerTag, &SpawnPos[6])))
+		return E_FAIL;
 
 	return S_OK;
 }

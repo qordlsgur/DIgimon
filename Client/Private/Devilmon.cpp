@@ -172,11 +172,16 @@ void CDevilmon::Update(_float fTimeDelta)
 				}
 
 
-				if (!m_bSkill1 && !m_bSkill2 && !m_bSkill3 && !m_bBackJump)
+				if (!m_bSkill1 && !m_bSkill2 && !m_bSkill3 && !m_bBackJump && !m_bHitAinm)
 				{
 					m_bTurnEnd = true;
 					m_bSkillOn = false;
 					m_pFsm->Enter(DIGIMONSTATE::STANDBATTLE, m_pPart_Body);
+				}
+				if (m_bHitAinm == true)
+				{
+					if (m_pPart_Body->Get_AnimFinish() == true)
+						m_bHitAinm = false;
 				}
 			}
 			else
@@ -212,12 +217,7 @@ void CDevilmon::Late_Update(_float fTimeDelta)
 
 HRESULT CDevilmon::Render()
 {
-	if (m_bLife)
-	{
-#ifdef _DEBUG
-		m_pColliderCom->Render();
-#endif
-	}
+
 	return S_OK;
 }
 
@@ -227,6 +227,12 @@ _int CDevilmon::Intersect(CCollider* pPlayer_Collider)
 		return Get_ID();
 
 	return -1;
+}
+
+void CDevilmon::HitAnim()
+{
+	m_bHitAinm = true;
+	m_pFsm->Enter(DIGIMONSTATE::HIT, m_pPart_Body, false, false);
 }
 
 void CDevilmon::UseSkill(_int Skill)

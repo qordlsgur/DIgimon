@@ -20,6 +20,8 @@ HRESULT CLevel_Logo::Initialize()
 	if (FAILED(Ready_Layer_BackGround(TEXT("Layer_BackGround"))))
 		return E_FAIL;
 
+	m_pGameInstance->Manager_PlayBGM(TEXT("Loding.mp3"), 3.f);
+
 	return S_OK;
 }
 
@@ -27,8 +29,11 @@ void CLevel_Logo::Update(_float fTimeDelta)
 {
 	//if (GetKeyState(VK_SPACE) & 0x8000)
 	//{
+
 		if (FAILED(m_pGameInstance->Change_Level(CLevel_Loading::Create(m_pDevice, m_pContext, LEVEL::LOADING, LEVEL::GAMEPLAY))))
-			return;
+			
+		return;
+
 	//}
 }
 
@@ -61,7 +66,7 @@ HRESULT CLevel_Logo::Ready_Layer_Camera(const _wstring& strLayerTag)
 
 HRESULT CLevel_Logo::Ready_Layer_BackGround(const _wstring& strLayerTag)
 {
-	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(ENUM_CLASS(LEVEL::LOGO), TEXT("Prototype_GameObject_BackGround"),
+	if (FAILED(m_pGameInstance->Add_GameObject_ToLayer(ENUM_CLASS(LEVEL::STATIC), TEXT("Prototype_GameObject_BackGround"),
 		ENUM_CLASS(LEVEL::LOGO), strLayerTag)))
 		return E_FAIL;
 

@@ -70,6 +70,8 @@ HRESULT CFont::Perspective_Render(_matrix View, _matrix Proj, const _tchar* pTex
     m_pFont->DrawString(m_pBatch, pText, XMVectorSet(screenPos.x, screenPos.y, 0.f, 0.f), vColor, 0.f, origin, scale);
 
     m_pBatch->End();
+
+	return S_OK;
 }
 
 _float CFont::FontSizeX(const _tchar* pText)

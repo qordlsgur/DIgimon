@@ -34,6 +34,7 @@ public:
 
 public:
 	virtual _int Intersect(class CCollider* pPlayer_Collider) override;
+	virtual void HitAnim() override;
 
 
 private:

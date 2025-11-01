@@ -31,7 +31,7 @@ HRESULT CMetalgreymonSkill2_Part3::Initialize(void* pArg)
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 
-	m_pTransformCom->Set_Scale(15.0f, 15.f, 15.f);
+	m_pTransformCom->Set_Scale(10.f, 10.f, 10.f);
 	m_fTime = 0.f;
 
 	return S_OK;

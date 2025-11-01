@@ -436,6 +436,15 @@
     <Filter Include="02.GameObjects\Digimon\06.Metalgreymon\Skill1\Part">
       <UniqueIdentifier>{84b9e14d-75da-43d7-a973-caf7a08fd226}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.GameObjects\Digimon\05.Metalgarumon\Skill1\Part">
+      <UniqueIdentifier>{94bd08b9-8892-4569-806d-e7c1ed79fbf5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Digimon\04.Leomon\Skill3\Part">
+      <UniqueIdentifier>{d19335c6-bd13-4811-944c-6b29797c4d5c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\Digimon\04.Leomon\Skill1\Part">
+      <UniqueIdentifier>{60a7ee82-8455-45fc-8b6c-37bc2a10c8ac}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -855,9 +864,6 @@
     <ClInclude Include="..\public\DevilmonSkill3_Part4.h">
       <Filter>02.GameObjects\Digimon\02.Devilmon\Skill3\Part</Filter>
     </ClInclude>
-    <ClInclude Include="..\public\LeomonSkill2_Part1.h">
-      <Filter>02.GameObjects\Digimon\03.Ladydevimon\Skill2\Part</Filter>
-    </ClInclude>
     <ClInclude Include="..\public\MetalgarumonSkill2_Part1.h">
       <Filter>02.GameObjects\Digimon\05.Metalgarumon\Skill2\Part</Filter>
     </ClInclude>
@@ -905,6 +911,39 @@
     </ClInclude>
     <ClInclude Include="..\public\AngewomonSkill3_Part3.h">
       <Filter>02.GameObjects\Digimon\00.Angewomon\Skill3\Parts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\MetalgarumonSkill1_Part1.h">
+      <Filter>02.GameObjects\Digimon\05.Metalgarumon\Skill1\Part</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\MetalgarumonSkill2_Part2.h">
+      <Filter>02.GameObjects\Digimon\05.Metalgarumon\Skill2\Part</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\MetalgarumonSkill2_Part3.h">
+      <Filter>02.GameObjects\Digimon\05.Metalgarumon\Skill2\Part</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\MetalgarumonSkill2_Part5.h">
+      <Filter>02.GameObjects\Digimon\05.Metalgarumon\Skill2\Part</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\MetalgarumonSkill2_Part4.h">
+      <Filter>02.GameObjects\Digimon\05.Metalgarumon\Skill2\Part</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\LeomonSkill2_Part1.h">
+      <Filter>02.GameObjects\Digimon\04.Leomon\Skill2\Part</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\LeomonSkill2_Part2.h">
+      <Filter>02.GameObjects\Digimon\04.Leomon\Skill2\Part</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\LeomonSkill3_Part1.h">
+      <Filter>02.GameObjects\Digimon\04.Leomon\Skill3\Part</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\LeomonSkill1_Part2.h">
+      <Filter>02.GameObjects\Digimon\04.Leomon\Skill1\Part</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\LeomonSkill1_Part1.h">
+      <Filter>02.GameObjects\Digimon\04.Leomon\Skill1\Part</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\BackGround2.h">
+      <Filter>02.GameObjects\BackGround</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1326,9 +1365,6 @@
     <ClCompile Include="..\private\DevilmonSkill3_Part4.cpp">
       <Filter>02.GameObjects\Digimon\02.Devilmon\Skill3\Part</Filter>
     </ClCompile>
-    <ClCompile Include="..\private\LeomonSkill2_Part1.cpp">
-      <Filter>02.GameObjects\Digimon\03.Ladydevimon\Skill2\Part</Filter>
-    </ClCompile>
     <ClCompile Include="..\private\MetalgarumonSkill2_Part1.cpp">
       <Filter>02.GameObjects\Digimon\05.Metalgarumon\Skill2\Part</Filter>
     </ClCompile>
@@ -1376,6 +1412,39 @@
     </ClCompile>
     <ClCompile Include="..\private\AngewomonSkill3_Part3.cpp">
       <Filter>02.GameObjects\Digimon\00.Angewomon\Skill3\Parts</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\MetalgarumonSkill1_Part1.cpp">
+      <Filter>02.GameObjects\Digimon\05.Metalgarumon\Skill1\Part</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\MetalgarumonSkill2_Part2.cpp">
+      <Filter>02.GameObjects\Digimon\05.Metalgarumon\Skill2\Part</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\MetalgarumonSkill2_Part3.cpp">
+      <Filter>02.GameObjects\Digimon\05.Metalgarumon\Skill2\Part</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\MetalgarumonSkill2_Part4.cpp">
+      <Filter>02.GameObjects\Digimon\05.Metalgarumon\Skill2\Part</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\MetalgarumonSkill2_Part5.cpp">
+      <Filter>02.GameObjects\Digimon\05.Metalgarumon\Skill2\Part</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\LeomonSkill2_Part1.cpp">
+      <Filter>02.GameObjects\Digimon\04.Leomon\Skill2\Part</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\LeomonSkill2_Part2.cpp">
+      <Filter>02.GameObjects\Digimon\04.Leomon\Skill2\Part</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\LeomonSkill3_Part1.cpp">
+      <Filter>02.GameObjects\Digimon\04.Leomon\Skill3\Part</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\LeomonSkill1_Part2.cpp">
+      <Filter>02.GameObjects\Digimon\04.Leomon\Skill1\Part</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\LeomonSkill1_Part1.cpp">
+      <Filter>02.GameObjects\Digimon\04.Leomon\Skill1\Part</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\BackGround2.cpp">
+      <Filter>02.GameObjects\BackGround</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
