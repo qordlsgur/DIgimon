@@ -2,13 +2,13 @@
 
 **개발 인원:** 1명  
 **장르:** 턴제 RPG  
-**개발 인원:** 1인 개발
-**개발 기간:** 2025.00.00 ~ 2025.00.00
-**플랫폼:** PC (Windows)
+**개발 인원:** 1인 개발  
+**개발 기간:** 2025.00.00 ~ 2025.00.00  
+**플랫폼:** PC (Windows)  
 
-**Language:** C++
-**Graphics:** DirectX 11
-**IDE:** Visual Studio 2022
+**Language:** C++  
+**Graphics:** DirectX 11  
+**IDE:** Visual Studio 2022  
 
 ## 프로젝트 소개
 디지몬 슈퍼럼블을 기반으로 한 턴제 RPG 게임 모작 프로젝트입니다.  
